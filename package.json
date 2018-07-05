@@ -1,6 +1,6 @@
 {
   "name": "shuutils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "utils collection",
   "engines": {
     "node": ">=9.11.1"
