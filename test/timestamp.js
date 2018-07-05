@@ -1,11 +1,6 @@
 import test from 'ava'
+import getTimestamp from '../lib/timestamp'
 
-test('foo', t => {
-  t.pass()
-})
-
-test('bar', async t => {
-  const bar = Promise.resolve('bar')
-
-  t.is(await bar, 'bar')
+test('getTimestamp', t => {
+  t.true(getTimestamp() > 0)
 })

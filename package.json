@@ -5,7 +5,6 @@
   "engines": {
     "node": ">=9.11.1"
   },
-  "main": "index.js",
   "scripts": {
     "test": "ava",
     "test:dev": "yarn test --watch"
@@ -31,9 +30,15 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
     "@babel/runtime": "^7.0.0-beta.51",
     "ava": "1.0.0-beta.6",
     "babel-eslint": "8",
     "eslint": "4.x"
+  },
+  "ava": {
+    "require": [
+      "@babel/register"
+    ]
   }
 }
