@@ -1,6 +1,6 @@
 # Shuutils
 
-My collection of pure JS utils functions :zap:
+My collection of *mostly* pure JS utils functions :zap:
 
 ## Install
 
@@ -14,6 +14,7 @@ or :
 
 ```js
 import { getTimestamp } from 'shuutils'
+
 console.log('Hello world, now is', getTimestamp())
 ```
 
