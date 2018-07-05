@@ -2,9 +2,13 @@
   "name": "shuutils",
   "version": "1.0.0",
   "description": "utils collection",
+  "engines": {
+    "node": ">=9.11.1"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified yet :p\" && exit 1"
+    "test": "ava",
+    "test:dev": "yarn test --watch"
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,14 @@
   "bugs": {
     "url": "https://github.com/Shuunen/shuutils/issues"
   },
-  "homepage": "https://github.com/Shuunen/shuutils#readme"
+  "homepage": "https://github.com/Shuunen/shuutils#readme",
+  "private": false,
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/runtime": "^7.0.0-beta.51",
+    "ava": "1.0.0-beta.6",
+    "babel-eslint": "8",
+    "eslint": "4.x"
+  }
 }
