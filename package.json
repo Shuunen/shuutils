@@ -1,0 +1,26 @@
+{
+  "name": "shuutils",
+  "version": "1.0.0",
+  "description": "utils collection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified yet :p\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shuunen/shuutils.git"
+  },
+  "keywords": [
+    "shuunen",
+    "utils",
+    "collection",
+    "pure",
+    "javascript"
+  ],
+  "author": "Romain Racamier-Lafon",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Shuunen/shuutils/issues"
+  },
+  "homepage": "https://github.com/Shuunen/shuutils#readme"
+}
