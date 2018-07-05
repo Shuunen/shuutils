@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=9.11.1"
   },
+  "main": "index.js",
   "scripts": {
     "test": "ava",
     "test:dev": "yarn test --watch"
