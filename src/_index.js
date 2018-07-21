@@ -1,5 +1,5 @@
 'use strict'
 
-var getTimestamp = require('./lib/timestamp')
+var getTimestamp = require('./timestamp')
 
 module.exports = { getTimestamp }
