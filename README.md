@@ -4,11 +4,7 @@ My collection of *mostly* pure JS utils functions :zap:
 
 ## Install
 
-`yarn add shuutils` (should work once this repo will be listed)
-
-or :
-
-`yarn add https://github.com/Shuunen/shuutils.git`
+`yarn add shuutils`
 
 ## Use
 
@@ -20,4 +16,6 @@ console.log('Hello world, now is', getTimestamp())
 
 ## Thanks
 
-- [Ava](https://github.com/avajs/ava) : for test runner
+- Avajs's test runner : [Ava](https://github.com/avajs/ava)
+- Josh Crowther's repo : [how to browser modules](https://github.com/jshcrowthe/howto-browser-modules)
+- Jakub Juszczak's article : [how to publish your package on npm](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600)
