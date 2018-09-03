@@ -7,7 +7,6 @@
     "align": false,
     "arrow-parens": false,
     "arrow-return-shorthand": true,
-    "await-promise": true,
     "ban": [
       true,
       "eval",
@@ -20,7 +19,6 @@
     "class-name": true,
     "curly": true,
     "cyclomatic-complexity": true,
-    "deprecation": true,
     "encoding": true,
     "import-spacing": true,
     "interface-name": false,
@@ -47,7 +45,6 @@
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
-    "no-floating-promises": true,
     "no-invalid-template-strings": true,
     "no-invalid-this": true,
     "no-irregular-whitespace": true,
@@ -60,9 +57,7 @@
     "no-this-assignment": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
-    "no-unsafe-any": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
     "no-var-keyword": true,
     "no-var-requires": true,
     "object-literal-key-quotes": [
@@ -88,7 +83,6 @@
       true,
       "never"
     ],
-    "strict-type-predicates": true,
     "trailing-comma": [
       true,
       {
