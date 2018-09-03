@@ -1,5 +1,5 @@
 'use strict'
 
-import { getTimestamp, getTimestampMs } from './timestamp'
+import { getTimestamp, getTimestampMs } from './timestamps'
 
 module.exports = { getTimestamp, getTimestampMs }
