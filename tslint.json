@@ -17,6 +17,18 @@
     ],
     "binary-expression-operand-order": true,
     "class-name": true,
+    "completed-docs": [
+      true,
+      "classes",
+      "enums",
+      "functions",
+      "interfaces",
+      "methods",
+      "namespaces",
+      "properties",
+      "types",
+      "variables"
+    ],
     "curly": true,
     "cyclomatic-complexity": true,
     "encoding": true,
@@ -27,6 +39,7 @@
       "spaces",
       4
     ],
+    "jsdoc-format": true,
     "linebreak-style": [
       true,
       "LF"
@@ -51,6 +64,7 @@
     "no-misused-new": true,
     "no-object-literal-type-assertion": false,
     "no-parameter-reassignment": true,
+    "no-redundant-jsdoc": true,
     "no-shadowed-variable": true,
     "no-string-literal": true,
     "no-string-throw": true,

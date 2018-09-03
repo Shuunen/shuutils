@@ -11,8 +11,8 @@
  * in  : dateToIsoString(new Date(), true)
  * out : "2018-09-03T15:24:00.366"
  *
- * @param {Date} date input date
- * @param {Boolean} removeTimezone remove the last z ?
+ * @param date input date
+ * @param removeTimezone remove the last z ?
  */
 export function dateToIsoString(date: Date, removeTimezone?: boolean): string {
   let dateStr = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
