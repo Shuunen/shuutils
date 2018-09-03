@@ -18,7 +18,7 @@
     "build": "tsc",
     "check-all": "run-p verify lint test",
     "dev": "yarn test --watch",
-    "lint:fix": "run-s lint --fix",
+    "lint:fix": "tslint -c tslint.json --fix '{src,test}/**/*.ts'",
     "lint": "tslint -c tslint.json '{src,test}/**/*.ts'",
     "precommit": "lint-staged",
     "prepublish": "run-s check-all build",
