@@ -10,8 +10,9 @@ My collection of *mostly* pure JS utils functions :zap:
 
 ```js
 import { getTimestamp } from 'shuutils'
+// or for older js : var getTimestamp = require("shuutils").getTimestamp
 
-console.log('Hello world, now is', getTimestamp())
+console.log('Hello world, current timestamp is', getTimestamp())
 ```
 
 ## Thanks
