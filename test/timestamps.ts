@@ -1,5 +1,5 @@
 import test from 'ava'
-import { getTimestamp, getTimestampMs } from '../src/timestamps'
+import { getTimestamp, getTimestampMs } from '../dist'
 
 test('timestamp give positive number', t => {
   t.true(getTimestamp() > 0)
