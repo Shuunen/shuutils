@@ -7,7 +7,7 @@
   },
   "description": "utils collection",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=8.12.0"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
