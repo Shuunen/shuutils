@@ -1,6 +1,6 @@
 {
   "name": "shuutils",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": {
     "name": "Romain Racamier-Lafon",
     "email": "romain.racamier@gmail.com"
@@ -17,11 +17,12 @@
   "scripts": {
     "build": "tsc",
     "check-all": "run-p verify lint test",
-    "dev": "yarn test --watch",
+    "dev": "run-s build test:watch",
     "lint": "standard --fix src/**/*.ts test/**/*.ts",
     "prepublish": "run-s check-all build",
     "pretest": "run-p lint",
     "test": "ava",
+    "test:watch": "ava --watch",
     "verify": "nsp check",
     "version:major": "run-s version:increment:major version:publish",
     "version:minor": "run-s version:increment:minor version:publish",
@@ -70,6 +71,8 @@
   },
   "standard": {
     "parser": "typescript-eslint-parser",
-    "plugins": [ "typescript" ]
+    "plugins": [
+      "typescript"
+    ]
   }
 }
