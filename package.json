@@ -1,13 +1,13 @@
 {
   "name": "shuutils",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "author": {
     "name": "Romain Racamier-Lafon",
     "email": "romain.racamier@gmail.com"
   },
   "description": "utils collection",
   "engines": {
-    "node": ">=8.11.4"
+    "node": ">=10.13.0"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,9 +28,9 @@
     "version:major": "run-s version:increment:major version:publish",
     "version:minor": "run-s version:increment:minor version:publish",
     "version:patch": "run-s version:increment:patch version:publish",
-    "version:increment:major": "npm version major",
-    "version:increment:minor": "npm version minor",
-    "version:increment:patch": "npm version patch",
+    "version:increment:major": "yarn version --major",
+    "version:increment:minor": "yarn version --minor",
+    "version:increment:patch": "yarn version --patch",
     "version:publish": "yarn publish"
   },
   "repository": {
@@ -71,7 +71,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npm run lint:fix",
+      "yarn lint:fix",
       "git add"
     ]
   }
