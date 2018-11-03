@@ -18,9 +18,7 @@
     "build": "tsc",
     "check-all": "run-p verify lint test",
     "dev": "yarn test --watch",
-    "lint": "    tslint --project tsconfig.json --config tslint.json      ",
-    "lint:fix": "tslint --project tsconfig.json --config tslint.json --fix",
-    "precommit": "lint-staged",
+    "lint": "standard --fix src/**/*.ts test/**/*.ts",
     "prepublish": "run-s check-all build",
     "pretest": "run-p lint",
     "test": "ava",
@@ -53,12 +51,13 @@
   "private": false,
   "devDependencies": {
     "ava": "1.0.0-beta.8",
-    "lint-staged": "^7.2.0",
+    "eslint-plugin-typescript": "^0.13.0",
     "npm-run-all": "^4.1.3",
     "nsp": "^3.2.1",
+    "standard": "^12.0.1",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.1",
+    "typescript-eslint-parser": "^20.1.1"
   },
   "ava": {
     "compileEnhancements": false,
@@ -69,10 +68,8 @@
       "ts-node/register"
     ]
   },
-  "lint-staged": {
-    "*.ts": [
-      "yarn lint:fix",
-      "git add"
-    ]
+  "standard": {
+    "parser": "typescript-eslint-parser",
+    "plugins": [ "typescript" ]
   }
 }
