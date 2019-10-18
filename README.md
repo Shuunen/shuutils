@@ -4,7 +4,7 @@ My collection of *mostly* pure JS utils functions :zap:
 
 ## Install
 
-`yarn add shuutils`
+`npm install shuutils`
 
 ## Use
 
