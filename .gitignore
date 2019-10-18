@@ -1,3 +1,8 @@
-node_modules
+.cache
+.DS_Store
+.env
+*.log
+*.tgz
 dist
-yarn-error.log
+node_modules
+sample.*

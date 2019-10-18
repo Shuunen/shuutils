@@ -1,65 +1,5 @@
 {
-  "name": "shuutils",
-  "version": "3.4.0",
-  "author": {
-    "name": "Romain Racamier-Lafon",
-    "email": "romain.racamier@gmail.com"
-  },
-  "description": "utils collection",
-  "engines": {
-    "node": ">=8.12.0"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "check-all": "run-p verify lint test",
-    "dev": "run-s build test:watch",
-    "lint": "standard --fix src/**/*.ts test/**/*.ts",
-    "prepublish": "run-s check-all build",
-    "pretest": "run-p lint",
-    "test": "ava",
-    "test:watch": "ava --watch",
-    "verify": "nsp check",
-    "version:major": "run-s version:increment:major version:publish",
-    "version:minor": "run-s version:increment:minor version:publish",
-    "version:patch": "run-s version:increment:patch version:publish",
-    "version:increment:major": "yarn version --major",
-    "version:increment:minor": "yarn version --minor",
-    "version:increment:patch": "yarn version --patch",
-    "version:publish": "yarn publish"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Shuunen/shuutils.git"
-  },
-  "keywords": [
-    "shuunen",
-    "utils",
-    "collection",
-    "pure",
-    "javascript",
-    "typescript"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Shuunen/shuutils/issues"
-  },
-  "homepage": "https://github.com/Shuunen/shuutils#readme",
-  "private": false,
-  "devDependencies": {
-    "ava": "1.4.1",
-    "eslint-plugin-typescript": "0.13.0",
-    "npm-run-all": "4.1.5",
-    "nsp": "3.2.1",
-    "standard": "12.0.1",
-    "ts-node": "7.0.1",
-    "typescript": "3.1.6",
-    "typescript-eslint-parser": "20.1.1"
-  },
+  "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "ava": {
     "compileEnhancements": false,
     "extensions": [
@@ -69,10 +9,67 @@
       "ts-node/register"
     ]
   },
-  "standard": {
-    "parser": "typescript-eslint-parser",
+  "bugs": "https://github.com/Shuunen/shuutils/issues",
+  "description": "utils collection",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.4.0",
+    "@typescript-eslint/parser": "2.4.0",
+    "ava": "2.4.0",
+    "npm-run-all": "4.1.5",
+    "standardx": "5.0.0",
+    "ts-node": "8.4.1",
+    "typescript": "3.6.4"
+  },
+  "engines": {
+    "node": ">=8.12.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "error",
+      "no-unused-vars": "off"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/Shuunen/shuutils#readme",
+  "keywords": [
+    "shuunen",
+    "utils",
+    "collection",
+    "pure",
+    "javascript",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "shuutils",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shuunen/shuutils.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "check": "npx repo-check",
+    "ci": "run-s check lint build test",
+    "dev": "run-s build test:watch",
+    "lint": "standardx **/*.ts --fix",
+    "postversion": "npm run ci && npm publish",
+    "start": "npm run dev",
+    "test": "ava",
+    "test:watch": "ava --watch",
+    "update": "npx npm-check-updates -u",
+    "version:major": "npm version major",
+    "version:minor": "npm version minor",
+    "version:patch": "npm version patch"
+  },
+  "standardx": {
+    "parser": "@typescript-eslint/parser",
     "plugins": [
-      "typescript"
+      "@typescript-eslint/eslint-plugin"
     ]
-  }
+  },
+  "types": "dist/index.d.ts",
+  "version": "3.4.0"
 }
