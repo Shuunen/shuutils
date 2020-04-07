@@ -54,7 +54,7 @@
     "ci": "run-s check lint build test",
     "dev": "run-s build test:watch",
     "lint": "eslint --fix --ignore-path .gitignore --ext .ts,.html .",
-    "postpublish": "git push origin --all; git push origin --tags",
+    "postpublish": "git push && git push --tags",
     "postversion": "npm publish",
     "pretest": "npm run build",
     "preversion": "npm run ci",
