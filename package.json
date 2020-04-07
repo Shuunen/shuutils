@@ -55,6 +55,7 @@
     "dev": "run-s build test:watch",
     "lint": "eslint --fix --ignore-path .gitignore --ext .ts,.html .",
     "postversion": "npm run ci && npm publish",
+    "pretest": "npm run build",
     "start": "npm run dev",
     "test": "nyc ava",
     "test:watch": "ava --watch",
