@@ -28,5 +28,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) by Just Icon
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
+- [Nyc](https://github.com/istanbuljs/nyc): great cli for istanbul (code coverage)
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Travis-ci.org](https://travis-ci.org) : for providing free continuous deployments
