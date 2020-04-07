@@ -15,19 +15,18 @@
     "@typescript-eslint/eslint-plugin": "2.4.0",
     "@typescript-eslint/parser": "2.4.0",
     "ava": "2.4.0",
+    "eslint": "6.8.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
     "npm-run-all": "4.1.5",
-    "standardx": "5.0.0",
     "ts-node": "8.4.1",
     "typescript": "3.6.4"
   },
   "engines": {
     "node": ">=8.12.0"
-  },
-  "eslintConfig": {
-    "rules": {
-      "@typescript-eslint/no-unused-vars": "error",
-      "no-unused-vars": "off"
-    }
   },
   "files": [
     "dist"
@@ -54,7 +53,7 @@
     "check": "npx repo-check",
     "ci": "run-s check lint build test",
     "dev": "run-s build test:watch",
-    "lint": "standardx **/*.ts --fix",
+    "lint": "eslint --fix --ignore-path .gitignore --ext .ts,.html .",
     "postversion": "npm run ci && npm publish",
     "start": "npm run dev",
     "test": "ava",

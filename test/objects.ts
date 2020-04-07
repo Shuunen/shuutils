@@ -4,7 +4,7 @@ import { copy } from '../dist'
 test('copy object', t => {
   const person = {
     name: 'John',
-    age: 21
+    age: 21,
   }
   const personCopy = copy(person)
   personCopy.age = 42
@@ -15,7 +15,7 @@ test('copy object', t => {
 test('no copy object', t => {
   const person = {
     name: 'John',
-    age: 21
+    age: 21,
   }
   const personCopy = person
   personCopy.age = 42
