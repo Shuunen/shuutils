@@ -1,5 +1,5 @@
 import test from 'ava'
-import { slugify, getRandomImageUrl, getRandomString } from '../dist'
+import { getRandomImageUrl, getRandomString, slugify } from '../dist'
 
 test('slugify', t => {
   const expected = 'oh-ma-darling'
