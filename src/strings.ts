@@ -10,10 +10,10 @@ const random = {
  * @param str input string like : "Slug % ME with // Love !"
  * @returns string like : "slug-me-with-love"
  */
-export function slugify (str: string): string {
+export function slugify (string: string): string {
   // does not handle accentuated
   // ex : Déjà Vu => d-j-vu
-  return str.toLowerCase().trim() // Lower case everything & trim
+  return string.toLowerCase().trim() // Lower case everything & trim
     .replace(/\W+/gi, '-') // Replace all non word with dash
     .replace(/^-+/, '') // Trim dash from start
     .replace(/-+$/, '') // Trim dash from end

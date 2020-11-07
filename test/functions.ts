@@ -2,12 +2,12 @@ import test from 'ava'
 import { debounce, sleep } from '../dist'
 
 let called = false
-const myFunc = () => (called = true)
+const myFunction = () => (called = true)
 test('debounce', async (t) => {
   called = false
-  const myFuncDebounced = debounce(myFunc, 1000)
+  const myFunctionDebounced = debounce(myFunction, 1000)
   t.is(called, false)
-  myFuncDebounced()
+  myFunctionDebounced()
   t.is(called, false)
   await sleep(500)
   t.is(called, false)
