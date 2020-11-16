@@ -16,8 +16,8 @@
   "devDependencies": {
     "@types/dlv": "1.1.2",
     "@types/node": "14.14.7",
-    "@typescript-eslint/eslint-plugin": "4.7.0",
-    "@typescript-eslint/parser": "4.7.0",
+    "@typescript-eslint/eslint-plugin": "4.8.0",
+    "@typescript-eslint/parser": "4.8.0",
     "ava": "3.13.0",
     "eslint": "7.13.0",
     "eslint-config-standard": "16.0.1",
