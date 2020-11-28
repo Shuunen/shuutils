@@ -57,7 +57,7 @@
     "check": "repo-check",
     "ci": "run-s lint test check",
     "dev": "run-s build test:watch",
-    "lint": "eslint --fix --ignore-path .gitignore --ext .ts,.html .",
+    "lint": "eslint --fix --ignore-path .gitignore --ext .ts .",
     "postversion": "git push && git push --tags && npm publish",
     "pretest": "npm run build",
     "preversion": "npm run ci",
