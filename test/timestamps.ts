@@ -1,5 +1,5 @@
 import test from 'ava'
-import { getTimestamp, getTimestampMs } from '../dist'
+import { getTimestamp, getTimestampMs } from '../src'
 
 test('timestamp of a specific date', t => t.true(getTimestamp(new Date('1989-05-14')) === 611107200))
 

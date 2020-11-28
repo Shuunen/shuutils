@@ -1,5 +1,5 @@
 import test from 'ava'
-import { pickOne } from '../dist'
+import { pickOne } from '../src'
 
 test('pick one', t => {
   const elements = ['damn', 'this', 'test', 'is', 'crazy']

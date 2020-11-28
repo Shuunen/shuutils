@@ -1,11 +1,11 @@
 import test from 'ava'
-import { debounce, sleep } from '../dist'
+import { debounce, sleep } from '../src'
 
 let called = false
-const myFunction = () => (called = true)
+const myFunction = (): boolean => (called = true)
 test('debounce', async (t) => {
   called = false
-  const myFunctionDebounced = debounce(myFunction, 1000)
+  const myFunctionDebounced = debounce(myFunction, 1000) as any
   t.is(called, false)
   myFunctionDebounced()
   t.is(called, false)

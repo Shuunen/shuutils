@@ -1,5 +1,5 @@
 import test from 'ava'
-import { dateToIsoString } from '../dist'
+import { dateToIsoString } from '../src'
 
 test('iso string date has length', t => {
   t.true(dateToIsoString(new Date()).length > 0)

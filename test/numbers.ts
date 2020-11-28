@@ -1,5 +1,5 @@
 import test from 'ava'
-import { getRandomNumber } from '../dist'
+import { getRandomNumber } from '../src'
 
 test('random number between defaults', t => {
   const min = 0
