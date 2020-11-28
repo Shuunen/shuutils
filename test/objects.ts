@@ -1,5 +1,5 @@
 import test from 'ava'
-import { access, clone, copy } from '../dist'
+import { access, clone, copy } from '../src'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
 const persons = ['John', 'Fanny']

@@ -7,18 +7,12 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'standard',
     'plugin:unicorn/recommended',
+    'standard-with-typescript',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  plugins: [
-    '@typescript-eslint',
-    'unicorn',
-  ],
+  plugins: ['unicorn'],
   rules,
 }
