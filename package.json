@@ -35,7 +35,7 @@
     "repo-check": "1.14.2",
     "rimraf": "3.0.2",
     "ts-node": "9.1.1",
-    "typescript": "4.1.2"
+    "typescript": "4.1.3"
   },
   "files": [
     "dist/src"
