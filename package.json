@@ -62,6 +62,6 @@
     "test:watch": "onchange --initial \"src/**/*.ts\" \"tests/**/*.ts\" -- npm test",
     "update": "npx npm-check-updates -u"
   },
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "version": "4.1.0"
 }
