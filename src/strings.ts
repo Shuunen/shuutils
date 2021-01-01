@@ -34,3 +34,23 @@ export function getRandomImageUrl (): string {
 export function getRandomString (): string {
   return pickOne(random.strings)
 }
+
+/**
+ * Fill mustaches in a given string
+ * @param template input string, ex : "Hello {{ name }} !"
+ * @param data input object, ex : { name: "world" }
+ * @returns string, ex : "Hello world !"
+ */
+export function fillTemplate (template: string | object, data: { [key: string]: string } = {}): string {
+  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, 2) : template)
+  if (string.length === 0) return string
+  const tokens = string.match(/{{?\s?([^\s}]+)\s?}?}/g)
+  if (tokens === null || tokens.length === 0) return string
+  for (const token of tokens) {
+    const key = token.replace(/[\s{}]/g, '')
+    const value = data[key] ?? ''
+    if (value.length === 0) return ''
+    string = string.replace(token, value)
+  }
+  return string
+}
