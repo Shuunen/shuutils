@@ -2,6 +2,7 @@
 
 export * from './arrays'
 export * from './dates'
+export * from './event'
 export * from './functions'
 export * from './numbers'
 export * from './objects'
