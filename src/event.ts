@@ -1,7 +1,8 @@
 /* istanbul ignore next */
-export const emit = (eventName: string, eventData: unknown): void => {
+export const emit = (eventName: string, eventData?: unknown): void => {
   if (global.window === undefined) return
-  window.dispatchEvent(new CustomEvent(eventName, { detail: eventData }))
+  if (eventData === undefined) window.dispatchEvent(new CustomEvent(eventName))
+  else window.dispatchEvent(new CustomEvent(eventName, { detail: eventData }))
 }
 
 /* istanbul ignore next */
