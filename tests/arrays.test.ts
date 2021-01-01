@@ -1,8 +1,8 @@
-import test from 'ava'
+import { ok } from 'assert'
 import { pickOne } from '../src'
 
-test('pick one', t => {
+it('pick one', () => {
   const elements = ['damn', 'this', 'test', 'is', 'crazy']
   const element = pickOne(elements)
-  t.true(elements.includes(element))
+  ok(elements.includes(element))
 })

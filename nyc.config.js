@@ -1,5 +1,6 @@
 module.exports = {
-  exclude: ['test/**', 'dist/index.js'],
+  exclude: ['tests/**', '*.js'],
+  reporter: ['text', 'lcovonly'],
   'check-coverage': true,
   branches: 90,
   functions: 90,
