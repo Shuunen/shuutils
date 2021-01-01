@@ -51,7 +51,7 @@
   "scripts": {
     "build": "tsc",
     "check": "repo-check",
-    "ci": "run-s lint test check",
+    "ci": "run-s lint test build check",
     "dev": "run-s build test:watch",
     "lint": "eslint --fix --ignore-path .gitignore --ext .ts .",
     "postversion": "git push && git push --tags && npm publish",
