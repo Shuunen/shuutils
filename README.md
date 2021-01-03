@@ -5,7 +5,7 @@
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
 [![GitHub license](https://img.shields.io/github/license/shuunen/shuutils.svg?color=informational)](https://github.com/Shuunen/shuutils/blob/master/LICENSE)
 
-[![Build Status](https://travis-ci.org/Shuunen/shuutils.svg?branch=master)](https://travis-ci.org/Shuunen/shuutils)
+[![Build Status](https://travis-ci.com/Shuunen/shuutils.svg?branch=master)](https://travis-ci.com/Shuunen/shuutils)
 [![David](https://img.shields.io/david/shuunen/shuutils.svg)](https://david-dm.org/shuunen/shuutils)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Shuunen/shuutils.svg)](https://lgtm.com/projects/g/Shuunen/shuutils)
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/Shuunen/shuutils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Shuunen/shuutils)
@@ -37,4 +37,4 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Nyc](https://github.com/istanbuljs/nyc): great cli for istanbul (code coverage)
 - [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
-- [Travis-ci.org](https://travis-ci.org) : for providing free continuous deployments
+- [Travis-ci.com](https://travis-ci.com) : for providing free continuous deployments
