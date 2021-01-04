@@ -5,7 +5,7 @@
  * @param max (optional) the return number maximum included value
  * @return number like : 12
  */
-export function getRandomNumber (min = 0, max = 100): number {
+export function getRandomNumber(min = 0, max = 100): number {
   // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min)
+  return Math.floor((Math.random() * (max - min + 1)) + min)
 }

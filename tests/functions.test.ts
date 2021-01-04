@@ -3,7 +3,10 @@ import { debounce, sleep } from '../src'
 
 describe('functions', () => {
   let called = false
-  const myFunction = (): boolean => (called = true)
+  const myFunction = (): void => {
+    called = true
+  }
+
   it('debounce', async () => {
     called = false
     const myFunctionDebounced = debounce(myFunction, 100) as any

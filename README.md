@@ -27,12 +27,11 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 ## Thanks
 
-- [Ava](https://github.com/avajs/ava): for the simple & effective test runner
 - [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) by Just Icon
-- [Eslint](https://eslint.org) : super tool to find & fix problems
 - [Github](https://github.com) : for all their great work year after year, pushing OSS forward
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
+- [Mocha](https://github.com/mochajs/mocha) : great test runner easy to setup & use
 - [Npm-run-all](https://github.com/mysticatea/npm-run-all) : to keep my npm scripts clean & readable
 - [Nyc](https://github.com/istanbuljs/nyc): great cli for istanbul (code coverage)
 - [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^

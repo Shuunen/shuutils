@@ -1,20 +1,24 @@
-async function get (key: string, /* istanbul ignore next */ storage = localStorage): Promise<any | undefined> {
+/* istanbul ignore next */
+async function get(key: string, storage = localStorage): Promise<any | undefined> {
   const data = storage[key]
   if (data === undefined) return
   return (data[0] === '{') ? JSON.parse(data) : data
 }
 
-async function set (key: string, data: string | Record<string, unknown>, /* istanbul ignore next */ storage = localStorage): Promise<string | Record<string, unknown>> {
+/* istanbul ignore next */
+async function set(key: string, data: string | Record<string, unknown>, storage = localStorage): Promise<string | Record<string, unknown>> {
   storage[key] = typeof data === 'object' ? JSON.stringify(data) : data
   return data
 }
 
-async function has (key: string, /* istanbul ignore next */ storage = localStorage): Promise<boolean> {
+/* istanbul ignore next */
+async function has(key: string, storage = localStorage): Promise<boolean> {
   const value = await get(key, storage)
   return value !== undefined
 }
 
-function clear (key: string, /* istanbul ignore next */ storage = localStorage): void {
+/* istanbul ignore next */
+function clear(key: string, storage = localStorage): void {
   /* eslint-disable-next-line @typescript-eslint/no-dynamic-delete */
   delete storage[key]
 }

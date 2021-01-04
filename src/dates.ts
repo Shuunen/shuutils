@@ -15,11 +15,11 @@
  * @param removeTimezone remove the last z ?
  * @returns string like : "2018-09-03T15:24:00.366Z"
  */
-export function dateToIsoString (date: Date, removeTimezone = false): string {
+export function dateToIsoString(date: Date, removeTimezone = false): string {
   let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
-  if (removeTimezone && dateString[dateString.length - 1].toLowerCase() === 'z') {
+  if (removeTimezone && dateString[dateString.length - 1].toLowerCase() === 'z')
     dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
-  }
+
   return dateString
 }
 
@@ -36,6 +36,7 @@ export const daysAgo = (nbDays = 0): Date => (d => new Date(d.setDate(d.getDate(
  */
 export const dateIso10 = (date = new Date()): string => date.toISOString().split('T')[0]
 
+/* istanbul ignore next */
 /**
  * Return a relative date formatted to ISO 10
  * @param nbDays the number of days to subtract from today
