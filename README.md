@@ -5,7 +5,6 @@
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
 [![GitHub license](https://img.shields.io/github/license/shuunen/shuutils.svg?color=informational)](https://github.com/Shuunen/shuutils/blob/master/LICENSE)
 
-[![Build Status](https://travis-ci.com/Shuunen/shuutils.svg?branch=master)](https://travis-ci.com/Shuunen/shuutils)
 [![David](https://img.shields.io/david/shuunen/shuutils.svg)](https://david-dm.org/shuunen/shuutils)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Shuunen/shuutils.svg)](https://lgtm.com/projects/g/Shuunen/shuutils)
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/Shuunen/shuutils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Shuunen/shuutils)
@@ -32,8 +31,4 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
 - [Mocha](https://github.com/mochajs/mocha) : great test runner easy to setup & use
-- [Npm-run-all](https://github.com/mysticatea/npm-run-all) : to keep my npm scripts clean & readable
-- [Nyc](https://github.com/istanbuljs/nyc): great cli for istanbul (code coverage)
-- [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
-- [Travis-ci.com](https://travis-ci.com) : for providing free continuous deployments
