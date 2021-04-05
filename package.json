@@ -6,18 +6,10 @@
     "dlv": "1.1.3"
   },
   "devDependencies": {
-    "@types/dlv": "1.1.2",
-    "@types/mocha": "8.2.2",
-    "@types/node": "14.14.37",
-    "mocha": "8.3.2",
-    "npm-run-all": "4.1.5",
-    "nyc": "15.1.0",
-    "onchange": "7.1.0",
-    "repo-check": "1.15.1",
-    "rimraf": "3.0.2",
-    "ts-node": "9.1.1",
-    "typescript": "4.2.3",
-    "xo": "0.38.2"
+    "@types/dlv": "latest",
+    "@types/mocha": "latest",
+    "@types/node": "latest",
+    "shuunen-stack": "latest"
   },
   "files": [
     "dist/src"
@@ -41,16 +33,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "check": "repo-check",
-    "ci": "run-s lint test build check",
+    "ci": "run-s build lint test",
     "dev": "run-s build test:watch",
-    "lint": "xo --fix",
+    "lint": "stack lint",
     "postversion": "git push && git push --tags && npm publish",
     "preversion": "npm run ci",
-    "prebuild": "rimraf dist",
     "start": "npm run dev",
-    "test": "nyc mocha",
-    "test:watch": "onchange --initial \"src/**/*.ts\" \"tests/**/*.ts\" -- npm test",
+    "test": "stack test",
+    "test:watch": "stack test --watch",
     "update": "npx npm-check-updates -u"
   },
   "types": "dist/src/index.d.ts",

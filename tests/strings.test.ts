@@ -17,7 +17,7 @@ describe('strings', () => {
   const data = {
     name: 'Wick',
     key_to_happiness: 'Roo-doo-doot-da-doo',
-    quote: 'Bears. Beets. Battlestar Galactica.'
+    quote: 'Bears. Beets. Battlestar Galactica.',
   }
   it('fill a template string without mustaches and data', () => equal(fillTemplate(data.quote), data.quote))
   it('fill an empty template string', () => equal(fillTemplate(''), ''))
