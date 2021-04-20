@@ -24,6 +24,16 @@ describe('storage', () => {
     equal(dug.lastName, value)
   })
 
+  it('working with an array', async () => {
+    const key = 'Bon'
+    const value = ['Soir']
+    await storage.set(key, value, mock)
+    const exists = await storage.has(key, mock)
+    equal(exists, true)
+    const dug = await storage.get(key, mock)
+    equal(dug[0], value[0])
+  })
+
   it('save & clear', async () => {
     const key = 'Kevin'
     const value = 'Malone'
