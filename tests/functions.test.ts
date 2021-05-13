@@ -1,21 +1,39 @@
 import { strictEqual as equal } from 'assert'
-import { debounce, sleep } from '../src'
+import { debounce, sleep, throttle } from '../src'
 
 describe('functions', () => {
-  let called = false
+  let times: number
   const myFunction = (): void => {
-    called = true
+    times++
   }
 
   it('debounce', async () => {
-    called = false
+    times = 0
     const myFunctionDebounced = debounce(myFunction, 100) as any
-    equal(called, false)
+    equal(times, 0)
     myFunctionDebounced()
-    equal(called, false)
+    equal(times, 0)
     await sleep(50)
-    equal(called, false)
+    equal(times, 0)
     await sleep(60)
-    equal(called, true)
+    equal(times, 1)
+    await sleep(30)
+    equal(times, 1)
+  })
+
+  it('throttle', async () => {
+    times = 0
+    const myFunctionThrottled = throttle(myFunction, 100) as any
+    equal(times, 0)
+    myFunctionThrottled()
+    equal(times, 1)
+    myFunctionThrottled()
+    myFunctionThrottled()
+    myFunctionThrottled()
+    equal(times, 1)
+    await sleep(100)
+    myFunctionThrottled()
+    myFunctionThrottled()
+    equal(times, 2)
   })
 })
