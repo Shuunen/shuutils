@@ -1,7 +1,7 @@
 /* istanbul ignore next */
 async function get(key: string, storage = localStorage): Promise<any | undefined> {
-  const data = storage[key]
-  if (data === undefined) return
+  if (storage[key] === undefined) return
+  const data = String(storage[key])
   return (['{', '['].includes(data[0])) ? JSON.parse(data) : data
 }
 
