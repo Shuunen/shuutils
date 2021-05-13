@@ -9,7 +9,7 @@
     "@types/dlv": "latest",
     "@types/mocha": "latest",
     "@types/node": "latest",
-    "shuunen-stack": "latest"
+    "shuunen-stack": "0.6.2"
   },
   "files": [
     "dist/src"
@@ -41,7 +41,7 @@
     "start": "npm run dev",
     "test": "stack test",
     "test:watch": "stack test --watch",
-    "update": "npx npm-check-updates -u"
+    "update": "stack update"
   },
   "types": "dist/src/index.d.ts",
   "version": "4.4.0"
