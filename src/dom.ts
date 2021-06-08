@@ -18,6 +18,7 @@ export const a = (classes: string, content: string, href: string, newTab = false
   const element = dom('a', classes, content) as HTMLAnchorElement
   element.href = href
   if (newTab) element.target = '_blank'
+  return element
 }
 export const link = a
 
