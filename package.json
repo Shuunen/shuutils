@@ -44,5 +44,5 @@
     "update": "stack update"
   },
   "types": "dist/src/index.d.ts",
-  "version": "4.5.1"
+  "version": "4.6.0"
 }
