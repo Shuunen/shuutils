@@ -4,9 +4,8 @@
  * @param waitFor time before executing function
  * @returns promise with a resolve type of the original function's return type
  */
-export function debounce<F extends (...parameters: any[]) => ReturnType<F>>(function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
+export function debounce<F extends (...parameters: unknown[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
   let timeout: NodeJS.Timeout
-  // eslint-disable-next-line @typescript-eslint/promise-function-async
   return (...parameters: Parameters<F>) => new Promise(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
@@ -16,7 +15,7 @@ export function debounce<F extends (...parameters: any[]) => ReturnType<F>>(func
 }
 
 // inspiration from https://www.matthewgerstman.com/tech/throttle-and-debounce/
-export function throttle<F extends (...parameters: any[]) => ReturnType<F>>(function_: F, timeout: number) {
+export function throttle<F extends (...parameters: unknown[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void {
   let ready = true
   return (...parameters: Parameters<F>) => {
     if (!ready) return
@@ -34,7 +33,6 @@ export function throttle<F extends (...parameters: any[]) => ReturnType<F>>(func
  * @param ms the time to wait in milliseconds, default 1000ms / 1 sec
  * @returns promise that resolve in the provided time
  */
-export async function sleep(ms = 1000): Promise<number> {
-  // eslint-disable-next-line no-promise-executor-return
+export async function sleep (ms = 1000): Promise<number> {
   return new Promise(resolve => setTimeout(() => resolve(ms), ms))
 }

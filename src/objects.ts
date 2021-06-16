@@ -5,7 +5,7 @@ import { delve } from './imports'
  * @param item like : { name : "Pine" }
  * @return item copy like : { name : "Pine" }
  */
-export function copy<T>(object: T): T {
+export function copy<T> (object: T): T {
   return JSON.parse(JSON.stringify(object))
 }
 

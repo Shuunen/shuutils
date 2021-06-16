@@ -1,10 +1,11 @@
-import { strictEqual as equal } from 'assert'
+import { deepStrictEqual as deepEqual,strictEqual as equal } from 'assert'
 import { storage } from '../src'
 
-describe('storage', () => {
-  const mock = {} as Storage
+const mock = {} as Storage
 
-  it('working with a string', async () => {
+describe('storage', function () {
+
+  it('working with a string', async function () {
     const key = 'Michael'
     const value = 'Scott'
     const exists = await storage.has(key, mock)
@@ -14,27 +15,27 @@ describe('storage', () => {
     equal(dug, value)
   })
 
-  it('working with an object', async () => {
+  it('working with an object', async function () {
     const key = 'Holly'
     const value = 'Flax'
     await storage.set(key, { lastName: value }, mock)
     const exists = await storage.has(key, mock)
     equal(exists, true)
-    const dug = await storage.get(key, mock)
-    equal(dug.lastName, value)
+    const dug = await storage.get<{ lastName: string }>(key, mock)
+    equal(dug?.lastName, value)
   })
 
-  it('working with an array', async () => {
+  it('working with an array', async function () {
     const key = 'Bon'
     const value = ['Soir']
     await storage.set(key, value, mock)
     const exists = await storage.has(key, mock)
     equal(exists, true)
-    const dug = await storage.get(key, mock)
-    equal(dug[0], value[0])
+    const dug = await storage.get<string[]>(key, mock)
+    deepEqual(dug, value)
   })
 
-  it('save & clear', async () => {
+  it('save & clear', async function () {
     const key = 'Kevin'
     const value = 'Malone'
     await storage.set(key, value, mock)
