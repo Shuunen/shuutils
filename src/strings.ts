@@ -10,7 +10,7 @@ const random = {
  * @param str input string like : "Slug % ME with // Love !"
  * @returns string like : "slug-me-with-love"
  */
-export function slugify(string: string): string {
+export function slugify (string: string): string {
   // does not handle accentuated
   // ex : Déjà Vu => d-j-vu
   return string.toLowerCase().trim() // Lower case everything & trim
@@ -23,7 +23,7 @@ export function slugify(string: string): string {
  * Give a random url that point to an image
  * @returns string like : "https://server.com/image.png"
  */
-export function getRandomImageUrl(): string {
+export function getRandomImageUrl (): string {
   return pickOne(random.images)
 }
 
@@ -31,7 +31,7 @@ export function getRandomImageUrl(): string {
  * Give a random word or sentence without signification
  * @returns string like : "Bolowey Opnet"
  */
-export function getRandomString(): string {
+export function getRandomString (): string {
   return pickOne(random.strings)
 }
 
@@ -41,7 +41,7 @@ export function getRandomString(): string {
  * @param data input object, ex : { name: "world" }
  * @returns string, ex : "Hello world !"
  */
-export function fillTemplate(template: string | Record<string, unknown>, data: Record<string, string> = {}): string {
+export function fillTemplate (template: string | Record<string, unknown>, data: Record<string, string> = {}): string {
   let string = (typeof template === 'object' ? JSON.stringify(template, undefined, 2) : template)
   if (string.length === 0) return string
   const tokens = string.match(/{{?\s?([^\s}]+)\s?}?}/g)

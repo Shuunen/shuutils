@@ -1,8 +1,8 @@
 import { ok } from 'assert'
 import { getRandomNumber } from '../src'
 
-describe('numbers', () => {
-  it('random between defaults', () => {
+describe('numbers', function () {
+  it('random between defaults', function () {
     const min = 0
     const max = 100
     const number = getRandomNumber()
@@ -10,7 +10,7 @@ describe('numbers', () => {
     ok(number <= max)
   })
 
-  it('random between range', () => {
+  it('random between range', function () {
     const min = 22
     const max = 122
     const number = getRandomNumber(min, max)
@@ -18,7 +18,7 @@ describe('numbers', () => {
     ok(number <= max)
   })
 
-  it('random not random', () => {
+  it('random not random', function () {
     const min = 42
     const number = getRandomNumber(min, min)
     ok(number === min)

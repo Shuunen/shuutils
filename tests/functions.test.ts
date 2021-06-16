@@ -1,15 +1,15 @@
 import { strictEqual as equal } from 'assert'
 import { debounce, sleep, throttle } from '../src'
 
-describe('functions', () => {
+describe('functions', function () {
   let times: number
   const myFunction = (): void => {
     times++
   }
 
-  it('debounce', async () => {
+  it('debounce', async function () {
     times = 0
-    const myFunctionDebounced = debounce(myFunction, 100) as any
+    const myFunctionDebounced = debounce(myFunction, 100)
     equal(times, 0)
     myFunctionDebounced()
     equal(times, 0)
@@ -21,9 +21,9 @@ describe('functions', () => {
     equal(times, 1)
   })
 
-  it('throttle', async () => {
+  it('throttle', async function () {
     times = 0
-    const myFunctionThrottled = throttle(myFunction, 100) as any
+    const myFunctionThrottled = throttle(myFunction, 100)
     equal(times, 0)
     myFunctionThrottled()
     equal(times, 1)

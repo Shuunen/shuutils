@@ -6,10 +6,10 @@
     "dlv": "1.1.3"
   },
   "devDependencies": {
-    "@types/dlv": "latest",
-    "@types/mocha": "latest",
-    "@types/node": "latest",
-    "shuunen-stack": "0.6.2"
+    "@types/dlv": "*",
+    "@types/mocha": "*",
+    "@types/node": "*",
+    "shuunen-stack": "0.9.5"
   },
   "files": [
     "dist/src"
