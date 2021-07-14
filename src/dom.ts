@@ -38,3 +38,16 @@ export const h2 = (classes: string, content = ''): HTMLHeadingElement => dom('h2
 export const h3 = (classes: string, content = ''): HTMLHeadingElement => dom('h3', classes, content)
 
 export const div = (classes: string, content = ''): HTMLDivElement => dom('div', classes, content)
+
+/**
+ * Generate a link to a css/stylesheet file
+ * @param href the href/src
+ * @returns the link element, ex: &lt;link type="text/css" href="../styles.css" rel="stylesheet" />
+ */
+export const css = (href: string): HTMLLinkElement => {
+  const element = dom('link')
+  element.href = href
+  element.type = 'text/css'
+  element.rel = 'stylesheet'
+  return element
+}
