@@ -1,3 +1,5 @@
+import { ellipsis } from './strings'
+
 /**
  * Debounce any function
  * @param func the function to debounce
@@ -35,4 +37,16 @@ export function throttle<F extends (...parameters: unknown[]) => ReturnType<F>> 
  */
 export async function sleep (ms = 1000): Promise<number> {
   return new Promise(resolve => setTimeout(() => resolve(ms), ms))
+}
+
+/* istanbul ignore next */
+export function copyToClipboard (stuff: string | number | Record<string, unknown>): void {
+  const element = document.createElement('textarea')
+  const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
+  console.log(`copying to clipboard : ${ellipsis(text)}`)
+  element.value = text
+  document.body.append(element)
+  element.select()
+  document.execCommand('copy')
+  element.remove()
 }
