@@ -54,11 +54,12 @@ export const YEAR = 365 * DAY
 /**
  * Make a date readable for us, poor humans
  * Kudos to https://coolaj86.com/articles/time-ago-in-under-50-lines-of-javascript/
- * @param date
+ * @param input a date or a number of milliseconds
  * @returns "a minute ago", "4 days ago"
  */
-export const readableTimeAgo = (date: Date): string => {
-  let ago = Math.floor(date.getTime() / 1000)
+export const readableTimeAgo = (input: Date | number): string => {
+  const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
+  let ago = Math.floor(ms / 1000)
   let part = 0
   if (ago < MOMENTS) return 'a moment ago'
   if (ago < MINUTE) return ago + ' seconds ago'

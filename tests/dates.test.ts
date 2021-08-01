@@ -33,6 +33,7 @@ describe('dates', function () {
   it('should calculate time ago correctly', function () {
     [
       [1.5 * 1000, 'a moment ago'],
+      [daysAgo(), 'a moment ago'],
       [10 * 1000, '10 seconds ago'],
       [59 * 1000, '59 seconds ago'],
       [60 * 1000, 'a minute ago'],
@@ -44,17 +45,15 @@ describe('dates', function () {
       [1 * 60 * 60 * 1000, 'an hour ago'],
       [1.5 * 60 * 60 * 1000, 'an hour ago'],
       [2.5 * 60 * 60 * 1000, '2 hours ago'],
-      [1.5 * 24 * 60 * 60 * 1000, 'a day ago'],
-      [2.5 * 24 * 60 * 60 * 1000, '2 days ago'],
-      [7 * 24 * 60 * 60 * 1000, 'a week ago'],
-      [14 * 24 * 60 * 60 * 1000, '2 weeks ago'],
-      [27 * 24 * 60 * 60 * 1000, '3 weeks ago'],
-      [28 * 24 * 60 * 60 * 1000, '4 weeks ago'],
-      [29 * 24 * 60 * 60 * 1000, '4 weeks ago'],
-      [1.5 * 30 * 24 * 60 * 60 * 1000, 'a month ago'],
-      [2.5 * 30 * 24 * 60 * 60 * 1000, '2 months ago'],
-      [(12 * 30 * 24 * 60 * 60 * 1000) + 1000, '12 months ago'],
-      [13 * 30 * 24 * 60 * 60 * 1000, 'more than a year ago'],
-    ].forEach(([time, expected]) => equal(readableTimeAgo(new Date(time)), expected))
+      [daysAgo(1), 'a day ago'],
+      [daysAgo(2), '2 days ago'],
+      [daysAgo(8), 'a week ago'],
+      [daysAgo(15), '2 weeks ago'],
+      [daysAgo(29), '4 weeks ago'],
+      [daysAgo(35), 'a month ago'],
+      [daysAgo(61), '2 months ago'],
+      [daysAgo(364), '12 months ago'],
+      [daysAgo(365), 'more than a year ago'],
+    ].forEach(([input, expected]) => equal(readableTimeAgo(input as number | Date), expected))
   })
 })
