@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ellipsis } from './strings'
 
 /**
@@ -6,7 +7,7 @@ import { ellipsis } from './strings'
  * @param waitFor time before executing function
  * @returns promise with a resolve type of the original function's return type
  */
-export function debounce<F extends (...parameters: unknown[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
+export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
   let timeout: NodeJS.Timeout
   return (...parameters: Parameters<F>) => new Promise(resolve => {
     clearTimeout(timeout)
@@ -17,7 +18,7 @@ export function debounce<F extends (...parameters: unknown[]) => ReturnType<F>> 
 }
 
 // inspiration from https://www.matthewgerstman.com/tech/throttle-and-debounce/
-export function throttle<F extends (...parameters: unknown[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void {
+export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void {
   let ready = true
   return (...parameters: Parameters<F>) => {
     if (!ready) return
@@ -40,7 +41,7 @@ export async function sleep (ms = 1000): Promise<number> {
 }
 
 /* istanbul ignore next */
-export function copyToClipboard (stuff: string | number | Record<string, unknown>): void {
+export function copyToClipboard (stuff: string | number | Record<string, any>): void {
   const element = document.createElement('textarea')
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
   console.log(`copying to clipboard : ${ellipsis(text)}`)
