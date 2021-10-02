@@ -1,6 +1,7 @@
 'use strict'
 
 export * from './arrays'
+export * from './colors'
 export * from './dates'
 export * from './dom'
 export * from './event'
@@ -10,4 +11,3 @@ export * from './objects'
 export * from './storage'
 export * from './strings'
 export * from './timestamps'
-

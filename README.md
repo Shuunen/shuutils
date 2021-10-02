@@ -39,3 +39,4 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Servor](https://github.com/lukejacksonn/servor) : dependency free dev server for single page app development
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
+- [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities

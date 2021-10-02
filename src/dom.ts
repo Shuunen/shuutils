@@ -26,10 +26,8 @@ export const p = (classes: string, content = ''): HTMLParagraphElement => dom('p
 export const text = p
 
 export const strong = (classes: string, content = ''): HTMLElement => dom('strong', classes, content)
-export const bold = strong
 
 export const em = (classes: string, content = ''): HTMLElement => dom('em', classes, content)
-export const italic = em
 
 export const small = (classes: string, content = ''): HTMLElement => dom('small', classes, content)
 
