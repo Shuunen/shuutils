@@ -9,7 +9,7 @@
     "@types/dlv": "*",
     "@types/mocha": "*",
     "@types/node": "*",
-    "shuunen-stack": "0.12.1"
+    "shuunen-stack": "0.13.0"
   },
   "files": [
     "dist/src"
