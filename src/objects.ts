@@ -1,4 +1,3 @@
-import { delve } from './imports'
 
 /**
  * Return a deep copy of an object or array
@@ -17,13 +16,18 @@ export function copy<T> (object: T): T {
 export const clone = copy
 
 /**
- * Access nested property with the help of delve https://github.com/developit/dlv
+ * Access nested property
+ * Credits : https://github.com/developit/dlv
  * @param object the base object to search into
  * @param path the full path to access nested property
  * @param default optional, return this value if nested prop not found
  * @return the nested property value
  */
-export const access = delve
+export const access = (object: Record<string, any>, key: string, defaultValue?: any): any => {
+  const keys = key.split('.')
+  for (const element of keys) object = object[element] // simplified from initial "object = object ? object[element] : undefined" ... ¯\_(ツ)_/¯
+  return object === undefined ? defaultValue : object
+}
 
 /**
  * Convert a multi-level deep object into a single-level, flatten, object
