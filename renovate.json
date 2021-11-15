@@ -3,6 +3,7 @@
   "extends": [
     "config:base",
     ":automergeAll",
+    ":preserveSemverRanges",
     ":preserveSemverRanges"
   ]
 }
