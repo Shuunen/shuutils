@@ -1,11 +1,6 @@
 import { pickOne } from './arrays'
 import { flatten } from './objects'
 
-const random = {
-  images: 'https://bulma.io/images/placeholders/128x128.png,https://bulma.io/images/placeholders/64x64.png'.split(','),
-  strings: 'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae,Buru menhir'.split(','),
-}
-
 /**
  * Slugify a string
  * @param str input string like `"Slug % ME with // Love !"`
@@ -25,7 +20,7 @@ export function slugify (string: string): string {
  * @returns string like `"https://server.com/image.png"`
  */
 export function getRandomImageUrl (): string {
-  return pickOne(random.images)
+  return pickOne('https://bulma.io/images/placeholders/128x128.png,https://bulma.io/images/placeholders/64x64.png'.split(','))
 }
 
 /**
@@ -33,7 +28,7 @@ export function getRandomImageUrl (): string {
  * @returns string like `"Bolowey Opnet"`
  */
 export function getRandomString (): string {
-  return pickOne(random.strings)
+  return pickOne('Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae,Buru menhir'.split(','))
 }
 
 /**

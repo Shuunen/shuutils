@@ -41,14 +41,6 @@ export const dateIso10 = (date = new Date()): string => date.toISOString().split
  */
 export const daysAgoIso10 = (nbDays = 0): string => dateIso10(daysAgo(nbDays))
 
-const MOMENTS = 2
-export const MINUTE = 60
-export const HOUR = 60 * MINUTE
-export const DAY = 24 * HOUR
-export const WEEK = 7 * DAY
-export const MONTH = 30 * DAY
-export const YEAR = 365 * DAY
-
 /**
  * Make a date readable for us, poor humans
  * Kudos to https://coolaj86.com/articles/time-ago-in-under-50-lines-of-javascript/
@@ -56,6 +48,13 @@ export const YEAR = 365 * DAY
  * @returns "a minute ago", "4 days ago"
  */
 export const readableTimeAgo = (input: Date | number): string => {
+  const MOMENTS = 2
+  const MINUTE = 60
+  const HOUR = 60 * MINUTE
+  const DAY = 24 * HOUR
+  const WEEK = 7 * DAY
+  const MONTH = 30 * DAY
+  const YEAR = 365 * DAY
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
   let ago = Math.floor(ms / 1000)
   let part = 0

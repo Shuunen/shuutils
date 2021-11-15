@@ -29,8 +29,7 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "tsc",
-    "ci": "run-s build lint test",
+    "build": "rm dist -rf && tsc --module esnext",
     "dev": "run-s build test:watch",
     "lint": "stack lint",
     "postversion": "git push && git push --tags && npm publish",
