@@ -1,5 +1,3 @@
-'use strict'
-
 export * from './arrays'
 export * from './colors'
 export * from './dates'

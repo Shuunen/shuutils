@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Give timestamp of a date or now in seconds
  * @param date input date
