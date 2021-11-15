@@ -1,35 +1,31 @@
-
 // Credits : https://github.com/sindresorhus/yoctocolors/blob/main/index.js
 
-// Intentionally not using template literal for performance.
-const format = (startCode: number, endCode: number) => (string: string) => '\u001B[' + startCode + 'm' + string + '\u001B[' + endCode + 'm'
+export const reset = (string: string) => '\u001B[' + 0 + 'm' + string + '\u001B[' + 0 + 'm'
+export const bold = (string: string) => '\u001B[' + 1 + 'm' + string + '\u001B[' + 22 + 'm'
+export const dim = (string: string) => '\u001B[' + 2 + 'm' + string + '\u001B[' + 22 + 'm'
+export const italic = (string: string) => '\u001B[' + 3 + 'm' + string + '\u001B[' + 23 + 'm'
+export const underline = (string: string) => '\u001B[' + 4 + 'm' + string + '\u001B[' + 24 + 'm'
+export const overline = (string: string) => '\u001B[' + 53 + 'm' + string + '\u001B[' + 55 + 'm'
+export const inverse = (string: string) => '\u001B[' + 7 + 'm' + string + '\u001B[' + 27 + 'm'
+export const hidden = (string: string) => '\u001B[' + 8 + 'm' + string + '\u001B[' + 28 + 'm'
+export const strikeThrough = (string: string) => '\u001B[' + 9 + 'm' + string + '\u001B[' + 29 + 'm'
 
-export const reset = format(0, 0)
-export const bold = format(1, 22)
-export const dim = format(2, 22)
-export const italic = format(3, 23)
-export const underline = format(4, 24)
-export const overline = format(53, 55)
-export const inverse = format(7, 27)
-export const hidden = format(8, 28)
-export const strikeThrough = format(9, 29)
+export const black = (string: string) => '\u001B[' + 30 + 'm' + string + '\u001B[' + 39 + 'm'
+export const red = (string: string) => '\u001B[' + 31 + 'm' + string + '\u001B[' + 39 + 'm'
+export const green = (string: string) => '\u001B[' + 32 + 'm' + string + '\u001B[' + 39 + 'm'
+export const yellow = (string: string) => '\u001B[' + 33 + 'm' + string + '\u001B[' + 39 + 'm'
+export const blue = (string: string) => '\u001B[' + 34 + 'm' + string + '\u001B[' + 39 + 'm'
+export const magenta = (string: string) => '\u001B[' + 35 + 'm' + string + '\u001B[' + 39 + 'm'
+export const cyan = (string: string) => '\u001B[' + 36 + 'm' + string + '\u001B[' + 39 + 'm'
+export const white = (string: string) => '\u001B[' + 37 + 'm' + string + '\u001B[' + 39 + 'm'
+export const gray = (string: string) => '\u001B[' + 90 + 'm' + string + '\u001B[' + 39 + 'm'
 
-export const black = format(30, 39)
-export const red = format(31, 39)
-export const green = format(32, 39)
-export const yellow = format(33, 39)
-export const blue = format(34, 39)
-export const magenta = format(35, 39)
-export const cyan = format(36, 39)
-export const white = format(37, 39)
-export const gray = format(90, 39)
-
-export const bgBlack = format(40, 49)
-export const bgRed = format(41, 49)
-export const bgGreen = format(42, 49)
-export const bgYellow = format(43, 49)
-export const bgBlue = format(44, 49)
-export const bgMagenta = format(45, 49)
-export const bgCyan = format(46, 49)
-export const bgWhite = format(47, 49)
-export const bgGray = format(100, 49)
+export const bgBlack = (string: string) => '\u001B[' + 40 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgRed = (string: string) => '\u001B[' + 41 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgGreen = (string: string) => '\u001B[' + 42 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgYellow = (string: string) => '\u001B[' + 43 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgBlue = (string: string) => '\u001B[' + 44 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgMagenta = (string: string) => '\u001B[' + 45 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgCyan = (string: string) => '\u001B[' + 46 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgWhite = (string: string) => '\u001B[' + 47 + 'm' + string + '\u001B[' + 49 + 'm'
+export const bgGray = (string: string) => '\u001B[' + 100 + 'm' + string + '\u001B[' + 49 + 'm'
