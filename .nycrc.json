@@ -1,0 +1,17 @@
+{
+  "branches": 90,
+  "check-coverage": true,
+  "exclude": [
+    "src/colors.ts"
+  ],
+  "functions": 90,
+  "include": [
+    "src/*.ts"
+  ],
+  "lines": 90,
+  "reporter": [
+    "text",
+    "lcovonly"
+  ],
+  "statements": 90
+}
