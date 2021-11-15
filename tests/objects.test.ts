@@ -40,7 +40,7 @@ describe('objects', function () {
   test('nested non-existing property access', access(person, 'details.favoriteDrink'))
   test('nested non-existing property access with a default value', access(person, 'details.favoriteDrink', 'wine'), 'wine')
   test('access a non-nested property', access({ name: 'John Cena' }, 'name'), 'John Cena')
-  test('access a non-existing non-nested property', access({ name: 'John Cena' }, 'age'), undefined)
+  test('access a non-existing non-nested property', access({ name: 'John Cena' }, 'age'))
   test('access a non-nested property after an undefined property', access({ age: undefined, name: 'John Cena' }, 'name'), 'John Cena')
 
   test('flatten an object', flatten(person), { 'age': 21, 'details.favoriteFood': 'sushi', 'name': 'John' })

@@ -2,6 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/shuutils.svg?color=informational)](https://www.npmjs.com/package/shuutils)
 [![npm monthly downloads](https://img.shields.io/npm/dm/shuutils.svg?color=informational)](https://www.npmjs.com/package/shuutils)
+[![Install size](https://badgen.net/packagephobia/install/shuutils)](https://packagephobia.com/result?p=shuutils)
+[![Publish size](https://img.shields.io/bundlephobia/min/shuutils?label=publish%20size)](https://bundlephobia.com/package/shuutils)
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
 [![GitHub license](https://img.shields.io/github/license/shuunen/shuutils.svg?color=informational)](https://github.com/Shuunen/shuutils/blob/master/LICENSE)
 

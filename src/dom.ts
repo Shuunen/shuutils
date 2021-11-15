@@ -45,7 +45,7 @@ export const div = (classes: string, content = ''): HTMLDivElement => dom('div',
 export const css = (href: string): HTMLLinkElement => {
   const element = dom('link')
   element.href = href
-  element.type = 'text/css'
   element.rel = 'stylesheet'
+  element.type = 'text/css'
   return element
 }
