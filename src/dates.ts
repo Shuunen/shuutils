@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Convert a date into iso string
  *
