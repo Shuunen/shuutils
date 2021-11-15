@@ -23,7 +23,7 @@ export const clone = copy
  * @param default optional, return this value if nested prop not found
  * @return the nested property value
  */
-export const access = (object: Record<string, any>, key: string, defaultValue?: any): any => {
+export const access = (object: Record<string, any>, key: string, defaultValue?: any): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
   const keys = key.split('.')
   for (const element of keys) object = object[element] // simplified from initial "object = object ? object[element] : undefined" ... ¯\_(ツ)_/¯
   return object === undefined ? defaultValue : object

@@ -4,71 +4,71 @@ import { css, div, dom, em, h1, h2, h3, image, link, p, small, strong } from '..
 describe('dom', function () {
 
   it('custom type dom element with no classes', function () {
-    const el = dom('article')
-    equal(el.tagName.toLowerCase(), 'article')
-    equal(el.className, '')
+    const element = dom('article')
+    equal(element.tagName.toLowerCase(), 'article')
+    equal(element.className, '')
   })
 
   it('custom type dom element with classes', function () {
-    const el = dom('strong', 'important important--stuff')
-    equal(el.tagName.toLowerCase(), 'strong')
-    equal(el.className, 'important important--stuff')
-    ok(el.classList.contains('important--stuff'))
+    const element = dom('strong', 'important important--stuff')
+    equal(element.tagName.toLowerCase(), 'strong')
+    equal(element.className, 'important important--stuff')
+    ok(element.classList.contains('important--stuff'))
   })
 
   it('custom type dom element with classes & text content', function () {
-    const el = dom('i', 'italic', 'Hello John Cena')
-    equal(el.textContent, 'Hello John Cena')
-    equal(el.innerHTML, 'Hello John Cena')
+    const element = dom('i', 'italic', 'Hello John Cena')
+    equal(element.textContent, 'Hello John Cena')
+    equal(element.innerHTML, 'Hello John Cena')
   })
 
   it('custom type dom element with classes & html content', function () {
-    const el = dom('i', 'italic', '<p>Hello John Cena</p>')
-    equal(el.textContent, 'Hello John Cena')
-    equal(el.tagName.toLowerCase(), 'i')
-    equal(el.innerHTML, '<p>Hello John Cena</p>')
+    const element = dom('i', 'italic', '<p>Hello John Cena</p>')
+    equal(element.textContent, 'Hello John Cena')
+    equal(element.tagName.toLowerCase(), 'i')
+    equal(element.innerHTML, '<p>Hello John Cena</p>')
   })
 
   it('image', function () {
-    const el = image('profile', 'https://cdn.com/image.jpg', 'profile picture')
-    equal(el.alt, 'profile picture')
-    equal(el.tagName.toLowerCase(), 'img')
-    equal(el.src, 'https://cdn.com/image.jpg')
+    const element = image('profile', 'https://cdn.com/image.jpg', 'profile picture')
+    equal(element.alt, 'profile picture')
+    equal(element.tagName.toLowerCase(), 'img')
+    equal(element.src, 'https://cdn.com/image.jpg')
   })
 
   it('link', function () {
-    const el = link('link', 'go to home page', '#home')
-    equal(el.tagName.toLowerCase(), 'a')
-    equal(el.textContent, 'go to home page')
-    ok(el.href.includes('#home')) // jsdom return "about:blank#home" for el.href...
+    const element = link('link', 'go to home page', '#home')
+    equal(element.tagName.toLowerCase(), 'a')
+    equal(element.textContent, 'go to home page')
+    ok(element.href.includes('#home')) // jsdom return "about:blank#home" for el.href...
   })
 
   it('link that open in a new tab', function () {
-    const el = link('link', 'go to external page', 'https://duckduckgo.com/', true)
-    equal(el.href, 'https://duckduckgo.com/')
-    equal(el.textContent, 'go to external page')
-    equal(el.target, '_blank')
+    const element = link('link', 'go to external page', 'https://duckduckgo.com/', true)
+    equal(element.href, 'https://duckduckgo.com/')
+    equal(element.textContent, 'go to external page')
+    equal(element.target, '_blank')
   })
 
   it('basics', function () {
     const funcs = [p, strong, em, small, h1, h2, h3, div]
-    funcs.forEach(func => {
-      const { name } = func
-      const el = func(name)
-      equal(el.tagName.toLowerCase(), name)
-      equal(el.textContent, '')
-      ok(el.classList.contains(name))
-      const elContent = func(name, `I really like guacamole with ${name}`)
-      equal(elContent.tagName.toLowerCase(), name)
-      equal(elContent.textContent, `I really like guacamole with ${name}`)
+    funcs.forEach(function_ => {
+      const { name } = function_
+      const element = function_(name)
+      equal(element.tagName.toLowerCase(), name)
+      equal(element.textContent, '')
+      ok(element.classList.contains(name))
+      const elementContent = function_(name, `I really like guacamole with ${name}`)
+      equal(elementContent.tagName.toLowerCase(), name)
+      equal(elementContent.textContent, `I really like guacamole with ${name}`)
     })
   })
 
   it('css link', function () {
-    const el = css('https://cdn.net/style.css')
-    equal(el.href, 'https://cdn.net/style.css')
-    equal(el.rel, 'stylesheet')
-    equal(el.type, 'text/css')
+    const element = css('https://cdn.net/style.css')
+    equal(element.href, 'https://cdn.net/style.css')
+    equal(element.rel, 'stylesheet')
+    equal(element.type, 'text/css')
   })
 
 })
