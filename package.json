@@ -10,12 +10,10 @@
     "eslint": "8",
     "eslint-plugin-mocha": "9",
     "eslint-plugin-unicorn": "38",
-    "esm": "^3.2",
     "jsdom": "18",
     "jsdom-global": "3",
     "mocha": "9",
     "npm-run-all": "4",
-    "nyc": "15",
     "repo-check": "^1.20",
     "ts-node": "10",
     "typescript": "4"
@@ -49,8 +47,9 @@
     "postversion": "git push && git push --tags && npm publish",
     "preversion": "npm run ci",
     "start": "npm run dev",
-    "test": "nyc mocha"
+    "test": "mocha"
   },
+  "type": "module",
   "types": "dist/index.d.ts",
   "version": "5.2.0"
 }
