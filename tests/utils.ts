@@ -1,9 +1,9 @@
 
 import { deepStrictEqual as deepEqual, strictEqual as equal } from 'assert'
+import { test } from 'uvu'
 
-// eslint-disable-next-line mocha/no-exports
-export const test = (title: string, actual: unknown, expected?: unknown): Mocha.Test => {
-  return it(title, function () {
+export const check = <T> (title: string, actual: T, expected: T) => {
+  return test(title, () => {
     if (typeof actual === 'object') return deepEqual(actual, expected)
     return equal(actual, expected)
   })

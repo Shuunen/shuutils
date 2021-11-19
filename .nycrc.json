@@ -2,7 +2,8 @@
   "branches": 90,
   "check-coverage": true,
   "exclude": [
-    "src/colors.ts"
+    "src/colors.ts",
+    "src/event.ts"
   ],
   "functions": 90,
   "include": [

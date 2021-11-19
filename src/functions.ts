@@ -30,7 +30,6 @@ export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (fun
   }
 }
 
-/* istanbul ignore next */
 /**
  * Sleep let you "pause" or delay processes
  * @param ms the time to wait in milliseconds, default 1000ms / 1 sec
@@ -40,7 +39,7 @@ export async function sleep (ms = 1000): Promise<number> {
   return new Promise(resolve => setTimeout(() => resolve(ms), ms))
 }
 
-/* istanbul ignore next */
+/* c8 ignore start */
 export function copyToClipboard (stuff: string | number | Record<string, any>): void {
   const element = document.createElement('textarea')
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
@@ -51,3 +50,4 @@ export function copyToClipboard (stuff: string | number | Record<string, any>): 
   document.execCommand('copy')
   element.remove()
 }
+/* c8 ignore stop */

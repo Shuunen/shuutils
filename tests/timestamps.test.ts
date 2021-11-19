@@ -1,18 +1,20 @@
 import { ok } from 'assert'
+import { test } from 'uvu'
 import { getTimestamp, getTimestampMs } from '../src'
+import { check } from './utils'
 
-describe('timestamp', function () {
-  it('specific date', function () { return ok(getTimestamp(new Date('1989-05-14')) === 611_107_200) })
+check('specific date', getTimestamp(new Date('1989-05-14')), 611_107_200)
 
-  it('give positive number', function () { return ok(getTimestamp() > 0) })
+check('give positive number', getTimestamp() > 0, true)
 
-  it('give date before year 3003', function () { return ok(getTimestamp() < 32_603_558_400_000) })
+check('give date before year 3003', getTimestamp() < 32_603_558_400_000, true)
 
-  it('ms of a specific date', function () { return ok(getTimestampMs(new Date('1989-05-14')) === 611_107_200_000) })
+check('ms of a specific date', getTimestampMs(new Date('1989-05-14')), 611_107_200_000)
 
-  it('ms is a 1000 times bigger', function () {
-    const sizeMs = getTimestampMs().toString().length
-    const sizeS = getTimestamp().toString().length
-    ok((sizeMs - sizeS) === 3)
-  })
+test('ms is a 1000 times bigger', function () {
+  const sizeMs = getTimestampMs().toString().length
+  const sizeS = getTimestamp().toString().length
+  ok((sizeMs - sizeS) === 3)
 })
+
+test.run()

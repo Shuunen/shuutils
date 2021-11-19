@@ -1,10 +1,11 @@
 import { ok } from 'assert'
+import { test } from 'uvu'
 import { pickOne } from '../src'
 
-describe('arrays', function () {
-  it('pick one', function () {
-    const elements = ['damn', 'this', 'test', 'is', 'crazy']
-    const element = pickOne(elements)
-    ok(elements.includes(element))
-  })
+test('pick one', function () {
+  const elements = ['damn', 'this', 'test', 'is', 'crazy']
+  const element = pickOne(elements)
+  ok(elements.includes(element))
 })
+
+test.run()

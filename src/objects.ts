@@ -35,7 +35,7 @@ export const access = (object: Record<string, any>, key: string, defaultValue?: 
  * @param path, optional, add a root path to all keys
  * @returns object like `{ 'person.name': 'John Doe', 'person.age': 32 }`
  */
-export function flatten<T extends Record<string, unknown>> (object: T, path = ''): T {
+export function flatten<T extends Record<string, unknown>> (object: T, path = ''): any { // eslint-disable-line @typescript-eslint/no-explicit-any
   // eslint-disable-next-line unicorn/no-array-reduce
   return Object.keys(object).reduce<T>((accumulator: T, key: string): T => {
     const value = object[key]

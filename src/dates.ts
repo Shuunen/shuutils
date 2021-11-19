@@ -34,7 +34,6 @@ export const daysAgo = (nbDays = 0): Date => (d => new Date(d.setDate(d.getDate(
  */
 export const dateIso10 = (date = new Date()): string => date.toISOString().split('T')[0]
 
-/* istanbul ignore next */
 /**
  * Return a relative date formatted to ISO 10
  * @param nbDays the number of days to subtract from today
