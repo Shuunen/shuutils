@@ -10,6 +10,7 @@
     "eslint": "8",
     "eslint-plugin-mocha": "9",
     "eslint-plugin-unicorn": "38",
+    "esm": "^3.2",
     "jsdom": "18",
     "jsdom-global": "3",
     "mocha": "9",

@@ -8,7 +8,6 @@
       "es2021",
       "dom"
     ],
-    "module": "CommonJS",
     "moduleResolution": "Node",
     "outDir": "./dist",
     "skipLibCheck": true,

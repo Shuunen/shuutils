@@ -4,6 +4,7 @@
     "ts"
   ],
   "require": [
+    "esm",
     "ts-node/register",
     "jsdom-global/register"
   ],
