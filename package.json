@@ -52,5 +52,5 @@
     "test": "nyc mocha"
   },
   "types": "dist/index.d.ts",
-  "version": "5.1.0"
+  "version": "5.2.0"
 }
