@@ -1,6 +1,6 @@
 import { ok, strictEqual as equal } from 'assert'
 import { test } from 'uvu'
-import { css, div, dom, em, h1, h2, h3, image, link, p, small, strong } from '../src'
+import { a, css, div, dom, em, h1, h2, h3, icon, image, img, link, p, small, strong, text } from '../src'
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')
@@ -42,6 +42,13 @@ test('image', function () {
   equal(element.src, 'https://cdn.com/image.jpg')
 })
 
+test('img', function () {
+  const element = img('profile-short', 'https://cdn.com/image-short.jpg', 'profile-short picture')
+  equal(element.alt, 'profile-short picture')
+  equal(element.tagName.toLowerCase(), 'img')
+  equal(element.src, 'https://cdn.com/image-short.jpg')
+})
+
 test('icon', function () {
   const element = icon('fas fa-profile')
   equal(element.className, 'icon fas fa-profile')
@@ -55,14 +62,14 @@ test('link', function () {
 })
 
 test('link that open in a new tab', function () {
-  const element = link('link', 'go to external page', 'https://duckduckgo.com/', true)
+  const element = a('link', 'go to external page', 'https://duckduckgo.com/', true)
   equal(element.href, 'https://duckduckgo.com/')
   equal(element.textContent, 'go to external page')
   equal(element.target, '_blank')
 })
 
 test('basics', function () {
-  const funcs = [p, strong, em, small, h1, h2, h3, div]
+  const funcs = [p, text, strong, em, small, h1, h2, h3, div]
   funcs.forEach(function_ => {
     const { name } = function_
     const element = function_(name)

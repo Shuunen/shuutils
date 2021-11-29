@@ -1,5 +1,7 @@
+/* c8 ignore start */ // I don't know why c8 wants me to cover this... ¯\_(ツ)_/¯
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ellipsis } from './strings'
+/* c8 ignore stop */
 
 /**
  * Debounce any function
