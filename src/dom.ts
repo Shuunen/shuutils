@@ -14,6 +14,8 @@ export const img = (classes: string, source: string, alt: string): HTMLImageElem
 }
 export const image = img
 
+export const icon = (classes = ''): HTMLElement => dom('i', `icon ${classes}`)
+
 export const a = (classes: string, content: string, href: string, newTab = false): HTMLAnchorElement => {
   const element = dom('a', classes, content)
   element.href = href

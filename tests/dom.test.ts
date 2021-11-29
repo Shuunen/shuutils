@@ -42,6 +42,11 @@ test('image', function () {
   equal(element.src, 'https://cdn.com/image.jpg')
 })
 
+test('icon', function () {
+  const element = icon('fas fa-profile')
+  equal(element.className, 'icon fas fa-profile')
+})
+
 test('link', function () {
   const element = link('link', 'go to home page', '#home')
   equal(element.tagName.toLowerCase(), 'a')
