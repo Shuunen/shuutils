@@ -28,6 +28,13 @@ test('custom type dom element with classes & html content', function () {
   equal(element.innerHTML, '<p>Hello John Cena</p>')
 })
 
+test('custom type dom element with classes & dom element content', function () {
+  const element = dom('i', 'italic', p('pizza', 'John Pepe'))
+  equal(element.textContent, 'John Pepe')
+  equal(element.tagName.toLowerCase(), 'i')
+  equal(element.innerHTML, '<p class="pizza">John Pepe</p>')
+})
+
 test('image', function () {
   const element = image('profile', 'https://cdn.com/image.jpg', 'profile picture')
   equal(element.alt, 'profile picture')
@@ -68,6 +75,12 @@ test('css link', function () {
   equal(element.href, 'https://cdn.net/style.css')
   equal(element.rel, 'stylesheet')
   equal(element.type, 'text/css')
+})
+
+test('dive div in a dave div has Life in a div', function () {
+  const element = div('dave', div('dive', 'Life in a div'))
+  equal(element.tagName.toLowerCase(), 'div')
+  equal(element.innerHTML, '<div class="dive">Life in a div</div>')
 })
 
 test.run()

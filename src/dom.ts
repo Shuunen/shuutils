@@ -1,8 +1,8 @@
-
-export const dom = <T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content = ''): HTMLElementTagNameMap[T] => {
+export const dom = <T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content: string | Node = ''): HTMLElementTagNameMap[T] => {
   const element = document.createElement(type)
   element.className = classes
-  element.innerHTML = content
+  if (typeof content === 'string') element.innerHTML = content
+  else element.append(content)
   return element
 }
 
@@ -35,7 +35,7 @@ export const h1 = (classes: string, content = ''): HTMLHeadingElement => dom('h1
 export const h2 = (classes: string, content = ''): HTMLHeadingElement => dom('h2', classes, content)
 export const h3 = (classes: string, content = ''): HTMLHeadingElement => dom('h3', classes, content)
 
-export const div = (classes: string, content = ''): HTMLDivElement => dom('div', classes, content)
+export const div = (classes: string, content: string | HTMLElement = ''): HTMLDivElement => dom('div', classes, content)
 
 /**
  * Generate a link to a css/stylesheet file
