@@ -9,7 +9,7 @@
     "c8": "7",
     "eslint": "8",
     "eslint-plugin-unicorn": "39",
-    "jsdom": "18",
+    "jsdom": "19",
     "jsdom-global": "3",
     "npm-run-all": "4",
     "repo-check": "^1.21",
