@@ -76,11 +76,15 @@ export function byProperty (property: string, order: 'asc' | 'desc' | '' = ''): 
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
 export const genClass = (object: Record<string, unknown>, keys: string[] = [], cls: string[] = []): string => {
+  if (typeof object !== 'object' || !object) return ''
   keys = keys.length > 0 ? keys : Object.keys(object)
   for (const key of keys) {
-    const value = object[key]
-    if (typeof value === 'boolean' && value === true) cls.push(key)
-    else if (typeof value === 'string' && value.length > 0) cls.push(`${key}-${value}`)
+    const bool = (object as Record<string, boolean>)[key]
+    const str = (object as Record<string, string>)[key]
+    const array = (object as Record<string, any[]>)[key] // eslint-disable-line @typescript-eslint/no-explicit-any
+    if (bool === true) cls.push(key)
+    else if (typeof str === 'string' && str.length > 0) cls.push(`${key}-${String(str)}`)
+    else if (Array.isArray(array) && array.length > 0) cls.push(`has-${key}`)
   }
   return cls.join(' ').trim().replace(/\s+/g, ' ')
 }

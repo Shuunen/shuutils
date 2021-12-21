@@ -55,8 +55,11 @@ check('sort objects by property even if some does not have it', users.sort(byPro
 
 const object3 = { 'superFun': true, 'notFun': false, 'pretty-good': true, 'size': 'large' }
 check('class generator empty', genClass({}), '')
+check('class generator bad object', genClass(undefined as unknown as Record<string, unknown>), '')
 check('class generator object', genClass(object3), 'superFun pretty-good size-large')
 check('class generator object & specific keys', genClass(object3, ['pretty-good']), 'pretty-good')
 check('class generator object & specific keys & custom class', genClass(object3, ['pretty-good'], ['nice ok']), 'nice ok pretty-good')
+check('class generator array', genClass({ status: ['visible', 'enabled'] }), 'has-status')
+check('class generator array empty', genClass({ status: [] }), '')
 
 test.run()
