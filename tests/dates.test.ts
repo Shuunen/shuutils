@@ -1,6 +1,7 @@
 import { ok, strictEqual as equal } from 'assert'
 import { test } from 'uvu'
-import { dateIso10, dateToIsoString, daysAgo, daysAgoIso10, readableTimeAgo } from '../src'
+import { dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, readableTimeAgo } from '../src'
+import { check } from './utils'
 
 const today = new Date()
 
@@ -56,5 +57,24 @@ test('should calculate time ago correctly', function () {
     [daysAgo(365), 'more than a year ago'],
   ].forEach(([input, expected]) => equal(readableTimeAgo(input as number | Date), expected))
 })
+
+const date = new Date('2021-09-02T07:08:28')
+check('format date as (space) HH:mm:ss', formatDate(date, ' HH:mm:ss'), ' 07:08:28')
+check('format date as d', formatDate(date, 'd'), '2')
+check('format date as dd', formatDate(date, 'dd'), '02')
+check('format date as dd/MM/yyyy HH:mm:ss', formatDate(date, 'dd/MM/yyyy HH:mm:ss'), '02/09/2021 07:08:28')
+check('format date as dd/MM/yyyy', formatDate(date, 'dd/MM/yyyy'), '02/09/2021')
+check('format date as eee d', formatDate(date, 'eee d'), 'Thu 2')
+check('format date as eee', formatDate(date, 'eee'), 'Thu')
+check('format date as eeee', formatDate(date, 'eeee'), 'Thursday')
+check('format date as HH', formatDate(date, 'HH'), '07')
+check('format date as mm', formatDate(date, 'mm'), '08')
+check('format date as MM', formatDate(date, 'MM'), '09')
+check('format date as MMMM', formatDate(date, 'MMMM'), 'September')
+check('format date as ss', formatDate(date, 'ss'), '28')
+check('format date as yy-MM-dd', formatDate(date, 'yy-MM-dd'), '21-09-02')
+check('format date as yy', formatDate(date, 'yy'), '21')
+check('format date as yyyy (space)', formatDate(date, 'yyyy '), '2021 ')
+check('format date as yyyy', formatDate(date, 'yyyy'), '2021')
 
 test.run()
