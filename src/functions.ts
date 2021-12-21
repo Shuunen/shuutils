@@ -1,15 +1,10 @@
-/* c8 ignore start */ // I don't know why c8 wants me to cover this... ¯\_(ツ)_/¯
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ellipsis } from './strings'
-/* c8 ignore stop */
-
 /**
  * Debounce any function
  * @param func the function to debounce
  * @param waitFor time before executing function
  * @returns promise with a resolve type of the original function's return type
  */
-export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
+export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> { // eslint-disable-line @typescript-eslint/no-explicit-any
   let timeout: NodeJS.Timeout
   return (...parameters: Parameters<F>) => new Promise(resolve => {
     clearTimeout(timeout)
@@ -20,7 +15,7 @@ export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (fun
 }
 
 // inspiration from https://www.matthewgerstman.com/tech/throttle-and-debounce/
-export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void {
+export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void { // eslint-disable-line @typescript-eslint/no-explicit-any
   let ready = true
   return (...parameters: Parameters<F>) => {
     if (!ready) return
@@ -40,16 +35,3 @@ export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (fun
 export async function sleep (ms = 1000): Promise<number> {
   return new Promise(resolve => setTimeout(() => resolve(ms), ms))
 }
-
-/* c8 ignore start */
-export function copyToClipboard (stuff: string | number | Record<string, any>): void {
-  const element = document.createElement('textarea')
-  const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
-  console.log(`copying to clipboard : ${ellipsis(text)}`)
-  element.value = text
-  document.body.append(element)
-  element.select()
-  document.execCommand('copy')
-  element.remove()
-}
-/* c8 ignore stop */
