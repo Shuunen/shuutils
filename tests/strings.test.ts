@@ -1,6 +1,6 @@
 import { strictEqual as equal } from 'assert'
 import { test } from 'uvu'
-import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isJSON, slugify } from '../src'
+import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isJSON, sanitize, slugify } from '../src'
 import { check } from './utils'
 
 const data = {
@@ -16,12 +16,17 @@ const stringOut = `{
   "Andy": "${data.key_ToHappiness} !"
 }`
 
+check('sanitize a basic word', sanitize('Superbe'), 'superbe')
+check('sanitize a basic sentence', sanitize('Superbe météo aujourd\'hui'), 'superbe meteo aujourd hui')
+check('sanitize a complex sentence', sanitize(' d\'emblée€|| la@ PLUIE,,:& pùïs un cOup dê tonnerre_ !! Et puis 2 !? Mais qu\'est-ce qui se trame...'), 'd emblee la pluie puis un coup de tonnerre et puis 2 mais qu est ce qui se trame')
+
 test('slugify', function () {
   const expected = 'oh-ma-darling'
   equal(slugify('Oh ma darling'), expected)
   equal(slugify('Oh !ma  darling '), expected)
   equal(slugify('  Oh %*ma  darling .?! '), expected)
   equal(slugify(expected), expected)
+  equal(slugify('  -Oh mà  dârling .?! --'), expected)
 })
 
 check('random image', getRandomImageUrl().length > 0, true)
@@ -39,6 +44,10 @@ check('capitalize an empty string', capitalize(''), '')
 check('capitalize a single word', capitalize('hey'), 'Hey')
 check('capitalize an uppercased word', capitalize('HO'), 'HO')
 check('capitalize a sentence', capitalize('hello my name is John Doe !'), 'Hello my name is John Doe !')
+
+check('capitalize a sentence and lower John Doe', capitalize('hello my name is John Doe !', true), 'Hello my name is john doe !')
+check('capitalize a sentence and lower SUPER-CAM', capitalize('SUPER-CAM Universal Remote Control 433 mhz Key Fob duplicator DOORMAT Transmitter', true), 'SUPER-CAM universal remote control 433 mhz key fob duplicator DOORMAT transmitter')
+check('capitalize a sentence and lower DOORMAT', capitalize('Universal Remote Control 433 mhz Key Fob duplicator DOORMAT Transmitter', true), 'Universal remote control 433 mhz key fob duplicator DOORMAT transmitter')
 
 check('ellipsis words, giving an empty string', ellipsisWords(''), '')
 check('ellipsis words, giving a regular sentence', ellipsisWords('Hello my name is Jim Halpert', 5), 'Hello my name is Jim...')

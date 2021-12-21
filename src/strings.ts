@@ -2,14 +2,27 @@ import { pickOne } from './arrays'
 import { flatten } from './objects'
 
 /**
+ * Clean a string from special characters
+ * @param sentence like "Hello, my name is John Doe !"
+ * @returns cleaned string like "Hello my name is John Doe"
+ */
+export const sanitize = (sentence: string) => {
+  return sentence
+    .trim()
+    .replace(/['-]/g, ' ')
+    .normalize('NFD')
+    .replace(/[^\d\sa-z]/gi, '')
+    .replace(/\s\s+/g, ' ')
+    .toLowerCase()
+}
+
+/**
  * Slugify a string
  * @param str input string like `"Slug % ME with // Love !"`
  * @returns string like `"slug-me-with-love"`
  */
 export function slugify (string: string): string {
-  // does not handle accentuated
-  // ex : Déjà Vu => d-j-vu
-  return string.toLowerCase().trim() // Lower case everything & trim
+  return sanitize(string) // Clean the string
     .replace(/\W+/gi, '-') // Replace all non word with dash
     .replace(/^-+/, '') // Trim dash from start
     .replace(/-+$/, '') // Trim dash from end
@@ -51,9 +64,19 @@ export function fillTemplate (template: string | Record<string, unknown>, data =
 /**
  * Transform the first letter of a string into capital
  * @param str `"hello John"`
+ * @param lower boolean, try to lower the rest of the string when applicable
  * @returns `"Hello John"`
  */
-export const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1)
+export const capitalize = (str: string, lower = false): string => {
+  if (!lower) return str.charAt(0).toUpperCase() + str.slice(1)
+  const words = str.split(' ')
+  const cap = /^[\dA-Z-]+$/
+  return words.map((word, index) => {
+    if (cap.test(word)) return word
+    if (index === 0) return capitalize(word)
+    return word.toLowerCase()
+  }).join(' ')
+}
 
 /**
  * Ellipsis after a specific amount of words
