@@ -1,4 +1,7 @@
 # Shuutils
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![npm version](https://img.shields.io/npm/v/shuutils.svg?color=informational)](https://www.npmjs.com/package/shuutils)
 [![npm monthly downloads](https://img.shields.io/npm/dm/shuutils.svg?color=informational)](https://www.npmjs.com/package/shuutils)
@@ -41,3 +44,16 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [UvU](https://github.com/lukeed/uvu) : extremely fast and lightweight test runner for Node.js and the browser
 - [Watchlist](https://github.com/lukeed/watchlist) : recursively watch a list of directories & run a command on any file system
 - [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

@@ -1,0 +1,14 @@
+{
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [],
+  "contributorsPerLine": 7,
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "projectName": "shuutils",
+  "projectOwner": "Romain Racamier",
+  "repoHost": "https://github.com",
+  "repoType": "github"
+}
