@@ -3,5 +3,10 @@
   "cSpell.words": [
     "rebeccapurple",
     "standardx"
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#410A76",
+    "titleBar.activeBackground": "#5B0EA5",
+    "titleBar.activeForeground": "#FDFBFF"
+  }
 }
