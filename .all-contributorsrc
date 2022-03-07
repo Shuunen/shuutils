@@ -1,14 +1,27 @@
 {
   "commit": true,
   "commitConvention": "angular",
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "Shuunen",
+      "name": "Romain Racamier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/439158?v=4",
+      "profile": "https://fr.linkedin.com/in/romainracamier",
+      "contributions": [
+        "infra",
+        "test",
+        "code"
+      ]
+    }
+  ],
   "contributorsPerLine": 7,
   "files": [
     "README.md"
   ],
   "imageSize": 100,
   "projectName": "shuutils",
-  "projectOwner": "Romain Racamier",
+  "projectOwner": "Shuunen",
   "repoHost": "https://github.com",
-  "repoType": "github"
+  "repoType": "github",
+  "skipCi": true
 }
