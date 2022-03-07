@@ -12,6 +12,15 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "babforlife",
+      "name": "babforlife",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55501953?v=4",
+      "profile": "https://github.com/babforlife",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
