@@ -53,7 +53,7 @@ export const onPageChange = async (callback = (location: string) => { console.lo
 }
 
 // inspired by this script : https://github.com/benbscholz/detect/blob/master/src/detect.js
-class BrowserScout {
+export class BrowserScout {
   browser = 'unknown'
   isIE = false
   language = 'unknown'
@@ -106,5 +106,4 @@ class BrowserScout {
   }
 }
 
-export const browserScout = new BrowserScout()
 
