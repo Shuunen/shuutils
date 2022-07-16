@@ -2,6 +2,7 @@ import { build } from 'esbuild'
 
 const shared = {
   bundle: true,
+  external: ['tiny-glob'],
   outdir: 'dist',
   platform: 'node',
 }

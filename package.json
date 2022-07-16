@@ -1,6 +1,12 @@
 {
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
+  "bin": {
+    "unique-mark": "./dist/unique-mark.esm.js"
+  },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
+  "dependencies": {
+    "tiny-glob": "0"
+  },
   "description": "utils collection",
   "devDependencies": {
     "@types/node": "16",
