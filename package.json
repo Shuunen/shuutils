@@ -7,6 +7,7 @@
     "@typescript-eslint/eslint-plugin": "5",
     "@typescript-eslint/parser": "5",
     "c8": "7",
+    "esbuild": "^0.14",
     "eslint": "8",
     "eslint-plugin-unicorn": "43",
     "jsdom": "20",
@@ -31,7 +32,8 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.js",
   "name": "shuutils",
   "private": false,
   "repository": {
@@ -39,12 +41,13 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && tsc",
+    "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build",
     "check": "repo-check",
     "ci": "run-s build lint check test",
     "dev": "run-s build test:watch",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts .",
     "postversion": "git push && git push --tags && npm publish",
+    "prepack": "npm run build",
     "preversion": "npm run ci",
     "start": "npm run dev",
     "test": "c8 uvu -r tsm -r jsdom-global/register tests",
