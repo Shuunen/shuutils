@@ -1,5 +1,5 @@
-import { ok } from 'assert'
 import { test } from 'uvu'
+import { ok } from 'uvu/assert'
 import { hexToHsl, red, yellow } from '../src'
 import { check } from './utils'
 

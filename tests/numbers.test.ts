@@ -1,5 +1,5 @@
-import { ok } from 'assert'
 import { test } from 'uvu'
+import { ok } from 'uvu/assert'
 import { getRandomNumber } from '../src'
 
 test('random between defaults', function () {

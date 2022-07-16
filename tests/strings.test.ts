@@ -1,4 +1,3 @@
-import { strictEqual as equal } from 'assert'
 import { test } from 'uvu'
 import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isJSON, sanitize, slugify } from '../src'
 import { check } from './utils'
@@ -20,14 +19,12 @@ check('sanitize a basic word', sanitize('Superbe'), 'superbe')
 check('sanitize a basic sentence', sanitize('Superbe météo aujourd\'hui'), 'superbe meteo aujourd hui')
 check('sanitize a complex sentence', sanitize(' d\'emblée€|| la@ PLUIE,,:& pùïs un cOup dê tonnerre_ !! Et puis 2 !? Mais qu\'est-ce qui se trame...'), 'd emblee la pluie puis un coup de tonnerre et puis 2 mais qu est ce qui se trame')
 
-test('slugify', function () {
-  const expected = 'oh-ma-darling'
-  equal(slugify('Oh ma darling'), expected)
-  equal(slugify('Oh !ma  darling '), expected)
-  equal(slugify('  Oh %*ma  darling .?! '), expected)
-  equal(slugify(expected), expected)
-  equal(slugify('  -Oh mà  dârling .?! --'), expected)
-})
+const expected = 'oh-ma-darling'
+check('slugify A simple', slugify('Oh ma darling'), expected)
+check('slugify B medium', slugify('Oh !ma  darling '), expected)
+check('slugify C veteran', slugify('  Oh %*ma  darling .?! '), expected)
+check('slugify D expected is expected', slugify(expected), expected)
+check('slugify E OMG o_O', slugify('  -Oh mà  dârling .?! --'), expected)
 
 check('random image', getRandomImageUrl().length > 0, true)
 check('random string', getRandomString().length > 0, true)

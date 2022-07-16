@@ -1,5 +1,5 @@
-import { ok, strictEqual as equal } from 'assert'
 import { test } from 'uvu'
+import { equal, ok } from 'uvu/assert'
 import { a, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, link, p, small, strong, text, waitToDetect } from '../src'
 import { check } from './utils'
 
@@ -96,13 +96,13 @@ test('dive div in a dave div has Life in a div', function () {
   equal(element.innerHTML, '<div class="dive">Life in a div</div>')
 })
 
-check('find one', findOne('body').tagName, 'BODY')
+check('find one', findOne('body')?.tagName, 'BODY')
 check('find all length', findAll('body').length, 1)
 check('find all type', Array.isArray(findAll('body')), true)
 
 test('wait to detect an existing element', async function () {
   const element = await waitToDetect('body', 10)
-  equal(element.tagName, 'BODY')
+  equal(element?.tagName, 'BODY')
 })
 test('wait to detect a non-existing element', async function () {
   const element = await waitToDetect('.not-existing', 10)
