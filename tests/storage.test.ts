@@ -1,5 +1,5 @@
-import { deepStrictEqual as deepEqual, strictEqual as equal } from 'assert'
 import { test } from 'uvu'
+import { equal } from 'uvu/assert'
 import { storage } from '../src'
 
 const mock = {} as Storage
@@ -31,7 +31,7 @@ test('working with an array', async function () {
   const exists = await storage.has(key, mock)
   equal(exists, true)
   const dug = await storage.get<string[]>(key, mock)
-  deepEqual(dug, value)
+  equal(dug, value)
 })
 
 test('save & clear', async function () {

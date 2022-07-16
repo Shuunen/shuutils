@@ -1,5 +1,5 @@
-import { ok, strictEqual as equal } from 'assert'
 import { test } from 'uvu'
+import { equal, ok } from 'uvu/assert'
 import { dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, readableTimeAgo } from '../src'
 import { check } from './utils'
 
