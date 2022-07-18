@@ -6,10 +6,10 @@ import { flatten } from './objects'
  * @param sentence like "Hello, my name is John Doe !"
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export const sanitize = (sentence: string) => {
+export const sanitize = (sentence: string): string => {
   return sentence
     .trim()
-    .replace(/['-]/g, ' ')
+    .replace(/['’-]/g, ' ')
     .normalize('NFD')
     .replace(/[^\d\sa-z]/gi, '')
     .replace(/\s\s+/g, ' ')
@@ -18,7 +18,7 @@ export const sanitize = (sentence: string) => {
 
 /**
  * Slugify a string
- * @param str input string like `"Slug % ME with // Love !"`
+ * @param string input string like `"Slug % ME with // Love !"`
  * @returns string like `"slug-me-with-love"`
  */
 export function slugify (string: string): string {
@@ -33,7 +33,8 @@ export function slugify (string: string): string {
  * @returns string like `"https://server.com/image.png"`
  */
 export function getRandomImageUrl (): string {
-  return pickOne('https://bulma.io/images/placeholders/128x128.png,https://bulma.io/images/placeholders/64x64.png'.split(','))
+  const images = 'https://bulma.io/images/placeholders/128x128.png,https://via.placeholder.com/150,https://bulma.io/images/placeholders/64x64.png'.split(',')
+  return String(pickOne(images))
 }
 
 /**
@@ -41,7 +42,8 @@ export function getRandomImageUrl (): string {
  * @returns string like `"Bolowey Opnet"`
  */
 export function getRandomString (): string {
-  return pickOne('Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae,Buru menhir'.split(','))
+  const strings = 'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae'.split(',')
+  return String(pickOne(strings))
 }
 
 /**
@@ -50,8 +52,9 @@ export function getRandomString (): string {
  * @param data input object, like `{ name: "world" }`
  * @returns string, like `"Hello world !"`
  */
-export function fillTemplate (template: string | Record<string, unknown>, data = {} as Record<string, unknown>): string {
+export function fillTemplate (template: string | Record<string, unknown>, data?: Record<string, unknown>): string {
   let string = (typeof template === 'object' ? JSON.stringify(template, undefined, 2) : template)
+  if (data === undefined) return string
   if (string.length === 0) return string
   const flatData = flatten(data)
   for (const [key, value] of Object.entries(flatData)) {
@@ -63,13 +66,13 @@ export function fillTemplate (template: string | Record<string, unknown>, data =
 
 /**
  * Transform the first letter of a string into capital
- * @param str `"hello John"`
+ * @param string `"hello John"`
  * @param lower boolean, try to lower the rest of the string when applicable
  * @returns `"Hello John"`
  */
-export const capitalize = (str: string, lower = false): string => {
-  if (!lower) return str.charAt(0).toUpperCase() + str.slice(1)
-  const words = str.split(' ')
+export const capitalize = (string: string, lower = false): string => {
+  if (!lower) return string.charAt(0).toUpperCase() + string.slice(1)
+  const words = string.split(' ')
   const cap = /^[\dA-Z-]+$/
   return words.map((word, index) => {
     if (cap.test(word)) return word
@@ -84,13 +87,19 @@ export const capitalize = (str: string, lower = false): string => {
  * @param maxWords 3 for example
  * @returns `"Hello my dear..."`
  */
-export const ellipsisWords = (stringIn: string, maxWords = 5): string => {
+export const ellipsisWords = (stringIn = '', maxWords = 5): string => {
   const stringOut = stringIn.split(' ').splice(0, maxWords).join(' ')
   if (stringOut === stringIn) return stringIn
   return stringOut + '...'
 }
 
-export const ellipsis = (stringIn: string, maxLength = 50): string => {
+/**
+ * Ellipsis after a specific amount of characters
+ * @param stringIn `"Hello my dear friend"`
+ * @param maxLength 8 for example
+ * @returns `"Hello my..."`
+ */
+export const ellipsis = (stringIn = '', maxLength = 50): string => {
   const stringOut = stringIn.slice(0, maxLength)
   if (stringOut === stringIn) return stringIn
   return stringOut + '...'
@@ -108,4 +117,46 @@ export const isJSON = (string: string): boolean => {
   return true
 }
 
+/**
+ * Generate a checksum for a given string
+ * @param string `"Hello my dear friend"`
+ * @returns the checksum like `3547`
+ */
+export const stringSum = (string: string): number => [...new TextEncoder().encode(string)].reduce((a, b) => (a + b), 0)
+
+/**
+ * Check if the value is a string
+ * @param value the value to check
+ * @returns true if the value is a string
+ */
+export const isString = (value: unknown): boolean => (typeof value === 'string')
+
+/**
+ * Check if the string is a base64 string
+ * @param string the string to check
+ * @returns true if the string is a base64 string
+ */
+export const isBase64 = (string: string): boolean => /^(data:)?[\w/]+;base64,[\w+/=]+$/.test(string)
+
+/**
+ * Parse a base64 string
+ * @param string the base64 string to parse
+ * @returns the parsed string like `{ base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/png' }`
+ */
+export const parseBase64 = (string: string): { base64: string, size: number, type: string } => {
+  const result = { base64: '', size: 0, type: '' }
+  if (!isBase64(string)) return result
+  const type = string.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)
+  if (type && typeof type[0] === 'string') result.type = type[0]
+  const base64 = string.split('base64,')
+  if (base64.length > 1 && typeof base64[1] === 'string') result.base64 = base64[1]
+  result.size = Math.round(result.base64.length * 3 / 4)
+  return result
 }
+
+/**
+ * Check if the string contains HTML
+ * @param string the string to check
+ * @returns true if the string contains HTML
+ */
+export const isHtml = (string: string): boolean => /<[^>]+>/.test(string)

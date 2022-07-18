@@ -1,20 +1,26 @@
 /**
  * Debounce any function
- * @param func the function to debounce
- * @param waitFor time before executing function
- * @returns promise with a resolve type of the original function's return type
+ * @param callback the function to debounce
+ * @param waitFor the time to wait before calling the function
+ * @returns promise with a resolve type of the original function’s return type
  */
-export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> { // eslint-disable-line @typescript-eslint/no-explicit-any
-  let timeout: NodeJS.Timeout
-  return (...parameters: Parameters<F>) => new Promise(resolve => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (callback: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
+  let timeout: ReturnType<typeof setTimeout>
+  return async (...parameters: Parameters<F>) => new Promise(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
-      resolve(function_(...parameters))
+      resolve(callback(...parameters))
     }, waitFor)
   })
 }
 
-// inspiration from https://www.matthewgerstman.com/tech/throttle-and-debounce/
+/**
+ * Throttle a function, inspired from https://www.matthewgerstman.com/tech/throttle-and-debounce/
+ * @param function_ the function to throttle
+ * @param timeout the time to wait before each function call
+ * @returns a throttled function
+ */
 export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void { // eslint-disable-line @typescript-eslint/no-explicit-any
   let ready = true
   return (...parameters: Parameters<F>) => {

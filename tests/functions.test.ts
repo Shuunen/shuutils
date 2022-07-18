@@ -3,6 +3,9 @@ import { equal } from 'uvu/assert'
 import { debounce, sleep, throttle } from '../src'
 
 let times: number
+/**
+ *
+ */
 const myFunction = (): void => {
   times++
 }
