@@ -25,3 +25,12 @@ export function shuffleArray<T> (input: T[]): T[] {
   }
   return array
 }
+
+
+/**
+ * Return an array with unique values
+ * @param items the array to check/clean/reduce
+ * @returns the array with unique values
+ */
+export const arrayUnique = <T> (items: T[]): T[] => [...new Set(items)]
+
