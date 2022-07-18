@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
-import { a, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, link, p, small, strong, text, waitToDetect } from '../src'
+import { a, backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, ul, waitToDetect } from '../src'
 import { check } from './utils'
 
 test('custom type dom element with no classes', function () {
@@ -69,7 +69,24 @@ test('link that open in a new tab', function () {
   equal(element.target, '_blank')
 })
 
-test('basics', function () {
+test('dom list ul/li', function () {
+  const element = li('item', 'item 1')
+  equal(element.tagName.toLowerCase(), 'li')
+  equal(element.textContent, 'item 1')
+  const list = ul('list', element)
+  equal(list.tagName.toLowerCase(), 'ul')
+  equal(list.textContent, 'item 1')
+  equal(list.childElementCount, 1)
+})
+
+test('dom backdrop', function () {
+  const element = backdrop('custom-class')
+  equal(element.tagName.toLowerCase(), 'div')
+  ok(element.classList.contains('backdrop'))
+  ok(element.classList.contains('custom-class'))
+})
+
+test('dom basics', function () {
   const funcs = [p, text, strong, em, small, h1, h2, h3, div]
   funcs.forEach(function_ => {
     const { name } = function_
@@ -81,6 +98,12 @@ test('basics', function () {
     equal(elementContent.tagName.toLowerCase(), name)
     equal(elementContent.textContent, `I really like guacamole with ${name}`)
   })
+})
+
+test('dom handle multiple children', function (){
+  const element = div('div', [p('p', 'text 1'), p('p', 'text 2')])
+  equal(element.childElementCount, 2)
+  equal(element.textContent, 'text 1text 2')
 })
 
 test('css link', function () {
@@ -107,6 +130,14 @@ test('wait to detect an existing element', async function () {
 test('wait to detect a non-existing element', async function () {
   const element = await waitToDetect('.not-existing', 10)
   equal(element, undefined)
+})
+
+test('scroll to height', async function () {
+  const element = dom('textarea')
+  element.textContent = 'Hello World'
+  equal(element.style.height, '')
+  await scrollToHeightSync(element)
+  ok(element.style.height.includes('px'))
 })
 
 test.run()

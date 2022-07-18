@@ -15,28 +15,32 @@
  */
 export function dateToIsoString (date: Date, removeTimezone = false): string {
   let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60_000)).toISOString()
-  if (removeTimezone && dateString[dateString.length - 1].toLowerCase() === 'z')
-    dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
-
+  if (removeTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
   return dateString
 }
 
 /**
  * Return a relative Date
  * @param nbDays the number of days to subtract from today
+ * @returns a Date
  */
-export const daysAgo = (nbDays = 0): Date => (d => new Date(d.setDate(d.getDate() - nbDays)))(new Date())
+export const daysAgo = (nbDays = 0): Date => {
+  const date = new Date()
+  date.setDate(date.getDate() - nbDays)
+  return date
+}
 
 /**
  * Format a date to ISO without time
- * @param date
+ * @param date input date
  * @returns string like : "2019-12-31"
  */
-export const dateIso10 = (date = new Date()): string => date.toISOString().split('T')[0]
+export const dateIso10 = (date = new Date()): string => String(date.toISOString().split('T')[0])
 
 /**
  * Return a relative date formatted to ISO 10
  * @param nbDays the number of days to subtract from today
+ * @returns a string like : "2019-12-31"
  */
 export const daysAgoIso10 = (nbDays = 0): string => dateIso10(daysAgo(nbDays))
 
@@ -87,6 +91,13 @@ export const readableTimeAgo = (input: Date | number): string => {
   return 'more than a year ago'
 }
 
+/**
+ * Format a date to a specific format
+ * @param date input date
+ * @param format the format to use like : "yyyy-MM-dd" or "dd/MM/yyyy HH:mm:ss"
+ * @param locale the locale to use, default is en-US
+ * @returns a string like : "2018-09-03"
+ */
 export const formatDate = (date: Date, format: string, locale = 'en-US'): string => {
   return format.replace(/yyyy|yy|MMMM|MM|dd|d|eeee|eee|HH|mm|ss|\s/g, (match) => {
     switch (match) {

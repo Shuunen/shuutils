@@ -2,7 +2,14 @@
 import { test } from 'uvu'
 import { equal } from 'uvu/assert'
 
-export const check = <T> (title: string, actual: T, expected: T) => {
+/**
+ * Check if the actual value is equal to the expected value
+ * @param title the title of the test
+ * @param actual the actual value
+ * @param expected the expected value
+ * @returns nothing
+ */
+export const check = <T> (title: string, actual: T, expected: T): void => {
   return test(title, () => {
     return equal(actual, expected)
   })

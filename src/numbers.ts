@@ -3,7 +3,7 @@
  * Return a random number between min & max (0 & 100 if no args)
  * @param min (optional) the return number minimum included value
  * @param max (optional) the return number maximum included value
- * @return number like : 12
+ * @returns number like : 12
  */
 export function getRandomNumber (min = 0, max = 100): number {
   // min and max included

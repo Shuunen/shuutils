@@ -1,5 +1,5 @@
 import { test } from 'uvu'
-import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isJSON, sanitize, slugify } from '../src'
+import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, sanitize, slugify, stringSum } from '../src'
 import { check } from './utils'
 
 const data = {
@@ -31,11 +31,13 @@ check('random string', getRandomString().length > 0, true)
 
 check('fill a template string without mustaches and data', fillTemplate(data.quote), data.quote)
 check('fill an empty template string', fillTemplate(''), '')
+check('fill an empty template string with data', fillTemplate('', data), '')
 check('fill a template string with data', fillTemplate('John {name}', data), 'John Wick')
 check('fill a template string with long key data', fillTemplate('Andy : {{ key_ToHappiness }} !', data), `Andy : ${data.key_ToHappiness} !`)
 check('fill a template string with unknown key', fillTemplate('John {unknown_key}', data), 'John {unknown_key}')
 check('fill a template object with data', fillTemplate(objectIn, data), stringOut)
 check('fill a template string with deep data', fillTemplate('My code is {{details.pinCode}}', data), 'My code is 3544')
+check('fill template string with missing data', fillTemplate('J’aime les {membre}', {}), 'J’aime les {membre}')
 
 check('capitalize an empty string', capitalize(''), '')
 check('capitalize a single word', capitalize('hey'), 'Hey')
@@ -57,5 +59,28 @@ check('ellipsis, giving a short string that should not be processed', ellipsis('
 check('valid JSON', isJSON('{ "name": "John Doe" }'), true)
 check('invalid JSON', isJSON('"name": "John Doe" }'), false)
 check('un-parse-able JSON', isJSON('{"name" "John Doe" }'), false)
+
+check('string sum', stringSum('plop'), 443)
+check('string sum', stringSum('ça fait du bien par où ça passe'), 3547)
+
+check('isBase64 valid with data', isBase64('data:image/png;base64,iVBORw0KGgoYII='), true)
+check('isBase64 valid with data & double equal', isBase64('data:image/png;base64,iVBORw0KGgoYII=='), true)
+check('isBase64 valid without data', isBase64('image/jpg;base64,iVBORw0KGgoYII='), true)
+check('isBase64 invalid, missing first char', isBase64('ata:image/png;base64,iVBORw0KGgoYII='), false)
+check('isBase64 invalid because empty', isBase64(''), false)
+
+check('parseBase64 png image', parseBase64('data:image/png;base64,iVBORw0KGgoYII='), { base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/png' })
+check('parseBase64 jpg image', parseBase64('image/jpg;base64,iVBORw0KGgoYII='), { base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/jpg' })
+check('parseBase64 jpeg image', parseBase64('image/jpeg;base64,iVBORw0KGgoYII='), { base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/jpeg' })
+check('parseBase64 invalid, missing type', parseBase64(';base64,iVBORw0KGgoYII'), { base64: '', size: 0, type: '' })
+check('parseBase64 invalid because empty', parseBase64(''), { base64: '', size: 0, type: '' })
+
+check('isString valid', isString('plop'), true)
+check('isString invalid', isString(123), false)
+
+check('isHtml on html', isHtml('<lyf-wc-icon name="logo"></lyf-wc-icon>'), true)
+check('isHtml valid on malformed html', isHtml('<lyf-wc-icon name="logo"></i'), true)
+check('isHtml valid on bad html', isHtml('<lyf-wc-icon name="logo"'), false)
+check('isHtml on text', isHtml('Hello'), false)
 
 test.run()
