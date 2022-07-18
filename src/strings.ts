@@ -98,13 +98,14 @@ export const ellipsis = (stringIn: string, maxLength = 50): string => {
 
 /**
  * Check if the given string is a JSON object
- * @param str `'{ "name": "Johnny" }'`
+ * @param string `'{ "name": "Johnny" }'`
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
-export const isJSON = (str: string): Record<string, unknown> | boolean => {
-  const startValid = /^(\[\s*)?{\s*"/.test(str)
+export const isJSON = (string: string): boolean => {
+  const startValid = /^(\[\s*)?{\s*"/.test(string)
   if (!startValid) return false
-  let data: Record<string, unknown>
-  try { data = JSON.parse(str) } catch { return false }
-  return data
+  try { JSON.parse(string) } catch { return false }
+  return true
+}
+
 }
