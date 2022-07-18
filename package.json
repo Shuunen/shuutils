@@ -56,7 +56,7 @@
     "preversion": "npm run ci",
     "start": "npm run dev",
     "test": "c8 uvu -r tsm -r jsdom-global/register tests",
-    "test:watch": "watchlist src tests -- npm test"
+    "test:watch": "watchlist src tests -eager -- npm test"
   },
   "type": "module",
   "types": "dist/index.d.ts",
