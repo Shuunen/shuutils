@@ -54,7 +54,7 @@ check('ellipsis, giving an empty string', ellipsis(''), '')
 check('ellipsis, giving a regular string', ellipsis('I really like pineapples', 18), 'I really like pine...')
 check('ellipsis, giving a short string that should not be processed', ellipsis('I really like pineapples'), 'I really like pineapples')
 
-check('valid JSON', isJSON('{ "name": "John Doe" }'), { name: 'John Doe' })
+check('valid JSON', isJSON('{ "name": "John Doe" }'), true)
 check('invalid JSON', isJSON('"name": "John Doe" }'), false)
 check('un-parse-able JSON', isJSON('{"name" "John Doe" }'), false)
 
