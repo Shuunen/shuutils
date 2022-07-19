@@ -50,6 +50,25 @@ class BrowserScout {
   platform: 'Unknown platform' | string = 'Unknown platform'
   ua: 'Unknown UA' | string = 'Unknown UA'
   version: 'Unknown version' | string = 'Unknown version'
+
+  /**
+   * Return the navigator in a safe way for non-browser environments
+   * @returns {NavigatorExtract} the navigator
+   */
+  get navigator (): NavigatorExtract {
+    const extract = {
+      userAgent: 'Undefined window userAgent',
+      language: 'Undefined window language',
+      platform: 'Undefined window platform',
+    }
+    if (typeof window !== 'undefined') {
+      extract.userAgent = window.navigator.userAgent
+      extract.language = window.navigator.language
+      extract.platform = (window.navigator as NavigatorUA).userAgentData?.platform ?? window.navigator.platform ?? 'Unknown platform'
+    }
+    return extract
+  }
+
   /**
    * BrowserScout constructor
    */
@@ -61,13 +80,13 @@ class BrowserScout {
    * Detect the browser context
    */
   private detect (): void {
-    this.ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Undefined window UA'
+    this.ua = this.navigator.userAgent
     this.platform = this.getPlatform()
     this.browser = this.getBrowser()
     this.isIE = this.browser === 'Internet Explorer'
     this.version = this.getVersion()
     this.os = this.getOS()
-    this.language = typeof window !== 'undefined' ? window.navigator.language : 'Undefined window language'
+    this.language = this.navigator.language
   }
 
   /**
@@ -105,7 +124,7 @@ class BrowserScout {
    */
   private getPlatform (): this['platform'] {
     if (/Chrome/.test(this.ua) && /CrOS/.test(this.ua)) return 'CrOS'
-    return (window.navigator as NavigatorUA)?.userAgentData?.platform ?? window.navigator.platform ?? 'Unknown platform'
+    return this.navigator.platform
   }
 
   /**
@@ -123,6 +142,12 @@ class BrowserScout {
 }
 
 export const browserScout = new BrowserScout()
+
+interface NavigatorExtract {
+  language: string
+  platform: string
+  userAgent: string
+}
 
 // below types from https://github.com/lukewarlow/user-agent-data-types/blob/master/index.d.ts
 declare interface NavigatorUA {
