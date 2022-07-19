@@ -94,7 +94,7 @@ new class UniqueMark {
   injectMark (): void {
     this.files.forEach(file => {
       const content = readFileSync(file, 'utf8')
-      if (!content.includes(`="${this.name}"`) && !content.includes(`__${this.name}__`)) return this.error(`could not find a place to inject in ${location}, aborting ${this.name}.\n\nPlease use one or more of these placeholders :  <span id="${this.name}"></span>  <meta name="${this.name}" content="">  __unique-mark__`)
+      if (!content.includes(`="${this.name}"`) && !content.includes(`__${this.name}__`)) return this.error(`could not find a place to inject in ${file}, aborting ${this.name}.\n\nPlease use one or more of these placeholders :  <span id="${this.name}"></span>  <meta name="${this.name}" content="">  __unique-mark__`)
       const newContent = content
         .replace(new RegExp(`__${this.name}__`, 'g'), this.mark)
         .replace(new RegExp(`(<[a-z]+ .*id="${this.name}".*>)[^<]*(</[a-z]+>)`), `$1${this.mark}$2`)
