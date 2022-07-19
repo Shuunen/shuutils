@@ -42,7 +42,7 @@ export const onPageChange = async (callback = (location: string): void => { cons
 /**
  * Detect the browser context, inspired by this script : https://github.com/benbscholz/detect/blob/master/src/detect.js
  */
-class BrowserScout {
+export class BrowserScout {
   browser: 'Internet Explorer' | 'Edge' | 'Chrome' | 'Opera' | 'Android' | 'Firefox' | 'Safari' | 'Unknown browser' = 'Unknown browser'
   isIE = false
   language = 'Unknown language'
@@ -140,8 +140,6 @@ class BrowserScout {
     return 'Unknown version'
   }
 }
-
-export const browserScout = new BrowserScout()
 
 interface NavigatorExtract {
   language: string
