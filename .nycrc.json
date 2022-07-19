@@ -3,7 +3,8 @@
   "check-coverage": true,
   "exclude": [
     "src/browser.ts",
-    "src/colors.ts"
+    "src/colors.ts",
+    "src/events.ts"
   ],
   "functions": 90,
   "include": [
