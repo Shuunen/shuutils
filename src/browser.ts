@@ -61,13 +61,13 @@ class BrowserScout {
    * Detect the browser context
    */
   private detect (): void {
-    this.ua = window.navigator.userAgent
+    this.ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Undefined window UA'
     this.platform = this.getPlatform()
     this.browser = this.getBrowser()
     this.isIE = this.browser === 'Internet Explorer'
     this.version = this.getVersion()
     this.os = this.getOS()
-    this.language = window.navigator.language
+    this.language = typeof window !== 'undefined' ? window.navigator.language : 'Undefined window language'
   }
 
   /**
