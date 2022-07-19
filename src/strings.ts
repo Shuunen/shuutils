@@ -155,6 +155,18 @@ export const parseBase64 = (string: string): { base64: string, size: number, typ
 }
 
 /**
+ * Parse a supposed JSON string into an object
+ * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
+ * @returns an object like `{ name: 'John Doe', age: 32 }`
+ */
+export const parseJson = <T> (json: string): { error: string, value: T } => {
+  let error = ''
+  let value = {}
+  if (json !== '') try { value = JSON.parse(json) } catch (error_) { error = 'JSON invalide : ' + (error_ as Error).message }
+  return { error, value: value as T }
+}
+
+/**
  * Check if the string contains HTML
  * @param string the string to check
  * @returns true if the string contains HTML

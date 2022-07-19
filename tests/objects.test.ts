@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal } from 'uvu/assert'
-import { access, byProperty, clone, copy, flatten, genClass, isRecord, jsonParse, safeAssign } from '../src'
+import { access, byProperty, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
 import { check } from './utils'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
@@ -77,10 +77,6 @@ check('safe assign G 2nd param overwrite', safeAssign({ name: 'John' }, { name: 
 check('safe assign H does overwrite with empty string', safeAssign({ name: 'John', age: 31 }, { name: '' }), { name: '', age: 31 })
 check('safe assign I does not overwrite with empty object', safeAssign({ name: 'John', details: { age: 42, type: 'years' } }, { name: '', details: {} }), { name: '', details: { age: 42, type: 'years' } })
 check('safe assign J does handle non existing sub object', safeAssign({ name: 'John' }, { details: { age: 42, type: 'years' } }), { name: 'John', details: { age: 42, type: 'years' } })
-
-check('json parse valid object string', jsonParse('{ "name": "John Cena", "age": 42 }'), { error: '', value: { name: 'John Cena', age: 42 } })
-check('json parse invalid object string', jsonParse('{ xyz "name": "John Cena" }'), { error: 'JSON invalide : Unexpected token x in JSON at position 2', value: {} })
-check('json parse valid array string', jsonParse('[ "John Cena", 42 ]'), { error: '', value: [ 'John Cena', 42 ] })
 
 check('isRecord on null', isRecord(null), false) // eslint-disable-line unicorn/no-null
 check('isRecord on an array', isRecord([1, 2]), false)

@@ -1,5 +1,5 @@
 import { test } from 'uvu'
-import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, sanitize, slugify, stringSum } from '../src'
+import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
 import { check } from './utils'
 
 const data = {
@@ -74,6 +74,10 @@ check('parseBase64 jpg image', parseBase64('image/jpg;base64,iVBORw0KGgoYII='), 
 check('parseBase64 jpeg image', parseBase64('image/jpeg;base64,iVBORw0KGgoYII='), { base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/jpeg' })
 check('parseBase64 invalid, missing type', parseBase64(';base64,iVBORw0KGgoYII'), { base64: '', size: 0, type: '' })
 check('parseBase64 invalid because empty', parseBase64(''), { base64: '', size: 0, type: '' })
+
+check('parse json valid object string', parseJson('{ "name": "John Cena", "age": 42 }'), { error: '', value: { name: 'John Cena', age: 42 } })
+check('parse json invalid object string', parseJson('{ xyz "name": "John Cena" }'), { error: 'JSON invalide : Unexpected token x in JSON at position 2', value: {} })
+check('parse json valid array string', parseJson('[ "John Cena", 42 ]'), { error: '', value: [ 'John Cena', 42 ] })
 
 check('isString valid', isString('plop'), true)
 check('isString invalid', isString(123), false)

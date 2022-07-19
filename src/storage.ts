@@ -1,4 +1,4 @@
-import { jsonParse } from './objects'
+import { parseJson } from './strings'
 
 /**
  * Get a value from the storage
@@ -9,7 +9,7 @@ import { jsonParse } from './objects'
 async function get<T = unknown> (key: string, storage = localStorage): Promise<T | undefined> {
   if (storage[key] === undefined) return
   const data = String(storage[key])
-  const { error, value } = jsonParse(data)
+  const { error, value } = parseJson(data)
   if (error) return data as unknown as T
   return value as T
 }

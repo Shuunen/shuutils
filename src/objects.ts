@@ -71,18 +71,6 @@ export function byProperty<T extends Record<string, unknown>> (property: string,
 }
 
 /**
- * Parse a supposed JSON string into an object
- * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
- * @returns an object like `{ name: 'John Doe', age: 32 }`
- */
-export const jsonParse = <T> (json: string): { error: string, value: T | T[] } => {
-  let error = ''
-  let value = {}
-  if (json !== '') try { value = JSON.parse(json) } catch (error_) { error = 'JSON invalide : ' + (error_ as Error).message }
-  return { error, value: value as T }
-}
-
-/**
  * Check if a value is an object/record
  * @param value the value to check
  * @returns true if value is an object/record
