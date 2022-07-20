@@ -10,10 +10,18 @@ export interface Listener {
  * @param name the name of the event
  * @param data the data to emit
  * @param media the media to emit the event from, like window or a dom element
+ * @returns true if the event is emitted
  */
-export const emit = (name: string, data?: unknown, media: HTMLElement | Element | Window = window): void => {
+export const emit = (name: string, data?: unknown, media?: HTMLElement | Element | Window): boolean => {
+  if (media === undefined)
+    if (typeof window !== 'undefined') media = window
+    else {
+      console.error('no media provided & no window available')
+      return false
+    }
   if (data === undefined) media.dispatchEvent(new CustomEvent(name))
   else media.dispatchEvent(new CustomEvent(name, { detail: data }))
+  return true
 }
 
 /**
@@ -21,9 +29,15 @@ export const emit = (name: string, data?: unknown, media: HTMLElement | Element 
  * @param name the name of the event to listen to
  * @param callback the callback to call when the event is emitted
  * @param media the media to listen to the event, like window or a dom element
- * @returns a listener object
+ * @returns false if the event cannot be not listened to or a listener object if it can
  */
-export const on = (name: string, callback: (data: any, event: Event) => unknown, media: HTMLElement | Element | Window = window): Listener => {
+export const on = (name: string, callback: (data: any, event: Event) => unknown, media?: HTMLElement | Element | Window): Listener | boolean => {
+  if (media === undefined)
+    if (typeof window !== 'undefined') media = window
+    else {
+      console.error('no media provided & no window available')
+      return false
+    }
   /**
    * The callback to call when the event is emitted
    * @param event the event
