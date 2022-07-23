@@ -1,4 +1,4 @@
-import { sleep } from '.'
+import { sleep } from './functions'
 import { ellipsis } from './strings'
 
 /**

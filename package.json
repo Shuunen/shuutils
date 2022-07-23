@@ -1,7 +1,7 @@
 {
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "bin": {
-    "unique-mark": "./dist/unique-mark.esm.js"
+    "unique-mark": "./dist/unique-mark.js"
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
@@ -38,8 +38,8 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "dist/index.cjs",
-  "module": "dist/index.esm.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "name": "shuutils",
   "private": false,
   "repository": {

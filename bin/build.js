@@ -1,22 +1,21 @@
 import { build } from 'esbuild'
+import glob from 'tiny-glob'
 
-const shared = {
-  bundle: true,
-  external: ['tiny-glob'],
-  outdir: 'dist',
-  platform: 'node',
+/**
+ * Do the shuutils lib build
+ */
+async function doBuild () {
+
+  await build({
+    bundle: true,
+    external: ['uvu', 'uvu/asserts', 'tiny-glob'], // but not theses
+    outdir: 'dist',
+    platform: 'node',
+    entryPoints: await glob('src/*.ts'), // build all ts files let the end-user choose global import like import { aFunc } from 'shuutils' or import { aFunc } from 'shuutils/dist/a-specific-file' to force tree-shaking
+    format: 'esm',
+  })
+
+  return true
 }
 
-build({
-  ...shared,
-  entryPoints: ['src/index.ts'],
-  outExtension: { '.js': '.cjs' },
-  format: 'cjs',
-})
-
-build({
-  ...shared,
-  entryPoints: ['src/index.ts', 'src/unique-mark.ts'],
-  outExtension: { '.js': '.esm.js' },
-  format: 'esm',
-})
+await doBuild()
