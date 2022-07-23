@@ -12,6 +12,7 @@ new class UniqueMark {
   name = 'unique-mark'
   mark = ''
   pkg: Record<string, unknown> = {}
+  verbose = false
 
   /**
    * UniqueMark constructor
@@ -42,7 +43,8 @@ new class UniqueMark {
    * Main function
    */
   async init (): Promise<void> {
-    this.log('starting...')
+    this.verbose = process.argv.includes('-v') || process.argv.includes('--verbose')
+    if (this.verbose) this.log('starting...')
     this.loadPackageJson()
     await this.getTargetFiles()
     if (this.files.length === 0) return
@@ -55,7 +57,7 @@ new class UniqueMark {
    * @returns nothing
    */
   loadPackageJson (): void {
-    this.log('looking for', 'package.json')
+    if (this.verbose) this.log('looking for', 'package.json')
     const pkgLocation = path.join(process.cwd(), 'package.json')
     if (!existsSync(pkgLocation)) return this.error(`package.json was not found in ${pkgLocation}, aborting ${this.name}.`)
     const content = readFileSync(pkgLocation, 'utf8')
@@ -71,7 +73,7 @@ new class UniqueMark {
     const target = (targetSpecified && typeof process.argv[2] === 'string') ? process.argv[2] : 'public/index.html'
     this.files = await glob(target)
     if (this.files.length === 0) return this.error(`no file found for target "${target}", aborting ${this.name}.`)
-    this.log(`found ${this.files.length} file${this.files.length > 1 ? 's' : ''} to inject mark`, this.files.join(', '))
+    if (this.verbose) this.log(`found ${this.files.length} file${this.files.length > 1 ? 's' : ''} to inject mark`, this.files.join(', '))
   }
 
   /**
@@ -82,7 +84,7 @@ new class UniqueMark {
       const lastCommit = execSync('git rev-parse --short HEAD', { cwd: process.cwd() }).toString().trim()
       const now = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss')
       this.mark = `${this.pkg['version']} - ${lastCommit} - ${now}`
-      this.log('generated mark', this.mark)
+      if (this.verbose) this.log('generated mark', this.mark)
     } catch (error) {
       this.error(`could not generate mark, cause "${(error as Error).message}", aborting`)
     }
@@ -101,7 +103,7 @@ new class UniqueMark {
         .replace(new RegExp(`(<meta name="${this.name}" content=")[^"]*(">)`), `$1${this.mark}$2`)
       const times = (newContent.match(new RegExp(this.mark, 'g')) || []).length
       writeFileSync(file, newContent)
-      this.log(`injected in ${file}`, `${times} time${times > 1 ? 's' : ''}`)
+      this.log(`injected in ${file}`, `${times} time${times > 1 ? 's' : ''}\n`)
     })
   }
 }()
