@@ -14,3 +14,6 @@ export const check = <T> (title: string, actual: T, expected: T): void => {
     return equal(actual, expected)
   })
 }
+
+// give the uvu runner to check shortcut
+check.run = test.run
