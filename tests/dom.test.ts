@@ -1,7 +1,6 @@
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
-import { a, backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, ul, waitToDetect } from '../src'
-import { check } from './utils'
+import { a, backdrop, check, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, ul, waitToDetect } from '../src'
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')

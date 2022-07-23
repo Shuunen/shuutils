@@ -1,6 +1,4 @@
-import { test } from 'uvu'
-import { capitalize, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
-import { check } from './utils'
+import { capitalize, check, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
 
 const data = {
   name: 'Wick',
@@ -87,4 +85,4 @@ check('isHtml valid on malformed html', isHtml('<lyf-wc-icon name="logo"></i'), 
 check('isHtml valid on bad html', isHtml('<lyf-wc-icon name="logo"'), false)
 check('isHtml on text', isHtml('Hello'), false)
 
-test.run()
+check.run()

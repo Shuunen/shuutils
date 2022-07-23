@@ -1,38 +1,16 @@
-import { test } from 'uvu'
-import { equal } from 'uvu/assert'
-import { access, byProperty, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
-import { check } from './utils'
+import { access, byProperty, check, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
+const personCopy = copy(person)
+personCopy.age = 42
+check('copy a record', personCopy.age, 42)
+check('copy a record does not affect the original one', person.age, 21)
+
 const persons = ['John', 'Fanny']
-
-test('copy object', function () {
-  const personCopy = copy(person)
-  personCopy.age = 42
-  equal(person.age, 21)
-  equal(personCopy.age, 42)
-})
-
-test('copy-less object', function () {
-  const personCopy = person
-  personCopy.age = 42
-  equal(person.age, 42)
-  equal(personCopy.age, 42)
-})
-
-test('copy array', function () {
-  const personsCopy = copy(persons)
-  personsCopy[1] = 'Bob'
-  equal(persons[1], 'Fanny')
-  equal(personsCopy[1], 'Bob')
-})
-
-test('copy-less array', function () {
-  const personsCopy = persons
-  personsCopy[1] = 'Bob'
-  equal(persons[1], 'Bob')
-  equal(personsCopy[1], 'Bob')
-})
+const personsCopy = copy(persons)
+personsCopy[1] = 'Bob'
+check('copy an array', personsCopy[1], 'Bob')
+check('copy an array does not affect the original one', persons[1], 'Fanny')
 
 check('clone is a better name', copy(person), clone(person))
 
@@ -47,10 +25,10 @@ check('flatten an object with a custom root path', flatten(person, 'person'), { 
 check('flatten an object containing an array', flatten({ name: 'John', collection: ['pikachu', 'drake'] }), { 'name': 'John', 'collection[0]': 'pikachu', 'collection[1]': 'drake' })
 
 const users = [{ name: 'John', age: 21, pic: 'wow.png' }, { name: 'Albert', age: 42 }, { name: 'Sam', age: 22 }, { name: 'Birgit', age: 11 }]
-check('sort objects by property without order does not sort', users.sort(byProperty('name'))[0].name, 'John')
-check('sort objects by property with asc order does sort', users.sort(byProperty('name', 'asc'))[0].name, 'Albert')
-check('sort objects by property with desc order does sort', users.sort(byProperty('name', 'desc'))[0].name, 'Sam')
-check('sort objects by property even if some does not have it', users.sort(byProperty('pic', 'asc'))[0].pic, 'wow.png')
+check('sort objects by property without order does not sort', users.sort(byProperty('name'))[0]?.name, 'John')
+check('sort objects by property with asc order does sort', users.sort(byProperty('name', 'asc'))[0]?.name, 'Albert')
+check('sort objects by property with desc order does sort', users.sort(byProperty('name', 'desc'))[0]?.name, 'Sam')
+check('sort objects by property even if some does not have it', users.sort(byProperty('pic', 'asc'))[0]?.pic, 'wow.png')
 
 const object3 = { 'superFun': true, 'notFun': false, 'pretty-good': true, 'size': 'large' }
 check('class generator empty', genClass({}), '')
@@ -86,4 +64,4 @@ check('isRecord on a number', isRecord(-1), false)
 check('isRecord on an empty record', isRecord({}), true)
 check('isRecord on a record', isRecord({ name: 'John' }), true)
 
-test.run()
+check.run()

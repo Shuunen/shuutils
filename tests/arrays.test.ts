@@ -1,21 +1,11 @@
-import { test } from 'uvu'
-import { equal, ok } from 'uvu/assert'
-import { arrayUnique, insertValueAfterItem, isArray, pickOne, removeValueFromArray, shuffleArray } from '../src'
-import { check } from './utils'
+import { arrayUnique, check, insertValueAfterItem, isArray, pickOne, removeValueFromArray, shuffleArray } from '../src'
 
-test('pick one', function () {
-  const elements = ['damn', 'this', 'test', 'is', 'crazy']
-  const element = pickOne(elements)
-  ok(element && elements.includes(element))
-})
+const elements = ['damn', 'this', 'test', 'is', 'crazy']
+const elementsShuffled = shuffleArray(elements)
+check('shuffle an array does not affect the original one', (elementsShuffled[0] !== 'damn') || (elementsShuffled[1] !== 'this') || (elementsShuffled[2] !== 'test'), true)
 
-test('shuffle an array without affecting the original one', function () {
-  const elements = ['damn', 'this', 'test', 'is', 'crazy']
-  const elementsShuffled = shuffleArray(elements)
-  equal(elements[0], 'damn', 'the first element of the original array should not have changed')
-  equal(elements[2], 'test', 'the third element of the original array should not have changed')
-  ok((elementsShuffled[0] !== 'damn') || (elementsShuffled[1] !== 'this') || (elementsShuffled[2] !== 'test'),'the 1st/3rd element of the shuffled array should have changed')
-})
+const elementPicked = pickOne(elements)
+check('pick one returns an element from the array', elementPicked && elements.includes(elementPicked), true)
 
 check('isArray on null', isArray(null), false) // eslint-disable-line unicorn/no-null
 check('isArray on an array', isArray([1, 2]), true)
@@ -40,4 +30,4 @@ check('insert value after item case C', insertValueAfterItem([1, 'deux', 3], 1, 
 check('insert value after item case D', insertValueAfterItem([1, 2, 3], 4, 4), [1, 2, 3])
 check('insert value after item case E', insertValueAfterItem([], 4, 4), [])
 
-test.run()
+check.run()
