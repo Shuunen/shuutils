@@ -40,4 +40,9 @@ test('throttle', async function () {
   equal(times, 2)
 })
 
+check('hasOwnProperty A', hasOwnProperty({ a: 1 }, 'a'), true)
+check('hasOwnProperty B', hasOwnProperty({ a: 1 }, 'b'), false)
+check('hasOwnProperty C', hasOwnProperty({ a: 1 }, 'toString'), false)
+check('hasOwnProperty D', hasOwnProperty({ a: 1 }, 'hasOwnProperty'), false)
+
 test.run()

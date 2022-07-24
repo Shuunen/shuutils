@@ -41,3 +41,13 @@ export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (fun
 export async function sleep (ms = 1000): Promise<number> {
   return new Promise(resolve => setTimeout(() => resolve(ms), ms))
 }
+
+/**
+ * Determine whether the given object has a property
+ * @param object the object to test
+ * @param property the property to test
+ * @returns true if the object has the property
+ */
+export function hasOwnProperty (object: object, property: string): boolean {
+  return Object.prototype.hasOwnProperty.call(object, property)
+}
