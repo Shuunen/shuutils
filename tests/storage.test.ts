@@ -45,4 +45,11 @@ test('save & clear', async function () {
   equal(dug, undefined)
 })
 
+test('storage get return undefined when key is not found', async function () {
+  const key = 'John'
+  type User = { name: string; age: number }
+  const dug = await storage.get<User>(key, mock)
+  equal(dug, undefined)
+})
+
 test.run()
