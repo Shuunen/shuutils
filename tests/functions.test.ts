@@ -10,6 +10,20 @@ const myFunction = (): void => {
   times++
 }
 
+/**
+ *
+ */
+const anAsyncFunctionThatReturn12 = async (): Promise<number> => {
+  return 12
+}
+
+/**
+ *
+ */
+const anAsyncFunctionThatReturnAnObject = async (): Promise<object> => {
+  return { name: 'John', age: 30 }
+}
+
 test('debounce', async function () {
   times = 0
   const myFunctionDebounced = debounce(myFunction, 100)
@@ -47,5 +61,10 @@ check('hasOwnProperty D', hasOwnProperty({ a: 1 }, 'hasOwnProperty'), false)
 
 check('sleep A', sleep(10), Promise.resolve(10))
 check('sleep B', sleep(20), 20)
+
+check('anAsyncFunctionThatReturn12 A', anAsyncFunctionThatReturn12(), 12)
+check('anAsyncFunctionThatReturn12 B', anAsyncFunctionThatReturn12(), Promise.resolve(12))
+check('anAsyncFuntionThatReturnAnObject A', anAsyncFunctionThatReturnAnObject(), { name: 'John', age: 30 })
+check('anAsyncFuntionThatReturnAnObject B', anAsyncFunctionThatReturnAnObject(), Promise.resolve({ name: 'John', age: 30 }))
 
 test.run()
