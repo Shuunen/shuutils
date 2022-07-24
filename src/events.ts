@@ -12,7 +12,7 @@ export interface Listener {
  * @param media the media to emit the event from, like window or a dom element
  * @returns true if the event is emitted
  */
-export const emit = (name: string, data?: unknown, media?: HTMLElement | Element | Window): boolean => {
+export const emit = <T>(name: string, data?: T, media?: HTMLElement | Element | Window): boolean => {
   if (media === undefined)
     if (typeof window !== 'undefined') media = window
     else {
@@ -31,7 +31,7 @@ export const emit = (name: string, data?: unknown, media?: HTMLElement | Element
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
  */
-export const on = (name: string, callback: (data: any, event: Event) => unknown, media?: HTMLElement | Element | Window): Listener | boolean => {
+export const on = <T>(name: string, callback: (data: T, event: Event) => unknown, media?: HTMLElement | Element | Window): Listener | boolean => {
   if (media === undefined)
     if (typeof window !== 'undefined') media = window
     else {
