@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal } from 'uvu/assert'
-import { debounce, sleep, throttle } from '../src'
+import { check, debounce, hasOwnProperty, sleep, throttle } from '../src'
 
 let times: number
 /**
@@ -44,5 +44,8 @@ check('hasOwnProperty A', hasOwnProperty({ a: 1 }, 'a'), true)
 check('hasOwnProperty B', hasOwnProperty({ a: 1 }, 'b'), false)
 check('hasOwnProperty C', hasOwnProperty({ a: 1 }, 'toString'), false)
 check('hasOwnProperty D', hasOwnProperty({ a: 1 }, 'hasOwnProperty'), false)
+
+check('sleep A', sleep(10), Promise.resolve(10))
+check('sleep B', sleep(20), 20)
 
 test.run()

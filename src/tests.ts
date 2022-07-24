@@ -9,10 +9,12 @@ import { equal } from 'uvu/assert'
  * @param expected the expected value
  * @returns nothing
  */
-export const check = <T> (title: string, actual: T, expected: T): void => {
-  return test(title, () => {
-    return equal(actual, expected)
+export const check = <T> (title: string, actual: T | Promise<T>, expected?: T | Promise<T>): void => {
+  if (actual instanceof Promise) return test(title, async () => {
+    if (expected instanceof Promise) return equal(await actual, await expected)
+    return equal(await actual, expected)
   })
+  return test(title, () => equal(actual, expected))
 }
 
 // give the uvu runner to check shortcut
