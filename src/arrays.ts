@@ -5,8 +5,8 @@ import { clone } from './objects'
  * @param items like : ["great", "place", "pine"]
  * @returns item like : "pine"
  */
-export function pickOne<T> (items: T[]): T | undefined {
-  return items[Math.floor(Math.random() * items.length)]
+export function pickOne<T> (items: T[]): T {
+  return items[Math.floor(Math.random() * items.length)] as T
 }
 
 /**
