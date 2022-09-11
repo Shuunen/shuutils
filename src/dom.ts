@@ -208,3 +208,11 @@ export const scrollToHeightSync = async (element: HTMLElement): Promise<void> =>
  * @returns the backdrop element
  */
 export const backdrop = (classes: string): HTMLDivElement => div(`backdrop ${classes} fixed top-0 left-0 z-10 w-full h-full opacity-0 pointer-events-none`)
+
+
+/**
+ * Tw is a callee mock for tailwindcss, it will return the classes as a string
+ * @param classes the classes to return
+ * @returns the classes as a string
+ */
+export const tw = (classes: string): string => classes

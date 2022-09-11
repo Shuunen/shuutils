@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
-import { a, backdrop, check, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, ul, waitToDetect } from '../src'
+import { a, backdrop, check, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')
@@ -99,7 +99,7 @@ test('dom basics', function () {
   })
 })
 
-test('dom handle multiple children', function (){
+test('dom handle multiple children', function () {
   const element = div('div', [p('p', 'text 1'), p('p', 'text 2')])
   equal(element.childElementCount, 2)
   equal(element.textContent, 'text 1text 2')
@@ -138,5 +138,10 @@ test('scroll to height', async function () {
   await scrollToHeightSync(element)
   ok(element.style.height.includes('px'))
 })
+
+check('tw returns a string A', typeof tw(''), 'string')
+check('tw returns a string B', typeof tw('text-red-500'), 'string')
+check('tw returns a string C', tw('text-red-500 text-blue-500'), 'text-red-500 text-blue-500')
+check('tw returns a string D', tw(''), '')
 
 test.run()
