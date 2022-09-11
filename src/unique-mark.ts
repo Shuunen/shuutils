@@ -99,7 +99,7 @@ new class UniqueMark {
       if (!content.includes(`="${this.name}"`) && !content.includes(`__${this.name}__`)) return this.error(`could not find a place to inject in ${file}, aborting ${this.name}.\n\nPlease use one or more of these placeholders :  <span id="${this.name}"></span>  <meta name="${this.name}" content="">  __unique-mark__`)
       const newContent = content
         .replace(new RegExp(`__${this.name}__`, 'g'), this.mark)
-        .replace(new RegExp(`(<[a-z]+ .*id="${this.name}".*>)[^<]*(</[a-z]+>)`), `$1${this.mark}$2`)
+        .replace(new RegExp(`(<[a-z]+ .*id="${this.name}"[^>]*>)[^<]*(</[a-z]+>)`), `$1${this.mark}$2`)
         .replace(new RegExp(`(<meta name="${this.name}" content=")[^"]*(">)`), `$1${this.mark}$2`)
       const times = (newContent.match(new RegExp(this.mark, 'g')) || []).length
       writeFileSync(file, newContent)

@@ -32,6 +32,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
 ## TODO
 
 - [ ] use zod
+- [ ] test unique-mark (injection at least)
 
 ## Thanks
 
