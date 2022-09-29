@@ -41,6 +41,8 @@ console.log("tree-shaking test, only using getRandomNumber", getRandomNumber(1, 
   if (actual !== expected) {
     await writeFile('./dist/tree-shaking-test.actual.js', actual, 'utf8')
     await writeFile('./dist/tree-shaking-test.expected.js', expected, 'utf8')
+    console.log(`--- vvv ACTUAL start vvv ---\n${actual}\n--- ^^^ ACTUAL end ^^^ ---`)
+    console.log(`--- vvv EXPECTED start vvv ---\n${expected}\n--- ^^^ EXPECTED end ^^^ ---`)
     throw new Error('tree-shaking build is not as expected, see dist/tree-shaking-test.*.js files')
   }
 }
