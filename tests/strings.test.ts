@@ -39,7 +39,7 @@ check('fill template string with missing data', fillTemplate('J’aime les {memb
 
 check('capitalize an empty string', capitalize(''), '')
 check('capitalize a single word', capitalize('hey'), 'Hey')
-check('capitalize an uppercased word', capitalize('HO'), 'HO')
+check('capitalize an uppercase\'d word', capitalize('HO'), 'HO')
 check('capitalize a sentence', capitalize('hello my name is John Doe !'), 'Hello my name is John Doe !')
 
 check('capitalize a sentence and lower John Doe', capitalize('hello my name is John Doe !', true), 'Hello my name is john doe !')
@@ -58,8 +58,9 @@ check('valid JSON', isJSON('{ "name": "John Doe" }'), true)
 check('invalid JSON', isJSON('"name": "John Doe" }'), false)
 check('un-parse-able JSON', isJSON('{"name" "John Doe" }'), false)
 
-check('string sum', stringSum('plop'), 443)
-check('string sum', stringSum('ça fait du bien par où ça passe'), 3547)
+check('string sum a simple word', stringSum('plop'), 3_117_829_008)
+check('string sum a sentence', stringSum('ça fait du bien par où ça passe'), 1_300_099_934)
+check('string sum should be the same on the same string', stringSum('Excelsior!_812') === stringSum('Excelsior!_812'), true)
 
 check('isBase64 valid with data', isBase64('data:image/png;base64,iVBORw0KGgoYII='), true)
 check('isBase64 valid with data & double equal', isBase64('data:image/png;base64,iVBORw0KGgoYII=='), true)
