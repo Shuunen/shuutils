@@ -1,4 +1,5 @@
 import { arrayUnique } from './arrays'
+import { stringSum } from './strings'
 
 export type RecursivePartial<T> = {
   [P in keyof T]?:
@@ -118,3 +119,10 @@ export const genClass = (object: unknown, keys: string[] = [], cls: string[] = [
   }
   return arrayUnique(cls).join(' ').trim().replace(/\s+/g, ' ')
 }
+
+/**
+ * Generate a unique string checksum from an object
+ * @param object the object to generate checksum from
+ * @returns the checksum
+ */
+export const objectSum = (object: Record<string, unknown>): number => stringSum(JSON.stringify(object))

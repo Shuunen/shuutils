@@ -1,4 +1,4 @@
-import { access, byProperty, check, checksRun, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
+import { access, byProperty, check, checksRun, clone, copy, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
 const personCopy = copy(person)
@@ -63,5 +63,13 @@ check('isRecord on an empty string', isRecord(''), false)
 check('isRecord on a number', isRecord(-1), false)
 check('isRecord on an empty record', isRecord({}), true)
 check('isRecord on a record', isRecord({ name: 'John' }), true)
+
+check('objectSum on empty object', objectSum({}), 2_745_614_147)
+check('objectSum is the same on two equally empty objects', objectSum({}) === objectSum({}), true)
+check('objectSum on object with numbers', objectSum({ a: 1, b: 2, c: 3 }), 785_669_035)
+check('objectSum on object with a slightly different number', objectSum({ a: 1, b: 2, c: 5 }), 2_022_636_589)
+check('objectSum on object with a slightly different key', objectSum({ a: 1, d: 2, c: 3 }), 3_328_283_112)
+check('objectSum on a large object', objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10, users, object3 }), 4_236_592_105)
+check('objectSum is the same on two equals objects', objectSum(object3) === objectSum(object3), true)
 
 checksRun()
