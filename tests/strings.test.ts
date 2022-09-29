@@ -1,4 +1,4 @@
-import { capitalize, check, checksRun, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
+import { capitalize, check, checksRun, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, injectMark, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
 
 const data = {
   name: 'Wick',
@@ -85,5 +85,14 @@ check('isHtml on html', isHtml('<lyf-wc-icon name="logo"></lyf-wc-icon>'), true)
 check('isHtml valid on malformed html', isHtml('<lyf-wc-icon name="logo"></i'), true)
 check('isHtml valid on bad html', isHtml('<lyf-wc-icon name="logo"'), false)
 check('isHtml on text', isHtml('Hello'), false)
+
+check('injectMark on empty string', injectMark('', 'placeholder', 'da-mark'), '')
+check('injectMark on string that does not contain any placeholder', injectMark('Hello world', 'placeholder', 'da-mark'), 'Hello world')
+check('injectMark on string that contains one placeholder inside mustaches', injectMark('Hello {placeholder}} world', 'placeholder', 'da-mark'), 'Hello da-mark world')
+check('injectMark on string that contains one placeholder inside underscores', injectMark('Hello __placeholder__ world', 'placeholder', 'da-mark'), 'Hello da-mark world')
+check('injectMark on string that contains one placeholder on a div', injectMark('Hello <div id="placeholder">...</div> world', 'placeholder', 'da-mark'), 'Hello <div id="placeholder">da-mark</div> world')
+check('injectMark on string that contains one placeholder on a div with a class', injectMark('Hello <div id="placeholder" class="mt-6 p-4">...</div> world', 'placeholder', 'da-mark'), 'Hello <div id="placeholder" class="mt-6 p-4">da-mark</div> world')
+check('injectMark on string that contains one placeholder on a meta tag', injectMark('<meta name="placeholder" content="..." />', 'placeholder', 'da-mark'), '<meta name="placeholder" content="da-mark" />')
+check('injectMark on a complex string with multiple placeholders', injectMark('Hello __placeholder__ I like <meta name="placeholder" content="..." /> and <div id="placeholder" class="mt-6 p-4">OLD-mark</div> :)', 'placeholder', 'super-mark'), 'Hello super-mark I like <meta name="placeholder" content="super-mark" /> and <div id="placeholder" class="mt-6 p-4">super-mark</div> :)')
 
 checksRun()

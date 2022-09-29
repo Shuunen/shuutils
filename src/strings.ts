@@ -197,3 +197,17 @@ export const parseJson = <T> (json: string): { error: string, value: T } => {
  * @returns true if the string contains HTML
  */
 export const isHtml = (string: string): boolean => /<[^>]+>/.test(string)
+
+/**
+ * Inject a mark in a string at a specific placeholder locations like
+ * `__placeholder__` or `<div id="placeholder">...</div>` or `<meta name="placeholder" content="..." />`
+ * @param content the string to inject the mark in
+ * @param placeholder the placeholder to replace
+ * @param mark the mark to inject
+ * @returns the new string with the mark injected
+ */
+export const injectMark = (content: string, placeholder: string, mark: string): string => content
+  .replace(new RegExp(`__${placeholder}__`, 'g'), mark)
+  .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
+  .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`), `$1${mark}$2`)
+  .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`), `$1${mark}$2`)

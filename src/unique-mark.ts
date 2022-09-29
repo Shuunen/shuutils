@@ -5,7 +5,7 @@ import path from 'path'
 import glob from 'tiny-glob'
 import { blue, red } from './colors'
 import { formatDate } from './dates'
-import { isJSON } from './strings'
+import { injectMark, isJSON } from './strings'
 
 new class UniqueMark {
   files: string[] = []
@@ -97,10 +97,7 @@ new class UniqueMark {
     this.files.forEach(file => {
       const content = readFileSync(file, 'utf8')
       if (!content.includes(`="${this.name}"`) && !content.includes(`__${this.name}__`)) return this.error(`could not find a place to inject in ${file}, aborting ${this.name}.\n\nPlease use one or more of these placeholders :  <span id="${this.name}"></span>  <meta name="${this.name}" content="">  __unique-mark__`)
-      const newContent = content
-        .replace(new RegExp(`__${this.name}__`, 'g'), this.mark)
-        .replace(new RegExp(`(<[a-z]+ .*id="${this.name}"[^>]*>)[^<]*(</[a-z]+>)`), `$1${this.mark}$2`)
-        .replace(new RegExp(`(<meta name="${this.name}" content=")[^"]*(">)`), `$1${this.mark}$2`)
+      const newContent = injectMark(content, this.name, this.mark)
       const times = (newContent.match(new RegExp(this.mark, 'g')) || []).length
       writeFileSync(file, newContent)
       this.log(`injected in ${file}`, `${times} time${times > 1 ? 's' : ''}\n`)
