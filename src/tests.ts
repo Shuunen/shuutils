@@ -1,6 +1,4 @@
-
-import { test } from 'uvu'
-import { equal } from 'uvu/assert'
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 /**
  * Check if the actual value is equal to the expected value
@@ -10,6 +8,8 @@ import { equal } from 'uvu/assert'
  * @returns nothing
  */
 export const check = <T> (title: string, actual: T | Promise<T>, expected?: T | Promise<T>): void => {
+  const { test } = require('uvu')
+  const { equal } = require('uvu/assert')
   if (actual instanceof Promise) return test(title, async () => {
     if (expected instanceof Promise) return equal(await actual, await expected)
     return equal(await actual, expected)
@@ -17,5 +17,9 @@ export const check = <T> (title: string, actual: T | Promise<T>, expected?: T | 
   return test(title, () => equal(actual, expected))
 }
 
-// give the uvu runner to check shortcut
-check.run = test.run
+/**
+ * Run all the tests declared in the file
+ */
+export const checksRun = (): void => {
+  require('uvu').test.run()
+}

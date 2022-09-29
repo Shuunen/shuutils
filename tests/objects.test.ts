@@ -1,4 +1,4 @@
-import { access, byProperty, check, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
+import { access, byProperty, check, checksRun, clone, copy, flatten, genClass, isRecord, safeAssign } from '../src'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
 const personCopy = copy(person)
@@ -64,4 +64,4 @@ check('isRecord on a number', isRecord(-1), false)
 check('isRecord on an empty record', isRecord({}), true)
 check('isRecord on a record', isRecord({ name: 'John' }), true)
 
-check.run()
+checksRun()

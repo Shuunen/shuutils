@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
-import { a, backdrop, check, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+import { a, backdrop, check, checksRun, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')
@@ -144,4 +144,4 @@ check('tw returns a string B', typeof tw('text-red-500'), 'string')
 check('tw returns a string C', tw('text-red-500 text-blue-500'), 'text-red-500 text-blue-500')
 check('tw returns a string D', tw(''), '')
 
-test.run()
+checksRun()
