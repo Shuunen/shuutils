@@ -1,3 +1,4 @@
+/* c8 ignore next */
 import { pickOne } from './arrays'
 import { flatten } from './objects'
 
@@ -118,11 +119,35 @@ export const isJSON = (string: string): boolean => {
 }
 
 /**
+ * Generate a CRC32 checksum for a given string
+ * https://dirask.com/posts/TypeScript-calculate-crc32-p2ZBKp
+ * @param text the string to checksum
+ * @returns the checksum like `3547`
+ */
+export const crc32 = (text: string): number => {
+  const CRC_TABLE: number[] = Array.from({ length: 256 })
+  for (let index = 0; index < 256; ++index) {
+    let code = index
+    for (let index_ = 0; index_ < 8; ++index_) code = code & 0x01 ? 0xED_B8_83_20 ^ (code >>> 1) : code >>> 1
+    CRC_TABLE[index] = code
+  }
+  let crc = -1
+  for (let index = 0; index < text.length; ++index) {
+    /* c8 ignore next */
+    const code = text.codePointAt(index) ?? 0
+    const key = (code ^ crc) & 0xFF
+    const value = CRC_TABLE[key]
+    if (value) crc = value ^ (crc >>> 8)
+  }
+  return (-1 ^ crc) >>> 0
+}
+
+/**
  * Generate a checksum for a given string
  * @param string `"Hello my dear friend"`
  * @returns the checksum like `3547`
  */
-export const stringSum = (string: string): number => [...new TextEncoder().encode(string)].reduce((a, b) => (a + b), 0)
+export const stringSum = (string: string): number => crc32(string)
 
 /**
  * Check if the value is a string
