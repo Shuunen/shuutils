@@ -1,4 +1,4 @@
-import { capitalize, check, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
+import { capitalize, check, checksRun, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, isBase64, isHtml, isJSON, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
 
 const data = {
   name: 'Wick',
@@ -75,7 +75,7 @@ check('parseBase64 invalid because empty', parseBase64(''), { base64: '', size: 
 
 check('parse json valid object string', parseJson('{ "name": "John Cena", "age": 42 }'), { error: '', value: { name: 'John Cena', age: 42 } })
 check('parse json invalid object string', parseJson('{ xyz "name": "John Cena" }'), { error: 'JSON invalide : Unexpected token x in JSON at position 2', value: {} })
-check('parse json valid array string', parseJson('[ "John Cena", 42 ]'), { error: '', value: [ 'John Cena', 42 ] })
+check('parse json valid array string', parseJson('[ "John Cena", 42 ]'), { error: '', value: ['John Cena', 42] })
 
 check('isString valid', isString('plop'), true)
 check('isString invalid', isString(123), false)
@@ -85,4 +85,4 @@ check('isHtml valid on malformed html', isHtml('<lyf-wc-icon name="logo"></i'), 
 check('isHtml valid on bad html', isHtml('<lyf-wc-icon name="logo"'), false)
 check('isHtml on text', isHtml('Hello'), false)
 
-check.run()
+checksRun()

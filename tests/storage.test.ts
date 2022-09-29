@@ -1,5 +1,4 @@
-import { test } from 'uvu'
-import { check, storage } from '../src'
+import { check, checksRun, storage } from '../src'
 
 const mock = {} as Storage
 type User = { name: string; age: number }
@@ -25,4 +24,4 @@ check('storage clear value for key', storage.clear(key, mock))
 
 check('storage get return undefined when key is not found', storage.get<User>('John', mock))
 
-test.run()
+checksRun()

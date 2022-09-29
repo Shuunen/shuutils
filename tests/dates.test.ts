@@ -1,4 +1,4 @@
-import { check, dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, readableTimeAgo } from '../src'
+import { check, checksRun, dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, readableTimeAgo } from '../src'
 
 const today = new Date()
 
@@ -59,4 +59,4 @@ check('format date as yy', formatDate(date, 'yy'), '21')
 check('format date as yyyy (space)', formatDate(date, 'yyyy '), '2021 ')
 check('format date as yyyy', formatDate(date, 'yyyy'), '2021')
 
-check.run()
+checksRun()

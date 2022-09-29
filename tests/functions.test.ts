@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal } from 'uvu/assert'
-import { check, debounce, hasOwnProperty, sleep, throttle } from '../src'
+import { check, checksRun, debounce, hasOwnProperty, sleep, throttle } from '../src'
 
 let times: number
 
@@ -110,4 +110,4 @@ check('anAsyncFunctionThatReturn12 B', anAsyncFunctionThatReturn12(), Promise.re
 check('anAsyncFunctionThatReturnAnObject A', anAsyncFunctionThatReturnAnObject(), { name: 'John', age: 30 })
 check('anAsyncFunctionThatReturnAnObject B', anAsyncFunctionThatReturnAnObject(), Promise.resolve({ name: 'John', age: 30 }))
 
-test.run()
+checksRun()
