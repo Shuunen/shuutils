@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "bin": {
     "unique-mark": "./dist/unique-mark.js"
@@ -14,13 +15,13 @@
     "@typescript-eslint/eslint-plugin": "5",
     "@typescript-eslint/parser": "5",
     "c8": "7",
-    "esbuild": "^0.15",
-    "eslint": "8",
+    "esbuild": "0.15",
+    "eslint": "8.25",
     "eslint-plugin-jsdoc": "39",
     "eslint-plugin-unicorn": "44",
     "jsdom": "20",
     "jsdom-global": "3",
-    "repo-check": "^1.21",
+    "repo-check": "1.27",
     "tsm": "2",
     "typescript": "4",
     "watchlist": "0"
