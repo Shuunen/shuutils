@@ -101,30 +101,42 @@ export const readableTimeAgo = (input: Date | number): string => {
 export const formatDate = (date: Date, format: string, locale = 'en-US'): string => {
   return format.replace(/yyyy|yy|MMMM|MM|dd|d|eeee|eee|HH|mm|ss|\s/g, (match) => {
     switch (match) {
-    case 'yyyy':
+    case 'yyyy': {
       return date.toLocaleDateString(locale, { year: 'numeric' })
-    case 'yy':
+    }
+    case 'yy': {
       return date.toLocaleDateString(locale, { year: '2-digit' })
-    case 'MMMM': // does not work on Node... no idea why
+    }
+    case 'MMMM': { // does not work on Node... no idea why
       return date.toLocaleDateString(locale, { month: 'long' })
-    case 'MM':
+    }
+    case 'MM': {
       return date.toLocaleDateString(locale, { month: '2-digit' })
-    case 'dd':
+    }
+    case 'dd': {
       return date.toLocaleDateString(locale, { day: '2-digit' })
-    case 'd':
+    }
+    case 'd': {
       return date.toLocaleDateString(locale, { day: 'numeric' })
-    case 'eeee': // does not work on Node... no idea why
+    }
+    case 'eeee': { // does not work on Node... no idea why
       return date.toLocaleDateString(locale, { weekday: 'long' })
-    case 'eee':
+    }
+    case 'eee': {
       return date.toLocaleDateString(locale, { weekday: 'short' })
-    case 'HH':
+    }
+    case 'HH': {
       return date.getHours().toString().padStart(2, '0')
-    case 'mm':
+    }
+    case 'mm': {
       return date.getMinutes().toString().padStart(2, '0')
-    case 'ss':
+    }
+    case 'ss': {
       return date.getSeconds().toString().padStart(2, '0')
-    default:
+    }
+    default: {
       return match
+    }
     }
   })
 }

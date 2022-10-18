@@ -4,6 +4,27 @@ const mock = {} as Storage
 type User = { name: string; age: number }
 const key = 'Michael'
 
+const returnTestA = storage.get(key, mock)
+check('storage returnTestA', returnTestA)
+check('storage typeof returnTestA', typeof returnTestA, 'undefined')
+
+const returnTestB = storage.get(key, 'default', mock)
+check('storage returnTestB', returnTestB, 'default')
+
+const returnTestC = storage.get<User>(key, mock)
+check('storage returnTestC', returnTestC)
+
+const returnTestD = storage.get<User>(key, { name: 'default', age: 0 }, mock)
+check('storage returnTestD', returnTestD, { name: 'default', age: 0 })
+
+const returnTestE = storage.get(key, true, mock)
+check('storage returnTestE', returnTestE, true)
+
+const returnTestF = storage.get<number>(key, mock)
+check('storage returnTestF', returnTestF)
+
+check('storage get without default value', storage.get(key, mock))
+
 check('storage has no value for key', storage.has(key, mock), false)
 check('storage set string value for key', storage.set(key, 'Flax', mock), 'Flax')
 check('storage has string value for key', storage.has(key, mock), true)
