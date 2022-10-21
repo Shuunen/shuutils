@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "5",
     "c8": "7",
     "esbuild": "0.15",
-    "eslint": "8.25",
+    "eslint": "8.26",
     "eslint-plugin-jsdoc": "39",
     "eslint-plugin-unicorn": "44",
     "jsdom": "20",
