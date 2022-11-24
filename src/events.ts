@@ -14,11 +14,10 @@ export interface Listener {
  */
 export const emit = <T>(name: string, data?: T, media?: HTMLElement | Element | Window): boolean => {
   if (media === undefined)
-    if (typeof window !== 'undefined') media = window
-    else {
+    if (typeof window === 'undefined') {
       console.error('no media provided & no window available')
       return false
-    }
+    } else media = window
   if (data === undefined) media.dispatchEvent(new CustomEvent(name))
   else media.dispatchEvent(new CustomEvent(name, { detail: data }))
   return true
@@ -33,11 +32,10 @@ export const emit = <T>(name: string, data?: T, media?: HTMLElement | Element | 
  */
 export const on = <T>(name: string, callback: (data: T, event: Event) => unknown, media?: HTMLElement | Element | Window): Listener | boolean => {
   if (media === undefined)
-    if (typeof window !== 'undefined') media = window
-    else {
+    if (typeof window === 'undefined') {
       console.error('no media provided & no window available')
       return false
-    }
+    } else media = window
   /**
    * The callback to call when the event is emitted
    * @param event the event
