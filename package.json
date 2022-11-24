@@ -52,7 +52,7 @@
     "check": "repo-check",
     "ci": "npm run build && npm run lint && npm run check && npm run test",
     "dev": "npm run test:watch",
-    "lint": "tsc --noEmit && eslint --fix --ignore-path .gitignore --ext .js,.ts .",
+    "lint": "tsc --noEmit && eslint --cache --fix --ignore-path .gitignore --ext .js,.ts .",
     "postversion": "git push && git push --tags && npm publish",
     "prepack": "npm run build",
     "preversion": "npm run ci",
