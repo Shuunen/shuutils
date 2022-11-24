@@ -1,5 +1,8 @@
 import { parseJson } from './strings'
 
+/* c8 ignore next */
+const defaultMedia = typeof localStorage === 'undefined' ? {} as Storage : localStorage
+
 function get<T> (key: string, media?: Storage): T | undefined
 function get (key: string, defaultValue: string, media?: Storage): string
 function get (key: string, defaultValue: boolean, media?: Storage): boolean
@@ -31,7 +34,7 @@ function get<T> (key: string, ...args: Array<T | undefined | Storage>): T | unde
  * @param media The storage media to use like localStorage, sessionStorage or a custom object
  * @returns The given value
  */
-function set<T> (key: string, data: T, media = localStorage): T {
+function set<T> (key: string, data: T, media = defaultMedia): T {
   const value = typeof data === 'string' ? data : JSON.stringify(data)
   const path = storage['prefix'] + key
   media[path] = value // don't use setItem because it's not supported by all browsers or in memory object storage
@@ -44,7 +47,7 @@ function set<T> (key: string, data: T, media = localStorage): T {
  * @param media The storage media to use like localStorage, sessionStorage or a custom object
  * @returns true if storage has a value for the given key
  */
-function has (key: string, media = localStorage): boolean {
+function has (key: string, media = defaultMedia): boolean {
   const value = get(key, undefined, media)
   return value !== undefined
 }
@@ -54,12 +57,13 @@ function has (key: string, media = localStorage): boolean {
  * @param key The key of the value to remove
  * @param media The storage media to use like localStorage, sessionStorage or a custom object
  */
-function clear (key: string, media = localStorage): void {
+function clear (key: string, media = defaultMedia): void {
   const path = storage['prefix'] + key
   delete media[path]
 }
 
 export const storage = {
+  defaultMedia,
   prefix: '', // prefix all keys in the storage with a custom string
   get,
   set,
