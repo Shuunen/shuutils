@@ -54,7 +54,7 @@ new class UniqueMark {
 
   /**
    * Load the package.json file data
-   * @returns nothing
+   * @returns {void}
    */
   loadPackageJson (): void {
     if (this.verbose) this.log('looking for', 'package.json')
