@@ -48,6 +48,7 @@
   },
   "scripts": {
     "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && echo build success",
+    "build:watch": "watchlist src -eager -- npm run build",
     "check": "repo-check",
     "ci": "npm run build && npm run lint && npm run check && npm run test && echo ci success",
     "dev": "npm run test:watch",
