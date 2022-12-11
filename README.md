@@ -33,7 +33,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 - [ ] use zod
 - [ ] test unique mark
-- [ ] try to use const enum in constants.ts
 - [ ] add a logger util
 - [ ] remove that eslint-disable :
   - max-statements
@@ -41,6 +40,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
   - sonarjs/cognitive-complexity
 - [ ] release a new major version
 - [ ] add a benchmark.md
+- [ ] try to ditch the `Number(` around constant usages like `Nb.xyz`
 
 ## Thanks
 

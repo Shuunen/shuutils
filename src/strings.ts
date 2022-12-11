@@ -1,6 +1,6 @@
 /* c8 ignore next */
 import { pickOne } from './array-pick-one'
-import { four, numberOfSpaces, three } from './constants'
+import { Nb } from './constants'
 import { flatten } from './object-flatten'
 
 /**
@@ -56,7 +56,7 @@ export function getRandomString (): string {
  * @returns string, like `"Hello world !"`
  */
 export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>): string {
-  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, numberOfSpaces) : template)
+  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, Nb.Spaces) : template)
   if (data === undefined) return string
   if (string.length === 0) return string
   const flatData = flatten(data)
@@ -189,7 +189,7 @@ export function parseBase64 (string: string): { base64: string; size: number; ty
   if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
   if (base64.length > 1 && typeof base64[1] === 'string') [, result.base64] = base64
-  result.size = Math.round(result.base64.length * three / four)
+  result.size = Math.round(result.base64.length * Nb.Three / Nb.Four)
   return result
 }
 

@@ -1,6 +1,6 @@
 // Credits to : https://github.com/sindresorhus/yoctocolors/blob/main/index.js
 
-import { five, four, hslMin, hueMax, hueStep, lightnessMax, longHex, one, rgbMax, rgbMin, saturationMax, shortHex, six, three, two } from './constants'
+import { Nb } from './constants'
 
 /**
  * Reset the string color to the default terminal color
@@ -247,42 +247,42 @@ export function bgGray (string: string): string {
 // eslint-disable-next-line max-statements
 export function hexToHsl (hex: string): { hue: number; lightness: number; saturation: number } {
   // Convert hex to RGB first
-  let colorRed = rgbMin
-  let colorGreen = rgbMin
-  let colorBlue = rgbMin
-  if (hex.length === shortHex) {
+  let colorRed = Nb.RgbMin
+  let colorGreen = Nb.RgbMin
+  let colorBlue = Nb.RgbMin
+  if (hex.length === Nb.ShortHex) {
     /* eslint-disable @typescript-eslint/restrict-template-expressions */
-    colorRed = Number(`0x${hex[one]}${hex[one]}`)
-    colorGreen = Number(`0x${hex[two]}${hex[two]}`)
-    colorBlue = Number(`0x${hex[three]}${hex[three]}`)
-  } else if (hex.length === longHex) {
-    colorRed = Number(`0x${hex[one]}${hex[two]}`)
-    colorGreen = Number(`0x${hex[three]}${hex[four]}`)
-    colorBlue = Number(`0x${hex[five]}${hex[six]}`)
+    colorRed = Number(`0x${hex[Nb.One]}${hex[Nb.One]}`)
+    colorGreen = Number(`0x${hex[Nb.Two]}${hex[Nb.Two]}`)
+    colorBlue = Number(`0x${hex[Nb.Three]}${hex[Nb.Three]}`)
+  } else if (hex.length === Nb.LongHex) {
+    colorRed = Number(`0x${hex[Nb.One]}${hex[Nb.Two]}`)
+    colorGreen = Number(`0x${hex[Nb.Three]}${hex[Nb.Four]}`)
+    colorBlue = Number(`0x${hex[Nb.Five]}${hex[Nb.Six]}`)
     /* eslint-enable @typescript-eslint/restrict-template-expressions */
   } else
-    throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${shortHex} or ${longHex} instead of : ${hex.length}`)
+    throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${Nb.ShortHex} or ${Nb.LongHex} instead of : ${hex.length}`)
 
   // Then to HSL
-  colorRed /= rgbMax
-  colorGreen /= rgbMax
-  colorBlue /= rgbMax
+  colorRed /= Nb.RgbMax
+  colorGreen /= Nb.RgbMax
+  colorBlue /= Nb.RgbMax
   const min = Math.min(colorRed, colorGreen, colorBlue)
   const max = Math.max(colorRed, colorGreen, colorBlue)
   const delta = max - min
-  let hue = hslMin
-  let saturation = hslMin
-  let lightness = hslMin
-  if (delta === 0) hue = hslMin
-  else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % six
-  else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + two
-  else hue = (colorRed - colorGreen) / delta + four
-  hue = Math.round(hue * hueStep)
-  if (hue < 0) hue += hueMax
-  lightness = (max + min) / two
-  saturation = delta === 0 ? 0 : delta / (1 - Math.abs(two * lightness - 1))
-  saturation = Math.round(saturation * saturationMax)
-  lightness = Math.round(lightness * lightnessMax)
+  let hue = Number(Nb.HslMin)
+  let saturation = Nb.HslMin
+  let lightness = Nb.HslMin
+  if (delta === 0) hue = Nb.HslMin
+  else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % Nb.Six
+  else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + Number(Nb.Two)
+  else hue = (colorRed - colorGreen) / delta + Number(Nb.Four)
+  hue = Math.round(hue * Nb.HueStep)
+  if (hue < 0) hue += Number(Nb.HueMax)
+  lightness = (max + min) / Nb.Two
+  saturation = delta === 0 ? 0 : delta / (1 - Math.abs(Nb.Two * lightness - 1))
+  saturation = Math.round(saturation * Nb.SaturationMax)
+  lightness = Math.round(lightness * Nb.LightnessMax)
   return { hue, saturation, lightness }
 }
 

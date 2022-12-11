@@ -1,4 +1,4 @@
-import { msInMinute } from './constants'
+import { Nb } from './constants'
 
 /**
  * Convert a date into iso string
@@ -16,7 +16,7 @@ import { msInMinute } from './constants'
  * @returns string like : "2018-09-03T15:24:00.366Z"
  */
 export function dateToIsoString (date: Date, shouldRemoveTimezone = false): string {
-  let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * msInMinute)).toISOString()
+  let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * Nb.MsInMinute)).toISOString()
   if (shouldRemoveTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
   return dateString
 }

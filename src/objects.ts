@@ -1,5 +1,5 @@
 import { arrayUnique } from './array-unique'
-import { ascending, descending } from './constants'
+import { Nb } from './constants'
 import { clone } from './object-clone'
 import { flatten } from './object-flatten'
 import { stringSum } from './strings'
@@ -28,13 +28,13 @@ export function access (object: Record<string, unknown>, path: string): unknown 
 // eslint-disable-next-line sonarjs/cognitive-complexity, etc/no-misused-generics
 export function byProperty<T extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = ''): (a: T, b: T) => number {
   if (order === '') return () => 0
-  const sortOrder = order === 'asc' ? ascending : descending
+  const sortOrder = order === 'asc' ? Nb.Ascending : Nb.Descending
   return (recordA: T, recordB: T) => {
     const valueA = recordA[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     if (!valueA && valueB) return Number(sortOrder)
     if (valueA && !valueB) return -sortOrder
-    const result = (valueA < valueB) ? descending : ((valueA > valueB) ? ascending : 0) // eslint-disable-line no-nested-ternary
+    const result = (valueA < valueB) ? Nb.Descending : ((valueA > valueB) ? Nb.Ascending : 0) // eslint-disable-line no-nested-ternary
     return result * sortOrder
   }
 }
