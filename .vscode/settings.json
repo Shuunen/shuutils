@@ -1,7 +1,13 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "cSpell.words": [
+    "bitness",
+    "Cena",
+    "Pepe",
+    "pikachu",
+    "plusplus",
     "rebeccapurple",
+    "sonarjs",
     "standardx"
   ],
   "workbench.colorCustomizations": {

@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable putout/putout */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 /**
@@ -7,7 +13,7 @@
  * @param expected the expected value
  * @returns nothing
  */
-export const check = <T> (title: string, actual: T | Promise<T>, expected?: T | Promise<T>): void => {
+export function check<T> (title: string, actual: Promise<T> | T, expected?: Promise<T> | T): void {
   const { test } = require('uvu')
   const { equal } = require('uvu/assert')
   if (actual instanceof Promise) return test(title, async () => {
@@ -20,6 +26,6 @@ export const check = <T> (title: string, actual: T | Promise<T>, expected?: T | 
 /**
  * Run all the tests declared in the file
  */
-export const checksRun = (): void => {
+export function checksRun (): void {
   require('uvu').test.run()
 }

@@ -15,30 +15,33 @@ check('iso string date contains timezone by default', dateToIsoString(new Date()
 check('iso string date does not contains timezone if needed', dateToIsoString(new Date(), true).toLowerCase().includes('z'), false)
 
 const samples = [
-  [1.5 * 1000, 'a moment ago'],
-  [daysAgo(), 'a moment ago'],
+  [1000, '1 second ago'],
+  [2500, '2 seconds ago'],
+  [0, 'now'],
+  [daysAgo(), 'now'],
   [10 * 1000, '10 seconds ago'],
   [59 * 1000, '59 seconds ago'],
-  [60 * 1000, 'a minute ago'],
-  [61 * 1000, 'a minute ago'],
-  [119 * 1000, 'a minute ago'],
+  [60 * 1000, '1 minute ago'],
+  [61 * 1000, '1 minute ago'],
+  [119 * 1000, '1 minute ago'],
   [120 * 1000, '2 minutes ago'],
   [121 * 1000, '2 minutes ago'],
-  [(60 * 60 * 1000) - 1000, '59 minutes ago'],
-  [1 * 60 * 60 * 1000, 'an hour ago'],
-  [1.5 * 60 * 60 * 1000, 'an hour ago'],
+  [(60 ** 2 * 1000) - 1000, '59 minutes ago'],
+  [1 * 60 * 60 * 1000, '1 hour ago'],
+  [1.5 * 60 * 60 * 1000, '1 hour ago'],
   [2.5 * 60 * 60 * 1000, '2 hours ago'],
-  [daysAgo(1), 'a day ago'],
+  [daysAgo(1), 'yesterday'],
   [daysAgo(2), '2 days ago'],
-  [daysAgo(8), 'a week ago'],
+  [daysAgo(8), 'last week'],
   [daysAgo(15), '2 weeks ago'],
   [daysAgo(29), '4 weeks ago'],
-  [daysAgo(35), 'a month ago'],
+  [daysAgo(35), 'last month'],
   [daysAgo(61), '2 months ago'],
   [daysAgo(364), '12 months ago'],
-  [daysAgo(365), 'more than a year ago'],
+  [daysAgo(365), 'last year'],
 ]
-samples.forEach(([input, expected], index) => check(`should calculate time ago correctly (index ${index})`, readableTimeAgo(input as number | Date), expected))
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+samples.forEach(([input, expected], index) => { check(`should calculate time ago correctly (index ${index})`, readableTimeAgo(input as Date | number), expected) })
 
 const date = new Date('2021-09-02T07:08:28')
 check('format date as (space) HH:mm:ss', formatDate(date, ' HH:mm:ss'), ' 07:08:28')
@@ -60,3 +63,4 @@ check('format date as yyyy (space)', formatDate(date, 'yyyy '), '2021 ')
 check('format date as yyyy', formatDate(date, 'yyyy'), '2021')
 
 checksRun()
+

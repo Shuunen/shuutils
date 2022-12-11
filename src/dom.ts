@@ -1,4 +1,7 @@
+import { ten, two } from './constants'
 import { sleep } from './functions'
+
+type DomContent = Node | Node[] | string
 
 /**
  * Generate a dom element
@@ -7,12 +10,12 @@ import { sleep } from './functions'
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated dom element
  */
-export const dom = <T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content: string | Node | Node[] = ''): HTMLElementTagNameMap[T] => {
+export function dom<T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content: DomContent = ''): HTMLElementTagNameMap[T] {
   const element = document.createElement(type)
-  element.className = classes
+  element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
   if (typeof content === 'string') element.innerHTML = content
   else if (content instanceof Node) element.append(content)
-  else content.forEach(node => element.append(node))
+  else content.forEach(node => { element.append(node) })
   return element
 }
 
@@ -23,7 +26,7 @@ export const dom = <T extends keyof HTMLElementTagNameMap> (type: T, classes = '
  * @param alt the alt text of the image
  * @returns the generated image element
  */
-export const img = (classes: string, source: string, alt: string): HTMLImageElement => {
+export function img (classes: string, source: string, alt: string): HTMLImageElement {
   const element = dom('img', classes)
   element.alt = alt
   element.src = source
@@ -36,23 +39,25 @@ export const image = img
  * @param classes the custom classes to add to the element
  * @returns the generated icon element
  */
-export const icon = (classes = ''): HTMLElement => dom('i', `icon ${classes}`)
+export function icon (classes = ''): HTMLElement {
+  return dom('i', `icon ${classes}`)
+}
 
 /**
  * Generate a link <a> element
  * @param classes the custom classes to add to the element
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @param href the href of the link
- * @param newTab true if the link should open in a new tab
+ * @param willOpenInNewTab true if the link should open in a new tab
  * @returns the generated link element
  */
-export const a = (classes: string, content: string | Node | Node[], href: string, newTab = false): HTMLAnchorElement => {
+// eslint-disable-next-line max-params
+export function link (classes: string, content: DomContent, href: string, willOpenInNewTab = false): HTMLAnchorElement {
   const element = dom('a', classes, content)
   element.href = href
-  if (newTab) element.target = '_blank'
+  if (willOpenInNewTab) element.target = '_blank'
   return element
 }
-export const link = a
 
 /**
  * Generate a paragraph <p> element
@@ -60,8 +65,9 @@ export const link = a
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated paragraph element
  */
-export const p = (classes: string, content: string | Node | Node[] = ''): HTMLParagraphElement => dom('p', classes, content)
-export const text = p
+export function text (classes: string, content: DomContent = ''): HTMLParagraphElement {
+  return dom('p', classes, content)
+}
 
 /**
  * Generate a <strong> element
@@ -69,7 +75,9 @@ export const text = p
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated strong element
  */
-export const strong = (classes: string, content: string | Node | Node[] = ''): HTMLElement => dom('strong', classes, content)
+export function strong (classes: string, content: DomContent = ''): HTMLElement {
+  return dom('strong', classes, content)
+}
 
 /**
  * Generate an emphasis <em> element
@@ -77,7 +85,9 @@ export const strong = (classes: string, content: string | Node | Node[] = ''): H
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated emphasis element
  */
-export const em = (classes: string, content: string | Node | Node[] = ''): HTMLElement => dom('em', classes, content)
+export function em (classes: string, content: DomContent = ''): HTMLElement {
+  return dom('em', classes, content)
+}
 
 /**
  * Generate a <small> element
@@ -85,7 +95,9 @@ export const em = (classes: string, content: string | Node | Node[] = ''): HTMLE
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated small element
  */
-export const small = (classes: string, content: string | Node | Node[] = ''): HTMLElement => dom('small', classes, content)
+export function small (classes: string, content: DomContent = ''): HTMLElement {
+  return dom('small', classes, content)
+}
 
 /**
  * Generate a <h1> heading element
@@ -93,7 +105,9 @@ export const small = (classes: string, content: string | Node | Node[] = ''): HT
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export const h1 = (classes: string, content: string | Node | Node[] = ''): HTMLHeadingElement => dom('h1', classes, content)
+export function h1 (classes: string, content: DomContent = ''): HTMLHeadingElement {
+  return dom('h1', classes, content)
+}
 
 /**
  * Generate a <h2> heading element
@@ -101,7 +115,9 @@ export const h1 = (classes: string, content: string | Node | Node[] = ''): HTMLH
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export const h2 = (classes: string, content: string | Node | Node[] = ''): HTMLHeadingElement => dom('h2', classes, content)
+export function h2 (classes: string, content: DomContent = ''): HTMLHeadingElement {
+  return dom('h2', classes, content)
+}
 
 /**
  * Generate a <h3> heading element
@@ -109,7 +125,9 @@ export const h2 = (classes: string, content: string | Node | Node[] = ''): HTMLH
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export const h3 = (classes: string, content: string | Node | Node[] = ''): HTMLHeadingElement => dom('h3', classes, content)
+export function h3 (classes: string, content: DomContent = ''): HTMLHeadingElement {
+  return dom('h3', classes, content)
+}
 
 /**
  * Generate a <ul> list element
@@ -117,7 +135,9 @@ export const h3 = (classes: string, content: string | Node | Node[] = ''): HTMLH
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated list element
  */
-export const ul = (classes: string, content: string | Node | Node[] = ''): HTMLUListElement => dom('ul', classes, content)
+export function ul (classes: string, content: DomContent = ''): HTMLUListElement {
+  return dom('ul', classes, content)
+}
 
 /**
  * Generate a <li> element
@@ -125,7 +145,9 @@ export const ul = (classes: string, content: string | Node | Node[] = ''): HTMLU
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated list element
  */
-export const li = (classes: string, content: string | Node | Node[] = ''): HTMLLIElement => dom('li', classes, content)
+export function li (classes: string, content: DomContent = ''): HTMLLIElement {
+  return dom('li', classes, content)
+}
 
 /**
  * Generate a <div> element
@@ -133,14 +155,16 @@ export const li = (classes: string, content: string | Node | Node[] = ''): HTMLL
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated div element
  */
-export const div = (classes: string, content: string | Node | Node[] = ''): HTMLDivElement => dom('div', classes, content)
+export function div (classes: string, content: DomContent = ''): HTMLDivElement {
+  return dom('div', classes, content)
+}
 
 /**
  * Generate a link to a css/stylesheet file
  * @param href the href/src
  * @returns the link element, ex: &lt;link type="text/css" href="../styles.css" rel="stylesheet" />
  */
-export const css = (href: string): HTMLLinkElement => {
+export function css (href: string): HTMLLinkElement {
   const element = dom('link')
   element.href = href
   element.rel = 'stylesheet'
@@ -154,7 +178,7 @@ export const css = (href: string): HTMLLinkElement => {
  * @param context the dom context to search in
  * @returns the element or null if not found
  */
-export const findOne = (selector: string, context: Document | HTMLElement = document): HTMLElement | null => {
+export function findOne (selector: string, context: Document | HTMLElement = document): HTMLElement | null {
   return context.querySelector(selector)
 }
 
@@ -164,8 +188,8 @@ export const findOne = (selector: string, context: Document | HTMLElement = docu
  * @param context the context to search in, document by default
  * @returns array of found elements
  */
-export const findAll = (selector: string, context: Document | HTMLElement = document): HTMLElement[] => {
-  return Array.prototype.slice.call(context.querySelectorAll(selector))
+export function findAll (selector: string, context: Document | HTMLElement = document): HTMLElement[] {
+  return Array.from(context.querySelectorAll(selector))
 }
 
 /**
@@ -173,17 +197,19 @@ export const findAll = (selector: string, context: Document | HTMLElement = docu
  * @param selector the css-like selector to find the element, ex: '#super-id' or '.a-class'
  * @param wait time to wait in ms between each try, default 500ms
  * @param nbTries used for recursion, do not use it
+ * @param maxTry the max number of tries, default 5
  * @returns the element or undefined if not found
  */
-export const waitToDetect = async (selector: string, wait = 500, nbTries = 0): Promise<Element | undefined> => {
+// eslint-disable-next-line max-params
+export async function waitToDetect (selector: string, wait = 500, nbTries = 0, maxTry = 5): Promise<Element | undefined> {
   await sleep(wait)
   const element = findOne(selector)
   if (element) return element
-  if (nbTries > 5) {
+  if (nbTries > maxTry) {
     console.log(`stop searching after 5 fails to detect : "${selector}"`)
-    return
+    return undefined
   }
-  return waitToDetect(selector, wait, ++nbTries)
+  return await waitToDetect(selector, wait, nbTries + 1, maxTry)
 }
 
 /**
@@ -193,13 +219,13 @@ export const waitToDetect = async (selector: string, wait = 500, nbTries = 0): P
  * ```
  * @param element the element to set height to
  */
-export const scrollToHeightSync = async (element: HTMLElement): Promise<void> => {
+export async function scrollToHeightSync (element: HTMLElement): Promise<void> {
   const initial = element.style.height
-  element.style.height = 'inherit'
-  const target = element.scrollHeight + 2
-  element.style.height = initial
-  await sleep(10)
-  element.style.height = target + 'px'
+  element.style.height = 'inherit' // eslint-disable-line no-param-reassign
+  const target = element.scrollHeight + two
+  element.style.height = initial // eslint-disable-line no-param-reassign
+  await sleep(ten)
+  element.style.height = `${target}px` // eslint-disable-line no-param-reassign, require-atomic-updates
 }
 
 /**
@@ -207,12 +233,15 @@ export const scrollToHeightSync = async (element: HTMLElement): Promise<void> =>
  * @param classes the classes to add to the backdrop
  * @returns the backdrop element
  */
-export const backdrop = (classes: string): HTMLDivElement => div(`backdrop ${classes} fixed top-0 left-0 z-10 w-full h-full opacity-0 pointer-events-none`)
-
+export function backdrop (classes: string): HTMLDivElement {
+  return div(`backdrop ${classes} fixed top-0 left-0 z-10 w-full h-full opacity-0 pointer-events-none`)
+}
 
 /**
  * Tw is a callee mock for tailwindcss, it will return the classes as a string
  * @param classes the classes to return
  * @returns the classes as a string
  */
-export const tw = (classes: string): string => classes
+export function tw (classes: string): string {
+  return classes
+}

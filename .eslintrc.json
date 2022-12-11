@@ -5,10 +5,10 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsdoc/recommended",
-    "plugin:unicorn/recommended"
+    "plugin:unicorn/all",
+    "hardcore",
+    "hardcore/ts",
+    "plugin:jsdoc/recommended"
   ],
   "overrides": [
     {
@@ -21,14 +21,6 @@
     },
     {
       "files": [
-        "repo-checker.config.js"
-      ],
-      "rules": {
-        "@typescript-eslint/explicit-module-boundary-types": "off"
-      }
-    },
-    {
-      "files": [
         "*.js"
       ],
       "rules": {
@@ -36,32 +28,11 @@
       }
     }
   ],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module"
+    "project": "tsconfig.json"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "jsdoc",
-    "unicorn"
-  ],
   "rules": {
-    "jsdoc/require-jsdoc": [
-      "error",
-      {
-        "require": {
-          "FunctionDeclaration": true,
-          "MethodDefinition": true,
-          "ClassDeclaration": true,
-          "ArrowFunctionExpression": true,
-          "FunctionExpression": true
-        }
-      }
-    ],
-    "jsdoc/require-param-type": "off",
-    "jsdoc/require-returns-type": "off",
-    "jsdoc/newline-after-description": "off",
+    "@typescript-eslint/array-type": "off",
     "@typescript-eslint/brace-style": [
       "error",
       "1tbs",
@@ -69,13 +40,48 @@
         "allowSingleLine": true
       }
     ],
+    "@typescript-eslint/comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "@typescript-eslint/consistent-indexed-object-style": [
+      "error",
+      "record"
+    ],
+    "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none"
+        }
+      }
+    ],
+    "@typescript-eslint/no-type-alias": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^(_|global)"
       }
+    ],
+    "@typescript-eslint/object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/prefer-readonly-parameter-types": "off",
+    "@typescript-eslint/quotes": [
+      "error",
+      "single"
+    ],
+    "@typescript-eslint/semi": [
+      "error",
+      "never"
     ],
     "capitalized-comments": "off",
     "comma-dangle": [
@@ -86,23 +92,44 @@
       "error",
       "multi"
     ],
+    "eslint-comments/no-use": "off",
+    "etc/no-const-enum": "off",
+    "etc/no-enum": "off",
+    "etc/no-t": "off",
+    "ext/lines-between-object-properties": "off",
     "func-names": [
       "error",
       "always"
     ],
-    "import/no-unassigned-import": "off",
-    "indent": [
+    "import/order": "off",
+    "import/prefer-default-export": "off",
+    "jsdoc/newline-after-description": "off",
+    "jsdoc/require-jsdoc": [
       "error",
-      2
+      {
+        "require": {
+          "ArrowFunctionExpression": true,
+          "ClassDeclaration": true,
+          "FunctionDeclaration": true,
+          "FunctionExpression": true,
+          "MethodDefinition": true
+        }
+      }
     ],
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns-type": "off",
+    "line-comment-position": "off",
     "lines-between-class-members": "off",
+    "max-len": "off",
     "max-statements-per-line": "off",
     "no-console": "off",
+    "no-inline-comments": "off",
     "object-curly-spacing": [
       "error",
       "always"
     ],
     "padding-line-between-statements": "off",
+    "prettier/prettier": "off",
     "quote-props": [
       "error",
       "consistent-as-needed"
@@ -123,6 +150,8 @@
     "unicorn/no-process-exit": "off",
     "unicorn/prefer-module": "off",
     "unicorn/prefer-node-protocol": "off",
+    "unicorn/prefer-spread": "off",
+    "unicorn/prefer-string-replace-all": "off",
     "unicorn/prefer-switch": "off",
     "unicorn/prevent-abbreviations": [
       "error",
@@ -132,6 +161,12 @@
           "pkg": true
         }
       }
-    ]
+    ],
+    "unicorn/switch-case-braces": "off"
+  },
+  "settings": {
+    "repo-check": {
+      "remove-me": "plugin:@typescript-eslint/all"
+    }
   }
 }

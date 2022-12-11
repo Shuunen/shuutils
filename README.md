@@ -32,6 +32,12 @@ console.log('Hello world, current timestamp is', getTimestamp())
 ## TODO
 
 - [ ] use zod
+- [ ] test unique mark
+- [ ] try to use const enum in constants.ts
+- [ ] remove that eslint-disable :
+  - max-statements
+  - complexity
+  - sonarjs/cognitive-complexity
 
 ## Thanks
 
