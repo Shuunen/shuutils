@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/node": "18",
     "c8": "7",
+    "dependency-cruiser": "12",
     "esbuild": "0.16",
     "eslint": "8.29",
     "eslint-config-hardcore": "26",
@@ -50,7 +51,7 @@
     "check": "repo-check",
     "ci": "npm run build && npm run lint && npm run check && npm run test && echo ci success",
     "dev": "npm run test:watch",
-    "lint": "tsc --noEmit && eslint --cache --fix --ignore-path .gitignore --ext .js,.ts . && echo lint success",
+    "lint": "tsc --noEmit && eslint --cache --fix --ignore-path .gitignore --ext .js,.ts . && depcruise src --config && echo lint success",
     "lint:watch": "watchlist src tests -eager -- npm run lint",
     "postversion": "git push && git push --tags && npm publish",
     "prepack": "npm run build",
@@ -60,6 +61,6 @@
     "test:watch": "watchlist src tests -eager -- npm test"
   },
   "type": "module",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "version": "6.3.0"
 }
