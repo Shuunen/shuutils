@@ -1,36 +1,23 @@
-import { first, second, two } from './constants'
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable etc/no-misused-generics */
 import { parseJson } from './strings'
 
-/* c8 ignore next 2 */
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const defaultMedia = typeof localStorage === 'undefined' ? {} as Storage : localStorage
-
-function get (key: string, defaultValue: undefined, media?: Storage): unknown
-function get<T> (key: string, media?: Storage): T | undefined // eslint-disable-line etc/no-misused-generics
-function get (key: string, defaultValue: string, media?: Storage): string
-function get (key: string, defaultValue: boolean, media?: Storage): boolean // eslint-disable-line @typescript-eslint/naming-convention
-function get (key: string, defaultValue: number, media?: Storage): number
-function get<T> (key: string, defaultValue: T, media?: Storage): T
-function get<T> (key: string, defaultValue: undefined, media?: Storage): T | undefined // eslint-disable-line etc/no-misused-generics
+function get (key: string, defaultValue: string): string
+function get (key: string, defaultValue: boolean): boolean // eslint-disable-line @typescript-eslint/naming-convention
+function get (key: string, defaultValue: number): number
+function get<T = unknown> (key: string, defaultValue: T): T
+function get<T = unknown> (key: string): T | undefined
 
 /**
  * Get a value from the storage media
  * @param key The key of the value to get
- * @param {...any} args Either a defaultValue and a storage media, or just a storage media
+ * @param defaultValue The default value to return if the key is not found
  * @returns The value or defaultValue if not found
  */
-// eslint-disable-next-line putout/putout
-function get<T> (key: string, ...args: (Storage | T | undefined)[]): T {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const defaultValue = (args.length === two ? args[first] : undefined) as T
-
-  /* c8 ignore next 2 */
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unnecessary-condition
-  const media = (args.length === two ? args[second] : args[first]) as Storage ?? (typeof window === 'undefined' ? {} : localStorage) as Storage
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+function get<T = unknown> (key: string, defaultValue?: T): T | undefined {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const data = media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
+  const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
   if (data === undefined || data === null) return defaultValue
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const { error, value } = parseJson<T>(data)
@@ -43,42 +30,38 @@ function get<T> (key: string, ...args: (Storage | T | undefined)[]): T {
  * Set a value in the storage
  * @param key The key of the value to set
  * @param data The value to set
- * @param media The storage media to use like localStorage, sessionStorage or a custom object
  * @returns The given value
  */
-function set<T> (key: string, data: T, media = defaultMedia): T {
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+function set<T> (key: string, data: T): T {
   const path = storage.prefix + key
-  // eslint-disable-next-line no-param-reassign
-  media[path] = typeof data === 'string' ? data : JSON.stringify(data) // don't use setItem because it's not supported by all browsers or in memory object storage
+  const value = typeof data === 'string' ? data : JSON.stringify(data)
+  Reflect.set(storage.media, path, value)
   return data
 }
 
 /**
  * Check if storage has a value
  * @param key The key of the value to check
- * @param media The storage media to use like localStorage, sessionStorage or a custom object
  * @returns true if storage has a value for the given key
  */
-function has (key: string, media = defaultMedia): boolean {
-  const value = get(key, undefined, media)
-  return value !== undefined
+function has (key: string): boolean {
+  return get(key) !== undefined
 }
 
 /**
  * Remove a value from the storage
  * @param key The key of the value to remove
- * @param media The storage media to use like localStorage, sessionStorage or a custom object
  */
-function clear (key: string, media = defaultMedia): void {
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+function clear (key: string): void {
   const path = storage.prefix + key
-  // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-dynamic-delete
-  delete media[path]
+  // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+  delete storage.media[path]
 }
 
 export const storage = {
-  defaultMedia,
+  /* c8 ignore next 2 */
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  media: typeof localStorage === 'undefined' ? {} as Storage : localStorage,
   prefix: '', // prefix all keys in the storage with a custom string
   get,
   set,
