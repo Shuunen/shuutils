@@ -2,6 +2,7 @@
 /* eslint-disable max-lines */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable import/unambiguous */
+// eslint-disable-next-line jsdoc/valid-types
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
   forbidden: [
