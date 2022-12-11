@@ -68,3 +68,5 @@ export const storage = {
   has,
   clear,
 }
+
+export type ShuutilsStorage = typeof storage
