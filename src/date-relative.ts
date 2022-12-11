@@ -1,4 +1,4 @@
-import { msInDay, msInHour, msInMinute, msInMonth, msInSecond, msInWeek, msInYear } from './constants'
+import { Nb } from './constants'
 import { dateIso10 } from './dates'
 
 /**
@@ -11,13 +11,13 @@ import { dateIso10 } from './dates'
 export function readableTimeAgo (input: Date | number, language = 'en'): string {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' })
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
-  if (ms < msInMinute) return rtf.format(-Math.floor(ms / msInSecond), 'second')
-  if (ms < msInHour) return rtf.format(-Math.floor(ms / msInMinute), 'minute')
-  if (ms < msInDay) return rtf.format(-Math.floor(ms / msInHour), 'hour')
-  if (ms < msInWeek) return rtf.format(-Math.floor(ms / msInDay), 'day')
-  if (ms < msInMonth) return rtf.format(-Math.floor(ms / msInWeek), 'week')
-  if (ms < msInYear) return rtf.format(-Math.floor(ms / msInMonth), 'month')
-  return rtf.format(-Math.floor(ms / msInYear), 'year')
+  if (ms < Nb.MsInMinute) return rtf.format(-Math.floor(ms / Nb.MsInSecond), 'second')
+  if (ms < Nb.MsInHour) return rtf.format(-Math.floor(ms / Nb.MsInMinute), 'minute')
+  if (ms < Nb.MsInDay) return rtf.format(-Math.floor(ms / Nb.MsInHour), 'hour')
+  if (ms < Nb.MsInWeek) return rtf.format(-Math.floor(ms / Nb.MsInDay), 'day')
+  if (ms < Nb.MsInMonth) return rtf.format(-Math.floor(ms / Nb.MsInWeek), 'week')
+  if (ms < Nb.MsInYear) return rtf.format(-Math.floor(ms / Nb.MsInMonth), 'month')
+  return rtf.format(-Math.floor(ms / Nb.MsInYear), 'year')
 }
 
 /**

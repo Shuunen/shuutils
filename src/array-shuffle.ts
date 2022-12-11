@@ -1,4 +1,4 @@
-import { previous } from './constants'
+import { Nb } from './constants'
 import { clone } from './object-clone'
 
 /**
@@ -9,7 +9,8 @@ import { clone } from './object-clone'
  */
 export function shuffleArray<T> (input: T[]): T[] {
   const array = clone(input)
-  for (let indexA = array.length - 1; indexA > 0; indexA += previous) {
+  // eslint-disable-next-line for-direction
+  for (let indexA = array.length - 1; indexA > 0; indexA += Number(Nb.Previous)) {
     const indexB = Math.floor(Math.random() * (indexA + 1))
     const temporary = array[indexA]
     array[indexA] = array[indexB] as T // eslint-disable-line @typescript-eslint/consistent-type-assertions

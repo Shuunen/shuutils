@@ -14,12 +14,6 @@ import { fileURLToPath } from 'url'
 async function checkTreeShake () {
   // cross the fingers and hope that esbuild will not change the output
   const expected = `// dist/index.js
-var msInMinute = 60 * 1e3;
-var msInHour = 60 * 60 * 1e3;
-var msInDay = 24 * 60 * 60 * 1e3;
-var msInWeek = 7 * 24 * 60 * 60 * 1e3;
-var msInMonth = 30 * 24 * 60 * 60 * 1e3;
-var msInYear = 365 * 24 * 60 * 60 * 1e3;
 function getRandomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }

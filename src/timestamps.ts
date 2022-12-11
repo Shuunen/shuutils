@@ -1,4 +1,4 @@
-import { msInSecond } from './constants'
+import { Nb } from './constants'
 
 /**
  * Give timestamp of a date or now in seconds
@@ -6,7 +6,7 @@ import { msInSecond } from './constants'
  * @returns number like : 1541258097
  */
 export function getTimestamp (date: Date = new Date()): number {
-  return Math.round(date.getTime() / msInSecond)
+  return Math.round(date.getTime() / Nb.MsInSecond)
 }
 
 /**
