@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
-import { a, backdrop, check, checksRun, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, p, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+import { backdrop, check, checksRun, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')
@@ -29,7 +29,7 @@ test('custom type dom element with classes & html content', function () {
 })
 
 test('custom type dom element with classes & dom element content', function () {
-  const element = dom('i', 'italic', p('pizza', 'John Pepe'))
+  const element = dom('i', 'italic', text('pizza', 'John Pepe'))
   equal(element.textContent, 'John Pepe')
   equal(element.tagName.toLowerCase(), 'i')
   equal(element.innerHTML, '<p class="pizza">John Pepe</p>')
@@ -62,7 +62,7 @@ test('link', function () {
 })
 
 test('link that open in a new tab', function () {
-  const element = a('link', 'go to external page', 'https://duckduckgo.com/', true)
+  const element = link('link', 'go to external page', 'https://duckduckgo.com/', true)
   equal(element.href, 'https://duckduckgo.com/')
   equal(element.textContent, 'go to external page')
   equal(element.target, '_blank')
@@ -86,21 +86,21 @@ test('dom backdrop', function () {
 })
 
 test('dom basics', function () {
-  const funcs = [p, text, strong, em, small, h1, h2, h3, div]
-  funcs.forEach(function_ => {
-    const { name } = function_
-    const element = function_(name)
+  const funcs = [strong, em, small, h1, h2, h3, div]
+  funcs.forEach(testFunction => {
+    const { name } = testFunction
+    const element = testFunction(name)
     equal(element.tagName.toLowerCase(), name)
     equal(element.textContent, '')
     ok(element.classList.contains(name))
-    const elementContent = function_(name, `I really like guacamole with ${name}`)
+    const elementContent = testFunction(name, `I really like guacamole with ${name}`)
     equal(elementContent.tagName.toLowerCase(), name)
     equal(elementContent.textContent, `I really like guacamole with ${name}`)
   })
 })
 
 test('dom handle multiple children', function () {
-  const element = div('div', [p('p', 'text 1'), p('p', 'text 2')])
+  const element = div('div', [text('p', 'text 1'), text('p', 'text 2')])
   equal(element.childElementCount, 2)
   equal(element.textContent, 'text 1text 2')
 })
@@ -112,8 +112,8 @@ test('css link', function () {
   equal(element.type, 'text/css')
 })
 
-test('dive div in a dave div has Life in a div', function () {
-  const element = div('dave', div('dive', 'Life in a div'))
+test('dive div in a Dave div has Life in a div', function () {
+  const element = div('Dave', div('dive', 'Life in a div'))
   equal(element.tagName.toLowerCase(), 'div')
   equal(element.innerHTML, '<div class="dive">Life in a div</div>')
 })

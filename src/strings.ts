@@ -1,19 +1,20 @@
 /* c8 ignore next */
-import { pickOne } from './arrays'
-import { flatten } from './objects'
+import { pickOne } from './array-pick-one'
+import { four, numberOfSpaces, three } from './constants'
+import { flatten } from './object-flatten'
 
 /**
  * Clean a string from special characters
  * @param sentence like "Hello, my name is John Doe !"
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export const sanitize = (sentence: string): string => {
+export function sanitize (sentence: string): string {
   return sentence
     .trim()
-    .replace(/['’-]/g, ' ')
+    .replace(/['’-]/gu, ' ')
     .normalize('NFD')
-    .replace(/[^\d\sa-z]/gi, '')
-    .replace(/\s\s+/g, ' ')
+    .replace(/[^\d\sa-z]/giu, '')
+    .replace(/\s{2,}/gu, ' ')
     .toLowerCase()
 }
 
@@ -24,9 +25,10 @@ export const sanitize = (sentence: string): string => {
  */
 export function slugify (string: string): string {
   return sanitize(string) // Clean the string
-    .replace(/\W+/gi, '-') // Replace all non word with dash
-    .replace(/^-+/, '') // Trim dash from start
-    .replace(/-+$/, '') // Trim dash from end
+    .replace(/\W+/giu, '-') // Replace all non word with dash
+    .replace(/^-+/u, '') // Trim dash from start
+    // eslint-disable-next-line regexp/no-super-linear-move
+    .replace(/-+$/u, '') // Trim dash from end
 }
 
 /**
@@ -53,12 +55,13 @@ export function getRandomString (): string {
  * @param data input object, like `{ name: "world" }`
  * @returns string, like `"Hello world !"`
  */
-export function fillTemplate (template: string | Record<string, unknown>, data?: Record<string, unknown>): string {
-  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, 2) : template)
+export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>): string {
+  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, numberOfSpaces) : template)
   if (data === undefined) return string
   if (string.length === 0) return string
   const flatData = flatten(data)
   for (const [key, value] of Object.entries(flatData)) {
+    // eslint-disable-next-line require-unicode-regexp, security/detect-non-literal-regexp
     const regex = new RegExp(`(/?\\*?{{?\\s*${key}\\s*}?}\\*?/?)`, 'g')
     string = string.replace(regex, String(value))
   }
@@ -68,13 +71,13 @@ export function fillTemplate (template: string | Record<string, unknown>, data?:
 /**
  * Transform the first letter of a string into capital
  * @param string `"hello John"`
- * @param lower boolean, try to lower the rest of the string when applicable
+ * @param shouldLower boolean, try to lower the rest of the string when applicable
  * @returns `"Hello John"`
  */
-export const capitalize = (string: string, lower = false): string => {
-  if (!lower) return string.charAt(0).toUpperCase() + string.slice(1)
+export function capitalize (string: string, shouldLower = false): string {
+  if (!shouldLower) return string.charAt(0).toUpperCase() + string.slice(1)
   const words = string.split(' ')
-  const cap = /^[\dA-Z-]+$/
+  const cap = /^[\dA-Z-]+$/u
   return words.map((word, index) => {
     if (cap.test(word)) return word
     if (index === 0) return capitalize(word)
@@ -88,10 +91,10 @@ export const capitalize = (string: string, lower = false): string => {
  * @param maxWords 3 for example
  * @returns `"Hello my dear..."`
  */
-export const ellipsisWords = (stringIn = '', maxWords = 5): string => {
+export function ellipsisWords (stringIn = '', maxWords = 5): string {
   const stringOut = stringIn.split(' ').splice(0, maxWords).join(' ')
   if (stringOut === stringIn) return stringIn
-  return stringOut + '...'
+  return `${stringOut}...`
 }
 
 /**
@@ -100,10 +103,10 @@ export const ellipsisWords = (stringIn = '', maxWords = 5): string => {
  * @param maxLength 8 for example
  * @returns `"Hello my..."`
  */
-export const ellipsis = (stringIn = '', maxLength = 50): string => {
+export function ellipsis (stringIn = '', maxLength = 50): string {
   const stringOut = stringIn.slice(0, maxLength)
   if (stringOut === stringIn) return stringIn
-  return stringOut + '...'
+  return `${stringOut}...`
 }
 
 /**
@@ -111,9 +114,10 @@ export const ellipsis = (stringIn = '', maxLength = 50): string => {
  * @param string `'{ "name": "Johnny" }'`
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
-export const isJSON = (string: string): boolean => {
-  const startValid = /^(\[\s*)?{\s*"/.test(string)
-  if (!startValid) return false
+export function isJson (string: string): boolean {
+  // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex
+  const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
+  if (!hasValidStart) return false
   try { JSON.parse(string) } catch { return false }
   return true
 }
@@ -124,22 +128,25 @@ export const isJSON = (string: string): boolean => {
  * @param text the string to checksum
  * @returns the checksum like `3547`
  */
-export const crc32 = (text: string): number => {
-  const CRC_TABLE: number[] = Array.from({ length: 256 })
+export function crc32 (text: string): number { // eslint-disable-line max-statements
+  const crcTable: number[] = Array.from({ length: 256 })
+  /* eslint-disable @typescript-eslint/no-magic-numbers, no-bitwise, no-plusplus */
   for (let index = 0; index < 256; ++index) {
     let code = index
-    for (let index_ = 0; index_ < 8; ++index_) code = code & 0x01 ? 0xED_B8_83_20 ^ (code >>> 1) : code >>> 1
-    CRC_TABLE[index] = code
+    for (let indexB = 0; indexB < 8; ++indexB) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1
+    crcTable[index] = code
   }
   let crc = -1
   for (let index = 0; index < text.length; ++index) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
     const key = (code ^ crc) & 0xFF
-    const value = CRC_TABLE[key]
+    const value = crcTable[key]
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (value) crc = value ^ (crc >>> 8)
   }
   return (-1 ^ crc) >>> 0
+  /* eslint-enable @typescript-eslint/no-magic-numbers, no-bitwise, no-plusplus */
 }
 
 /**
@@ -147,35 +154,42 @@ export const crc32 = (text: string): number => {
  * @param string `"Hello my dear friend"`
  * @returns the checksum like `3547`
  */
-export const stringSum = (string: string): number => crc32(string)
+export function stringSum (string: string): number {
+  return crc32(string)
+}
 
 /**
  * Check if the value is a string
  * @param value the value to check
  * @returns true if the value is a string
  */
-export const isString = (value: unknown): boolean => (typeof value === 'string')
+export function isString (value: unknown): boolean {
+  return (typeof value === 'string')
+}
 
 /**
  * Check if the string is a base64 string
  * @param string the string to check
  * @returns true if the string is a base64 string
  */
-export const isBase64 = (string: string): boolean => /^(data:)?[\w/]+;base64,[\w+/=]+$/.test(string)
+export function isBase64 (string: string): boolean {
+  return /^(?:data:)?[\w/]+;base64,[\w+/=]+$/u.test(string)
+}
 
 /**
  * Parse a base64 string
  * @param string the base64 string to parse
  * @returns the parsed string like `{ base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/png' }`
  */
-export const parseBase64 = (string: string): { base64: string, size: number, type: string } => {
+export function parseBase64 (string: string): { base64: string; size: number; type: string } {
   const result = { base64: '', size: 0, type: '' }
   if (!isBase64(string)) return result
-  const type = string.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)
-  if (type && typeof type[0] === 'string') result.type = type[0]
+  // eslint-disable-next-line regexp/no-super-linear-move
+  const type = /[^:]\w+\/[\w+.-]+(?=;|,)/u.exec(string)
+  if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
-  if (base64.length > 1 && typeof base64[1] === 'string') result.base64 = base64[1]
-  result.size = Math.round(result.base64.length * 3 / 4)
+  if (base64.length > 1 && typeof base64[1] === 'string') [, result.base64] = base64
+  result.size = Math.round(result.base64.length * three / four)
   return result
 }
 
@@ -184,10 +198,13 @@ export const parseBase64 = (string: string): { base64: string, size: number, typ
  * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
-export const parseJson = <T> (json: string): { error: string, value: T } => {
+// eslint-disable-next-line etc/no-misused-generics
+export function parseJson<T> (json: string): { error: string; value: T } {
   let error = ''
   let value = {}
-  if (json !== '') try { value = JSON.parse(json) } catch (error_) { error = 'JSON invalide : ' + (error_ as Error).message }
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-assignment
+  if (json !== '') try { value = JSON.parse(json) } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` }
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return { error, value: value as T }
 }
 
@@ -196,7 +213,10 @@ export const parseJson = <T> (json: string): { error: string, value: T } => {
  * @param string the string to check
  * @returns true if the string contains HTML
  */
-export const isHtml = (string: string): boolean => /<[^>]+>/.test(string)
+export function isHtml (string: string): boolean {
+  // eslint-disable-next-line regexp/no-super-linear-move
+  return /<[^>]+>/u.test(string)
+}
 
 /**
  * Inject a mark in a string at a specific placeholder locations like
@@ -206,8 +226,14 @@ export const isHtml = (string: string): boolean => /<[^>]+>/.test(string)
  * @param mark the mark to inject
  * @returns the new string with the mark injected
  */
-export const injectMark = (content: string, placeholder: string, mark: string): string => content
-  .replace(new RegExp(`__${placeholder}__`, 'g'), mark)
-  .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
-  .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`), `$1${mark}$2`)
-  .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`), `$1${mark}$2`)
+export function injectMark (content: string, placeholder: string, mark: string): string {
+  /* eslint-disable security/detect-non-literal-regexp */
+  return content
+    .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)
+    // eslint-disable-next-line require-unicode-regexp
+    .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
+    .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`, 'u'), `$1${mark}$2`)
+    .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`, 'u'), `$1${mark}$2`)
+  /* eslint-enable security/detect-non-literal-regexp */
+}
+

@@ -6,8 +6,10 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (callback: F, waitFor: number): (...parameters: Parameters<F>) => Promise<ReturnType<F>> {
+  // eslint-disable-next-line @typescript-eslint/init-declarations
   let timeout: ReturnType<typeof setTimeout>
-  return async (...parameters: Parameters<F>) => new Promise(resolve => {
+  // eslint-disable-next-line promise/avoid-new
+  return async (...parameters: Parameters<F>) => await new Promise(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       resolve(callback(...parameters))
@@ -17,18 +19,18 @@ export function debounce<F extends (...parameters: any[]) => ReturnType<F>> (cal
 
 /**
  * Throttle a function, inspired from https://www.matthewgerstman.com/tech/throttle-and-debounce/
- * @param function_ the function to throttle
+ * @param callback the function to throttle
  * @param timeout the time to wait before each function call
  * @returns a throttled function
  */
-export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (function_: F, timeout: number): (...parameters: Parameters<F>) => void { // eslint-disable-line @typescript-eslint/no-explicit-any
-  let ready = true
+export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (callback: F, timeout: number): (...parameters: Parameters<F>) => void { // eslint-disable-line @typescript-eslint/no-explicit-any
+  let isReady = true
   return (...parameters: Parameters<F>) => {
-    if (!ready) return
-    ready = false
-    function_(...parameters)
+    if (!isReady) return
+    isReady = false
+    callback(...parameters)
     setTimeout(() => {
-      ready = true
+      isReady = true
     }, timeout)
   }
 }
@@ -39,7 +41,8 @@ export function throttle<F extends (...parameters: any[]) => ReturnType<F>> (fun
  * @returns promise that resolve in the provided time
  */
 export async function sleep (ms = 1000): Promise<number> {
-  return new Promise(resolve => setTimeout(() => resolve(ms), ms))
+  // eslint-disable-next-line promise/avoid-new, no-promise-executor-return
+  return await new Promise(resolve => setTimeout(() => { resolve(ms) }, ms))
 }
 
 /**
@@ -48,6 +51,6 @@ export async function sleep (ms = 1000): Promise<number> {
  * @param property the property to test
  * @returns true if the object has the property
  */
-export function hasOwnProperty (object: object, property: string): boolean {
+export function hasOwn (object: object, property: string): boolean {
   return Object.prototype.hasOwnProperty.call(object, property)
 }

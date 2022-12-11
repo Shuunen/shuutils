@@ -1,123 +1,159 @@
 // Credits to : https://github.com/sindresorhus/yoctocolors/blob/main/index.js
 
+import { five, four, hslMin, hueMax, hueStep, lightnessMax, longHex, one, rgbMax, rgbMin, saturationMax, shortHex, six, three, two } from './constants'
+
 /**
  * Reset the string color to the default terminal color
  * @param string the string to reset
  * @returns {string} the string with the reset color
  */
-export const reset = (string: string): string => '\u001B[' + 0 + 'm' + string + '\u001B[' + 0 + 'm'
+export function reset (string: string): string {
+  return `\u001B[0m${string}\u001B[0m`
+}
 
 /**
  * Render a bold string for the terminal
  * @param string the string to render
  * @returns {string} the string with the bold decoration
  */
-export const bold = (string: string): string => '\u001B[' + 1 + 'm' + string + '\u001B[' + 22 + 'm'
+export function bold (string: string): string {
+  return `\u001B[1m${string}\u001B[22m`
+}
 
 /**
  * Render a dim string for the terminal
  * @param string the string to render
  * @returns {string} the string with the dim decoration
  */
-export const dim = (string: string): string => '\u001B[' + 2 + 'm' + string + '\u001B[' + 22 + 'm'
+export function dim (string: string): string {
+  return `\u001B[2m${string}\u001B[22m`
+}
 
 /**
  * Render a italic string for the terminal
  * @param string the string to render
  * @returns {string} the string with the italic decoration
  */
-export const italic = (string: string): string => '\u001B[' + 3 + 'm' + string + '\u001B[' + 23 + 'm'
+export function italic (string: string): string {
+  return `\u001B[3m${string}\u001B[23m`
+}
 
 /**
  * Render a underline string for the terminal
  * @param string the string to render
  * @returns {string} the string with the underline decoration
  */
-export const underline = (string: string): string => '\u001B[' + 4 + 'm' + string + '\u001B[' + 24 + 'm'
+export function underline (string: string): string {
+  return `\u001B[4m${string}\u001B[24m`
+}
 
 /**
  * Render a overline string for the terminal
  * @param string the string to render
  * @returns {string} the string with the overline decoration
  */
-export const overline = (string: string): string => '\u001B[' + 53 + 'm' + string + '\u001B[' + 55 + 'm'
+export function overline (string: string): string {
+  return `\u001B[53m${string}\u001B[55m`
+}
 
 /**
  * Render an inverse string for the terminal
  * @param string the string to render
  * @returns {string} the string with the inverse decoration
  */
-export const inverse = (string: string): string => '\u001B[' + 7 + 'm' + string + '\u001B[' + 27 + 'm'
+export function inverse (string: string): string {
+  return `\u001B[7m${string}\u001B[27m`
+}
 
 /**
  * Render a strike-through string for the terminal
  * @param string the string to render
  * @returns {string} the string with the strike-through decoration
  */
-export const strikeThrough = (string: string): string => '\u001B[' + 9 + 'm' + string + '\u001B[' + 29 + 'm'
+export function strikeThrough (string: string): string {
+  return `\u001B[9m${string}\u001B[29m`
+}
 
 /**
  * Render a black string for the terminal
  * @param string the string to render
  * @returns {string} the string with the black color
  */
-export const black = (string: string): string => '\u001B[' + 30 + 'm' + string + '\u001B[' + 39 + 'm'
+export function black (string: string): string {
+  return `\u001B[30m${string}\u001B[39m`
+}
 
 /**
  * Render a red string for the terminal
  * @param string the string to render
  * @returns {string} the string with the red color
  */
-export const red = (string: string): string => '\u001B[' + 31 + 'm' + string + '\u001B[' + 39 + 'm'
+export function red (string: string): string {
+  return `\u001B[31m${string}\u001B[39m`
+}
 
 /**
  * Render a green string for the terminal
  * @param string the string to render
  * @returns {string} the string with the green color
  */
-export const green = (string: string): string => '\u001B[' + 32 + 'm' + string + '\u001B[' + 39 + 'm'
+export function green (string: string): string {
+  return `\u001B[32m${string}\u001B[39m`
+}
 
 /**
  * Render a yellow string for the terminal
  * @param string the string to render
  * @returns {string} the string with the yellow color
  */
-export const yellow = (string: string): string => '\u001B[' + 33 + 'm' + string + '\u001B[' + 39 + 'm'
+export function yellow (string: string): string {
+  return `\u001B[33m${string}\u001B[39m`
+}
 
 /**
  * Render a blue string for the terminal
  * @param string the string to render
  * @returns {string} the string with the blue color
  */
-export const blue = (string: string): string => '\u001B[' + 34 + 'm' + string + '\u001B[' + 39 + 'm'
+export function blue (string: string): string {
+  return `\u001B[34m${string}\u001B[39m`
+}
 
 /**
  * Render a magenta string for the terminal
  * @param string the string to render
  * @returns {string} the string with the magenta color
  */
-export const magenta = (string: string): string => '\u001B[' + 35 + 'm' + string + '\u001B[' + 39 + 'm'
+export function magenta (string: string): string {
+  return `\u001B[35m${string}\u001B[39m`
+}
 
 /**
  * Render a cyan string for the terminal
  * @param string the string to render
  * @returns {string} the string with the cyan color
  */
-export const cyan = (string: string): string => '\u001B[' + 36 + 'm' + string + '\u001B[' + 39 + 'm'
+export function cyan (string: string): string {
+  return `\u001B[36m${string}\u001B[39m`
+}
 
 /**
  * Render a white string for the terminal
  * @param string the string to render
  * @returns {string} the string with the white color
  */
-export const white = (string: string): string => '\u001B[' + 37 + 'm' + string + '\u001B[' + 39 + 'm'
+export function white (string: string): string {
+  return `\u001B[37m${string}\u001B[39m`
+}
 
 /**
  * Render a gray string for the terminal
  * @param string the string to render
  * @returns {string} the string with the gray color
  */
-export const gray = (string: string): string => '\u001B[' + 90 + 'm' + string + '\u001B[' + 39 + 'm'
+export function gray (string: string): string {
+  return `\u001B[90m${string}\u001B[39m`
+}
 
 
 /**
@@ -125,63 +161,81 @@ export const gray = (string: string): string => '\u001B[' + 90 + 'm' + string + 
  * @param string the string to render
  * @returns {string} the string with the black background
  */
-export const bgBlack = (string: string): string => '\u001B[' + 40 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgBlack (string: string): string {
+  return `\u001B[40m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a red background for the terminal
  * @param string the string to render
  * @returns {string} the string with the red background
  */
-export const bgRed = (string: string): string => '\u001B[' + 41 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgRed (string: string): string {
+  return `\u001B[41m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a green background for the terminal
  * @param string the string to render
  * @returns {string} the string with the green background
  */
-export const bgGreen = (string: string): string => '\u001B[' + 42 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgGreen (string: string): string {
+  return `\u001B[42m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a yellow background for the terminal
  * @param string the string to render
  * @returns {string} the string with the yellow background
  */
-export const bgYellow = (string: string): string => '\u001B[' + 43 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgYellow (string: string): string {
+  return `\u001B[43m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a blue background for the terminal
  * @param string the string to render
  * @returns {string} the string with the blue background
  */
-export const bgBlue = (string: string): string => '\u001B[' + 44 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgBlue (string: string): string {
+  return `\u001B[44m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a magenta background for the terminal
  * @param string the string to render
  * @returns {string} the string with the magenta background
  */
-export const bgMagenta = (string: string): string => '\u001B[' + 45 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgMagenta (string: string): string {
+  return `\u001B[45m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a cyan background for the terminal
  * @param string the string to render
  * @returns {string} the string with the cyan background
  */
-export const bgCyan = (string: string): string => '\u001B[' + 46 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgCyan (string: string): string {
+  return `\u001B[46m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a white background for the terminal
  * @param string the string to render
  * @returns {string} the string with the white background
  */
-export const bgWhite = (string: string): string => '\u001B[' + 47 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgWhite (string: string): string {
+  return `\u001B[47m${string}\u001B[49m`
+}
 
 /**
  * Render a string on a gray background for the terminal
  * @param string the string to render
  * @returns {string} the string with the gray background
  */
-export const bgGray = (string: string): string => '\u001B[' + 100 + 'm' + string + '\u001B[' + 49 + 'm'
+export function bgGray (string: string): string {
+  return `\u001B[100m${string}\u001B[49m`
+}
 
 
 // Credits to https://css-tricks.com/converting-color-spaces-in-javascript/
@@ -190,33 +244,45 @@ export const bgGray = (string: string): string => '\u001B[' + 100 + 'm' + string
  * @param hex "#000000"
  * @returns {string} "hsl(0, 0%, 0%)"
  */
-export function hexToHsl (hex: string): { h: number; l: number; s: number } {
+// eslint-disable-next-line max-statements
+export function hexToHsl (hex: string): { hue: number; lightness: number; saturation: number } {
   // Convert hex to RGB first
-  let r = 0, g = 0, b = 0
-  if (hex.length === 4) {
-    r = Number('0x' + hex[1] + hex[1])
-    g = Number('0x' + hex[2] + hex[2])
-    b = Number('0x' + hex[3] + hex[3])
-  } else if (hex.length === 7) {
-    r = Number('0x' + hex[1] + hex[2])
-    g = Number('0x' + hex[3] + hex[4])
-    b = Number('0x' + hex[5] + hex[6])
-  }
+  let colorRed = rgbMin
+  let colorGreen = rgbMin
+  let colorBlue = rgbMin
+  if (hex.length === shortHex) {
+    /* eslint-disable @typescript-eslint/restrict-template-expressions */
+    colorRed = Number(`0x${hex[one]}${hex[one]}`)
+    colorGreen = Number(`0x${hex[two]}${hex[two]}`)
+    colorBlue = Number(`0x${hex[three]}${hex[three]}`)
+  } else if (hex.length === longHex) {
+    colorRed = Number(`0x${hex[one]}${hex[two]}`)
+    colorGreen = Number(`0x${hex[three]}${hex[four]}`)
+    colorBlue = Number(`0x${hex[five]}${hex[six]}`)
+    /* eslint-enable @typescript-eslint/restrict-template-expressions */
+  } else
+    throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${shortHex} or ${longHex} instead of : ${hex.length}`)
+
   // Then to HSL
-  r /= 255
-  g /= 255
-  b /= 255
-  const min = Math.min(r, g, b), max = Math.max(r, g, b), delta = max - min
-  let h = 0, s = 0, l = 0
-  if (delta === 0) h = 0
-  else if (max === r) h = ((g - b) / delta) % 6
-  else if (max === g) h = (b - r) / delta + 2
-  else h = (r - g) / delta + 4
-  h = Math.round(h * 60)
-  if (h < 0) h += 360
-  l = (max + min) / 2
-  s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))
-  s = Math.round(s * 100)
-  l = Math.round(l * 100)
-  return { h, s, l }
+  colorRed /= rgbMax
+  colorGreen /= rgbMax
+  colorBlue /= rgbMax
+  const min = Math.min(colorRed, colorGreen, colorBlue)
+  const max = Math.max(colorRed, colorGreen, colorBlue)
+  const delta = max - min
+  let hue = hslMin
+  let saturation = hslMin
+  let lightness = hslMin
+  if (delta === 0) hue = hslMin
+  else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % six
+  else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + two
+  else hue = (colorRed - colorGreen) / delta + four
+  hue = Math.round(hue * hueStep)
+  if (hue < 0) hue += hueMax
+  lightness = (max + min) / two
+  saturation = delta === 0 ? 0 : delta / (1 - Math.abs(two * lightness - 1))
+  saturation = Math.round(saturation * saturationMax)
+  lightness = Math.round(lightness * lightnessMax)
+  return { hue, saturation, lightness }
 }
+

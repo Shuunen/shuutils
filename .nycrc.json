@@ -5,7 +5,10 @@
   "exclude": [
     "src/browser.ts",
     "src/colors.ts",
-    "src/events.ts"
+    "src/constants.ts",
+    "src/events.ts",
+    "src/types.ts",
+    "src/index.ts"
   ],
   "functions": 90,
   "include": [

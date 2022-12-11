@@ -12,14 +12,18 @@ export interface Listener {
  * @param media the media to emit the event from, like window or a dom element
  * @returns true if the event is emitted
  */
-export const emit = <T>(name: string, data?: T, media?: HTMLElement | Element | Window): boolean => {
-  if (media === undefined)
+export function emit<T> (name: string, data?: T, media?: Element | HTMLElement | Window): boolean {
+  // eslint-disable-next-line putout/putout
+  let targetMedia = media
+  if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
       console.error('no media provided & no window available')
       return false
-    } else media = window
-  if (data === undefined) media.dispatchEvent(new CustomEvent(name))
-  else media.dispatchEvent(new CustomEvent(name, { detail: data }))
+    }
+    targetMedia = window
+  }
+  if (data === undefined) targetMedia.dispatchEvent(new CustomEvent(name))
+  else targetMedia.dispatchEvent(new CustomEvent(name, { detail: data }))
   return true
 }
 
@@ -30,19 +34,26 @@ export const emit = <T>(name: string, data?: T, media?: HTMLElement | Element | 
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
  */
-export const on = <T>(name: string, callback: (data: T, event: Event) => unknown, media?: HTMLElement | Element | Window): Listener | boolean => {
-  if (media === undefined)
+export function on<T> (name: string, callback: (data: T, event: Event) => unknown, media?: Element | HTMLElement | Window): Listener | boolean {
+  let targetMedia = media
+  if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
       console.error('no media provided & no window available')
       return false
-    } else media = window
+    }
+    targetMedia = window
+  }
+
   /**
    * The callback to call when the event is emitted
    * @param event the event
    * @returns the result of the callback
    */
-  const onCallback = (event: any): unknown => callback(event instanceof CustomEvent ? event.detail : event, event)
-  media.addEventListener(name, onCallback)
+  function onCallback (event: unknown): unknown {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/consistent-type-assertions
+    return callback(event instanceof CustomEvent ? event.detail : event, event as Event)
+  }
+  targetMedia.addEventListener(name, onCallback)
   return { name, callback: onCallback, media }
 }
 
@@ -53,6 +64,7 @@ export const on = <T>(name: string, callback: (data: T, event: Event) => unknown
  * @param root0.name the name of the event to remove the listener from
  * @param root0.callback the callback to remove
  */
-export const off = ({ media, name, callback }: Listener): void => {
+export function off ({ media, name, callback }: Listener): void {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   media.removeEventListener(name, callback)
 }

@@ -1,14 +1,15 @@
 import { test } from 'uvu'
 import { equal } from 'uvu/assert'
-import { check, checksRun, debounce, hasOwnProperty, sleep, throttle } from '../src'
+import { check, checksRun, debounce, hasOwn, sleep, throttle } from '../src'
 
-let times: number
+let times = 0
 
 /**
  * @returns {number} the number of times the function has been called
  */
-const myFunction = (): number => {
-  return ++times
+function myFunction (): number {
+  times += 1
+  return times
 }
 
 const myFunctionDebounced = debounce(myFunction, 100)
@@ -16,9 +17,10 @@ const myFunctionDebounced = debounce(myFunction, 100)
 /**
  * @returns {Promise<number>} the number of times the function has been called after 50ms
  */
-const myAsyncFunction = async (): Promise<number> => {
+async function myAsyncFunction (): Promise<number> {
   await sleep(50)
-  return ++times
+  times += 1
+  return times
 }
 
 const myAsyncFunctionDebounced = debounce(myAsyncFunction, 100)
@@ -26,21 +28,26 @@ const myAsyncFunctionDebounced = debounce(myAsyncFunction, 100)
 /**
  *
  */
-const anAsyncFunctionThatReturn12 = async (): Promise<number> => {
+async function anAsyncFunctionThatReturn12 (): Promise<number> {
+  await sleep(5)
   return 12
 }
 
 /**
  *
  */
-const anAsyncFunctionThatReturnAnObject = async (): Promise<object> => {
-  return { name: 'John', age: 30 }
+async function anAsyncFunctionThatReturnAnObject (): Promise<object> {
+  await sleep(5)
+  return {
+    name: 'John',
+    age: 30,
+  }
 }
 
 test('debounce A : sync function', async function () {
   times = 0
   equal(times, 0)
-  myFunctionDebounced()
+  void myFunctionDebounced()
   equal(times, 0)
   await sleep(50)
   equal(times, 0)
@@ -53,7 +60,7 @@ test('debounce A : sync function', async function () {
 test('debounce B : async function', async function () {
   times = 0
   equal(times, 0)
-  myAsyncFunctionDebounced()
+  void myAsyncFunctionDebounced()
   equal(times, 0)
   await sleep(50)
   equal(times, 0)
@@ -97,17 +104,20 @@ test('throttle', async function () {
   equal(times, 2)
 })
 
-check('hasOwnProperty A', hasOwnProperty({ a: 1 }, 'a'), true)
-check('hasOwnProperty B', hasOwnProperty({ a: 1 }, 'b'), false)
-check('hasOwnProperty C', hasOwnProperty({ a: 1 }, 'toString'), false)
-check('hasOwnProperty D', hasOwnProperty({ a: 1 }, 'hasOwnProperty'), false)
+check('hasOwn A', hasOwn({ propA: 1 }, 'propA'), true)
+check('hasOwn B', hasOwn({ propA: 1 }, 'propB'), false)
+check('hasOwn C', hasOwn({ propA: 1 }, 'toString'), false)
+check('hasOwn D', hasOwn({ propA: 1 }, 'hasOwnProperty'), false)
 
 check('sleep A', sleep(10), Promise.resolve(10))
 check('sleep B', sleep(20), 20)
 
+/* eslint-disable unicorn/prefer-top-level-await */
 check('anAsyncFunctionThatReturn12 A', anAsyncFunctionThatReturn12(), 12)
 check('anAsyncFunctionThatReturn12 B', anAsyncFunctionThatReturn12(), Promise.resolve(12))
 check('anAsyncFunctionThatReturnAnObject A', anAsyncFunctionThatReturnAnObject(), { name: 'John', age: 30 })
 check('anAsyncFunctionThatReturnAnObject B', anAsyncFunctionThatReturnAnObject(), Promise.resolve({ name: 'John', age: 30 }))
+/* eslint-enable unicorn/prefer-top-level-await */
 
 checksRun()
+
