@@ -38,7 +38,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
   - max-statements
   - complexity
   - sonarjs/cognitive-complexity
-- [ ] release a new major version
 - [ ] add a benchmark.md
 - [ ] try to ditch the `Number(` around constant usages like `Nb.xyz`
 
