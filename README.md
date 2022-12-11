@@ -34,7 +34,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [ ] use zod
 - [ ] test unique mark
 - [ ] try to use const enum in constants.ts
-- [ ] check my last projects to see if I can add some utils
+- [ ] add a logger util
 - [ ] remove that eslint-disable :
   - max-statements
   - complexity
