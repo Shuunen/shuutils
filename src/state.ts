@@ -10,7 +10,7 @@ import type { ShuutilsStorage } from './storage'
  * @param onlyStoreKeys The keys to sync with the storage object, if empty all keys will be synced
  * @returns The state object and a watch function
  */
-export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []): { state: State; watch: (key: keyof State, callback: () => void) => void } { // eslint-disable-line putout/putout
+export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []): { state: State; watchState: (key: Array<keyof State> | keyof State | '*', callback: () => void) => void } { // eslint-disable-line putout/putout
   type StateListener = () => void
   type StateKey = keyof State
   const useStorage = (key: string | symbol): boolean => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey)) // eslint-disable-line func-style
@@ -28,9 +28,12 @@ export function createState<State extends object> (data: State, stateStorage?: S
     },
   }
   const state = new Proxy<State>(data, handler)
-  function watch (key: StateKey, callback: () => void): void {
-    listeners[key] ||= []
-    listeners[key]?.push(callback)
+  function watchState (key: StateKey | StateKey[] | '*', callback: () => void): void {
+    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
+    keys.forEach(stateKey => {
+      listeners[stateKey] ||= []
+      listeners[stateKey]?.push(callback)
+    })
   }
-  return { state, watch }
+  return { state, watchState }
 }
