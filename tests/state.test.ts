@@ -3,7 +3,7 @@ import { test } from 'uvu'
 import { equal } from 'uvu/assert'
 import { check, createState, storage } from '../src'
 
-const { state: stateA, watch: watchA } = createState({ name: 'Michael', age: 30 })
+const { state: stateA, watchState: watchStateA } = createState({ name: 'Michael', age: 30 })
 
 check('state A initial data', stateA, { name: 'Michael', age: 30 })
 
@@ -17,7 +17,7 @@ test('state A watch callback', function () {
   function callback (): void {
     callbackCalls += 1
   }
-  watchA('name', callback)
+  watchStateA('name', callback)
   equal(callbackCalls, 0, 'callback not called yet')
   stateA.name = 'Martin'
   equal(callbackCalls, 1, 'callback called once')
@@ -51,3 +51,27 @@ test('state C with storage and all keys stored by default', function () {
   equal(stateC.age, 14, 'age changed in state')
   equal(storage.get('age'), 14, 'age synced in storage')
 })
+
+test('state D multiple watch', function () {
+  let callbackCalls = 0
+  function callbackA (): void { callbackCalls += 1 }
+  watchStateA(['name', 'age'], callbackA)
+  equal(callbackCalls, 0, 'callback A not called yet')
+  stateA.name = 'Martin'
+  equal(callbackCalls, 1, 'callback A called once')
+  stateA.age = 33
+  equal(callbackCalls, 2, 'callback A called twice')
+})
+
+test('state E watch all', function () {
+  let callbackCalls = 0
+  function callbackB (): void { callbackCalls += 1 }
+  watchStateA('*', callbackB)
+  equal(callbackCalls, 0, 'callback B not called yet')
+  stateA.name = 'Martin'
+  equal(callbackCalls, 1, 'callback B called once')
+  stateA.age = 33
+  equal(callbackCalls, 2, 'callback B called twice')
+})
+
+test.run()
