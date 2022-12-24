@@ -4,7 +4,7 @@ module.exports = {
   userMail: 'romain.racamier@gmail.com',
   license: 'MIT',
   devDepsOnly: false, // dlv is a required dependency for the user that install shuutils
-  maxSizeKo: 30, // until this lib is bundled into a single file, this is a fake check xD
+  maxSizeKo: 35,
   npmPackage: true,
 }
 

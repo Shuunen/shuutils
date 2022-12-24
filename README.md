@@ -33,7 +33,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 - [ ] use zod
 - [ ] test unique mark
-- [ ] add a logger util
+- [ ] add willOutputToFile option to the logger
 - [ ] remove that eslint-disable :
   - max-statements
   - complexity
