@@ -67,15 +67,19 @@ test('state D multiple watch', function () {
 
 test('state E watch all', function () {
   let callbackCalls = 0
-  function callbackB (): void {
+  let callbackKey = ''
+  function callbackB (updatedKey: string): void {
     callbackCalls += 1
+    callbackKey = updatedKey
   }
   watchStateA('*', callbackB)
   equal(callbackCalls, 0, 'callback B not called yet')
   stateA.name = 'Martin'
   equal(callbackCalls, 1, 'callback B called once')
+  equal(callbackKey, 'name', 'callback B called with name key')
   stateA.age = 33
   equal(callbackCalls, 2, 'callback B called twice')
+  equal(callbackKey, 'age', 'callback B called with age key')
 })
 
 test.run()
