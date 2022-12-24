@@ -242,6 +242,7 @@ export function backdrop (classes: string): HTMLDivElement {
  * @param classes the classes to return
  * @returns the classes as a string
  */
-export function tw (classes: string): string {
-  return classes
+export function tw (classes: string[] | TemplateStringsArray | string): string {
+  if (typeof classes === 'string') return classes
+  return classes.join(' ')
 }
