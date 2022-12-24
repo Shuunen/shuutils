@@ -69,3 +69,24 @@ export function formatDate (date: Date, format: string, locale = 'en-US'): strin
   })
 }
 
+/**
+ * Make a date readable for us, poor humans
+ * @param input a date or a number of milliseconds
+ * @param isLong true to return a short version like "3d" instead of "3 days"
+ * @returns "1 minute", "4 months" or "1min", "4mon"
+ * @example readableTime(3 * Nb.MsInDay) // "3 days"
+ * @example readableTime(3 * Nb.MsInDay, true) // "3d"
+ */
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export function readableTime (input: Date | number, isLong = true): string {
+  const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
+  // eslint-disable-next-line func-style, jsdoc/require-jsdoc, sonarjs/no-nested-template-literals
+  const format = (value: number, long: string, short: string): string => `${Math.floor(value)}${isLong ? ` ${long + (Math.floor(value) > 1 ? 's' : '')}` : short}`
+  if (ms < Nb.MsInSecond) return format(ms, 'millisecond', 'ms')
+  if (ms < Nb.MsInMinute) return format(ms / Nb.MsInSecond, 'second', 's')
+  if (ms < Nb.MsInHour) return format(ms / Nb.MsInMinute, 'minute', 'min')
+  if (ms < Nb.MsInDay) return format(ms / Nb.MsInHour, 'hour', 'h')
+  if (ms < Nb.MsInMonth) return format(ms / Nb.MsInDay, 'day', 'd')
+  if (ms < Nb.MsInYear) return format(ms / Nb.MsInMonth, 'month', 'mon')
+  return format(ms / Nb.MsInYear, 'year', 'y')
+}

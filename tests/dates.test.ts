@@ -1,4 +1,4 @@
-import { check, checksRun, dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, readableTimeAgo } from '../src'
+import { check, checksRun, dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, Nb, readableTime, readableTimeAgo } from '../src'
 
 const today = new Date()
 
@@ -61,6 +61,23 @@ check('format date as yy-MM-dd', formatDate(date, 'yy-MM-dd'), '21-09-02')
 check('format date as yy', formatDate(date, 'yy'), '21')
 check('format date as yyyy (space)', formatDate(date, 'yyyy '), '2021 ')
 check('format date as yyyy', formatDate(date, 'yyyy'), '2021')
+
+check('readable time A', readableTime(0), '0 millisecond')
+check('readable time B', readableTime(Nb.MsInSecond), '1 second')
+check('readable time C', readableTime(3 * Nb.MsInSecond), '3 seconds')
+check('readable time D', readableTime(Nb.MsInMinute), '1 minute')
+check('readable time E', readableTime(2 * Nb.MsInMinute), '2 minutes')
+check('readable time F', readableTime(Nb.MsInHour), '1 hour')
+check('readable time G', readableTime(3 * Nb.MsInDay, false), '3d')
+check('readable time H', readableTime(Nb.MsInDay), '1 day')
+check('readable time I', readableTime(42, false), '42ms')
+check('readable time J', readableTime(42), '42 milliseconds')
+check('readable time K', readableTime(2 * Nb.MsInHour), '2 hours')
+check('readable time L', readableTime(3 * Nb.MsInDay), '3 days')
+check('readable time M', readableTime(32 * Nb.MsInDay), '1 month')
+check('readable time N', readableTime(2 * Nb.MsInYear), '2 years')
+check('readable time O', readableTime(daysAgo(2)), '2 days')
+check('readable time P', readableTime(daysAgo(4), false), '4d')
 
 checksRun()
 
