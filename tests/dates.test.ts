@@ -40,8 +40,10 @@ const samples = [
   [daysAgo(364), '12 months ago'],
   [daysAgo(365), 'last year'],
 ]
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-samples.forEach(([input, expected], index) => { check(`should calculate time ago correctly (index ${index})`, readableTimeAgo(input as Date | number), expected) })
+samples.forEach(([input, expected], index) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  check(`should calculate time ago correctly (index ${index})`, readableTimeAgo(input as Date | number), expected)
+})
 
 const date = new Date('2021-09-02T07:08:28')
 check('format date as (space) HH:mm:ss', formatDate(date, ' HH:mm:ss'), ' 07:08:28')

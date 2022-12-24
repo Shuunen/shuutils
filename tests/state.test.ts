@@ -54,7 +54,9 @@ test('state C with storage and all keys stored by default', function () {
 
 test('state D multiple watch', function () {
   let callbackCalls = 0
-  function callbackA (): void { callbackCalls += 1 }
+  function callbackA (): void {
+    callbackCalls += 1
+  }
   watchStateA(['name', 'age'], callbackA)
   equal(callbackCalls, 0, 'callback A not called yet')
   stateA.name = 'Martin'
@@ -65,7 +67,9 @@ test('state D multiple watch', function () {
 
 test('state E watch all', function () {
   let callbackCalls = 0
-  function callbackB (): void { callbackCalls += 1 }
+  function callbackB (): void {
+    callbackCalls += 1
+  }
   watchStateA('*', callbackB)
   equal(callbackCalls, 0, 'callback B not called yet')
   stateA.name = 'Martin'

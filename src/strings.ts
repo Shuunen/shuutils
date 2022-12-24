@@ -118,8 +118,24 @@ export function isJson (string: string): boolean {
   // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex
   const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
   if (!hasValidStart) return false
-  try { JSON.parse(string) } catch { return false }
+  try {
+    JSON.parse(string)
+  } catch { return false }
   return true
+}
+
+/**
+ * Create a CRC32 table
+ * @returns a table of 256 numbers
+ */
+export function createCrc32Table (): number[] {
+  const table: number[] = Array.from({ length: 256 })
+  for (let index = 0; index < 256; index += 1) { // eslint-disable-line @typescript-eslint/no-magic-numbers
+    let code = index
+    for (let indexB = 0; indexB < Nb.Eight; indexB += 1) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
+    table[index] = code
+  }
+  return table
 }
 
 /**
@@ -128,25 +144,17 @@ export function isJson (string: string): boolean {
  * @param text the string to checksum
  * @returns the checksum like `3547`
  */
-export function crc32 (text: string): number { // eslint-disable-line max-statements
-  const crcTable: number[] = Array.from({ length: 256 })
-  /* eslint-disable @typescript-eslint/no-magic-numbers, no-bitwise, no-plusplus */
-  for (let index = 0; index < 256; ++index) {
-    let code = index
-    for (let indexB = 0; indexB < 8; ++indexB) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1
-    crcTable[index] = code
-  }
-  let crc = -1
-  for (let index = 0; index < text.length; ++index) {
+export function crc32 (text: string): number {
+  const crcTable = createCrc32Table()
+  let crc = Nb.Descending
+  for (let index = 0; index < text.length; index += 1) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
-    const key = (code ^ crc) & 0xFF
+    const key = (code ^ crc) & 0xFF // eslint-disable-line @typescript-eslint/no-magic-numbers, no-bitwise
     const value = crcTable[key]
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (value) crc = value ^ (crc >>> 8)
+    if (value) crc = value ^ (crc >>> Nb.Eight) // eslint-disable-line no-bitwise, @typescript-eslint/strict-boolean-expressions
   }
-  return (-1 ^ crc) >>> 0
-  /* eslint-enable @typescript-eslint/no-magic-numbers, no-bitwise, no-plusplus */
+  return (Nb.Descending ^ crc) >>> 0 // eslint-disable-line no-bitwise
 }
 
 /**
@@ -202,10 +210,10 @@ export function parseBase64 (string: string): { base64: string; size: number; ty
 export function parseJson<T> (json: string): { error: string; value: T } {
   let error = ''
   let value = {}
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-assignment
-  if (json !== '') try { value = JSON.parse(json) } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` }
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return { error, value: value as T }
+  if (json !== '') try {
+    value = JSON.parse(json) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+  } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` } // eslint-disable-line @typescript-eslint/consistent-type-assertions
+  return { error, value: value as T } // eslint-disable-line @typescript-eslint/consistent-type-assertions
 }
 
 /**
