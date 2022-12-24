@@ -15,7 +15,9 @@ export function dom<T extends keyof HTMLElementTagNameMap> (type: T, classes = '
   element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
   if (typeof content === 'string') element.innerHTML = content
   else if (content instanceof Node) element.append(content)
-  else content.forEach(node => { element.append(node) })
+  else content.forEach(node => {
+    element.append(node)
+  })
   return element
 }
 

@@ -65,7 +65,10 @@ export class Logger {
    */
   private getDelay (): string {
     const now = Date.now()
-    if (this.lastLogTimestamp === 0) { this.lastLogTimestamp = now; return gray('init'.padStart(Nb.Seven)) }
+    if (this.lastLogTimestamp === 0) {
+      this.lastLogTimestamp = now
+      return gray('init'.padStart(Nb.Seven))
+    }
     const delay = now - this.lastLogTimestamp
     this.lastLogTimestamp = now
     return gray(`+${readableTime(delay, false)}`.padStart(Nb.Seven))

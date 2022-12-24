@@ -34,12 +34,8 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [ ] use zod
 - [ ] test unique mark
 - [ ] add willOutputToFile option to the logger
-- [ ] remove that eslint-disable :
-  - max-statements
-  - complexity
-  - sonarjs/cognitive-complexity
 - [ ] add a benchmark.md
-- [ ] try to ditch the `Number(` around constant usages like `Nb.xyz`
+- [ ] try to ditch the `Number(` around some constant usages like `Nb.xyz`
 
 ## Thanks
 

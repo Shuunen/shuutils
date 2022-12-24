@@ -19,7 +19,9 @@ export function createState<State extends object> (data: State, stateStorage?: S
     set (target: State, key: string | symbol, value: unknown): boolean {
       Reflect.set(target, key, value)
       if (useStorage(key)) stateStorage?.set(key.toString(), value)
-      listeners[key as StateKey]?.forEach(callback => { callback() })
+      listeners[key as StateKey]?.forEach(callback => {
+        callback()
+      })
       return true
     },
     get (target: State, key: string | symbol): unknown {

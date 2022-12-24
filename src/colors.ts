@@ -237,6 +237,27 @@ export function bgGray (string: string): string {
   return `\u001B[100m${string}\u001B[49m`
 }
 
+/**
+ * Convert a hex color to rgb
+ * @param hex the hex color like "#0f0" or "#00ff00"
+ * @returns {object} the rgb color like { colorRed: 12, colorGreen: 24, colorBlue: 42 }
+ * @example hexToRgb("#0f0") // { colorRed: 0, colorGreen: 255, colorBlue: 0 }
+ */
+export function hexToRgb (hex: string): { colorRed: number; colorGreen: number; colorBlue: number } {
+  /* eslint-disable @typescript-eslint/restrict-template-expressions */
+  if (hex.length === Nb.ShortHex) return {
+    colorRed: Number(`0x${hex[Nb.One]}${hex[Nb.One]}`),
+    colorGreen: Number(`0x${hex[Nb.Two]}${hex[Nb.Two]}`),
+    colorBlue: Number(`0x${hex[Nb.Three]}${hex[Nb.Three]}`),
+  }
+  if (hex.length === Nb.LongHex) return {
+    colorRed: Number(`0x${hex[Nb.One]}${hex[Nb.Two]}`),
+    colorGreen: Number(`0x${hex[Nb.Three]}${hex[Nb.Four]}`),
+    colorBlue: Number(`0x${hex[Nb.Five]}${hex[Nb.Six]}`),
+  }
+  /* eslint-enable @typescript-eslint/restrict-template-expressions */
+  throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${Nb.ShortHex} or ${Nb.LongHex} instead of : ${hex.length}`)
+}
 
 // Credits to https://css-tricks.com/converting-color-spaces-in-javascript/
 /**
@@ -246,23 +267,7 @@ export function bgGray (string: string): string {
  */
 // eslint-disable-next-line max-statements
 export function hexToHsl (hex: string): { hue: number; lightness: number; saturation: number } {
-  // Convert hex to RGB first
-  let colorRed = Nb.RgbMin
-  let colorGreen = Nb.RgbMin
-  let colorBlue = Nb.RgbMin
-  if (hex.length === Nb.ShortHex) {
-    /* eslint-disable @typescript-eslint/restrict-template-expressions */
-    colorRed = Number(`0x${hex[Nb.One]}${hex[Nb.One]}`)
-    colorGreen = Number(`0x${hex[Nb.Two]}${hex[Nb.Two]}`)
-    colorBlue = Number(`0x${hex[Nb.Three]}${hex[Nb.Three]}`)
-  } else if (hex.length === Nb.LongHex) {
-    colorRed = Number(`0x${hex[Nb.One]}${hex[Nb.Two]}`)
-    colorGreen = Number(`0x${hex[Nb.Three]}${hex[Nb.Four]}`)
-    colorBlue = Number(`0x${hex[Nb.Five]}${hex[Nb.Six]}`)
-    /* eslint-enable @typescript-eslint/restrict-template-expressions */
-  } else
-    throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${Nb.ShortHex} or ${Nb.LongHex} instead of : ${hex.length}`)
-
+  let { colorRed, colorGreen, colorBlue } = hexToRgb(hex) // Convert hex to RGB first
   // Then to HSL
   colorRed /= Nb.RgbMax
   colorGreen /= Nb.RgbMax

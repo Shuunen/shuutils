@@ -5,7 +5,9 @@
  */
 export async function sleep (ms = 1000): Promise<number> {
   // eslint-disable-next-line promise/avoid-new, no-promise-executor-return
-  return await new Promise(resolve => setTimeout(() => { resolve(ms) }, ms))
+  return await new Promise(resolve => setTimeout(() => {
+    resolve(ms)
+  }, ms))
 }
 
 /**
