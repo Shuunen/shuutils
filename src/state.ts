@@ -1,7 +1,9 @@
-/* eslint-disable etc/prefer-interface */
+
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable jsdoc/require-jsdoc */
 import type { ShuutilsStorage } from './storage'
+
+type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown) => void)
 
 /**
  * Creates a state object that can be watched for changes, and optionally sync in a storage object
@@ -10,17 +12,16 @@ import type { ShuutilsStorage } from './storage'
  * @param onlyStoreKeys The keys to sync with the storage object, if empty all keys will be synced
  * @returns The state object and a watch function
  */
-export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []): { state: State; watchState: (key: Array<keyof State> | keyof State | '*', callback: () => void) => void } { // eslint-disable-line putout/putout
-  type StateListener = () => void
+export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []): { state: State; watchState: (key: Array<keyof State> | keyof State | '*', callback: StateCallback) => void } { // eslint-disable-line putout/putout
   type StateKey = keyof State
   const useStorage = (key: string | symbol): boolean => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey)) // eslint-disable-line func-style
-  const listeners: Partial<Record<StateKey, StateListener[]>> = {}
+  const listeners: Partial<Record<StateKey, StateCallback[]>> = {}
   const handler: ProxyHandler<State> = {
     set (target: State, key: string | symbol, value: unknown): boolean {
       Reflect.set(target, key, value)
       if (useStorage(key)) stateStorage?.set(key.toString(), value)
       listeners[key as StateKey]?.forEach(callback => {
-        callback()
+        callback(key.toString(), value)
       })
       return true
     },
@@ -30,7 +31,7 @@ export function createState<State extends object> (data: State, stateStorage?: S
     },
   }
   const state = new Proxy<State>(data, handler)
-  function watchState (key: StateKey | StateKey[] | '*', callback: () => void): void {
+  function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback): void {
     const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
     keys.forEach(stateKey => {
       listeners[stateKey] ||= []
