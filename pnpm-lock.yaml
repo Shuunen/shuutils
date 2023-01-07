@@ -8,7 +8,7 @@ specifiers:
   eslint: '8.31'
   eslint-config-hardcore: '26'
   eslint-plugin-jsdoc: '39'
-  jsdom: '20'
+  jsdom: '21'
   jsdom-global: '3'
   repo-check: '1.29'
   tiny-glob: '0'
@@ -29,8 +29,8 @@ devDependencies:
   eslint: 8.31.0
   eslint-config-hardcore: 26.0.0_eslint@8.31.0
   eslint-plugin-jsdoc: 39.6.4_eslint@8.31.0
-  jsdom: 20.0.3
-  jsdom-global: 3.0.2_jsdom@20.0.3
+  jsdom: 21.0.0
+  jsdom-global: 3.0.2_jsdom@21.0.0
   repo-check: 1.29.0
   tsm: 2.3.0
   typescript: 4.9.4
@@ -5328,16 +5328,16 @@ packages:
     hasBin: true
     dev: true
 
-  /jsdom-global/3.0.2_jsdom@20.0.3:
+  /jsdom-global/3.0.2_jsdom@21.0.0:
     resolution: {integrity: sha512-t1KMcBkz/pT5JrvcJbpUR2u/w1kO9jXctaaGJ0vZDzwFnIvGWw9IDSRciT83kIs8Bnw4qpOl8bQK08V01YgMPg==}
     peerDependencies:
       jsdom: '>=10.0.0'
     dependencies:
-      jsdom: 20.0.3
+      jsdom: 21.0.0
     dev: true
 
-  /jsdom/20.0.3:
-    resolution: {integrity: sha512-SYhBvTh89tTfCD/CRdSOm13mOBa42iTaTyfyEWBdKcGdPxPtLFBXuHR8XHb33YNYaP+lLbmSvBTsnoesCNJEsQ==}
+  /jsdom/21.0.0:
+    resolution: {integrity: sha512-AIw+3ZakSUtDYvhwPwWHiZsUi3zHugpMEKlNPaurviseYoBqo0zBd3zqoUi3LPCNtPFlEP8FiW9MqCZdjb2IYA==}
     engines: {node: '>=14'}
     peerDependencies:
       canvas: ^2.5.0
