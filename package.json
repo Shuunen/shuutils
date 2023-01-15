@@ -15,7 +15,7 @@
     "c8": "7",
     "dependency-cruiser": "12",
     "esbuild": "0.16",
-    "eslint": "8.31",
+    "eslint": "8.32",
     "eslint-config-hardcore": "26",
     "eslint-plugin-jsdoc": "39",
     "jsdom": "21",
