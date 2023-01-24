@@ -36,7 +36,8 @@ function getPackageJsonVersion (): string {
  */
 async function getTargetFiles (): Promise<string[]> {
   const hasTargetSpecified = process.argv.length === Nb.Three
-  const target = (hasTargetSpecified && typeof process.argv[Nb.Third] === 'string') ? process.argv[Nb.Third] : 'public/index.html'
+  const defaultTarget = 'public/index.html'
+  const target = (hasTargetSpecified && typeof process.argv[Nb.Third] === 'string') ? (process.argv[Nb.Third] ?? defaultTarget) : defaultTarget
   const files = await glob(target)
   if (files.length === 0) throw new Error(`no file found for target "${target}", aborting.`)
   return files
