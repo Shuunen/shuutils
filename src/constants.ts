@@ -1,4 +1,3 @@
-/* eslint-disable lines-around-comment */
 /* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 /* eslint-disable @typescript-eslint/prefer-literal-enum-member */
 /* eslint-disable putout/putout */

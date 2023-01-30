@@ -227,7 +227,7 @@ export async function scrollToHeightSync (element: HTMLElement): Promise<void> {
   const target = element.scrollHeight + Number(Nb.Two)
   element.style.height = initial // eslint-disable-line no-param-reassign
   await sleep(Nb.Ten)
-  element.style.height = `${target}px` // eslint-disable-line no-param-reassign, require-atomic-updates
+  element.style.height = `${target}px` // eslint-disable-line no-param-reassign
 }
 
 /**

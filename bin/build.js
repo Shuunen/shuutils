@@ -1,5 +1,4 @@
 import assert from 'assert'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { build as esbuild } from 'esbuild'
 import { writeFile } from 'fs/promises'
 import path from 'path'
