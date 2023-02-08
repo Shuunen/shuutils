@@ -12,7 +12,7 @@ export interface Listener {
  * @param media the media to emit the event from, like window or a dom element
  * @returns true if the event is emitted
  */
-export function emit<T> (name: string, data?: T, media?: Element | HTMLElement | Window): boolean {
+export function emit<T> (name: string, data?: T, media?: Element | HTMLElement | Window) {
   // eslint-disable-next-line putout/putout
   let targetMedia = media
   if (targetMedia === undefined) {
@@ -34,7 +34,7 @@ export function emit<T> (name: string, data?: T, media?: Element | HTMLElement |
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
  */
-export function on<T> (name: string, callback: (data: T, event: Event) => unknown, media?: Element | HTMLElement | Window): Listener | boolean {
+export function on<T> (name: string, callback: (data: T, event: Event) => unknown, media?: Element | HTMLElement | Window) {
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
@@ -49,7 +49,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
    * @param event the event
    * @returns the result of the callback
    */
-  function onCallback (event: unknown): unknown {
+  function onCallback (event: unknown) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/consistent-type-assertions
     return callback(event instanceof CustomEvent ? event.detail : event, event as Event)
   }
@@ -64,7 +64,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
  * @param root0.name the name of the event to remove the listener from
  * @param root0.callback the callback to remove
  */
-export function off ({ media, name, callback }: Listener): void {
+export function off ({ media, name, callback }: Listener) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   media.removeEventListener(name, callback)
 }

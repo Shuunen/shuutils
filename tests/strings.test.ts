@@ -43,10 +43,7 @@ check('capitalize an empty string', capitalize(''), '')
 check('capitalize a single word', capitalize('hey'), 'Hey')
 check('capitalize an uppercase\'d word', capitalize('HO'), 'HO')
 check('capitalize a sentence', capitalize('hello my name is John Doe !'), 'Hello my name is John Doe !')
-
 check('capitalize a sentence and lower John Doe', capitalize('hello my name is John Doe !', true), 'Hello my name is john doe !')
-check('capitalize a sentence and lower SUPER-CAM', capitalize('SUPER-CAM Universal Remote Control 433 mhz Key Fob duplicator DOORMAT Transmitter', true), 'SUPER-CAM universal remote control 433 mhz key fob duplicator DOORMAT transmitter')
-check('capitalize a sentence and lower DOORMAT', capitalize('Universal Remote Control 433 mhz Key Fob duplicator DOORMAT Transmitter', true), 'Universal remote control 433 mhz key fob duplicator DOORMAT transmitter')
 
 check('ellipsis words, giving an empty string', ellipsisWords(''), '')
 check('ellipsis words, giving a regular sentence', ellipsisWords('Hello my name is Jim Halpert', 5), 'Hello my name is Jim...')

@@ -12,7 +12,7 @@ type GenClassTypes = string[] | boolean | number | string | null | undefined
  * @param path the full path to access nested property
  * @returns the nested property value
  */
-export function access (object: Record<string, unknown>, path: string): unknown {
+export function access (object: Record<string, unknown>, path: string) {
   return flatten(object)[path]
 }
 
@@ -26,7 +26,7 @@ export function access (object: Record<string, unknown>, path: string): unknown 
  * @returns the sorted array
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, etc/no-misused-generics
-export function byProperty<T extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = ''): (a: T, b: T) => number {
+export function byProperty<T extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = '') {
   if (order === '') return () => 0
   const sortOrder = order === 'asc' ? Nb.Ascending : Nb.Descending
   return (recordA: T, recordB: T) => {
@@ -44,7 +44,7 @@ export function byProperty<T extends Record<string, unknown>> (property: string,
  * @param value the value to check
  * @returns true if value is an object/record
  */
-export function isRecord (value: unknown): boolean {
+export function isRecord (value: unknown) {
   return (
     value !== null &&
     (typeof value === 'object' || typeof value === 'function') &&
@@ -82,7 +82,7 @@ export function safeAssign (target: Record<string, unknown>, ...sources: Record<
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
 // eslint-disable-next-line complexity, sonarjs/cognitive-complexity
-export function genClass (object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []): string {
+export function genClass (object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
   const list = clone(cls)
   if (object === null || object === undefined) list.unshift('')
   else if (typeof object !== 'object') list.unshift(...String(object).split(' '))
@@ -105,7 +105,7 @@ export function genClass (object: GenClassTypes | GenClassTypes[] | Record<strin
  * @param object the object to generate checksum from
  * @returns the checksum
  */
-export function objectSum (object: Record<string, unknown>): number {
+export function objectSum (object: Record<string, unknown>) {
   return stringSum(JSON.stringify(object))
 }
 

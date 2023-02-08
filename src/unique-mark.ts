@@ -14,7 +14,7 @@ import type { PackageJson } from './types'
  * @param message the message to log
  * @param value the value to log
  */
-function log (message: string, value = ''): void {
+function log (message: string, value = '') {
   console.log('unique-mark', blue(message), value)
 }
 
@@ -22,7 +22,7 @@ function log (message: string, value = ''): void {
  * Load the package.json file data
  * @returns {string} the package.json version
  */
-function getPackageJsonVersion (): string {
+function getPackageJsonVersion () {
   const pkgLocation = path.join(process.cwd(), 'package.json')
   if (!existsSync(pkgLocation)) throw new Error(`package.json was not found in ${pkgLocation}, aborting.`)
   const content = readFileSync(pkgLocation, 'utf8')
@@ -34,7 +34,7 @@ function getPackageJsonVersion (): string {
 /**
  * Get the files to inject the mark in
  */
-async function getTargetFiles (): Promise<string[]> {
+async function getTargetFiles () {
   const hasTargetSpecified = process.argv.length === Nb.Three
   const defaultTarget = 'public/index.html'
   const target = (hasTargetSpecified && typeof process.argv[Nb.Third] === 'string') ? (process.argv[Nb.Third] ?? defaultTarget) : defaultTarget
@@ -51,7 +51,7 @@ async function getTargetFiles (): Promise<string[]> {
  * @param root0.version the version to use, if empty, will use the version from package.json
  * @returns {string} the mark to inject, like "4.2.0 - 123abc45 - 01/01/2021 12:00:00"
  */
-function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }): string {
+function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }) {
   let finalCommit = commit
   if (commit === '') finalCommit = execSync('git rev-parse --short HEAD', { cwd: process.cwd() }).toString().trim()
   return `${version} - ${finalCommit} - ${date}`
@@ -66,7 +66,7 @@ function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy 
  * @param root0.files the files to inject the mark in
  * @returns {number} the total amount of mark injection in the targeted files
  */
-function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mark', files = [] }: { placeholder?: string; mark?: string; files?: string[] }): number {
+function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mark', files = [] }: { placeholder?: string; mark?: string; files?: string[] }) {
   let totalInjections = 0
   files.forEach(file => {
     const content = readFileSync(file, 'utf8')
@@ -84,7 +84,7 @@ function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mark', fil
 /**
  * Main function
  */
-async function init (): Promise<void> {
+async function init () {
   const isVerbose = process.argv.includes('-v') || process.argv.includes('--verbose')
   if (isVerbose) log('starting...')
   const version = getPackageJsonVersion()

@@ -7,7 +7,7 @@ import { clone } from './object-clone'
  * @param input the array to shuffle
  * @returns a shuffled clone of the input array
  */
-export function shuffleArray<T> (input: T[]): T[] {
+export function shuffleArray<T> (input: T[]) {
   const array = clone(input)
   // eslint-disable-next-line for-direction
   for (let indexA = array.length - 1; indexA > 0; indexA += Number(Nb.Previous)) {

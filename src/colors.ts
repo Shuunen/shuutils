@@ -7,7 +7,7 @@ import { Nb } from './constants'
  * @param string the string to reset
  * @returns {string} the string with the reset color
  */
-export function reset (string: string): string {
+export function reset (string: string) {
   return `\u001B[0m${string}\u001B[0m`
 }
 
@@ -16,7 +16,7 @@ export function reset (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the bold decoration
  */
-export function bold (string: string): string {
+export function bold (string: string) {
   return `\u001B[1m${string}\u001B[22m`
 }
 
@@ -25,7 +25,7 @@ export function bold (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the dim decoration
  */
-export function dim (string: string): string {
+export function dim (string: string) {
   return `\u001B[2m${string}\u001B[22m`
 }
 
@@ -34,7 +34,7 @@ export function dim (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the italic decoration
  */
-export function italic (string: string): string {
+export function italic (string: string) {
   return `\u001B[3m${string}\u001B[23m`
 }
 
@@ -43,7 +43,7 @@ export function italic (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the underline decoration
  */
-export function underline (string: string): string {
+export function underline (string: string) {
   return `\u001B[4m${string}\u001B[24m`
 }
 
@@ -52,7 +52,7 @@ export function underline (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the overline decoration
  */
-export function overline (string: string): string {
+export function overline (string: string) {
   return `\u001B[53m${string}\u001B[55m`
 }
 
@@ -61,7 +61,7 @@ export function overline (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the inverse decoration
  */
-export function inverse (string: string): string {
+export function inverse (string: string) {
   return `\u001B[7m${string}\u001B[27m`
 }
 
@@ -70,7 +70,7 @@ export function inverse (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the strike-through decoration
  */
-export function strikeThrough (string: string): string {
+export function strikeThrough (string: string) {
   return `\u001B[9m${string}\u001B[29m`
 }
 
@@ -79,7 +79,7 @@ export function strikeThrough (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the black color
  */
-export function black (string: string): string {
+export function black (string: string) {
   return `\u001B[30m${string}\u001B[39m`
 }
 
@@ -88,7 +88,7 @@ export function black (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the red color
  */
-export function red (string: string): string {
+export function red (string: string) {
   return `\u001B[31m${string}\u001B[39m`
 }
 
@@ -97,7 +97,7 @@ export function red (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the green color
  */
-export function green (string: string): string {
+export function green (string: string) {
   return `\u001B[32m${string}\u001B[39m`
 }
 
@@ -106,7 +106,7 @@ export function green (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the yellow color
  */
-export function yellow (string: string): string {
+export function yellow (string: string) {
   return `\u001B[33m${string}\u001B[39m`
 }
 
@@ -115,7 +115,7 @@ export function yellow (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the blue color
  */
-export function blue (string: string): string {
+export function blue (string: string) {
   return `\u001B[34m${string}\u001B[39m`
 }
 
@@ -124,7 +124,7 @@ export function blue (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the magenta color
  */
-export function magenta (string: string): string {
+export function magenta (string: string) {
   return `\u001B[35m${string}\u001B[39m`
 }
 
@@ -133,7 +133,7 @@ export function magenta (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the cyan color
  */
-export function cyan (string: string): string {
+export function cyan (string: string) {
   return `\u001B[36m${string}\u001B[39m`
 }
 
@@ -142,7 +142,7 @@ export function cyan (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the white color
  */
-export function white (string: string): string {
+export function white (string: string) {
   return `\u001B[37m${string}\u001B[39m`
 }
 
@@ -151,7 +151,7 @@ export function white (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the gray color
  */
-export function gray (string: string): string {
+export function gray (string: string) {
   return `\u001B[90m${string}\u001B[39m`
 }
 
@@ -161,7 +161,7 @@ export function gray (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the black background
  */
-export function bgBlack (string: string): string {
+export function bgBlack (string: string) {
   return `\u001B[40m${string}\u001B[49m`
 }
 
@@ -170,7 +170,7 @@ export function bgBlack (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the red background
  */
-export function bgRed (string: string): string {
+export function bgRed (string: string) {
   return `\u001B[41m${string}\u001B[49m`
 }
 
@@ -179,7 +179,7 @@ export function bgRed (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the green background
  */
-export function bgGreen (string: string): string {
+export function bgGreen (string: string) {
   return `\u001B[42m${string}\u001B[49m`
 }
 
@@ -188,7 +188,7 @@ export function bgGreen (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the yellow background
  */
-export function bgYellow (string: string): string {
+export function bgYellow (string: string) {
   return `\u001B[43m${string}\u001B[49m`
 }
 
@@ -197,7 +197,7 @@ export function bgYellow (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the blue background
  */
-export function bgBlue (string: string): string {
+export function bgBlue (string: string) {
   return `\u001B[44m${string}\u001B[49m`
 }
 
@@ -206,7 +206,7 @@ export function bgBlue (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the magenta background
  */
-export function bgMagenta (string: string): string {
+export function bgMagenta (string: string) {
   return `\u001B[45m${string}\u001B[49m`
 }
 
@@ -215,7 +215,7 @@ export function bgMagenta (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the cyan background
  */
-export function bgCyan (string: string): string {
+export function bgCyan (string: string) {
   return `\u001B[46m${string}\u001B[49m`
 }
 
@@ -224,7 +224,7 @@ export function bgCyan (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the white background
  */
-export function bgWhite (string: string): string {
+export function bgWhite (string: string) {
   return `\u001B[47m${string}\u001B[49m`
 }
 
@@ -233,7 +233,7 @@ export function bgWhite (string: string): string {
  * @param string the string to render
  * @returns {string} the string with the gray background
  */
-export function bgGray (string: string): string {
+export function bgGray (string: string) {
   return `\u001B[100m${string}\u001B[49m`
 }
 
@@ -243,7 +243,7 @@ export function bgGray (string: string): string {
  * @returns {object} the rgb color like { colorRed: 12, colorGreen: 24, colorBlue: 42 }
  * @example hexToRgb("#0f0") // { colorRed: 0, colorGreen: 255, colorBlue: 0 }
  */
-export function hexToRgb (hex: string): { colorRed: number; colorGreen: number; colorBlue: number } {
+export function hexToRgb (hex: string) {
   /* eslint-disable @typescript-eslint/restrict-template-expressions */
   if (hex.length === Nb.ShortHex) return {
     colorRed: Number(`0x${hex[Nb.One]}${hex[Nb.One]}`),
@@ -266,7 +266,7 @@ export function hexToRgb (hex: string): { colorRed: number; colorGreen: number; 
  * @returns {string} "hsl(0, 0%, 0%)"
  */
 // eslint-disable-next-line max-statements
-export function hexToHsl (hex: string): { hue: number; lightness: number; saturation: number } {
+export function hexToHsl (hex: string) {
   let { colorRed, colorGreen, colorBlue } = hexToRgb(hex) // Convert hex to RGB first
   // Then to HSL
   colorRed /= Nb.RgbMax

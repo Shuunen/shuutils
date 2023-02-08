@@ -8,7 +8,7 @@ import { dateIso10 } from './dates'
  * @param language the language to use, default is "en"
  * @returns "a minute ago", "4 days ago"
  */
-export function readableTimeAgo (input: Date | number, language = 'en'): string {
+export function readableTimeAgo (input: Date | number, language = 'en') {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' })
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
   if (ms < Nb.MsInMinute) return rtf.format(-Math.floor(ms / Nb.MsInSecond), 'second')
@@ -25,7 +25,7 @@ export function readableTimeAgo (input: Date | number, language = 'en'): string 
  * @param nbDays the number of days to subtract from today
  * @returns a Date
  */
-export function daysAgo (nbDays = 0): Date {
+export function daysAgo (nbDays = 0) {
   const date = new Date()
   date.setDate(date.getDate() - nbDays)
   return date
@@ -36,6 +36,6 @@ export function daysAgo (nbDays = 0): Date {
  * @param nbDays the number of days to subtract from today
  * @returns a string like : "2019-12-31"
  */
-export function daysAgoIso10 (nbDays = 0): string {
+export function daysAgoIso10 (nbDays = 0) {
   return dateIso10(daysAgo(nbDays))
 }

@@ -8,7 +8,7 @@ let times = 0
 /**
  * @returns {number} the number of times the function has been called
  */
-function myFunction (): number {
+function myFunction () {
   times += 1
   return times
 }
@@ -16,7 +16,7 @@ function myFunction (): number {
 /**
  *
  */
-async function anAsyncFunctionThatReturn12 (): Promise<number> {
+async function anAsyncFunctionThatReturn12 () {
   await sleep(5)
   return 12
 }
@@ -24,7 +24,7 @@ async function anAsyncFunctionThatReturn12 (): Promise<number> {
 /**
  *
  */
-async function anAsyncFunctionThatReturnAnObject (): Promise<object> {
+async function anAsyncFunctionThatReturnAnObject () {
   await sleep(5)
   return {
     name: 'John',

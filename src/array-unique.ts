@@ -3,6 +3,6 @@
  * @param items the array to check/clean/reduce
  * @returns the array with unique values
  */
-export function arrayUnique<T> (items: T[]): T[] {
+export function arrayUnique<T> (items: T[]) {
   return Array.from(new Set(items))
 }

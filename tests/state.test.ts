@@ -14,7 +14,7 @@ test('state A name change', function () {
 
 test('state A watch callback', function () {
   let callbackCalls = 0
-  function callback (): void {
+  function callback () {
     callbackCalls += 1
   }
   watchStateA('name', callback)
@@ -54,7 +54,7 @@ test('state C with storage and all keys stored by default', function () {
 
 test('state D multiple watch', function () {
   let callbackCalls = 0
-  function callbackA (): void {
+  function callbackA () {
     callbackCalls += 1
   }
   watchStateA(['name', 'age'], callbackA)
@@ -68,7 +68,7 @@ test('state D multiple watch', function () {
 test('state E watch all', function () {
   let callbackCalls = 0
   let callbackKey = ''
-  function callbackB (updatedKey: string): void {
+  function callbackB (updatedKey: string) {
     callbackCalls += 1
     callbackKey = updatedKey
   }

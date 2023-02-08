@@ -6,7 +6,7 @@ import { clone } from './object-clone'
  * @param value the value to check
  * @returns true if value is in array
  */
-export function isArray (value: unknown): boolean {
+export function isArray (value: unknown) {
   return Array.isArray(value)
 }
 
@@ -16,7 +16,7 @@ export function isArray (value: unknown): boolean {
  * @param value the value to remove
  * @returns the array without the value
  */
-export function removeValueFromArray<T> (array: T[], value: T): T[] {
+export function removeValueFromArray<T> (array: T[], value: T) {
   if (!array.includes(value)) return array
   const arrayCopy = clone(array)
   arrayCopy.splice(arrayCopy.indexOf(value), 1)
@@ -30,7 +30,7 @@ export function removeValueFromArray<T> (array: T[], value: T): T[] {
  * @param value the value to add
  * @returns the array with the value added (if it didn't already exist)
  */
-export function insertValueAfterItem<T> (array: T[], item: T, value: T): T[] {
+export function insertValueAfterItem<T> (array: T[], item: T, value: T) {
   const index = array.indexOf(item)
   if (index === Nb.NoIndex) return array
   const arrayCopy = clone(array)

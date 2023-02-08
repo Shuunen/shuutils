@@ -14,7 +14,7 @@ function get<T = unknown> (key: string): T | undefined
  * @param defaultValue The default value to return if the key is not found
  * @returns The value or defaultValue if not found
  */
-function get<T = unknown> (key: string, defaultValue?: T): T | undefined {
+function get<T = unknown> (key: string, defaultValue?: T) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
@@ -32,7 +32,7 @@ function get<T = unknown> (key: string, defaultValue?: T): T | undefined {
  * @param data The value to set
  * @returns The given value
  */
-function set<T> (key: string, data: T): T {
+function set<T> (key: string, data: T) {
   const path = storage.prefix + key
   const value = typeof data === 'string' ? data : JSON.stringify(data)
   Reflect.set(storage.media, path, value)
@@ -44,7 +44,7 @@ function set<T> (key: string, data: T): T {
  * @param key The key of the value to check
  * @returns true if storage has a value for the given key
  */
-function has (key: string): boolean {
+function has (key: string) {
   return get(key) !== undefined
 }
 
@@ -52,7 +52,7 @@ function has (key: string): boolean {
  * Remove a value from the storage
  * @param key The key of the value to remove
  */
-function clear (key: string): void {
+function clear (key: string) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
   delete storage.media[path]

@@ -63,7 +63,7 @@ export class Logger {
    * Calculate the delay since the last log
    * @returns the delay like "+12ms"
    */
-  private getDelay (): string {
+  private getDelay () {
     const now = Date.now()
     if (this.lastLogTimestamp === 0) {
       this.lastLogTimestamp = now
@@ -80,7 +80,7 @@ export class Logger {
    * @returns the cleaned log line
    * @example logger.stuffToCleanLine(['Hello', 'world', 42]) // "Hello world 42"
    */
-  public clean (...stuff: unknown[]): string {
+  public clean (...stuff: unknown[]) {
     return stuff
       .map(thing => typeof thing === 'object' ? JSON.stringify(thing) : String(thing))
       .join(' ')
@@ -94,7 +94,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.addToMemoryLogs(['Hello', 'world', 42])
    */
-  public addToMemoryLogs (...stuff: unknown[]): void {
+  public addToMemoryLogs (...stuff: unknown[]) {
     this.inMemoryLogs.push(this.clean(...stuff))
   }
 
@@ -103,7 +103,7 @@ export class Logger {
    * @param prefix the prefix to add before the message
    * @param stuff the things to log
    */
-  private log (prefix: string, stuff: unknown[]): void {
+  private log (prefix: string, stuff: unknown[]) {
     const prefixes = [prefix]
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
@@ -117,7 +117,7 @@ export class Logger {
    * @param level the log level to check
    * @returns true if the log should be output
    */
-  private shouldLog (level: LogLevel): boolean {
+  private shouldLog (level: LogLevel) {
     return this.options.isActive && this.levels.indexOf(level) >= this.levels.indexOf(this.options.minimumLevel)
   }
 
@@ -126,7 +126,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.debug('Hello world')
    */
-  public debug (...stuff: unknown[]): void {
+  public debug (...stuff: unknown[]) {
     if (!this.shouldLog(LogLevel.Debug)) return
     this.log(LogLevel.Debug.padStart(this.padding), stuff)
   }
@@ -136,7 +136,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
-  public info (...stuff: unknown[]): void {
+  public info (...stuff: unknown[]) {
     if (!this.shouldLog(LogLevel.Info)) return
     this.log(blue(LogLevel.Info.padStart(this.padding)), stuff)
   }
@@ -146,7 +146,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.warn('Something went wrong')
    */
-  public warn (...stuff: unknown[]): void {
+  public warn (...stuff: unknown[]) {
     if (!this.shouldLog(LogLevel.Warn)) return
     this.log(yellow(LogLevel.Warn.padStart(this.padding)), stuff)
   }
@@ -156,7 +156,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.error('Something went wrong')
    */
-  public error (...stuff: unknown[]): void {
+  public error (...stuff: unknown[]) {
     if (!this.shouldLog(LogLevel.Error)) return
     this.log(red(LogLevel.Error.padStart(this.padding)), stuff)
   }
@@ -167,7 +167,7 @@ export class Logger {
    * @param {...any} stuff the things to log
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
-  public test (thing: unknown, ...stuff: unknown[]): void {
+  public test (thing: unknown, ...stuff: unknown[]) {
     if (!this.shouldLog(LogLevel.Test)) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
@@ -178,14 +178,14 @@ export class Logger {
   /**
    * Enable the logger output
    */
-  public enable (): void {
+  public enable () {
     this.options.isActive = true
   }
 
   /**
    * Disable the logger output
    */
-  public disable (): void {
+  public disable () {
     this.options.isActive = false
   }
 }

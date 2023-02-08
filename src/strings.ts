@@ -8,7 +8,7 @@ import { flatten } from './object-flatten'
  * @param sentence like "Hello, my name is John Doe !"
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export function sanitize (sentence: string): string {
+export function sanitize (sentence: string) {
   return sentence
     .trim()
     .replace(/['’-]/gu, ' ')
@@ -23,7 +23,7 @@ export function sanitize (sentence: string): string {
  * @param string input string like `"Slug % ME with // Love !"`
  * @returns string like `"slug-me-with-love"`
  */
-export function slugify (string: string): string {
+export function slugify (string: string) {
   return sanitize(string) // Clean the string
     .replace(/\W+/giu, '-') // Replace all non word with dash
     .replace(/^-+/u, '') // Trim dash from start
@@ -35,7 +35,7 @@ export function slugify (string: string): string {
  * Give a random url that point to an image
  * @returns string like `"https://server.com/image.png"`
  */
-export function getRandomImageUrl (): string {
+export function getRandomImageUrl () {
   const images = 'https://bulma.io/images/placeholders/128x128.png,https://via.placeholder.com/150,https://bulma.io/images/placeholders/64x64.png'.split(',')
   return String(pickOne(images))
 }
@@ -44,7 +44,7 @@ export function getRandomImageUrl (): string {
  * Give a random word or sentence without signification
  * @returns string like `"Bolowey Opnet"`
  */
-export function getRandomString (): string {
+export function getRandomString () {
   const strings = 'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae'.split(',')
   return String(pickOne(strings))
 }
@@ -55,7 +55,7 @@ export function getRandomString (): string {
  * @param data input object, like `{ name: "world" }`
  * @returns string, like `"Hello world !"`
  */
-export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>): string {
+export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>) {
   let string = (typeof template === 'object' ? JSON.stringify(template, undefined, Nb.Spaces) : template)
   if (data === undefined) return string
   if (string.length === 0) return string
@@ -72,17 +72,11 @@ export function fillTemplate (template: Record<string, unknown> | string, data?:
  * Transform the first letter of a string into capital
  * @param string `"hello John"`
  * @param shouldLower boolean, try to lower the rest of the string when applicable
- * @returns `"Hello John"`
+ * @returns {string}, `"Hello John"`
  */
-export function capitalize (string: string, shouldLower = false): string {
+export function capitalize (string: string, shouldLower = false) {
   if (!shouldLower) return string.charAt(0).toUpperCase() + string.slice(1)
-  const words = string.split(' ')
-  const cap = /^[\dA-Z-]+$/u
-  return words.map((word, index) => {
-    if (cap.test(word)) return word
-    if (index === 0) return capitalize(word)
-    return word.toLowerCase()
-  }).join(' ')
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 }
 
 /**
@@ -91,7 +85,7 @@ export function capitalize (string: string, shouldLower = false): string {
  * @param maxWords 3 for example
  * @returns `"Hello my dear..."`
  */
-export function ellipsisWords (stringIn = '', maxWords = 5): string {
+export function ellipsisWords (stringIn = '', maxWords = 5) {
   const stringOut = stringIn.split(' ').splice(0, maxWords).join(' ')
   if (stringOut === stringIn) return stringIn
   return `${stringOut}...`
@@ -103,7 +97,7 @@ export function ellipsisWords (stringIn = '', maxWords = 5): string {
  * @param maxLength 8 for example
  * @returns `"Hello my..."`
  */
-export function ellipsis (stringIn = '', maxLength = 50): string {
+export function ellipsis (stringIn = '', maxLength = 50) {
   const stringOut = stringIn.slice(0, maxLength)
   if (stringOut === stringIn) return stringIn
   return `${stringOut}...`
@@ -114,13 +108,11 @@ export function ellipsis (stringIn = '', maxLength = 50): string {
  * @param string `'{ "name": "Johnny" }'`
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
-export function isJson (string: string): boolean {
+export function isJson (string: string) {
   // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex
   const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
   if (!hasValidStart) return false
-  try {
-    JSON.parse(string)
-  } catch { return false }
+  try { JSON.parse(string) } catch { return false }
   return true
 }
 
@@ -128,7 +120,7 @@ export function isJson (string: string): boolean {
  * Create a CRC32 table
  * @returns a table of 256 numbers
  */
-export function createCrc32Table (): number[] {
+export function createCrc32Table () {
   const table: number[] = Array.from({ length: 256 })
   for (let index = 0; index < 256; index += 1) { // eslint-disable-line @typescript-eslint/no-magic-numbers
     let code = index
@@ -144,7 +136,7 @@ export function createCrc32Table (): number[] {
  * @param text the string to checksum
  * @returns the checksum like `3547`
  */
-export function crc32 (text: string): number {
+export function crc32 (text: string) {
   const crcTable = createCrc32Table()
   let crc = Nb.Descending
   for (let index = 0; index < text.length; index += 1) {
@@ -162,7 +154,7 @@ export function crc32 (text: string): number {
  * @param string `"Hello my dear friend"`
  * @returns the checksum like `3547`
  */
-export function stringSum (string: string): number {
+export function stringSum (string: string) {
   return crc32(string)
 }
 
@@ -171,7 +163,7 @@ export function stringSum (string: string): number {
  * @param value the value to check
  * @returns true if the value is a string
  */
-export function isString (value: unknown): boolean {
+export function isString (value: unknown) {
   return (typeof value === 'string')
 }
 
@@ -180,7 +172,7 @@ export function isString (value: unknown): boolean {
  * @param string the string to check
  * @returns true if the string is a base64 string
  */
-export function isBase64 (string: string): boolean {
+export function isBase64 (string: string) {
   return /^(?:data:)?[\w/]+;base64,[\w+/=]+$/u.test(string)
 }
 
@@ -189,7 +181,7 @@ export function isBase64 (string: string): boolean {
  * @param string the base64 string to parse
  * @returns the parsed string like `{ base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/png' }`
  */
-export function parseBase64 (string: string): { base64: string; size: number; type: string } {
+export function parseBase64 (string: string) {
   const result = { base64: '', size: 0, type: '' }
   if (!isBase64(string)) return result
   // eslint-disable-next-line regexp/no-super-linear-move
@@ -207,7 +199,7 @@ export function parseBase64 (string: string): { base64: string; size: number; ty
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
 // eslint-disable-next-line etc/no-misused-generics
-export function parseJson<T> (json: string): { error: string; value: T } {
+export function parseJson<T> (json: string) {
   let error = ''
   let value = {}
   if (json !== '') try {
@@ -221,7 +213,7 @@ export function parseJson<T> (json: string): { error: string; value: T } {
  * @param string the string to check
  * @returns true if the string contains HTML
  */
-export function isHtml (string: string): boolean {
+export function isHtml (string: string) {
   // eslint-disable-next-line regexp/no-super-linear-move
   return /<[^>]+>/u.test(string)
 }
@@ -234,7 +226,7 @@ export function isHtml (string: string): boolean {
  * @param mark the mark to inject
  * @returns the new string with the mark injected
  */
-export function injectMark (content: string, placeholder: string, mark: string): string {
+export function injectMark (content: string, placeholder: string, mark: string) {
   /* eslint-disable security/detect-non-literal-regexp */
   return content
     .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)

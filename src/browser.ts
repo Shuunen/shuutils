@@ -1,12 +1,12 @@
 import { sleep } from './functions'
 import { ellipsis } from './strings'
-import type { NavigatorExtract, NavigatorUserAgent } from './types'
+import type { NavigatorUserAgent } from './types'
 
 /**
  * Copy data to the clipboard
  * @param stuff the data to copy
  */
-export async function copyToClipboard (stuff: Record<string, unknown> | Record<string, unknown>[] | string[] | number | string): Promise<void> {
+export async function copyToClipboard (stuff: Record<string, unknown> | Record<string, unknown>[] | string[] | number | string) {
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
   console.log(`copying to clipboard : ${ellipsis(text)}`)
   await navigator.clipboard.writeText(text)
@@ -16,7 +16,7 @@ export async function copyToClipboard (stuff: Record<string, unknown> | Record<s
  * Read the clipboard content
  * @returns {string} the content of the clipboard
  */
-export async function readClipboard (): Promise<string> {
+export async function readClipboard () {
   console.log('reading clipboard...')
   const text = await navigator.clipboard.readText()
   console.log(`got this text from clipboard : ${ellipsis(text)}`)
@@ -28,7 +28,7 @@ export async function readClipboard (): Promise<string> {
  * @param location the new location
  * @returns {void} nothing
  */
-export function onPageChangeDefaultCallback (location: string): void {
+export function onPageChangeDefaultCallback (location: string) {
   console.log(`location changed : ${location} but onPageChange callback is empty`)
 }
 
@@ -38,7 +38,7 @@ export function onPageChangeDefaultCallback (location: string): void {
  * @param wait the time to wait between each check, default 1000ms
  * @param last used for recursion, do not use it
  */
-export async function onPageChange (callback = onPageChangeDefaultCallback, wait = 1000, last = ''): Promise<void> {
+export async function onPageChange (callback = onPageChangeDefaultCallback, wait = 1000, last = '') {
   await sleep(wait)
   const current = document.location.href
   if (current !== last) callback(current)
@@ -73,9 +73,9 @@ export class BrowserScout {
 
   /**
    * Return the navigator in a safe way for non-browser environments
-   * @returns {NavigatorExtract} the navigator
+   * @returns the navigator
    */
-  public get navigator (): NavigatorExtract {
+  public get navigator () {
     const extract = {
       userAgent: 'Undefined window userAgent',
       language: 'Undefined window language',
@@ -93,7 +93,7 @@ export class BrowserScout {
   /**
    * Detect the browser context
    */
-  private detect (): void {
+  private detect () {
     this.ua = this.navigator.userAgent
     this.platform = this.getPlatform()
     this.browser = this.getBrowser()
@@ -107,7 +107,7 @@ export class BrowserScout {
    * Get the browser name
    * @returns {string} the browser name
    */
-  private getBrowser (): this['browser'] {
+  private getBrowser () {
     if (this.ua.includes('MSIE') || (this.ua.includes('Mozilla') && this.ua.includes('Trident'))) return 'Internet Explorer'
     if (this.ua.includes('Edg')) return 'Edge'
     if (this.ua.includes('Chrome')) return 'Chrome'
@@ -123,7 +123,7 @@ export class BrowserScout {
    * @returns {string} the operating system name
    */
   // eslint-disable-next-line complexity
-  private getOperatingSystem (): this['os'] {
+  private getOperatingSystem () {
     if (this.ua.includes('Safari') && (this.ua.includes('iPhone') || this.ua.includes('iPad') || this.ua.includes('iPod'))) return 'iOS'
     if (this.platform === 'MacIntel' || this.platform === 'MacPPC') return 'Mac OS X'
     if (this.platform === 'CrOS') return 'ChromeOS'
@@ -137,7 +137,7 @@ export class BrowserScout {
    * Get the platform name
    * @returns {string} the platform name
    */
-  private getPlatform (): this['platform'] {
+  private getPlatform () {
     if (this.ua.includes('Chrome') && this.ua.includes('CrOS')) return 'CrOS'
     return this.navigator.platform
   }
@@ -147,7 +147,7 @@ export class BrowserScout {
    * @returns {string} the browser version
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-  private getVersion (): this['version'] {
+  private getVersion () {
     if (this.ua.includes('MSIE')) return ((/MSIE [\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown MSIE version'
     if (this.ua.includes('Chrome')) return ((/Chrome\/[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown Chrome version'
     if (this.ua.includes('Firefox')) return ((/Firefox\/[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown Firefox version'

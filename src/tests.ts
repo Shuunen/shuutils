@@ -13,7 +13,7 @@
  * @param expected the expected value
  * @returns nothing
  */
-export function check<T> (title: string, actual: Promise<T> | T, expected?: Promise<T> | T): void {
+export function check<T> (title: string, actual: Promise<T> | T, expected?: Promise<T> | T) {
   const { test } = require('uvu')
   const { equal } = require('uvu/assert')
   if (actual instanceof Promise) return test(title, async () => {
@@ -26,6 +26,6 @@ export function check<T> (title: string, actual: Promise<T> | T, expected?: Prom
 /**
  * Run all the tests declared in the file
  */
-export function checksRun (): void {
+export function checksRun () {
   require('uvu').test.run()
 }
