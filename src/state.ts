@@ -5,7 +5,6 @@ import type { ShuutilsStorage } from './storage'
 
 type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown) => void)
 
-
 /**
  * Creates a state object that can be watched for changes, and optionally sync in a storage object
  * @param data The initial state object
@@ -33,7 +32,7 @@ export function createState<State extends object> (data: State, stateStorage?: S
   }
   const state = new Proxy<State>(data, handler)
   function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback) {
-    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
+    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary, putout/putout
     keys.forEach(stateKey => {
       listeners[stateKey] ||= []
       listeners[stateKey]?.push(callback)
