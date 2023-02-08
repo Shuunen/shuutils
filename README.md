@@ -7,7 +7,7 @@
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
 [![GitHub license](https://img.shields.io/github/license/shuunen/shuutils.svg?color=informational)](https://github.com/Shuunen/shuutils/blob/master/LICENSE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![David](https://img.shields.io/david/shuunen/shuutils.svg)](https://david-dm.org/shuunen/shuutils)
@@ -61,10 +61,13 @@ Thanks goes to these wonderful people :
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://fr.linkedin.com/in/romainracamier"><img src="https://avatars.githubusercontent.com/u/439158?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Romain Racamier</b></sub></a><br /><a href="#infra-Shuunen" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Shuunen/shuutils/commits?author=Shuunen" title="Tests">⚠️</a> <a href="https://github.com/Shuunen/shuutils/commits?author=Shuunen" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/babforlife"><img src="https://avatars.githubusercontent.com/u/55501953?v=4?s=100" width="100px;" alt=""/><br /><sub><b>babforlife</b></sub></a><br /><a href="https://github.com/Shuunen/shuutils/commits?author=babforlife" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://fr.linkedin.com/in/romainracamier"><img src="https://avatars.githubusercontent.com/u/439158?v=4?s=100" width="100px;" alt="Romain Racamier"/><br /><sub><b>Romain Racamier</b></sub></a><br /><a href="#infra-Shuunen" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Shuunen/shuutils/commits?author=Shuunen" title="Tests">⚠️</a> <a href="https://github.com/Shuunen/shuutils/commits?author=Shuunen" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/babforlife"><img src="https://avatars.githubusercontent.com/u/55501953?v=4?s=100" width="100px;" alt="babforlife"/><br /><sub><b>babforlife</b></sub></a><br /><a href="https://github.com/Shuunen/shuutils/commits?author=babforlife" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jordan-boyer"><img src="https://avatars.githubusercontent.com/u/6780830?v=4?s=100" width="100px;" alt="jordan boyer"/><br /><sub><b>jordan boyer</b></sub></a><br /><a href="https://github.com/Shuunen/shuutils/commits?author=jordan-boyer" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
