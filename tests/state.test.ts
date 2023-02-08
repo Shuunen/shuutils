@@ -37,7 +37,7 @@ test('state B with storage and specific keys to store', function () {
   equal(stateB.excluded, ':)', 'excluded loaded from initial data event if present in storage, because it was not in the synced props')
   stateB.name = 'John'
   equal(stateB.name, 'John', 'name changed in state')
-  equal(storage.media['stateB_name'], 'John', 'name synced in storage')
+  equal(storage.media.stateB_name, 'John', 'name synced in storage')
 })
 
 test('state C with storage and all keys stored by default', function () {
