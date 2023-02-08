@@ -1,5 +1,5 @@
 
-import { bgGreen, bgRed, blue, gray, red } from './colors'
+import { bgGreen, bgRed, blue, gray, red, yellow } from './colors'
 import { Nb } from './constants'
 import { formatDate, readableTime } from './dates'
 
@@ -148,7 +148,7 @@ export class Logger {
    */
   public warn (...stuff: unknown[]): void {
     if (!this.shouldLog(LogLevel.Warn)) return
-    this.log(red(LogLevel.Warn.padStart(this.padding)), stuff)
+    this.log(yellow(LogLevel.Warn.padStart(this.padding)), stuff)
   }
 
   /**
