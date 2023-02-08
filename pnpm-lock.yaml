@@ -10,7 +10,7 @@ specifiers:
   eslint-plugin-jsdoc: '39'
   jsdom: '21'
   jsdom-global: '3'
-  repo-check: '1.29'
+  repo-check: '1.30'
   tiny-glob: '0'
   tsm: '2'
   typescript: '4'
@@ -31,7 +31,7 @@ devDependencies:
   eslint-plugin-jsdoc: 39.6.4_eslint@8.33.0
   jsdom: 21.0.0
   jsdom-global: 3.0.2_jsdom@21.0.0
-  repo-check: 1.29.0
+  repo-check: 1.30.0
   tsm: 2.3.0
   typescript: 4.9.4
   watchlist: 0.3.1
@@ -2509,6 +2509,10 @@ packages:
     dependencies:
       globby: 12.2.0
       meow: 10.1.5
+    dev: true
+
+  /arg/5.0.2:
+    resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
     dev: true
 
   /argparse/2.0.1:
@@ -6903,9 +6907,12 @@ packages:
     resolution: {integrity: sha512-NEs3uvzpaZscL9qFGIHMO7iFy45/nRQC0bBeIMys8UDJT5CX/OcgDeRpcmwXGcr9Ez+IYZka7w0xhA9pEs7Cag==}
     dev: true
 
-  /repo-check/1.29.0:
-    resolution: {integrity: sha512-byp4NWqqR5R/0mLOSPxcHiXmj5kW+MVGasvLJNWEmqNT1yuV7t5AJ0jen+rQ4Ah5s+aglP3eupgY812rB9uVpA==}
+  /repo-check/1.30.0:
+    resolution: {integrity: sha512-L/V4iSVlxaeEABGTZ/3JS1SggAQWMycs4W0pu6LCGDnCborl6HurWy3Jh3Sh5kiZFeHclKHw9O98XCgR4h6ang==}
     hasBin: true
+    dependencies:
+      arg: 5.0.2
+      shuutils: 7.1.0
     dev: true
 
   /req-all/0.1.0:
@@ -7082,6 +7089,14 @@ packages:
   /shebang-regex/3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+    dev: true
+
+  /shuutils/7.1.0:
+    resolution: {integrity: sha512-CYsVwn8EggWsF+oYIbB480zahvowxR8rTHHpKPogMKa/VyJ4Hjj7+Wbw1HsCHvLtY3yGKLuINwOSbbTNdPOLMg==}
+    hasBin: true
+    dependencies:
+      tiny-glob: 0.2.9
+      uvu: 0.5.6
     dev: true
 
   /side-channel/1.0.4:
