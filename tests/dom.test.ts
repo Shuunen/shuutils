@@ -1,6 +1,9 @@
+import { GlobalRegistrator } from '@happy-dom/global-registrator'
 import { test } from 'uvu'
 import { equal, ok } from 'uvu/assert'
 import { backdrop, check, checksRun, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+
+GlobalRegistrator.register()
 
 test('custom type dom element with no classes', function () {
   const element = dom('article')
@@ -58,7 +61,7 @@ test('link', function () {
   const element = link('link', 'go to home page', '#home')
   equal(element.tagName.toLowerCase(), 'a')
   equal(element.textContent, 'go to home page')
-  ok(element.href.includes('#home')) // jsdom return "about:blank#home" for el.href...
+  ok(element.href.includes('#home')) // return "about:blank#home" for el.href...
 })
 
 test('link that open in a new tab', function () {

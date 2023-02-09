@@ -11,6 +11,7 @@
   },
   "description": "utils collection",
   "devDependencies": {
+    "@happy-dom/global-registrator": "8",
     "@types/node": "18",
     "c8": "7",
     "dependency-cruiser": "12",
@@ -18,8 +19,6 @@
     "eslint": "8.33",
     "eslint-config-hardcore": "26",
     "eslint-plugin-jsdoc": "39",
-    "jsdom": "21",
-    "jsdom-global": "3",
     "repo-check": "1.30",
     "tsm": "2",
     "typescript": "4",
@@ -58,7 +57,7 @@
     "prepack": "npm run build",
     "preversion": "npm run ci",
     "start": "npm run dev",
-    "test": "c8 uvu -r tsm -r jsdom-global/register tests && echo test success",
+    "test": "c8 uvu -r tsm tests && echo test success",
     "test:watch": "watchlist src tests -eager -- npm test"
   },
   "type": "module",
