@@ -57,7 +57,7 @@ async function checkTreeShake () {
   assert(build.errors.length === 0, 'tree-shaking build should not have errors')
   assert(build.warnings.length === 0, 'tree-shaking build should not have warnings')
   assert(build.outputFiles.length === 1, 'tree-shaking build should have one output file')
-  const actual = build.outputFiles[0].text
+  const actual = build.outputFiles[0]?.text || ''
   if (actual !== expectedTreeShakeBuild) checkTreeShakeFailed(actual)
 }
 
@@ -77,5 +77,6 @@ async function doBuild () {
   return true
 }
 
+// @ts-ignore
 await doBuild()
 
