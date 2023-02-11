@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
-import { capitalize, check, checksRun, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, injectMark, isBase64, isHtml, isJson, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
+import { capitalize, crc32, createCrc32Table, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, injectMark, isBase64, isHtml, isJson, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
+import { check, checkSnapshot } from './utils'
 
 const data = {
   name: 'Wick',
@@ -94,5 +95,6 @@ check('injectMark on string that contains one placeholder on a div with a class'
 check('injectMark on string that contains one placeholder on a meta tag', injectMark('<meta name="placeholder" content="..." />', 'placeholder', 'da-mark'), '<meta name="placeholder" content="da-mark" />')
 check('injectMark on a complex string with multiple placeholders', injectMark('Hello __placeholder__ I like <meta name="placeholder" content="..." /> and <div id="placeholder" class="mt-6 p-4">OLD-mark</div> :)', 'placeholder', 'super-mark'), 'Hello super-mark I like <meta name="placeholder" content="super-mark" /> and <div id="placeholder" class="mt-6 p-4">super-mark</div> :)')
 
-checksRun()
-
+checkSnapshot('createCrc32Table', createCrc32Table())
+check('crc32 A', crc32('Hello world !'), 118_369_344)
+check('crc32 B', crc32('12 is a great number LÔL !! :p'), 1_336_548_843)

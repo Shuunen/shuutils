@@ -67,7 +67,7 @@ async function checkTreeShake () {
 async function doBuild () {
   await esbuild({
     bundle: true,
-    external: ['uvu', 'uvu/asserts', 'tiny-glob'], // but not theses
+    external: ['tiny-glob'], // but not theses
     outdir: 'dist',
     platform: 'node',
     entryPoints: await glob('src/*.ts'), // build all ts files let the end-user choose global import like import { aFunc } from 'shuutils' or import { aFunc } from 'shuutils/dist/a-specific-file' to force tree-shaking

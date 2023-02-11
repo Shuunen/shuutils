@@ -1,4 +1,5 @@
-import { check, checksRun, dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, Nb, readableTime, readableTimeAgo } from '../src'
+import { dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, Nb, readableTime, readableTimeAgo } from '../src'
+import { check } from './utils'
 
 const today = new Date()
 
@@ -80,6 +81,3 @@ check('readable time M', readableTime(32 * Nb.MsInDay), '1 month')
 check('readable time N', readableTime(2 * Nb.MsInYear), '2 years')
 check('readable time O', readableTime(daysAgo(2)), '2 days')
 check('readable time P', readableTime(daysAgo(4), false), '4d')
-
-checksRun()
-

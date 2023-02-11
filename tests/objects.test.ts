@@ -1,6 +1,7 @@
 /* eslint-disable etc/no-assign-mutated-array */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { access, byProperty, check, checksRun, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
+import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
+import { check } from './utils'
 
 const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
 const personCopy = clone(person)
@@ -81,4 +82,3 @@ check('objectSum on object with a slightly different key', objectSum({ keyA: 1, 
 check('objectSum on a large object', objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users, object3 }), 1_861_045_962)
 check('objectSum is the same on two equals objects', objectSum(object3) === objectSum(clone(object3)), true)
 
-checksRun()

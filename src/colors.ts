@@ -283,6 +283,7 @@ export function hexToHsl (hex: string) {
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + Number(Nb.Two)
   else hue = (colorRed - colorGreen) / delta + Number(Nb.Four)
   hue = Math.round(hue * Nb.HueStep)
+  /* c8 ignore next */
   if (hue < 0) hue += Number(Nb.HueMax)
   lightness = (max + min) / Nb.Two
   saturation = delta === 0 ? 0 : delta / (1 - Math.abs(Nb.Two * lightness - 1))

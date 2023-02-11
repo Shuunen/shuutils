@@ -2,6 +2,8 @@ import { sleep } from './functions'
 import { ellipsis } from './strings'
 import type { NavigatorUserAgent } from './types'
 
+/* c8 ignore start */
+
 /**
  * Copy data to the clipboard
  * @param stuff the data to copy
@@ -156,3 +158,5 @@ export class BrowserScout {
     return 'Unknown version'
   }
 }
+
+/* c8 ignore stop */

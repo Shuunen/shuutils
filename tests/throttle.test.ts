@@ -1,29 +1,19 @@
-/* eslint-disable unicorn/prefer-top-level-await */
-import { test } from 'uvu'
-import { equal } from 'uvu/assert'
-import { check, checksRun, sleep, throttle } from '../src'
+import { expect, it } from 'vitest'
+import { sleep, throttle } from '../src'
+import { check } from './utils'
 
 let times = 0
 
-/**
- * @returns {number} the number of times the function has been called
- */
 function myFunction () {
   times += 1
   return times
 }
 
-/**
- *
- */
 async function anAsyncFunctionThatReturn12 () {
   await sleep(5)
   return 12
 }
 
-/**
- *
- */
 async function anAsyncFunctionThatReturnAnObject () {
   await sleep(5)
   return {
@@ -32,20 +22,20 @@ async function anAsyncFunctionThatReturnAnObject () {
   }
 }
 
-test('throttle', async function () {
+it('throttle', async function () {
   times = 0
   const myFunctionThrottled = throttle(myFunction, 100)
-  equal(times, 0)
+  expect(times).toBe(0)
   myFunctionThrottled()
-  equal(times, 1)
+  expect(times).toBe(1)
   myFunctionThrottled()
   myFunctionThrottled()
   myFunctionThrottled()
-  equal(times, 1)
+  expect(times).toBe(1)
   await sleep(100)
   myFunctionThrottled()
   myFunctionThrottled()
-  equal(times, 2)
+  expect(times).toBe(2)
 })
 
 check('anAsyncFunctionThatReturn12 A', anAsyncFunctionThatReturn12(), 12)
@@ -53,5 +43,4 @@ check('anAsyncFunctionThatReturn12 B', anAsyncFunctionThatReturn12(), Promise.re
 check('anAsyncFunctionThatReturnAnObject A', anAsyncFunctionThatReturnAnObject(), { name: 'John', age: 30 })
 check('anAsyncFunctionThatReturnAnObject B', anAsyncFunctionThatReturnAnObject(), Promise.resolve({ name: 'John', age: 30 }))
 
-checksRun()
 

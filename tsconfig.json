@@ -32,6 +32,7 @@
     ]
   },
   "include": [
+    "*.ts",
     "bin",
     "src",
     "tests"

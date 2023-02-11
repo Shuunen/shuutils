@@ -1,3 +1,4 @@
+/* c8 ignore start */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Listener {
   callback: (event: any) => any
@@ -68,3 +69,5 @@ export function off ({ media, name, callback }: Listener) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   media.removeEventListener(name, callback)
 }
+
+/* c8 ignore stop */

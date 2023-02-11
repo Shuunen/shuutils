@@ -1,145 +1,145 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { test } from 'uvu'
-import { equal, ok } from 'uvu/assert'
-import { backdrop, check, checksRun, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+import { expect, it } from 'vitest'
+import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+import { check } from './utils'
 
 GlobalRegistrator.register()
 
-test('custom type dom element with no classes', function () {
+it('custom type dom element with no classes', function () {
   const element = dom('article')
-  equal(element.tagName.toLowerCase(), 'article')
-  equal(element.className, '')
+  expect(element.tagName.toLowerCase()).toBe('article')
+  expect(element.className).toBe('')
 })
 
-test('custom type dom element with classes', function () {
+it('custom type dom element with classes', function () {
   const element = dom('strong', 'important important--stuff')
-  equal(element.tagName.toLowerCase(), 'strong')
-  equal(element.className, 'important important--stuff')
-  ok(element.classList.contains('important--stuff'))
+  expect(element.tagName.toLowerCase()).toBe('strong')
+  expect(element.className).toBe('important important--stuff')
+  expect(element.classList.contains('important--stuff')).toBeTruthy()
 })
 
-test('custom type dom element with classes & text content', function () {
+it('custom type dom element with classes & text content', function () {
   const element = dom('i', 'italic', 'Hello John Cena')
-  equal(element.textContent, 'Hello John Cena')
-  equal(element.innerHTML, 'Hello John Cena')
+  expect(element.textContent).toBe('Hello John Cena')
+  expect(element.innerHTML).toBe('Hello John Cena')
 })
 
-test('custom type dom element with classes & html content', function () {
+it('custom type dom element with classes & html content', function () {
   const element = dom('i', 'italic', '<p>Hello John Cena</p>')
-  equal(element.textContent, 'Hello John Cena')
-  equal(element.tagName.toLowerCase(), 'i')
-  equal(element.innerHTML, '<p>Hello John Cena</p>')
+  expect(element.textContent).toBe('Hello John Cena')
+  expect(element.tagName.toLowerCase()).toBe('i')
+  expect(element.innerHTML).toBe('<p>Hello John Cena</p>')
 })
 
-test('custom type dom element with classes & dom element content', function () {
+it('custom type dom element with classes & dom element content', function () {
   const element = dom('i', 'italic', text('pizza', 'John Pepe'))
-  equal(element.textContent, 'John Pepe')
-  equal(element.tagName.toLowerCase(), 'i')
-  equal(element.innerHTML, '<p class="pizza">John Pepe</p>')
+  expect(element.textContent).toBe('John Pepe')
+  expect(element.tagName.toLowerCase()).toBe('i')
+  expect(element.innerHTML).toBe('<p class="pizza">John Pepe</p>')
 })
 
-test('image', function () {
+it('image', function () {
   const element = image('profile', 'https://cdn.com/image.jpg', 'profile picture')
-  equal(element.alt, 'profile picture')
-  equal(element.tagName.toLowerCase(), 'img')
-  equal(element.src, 'https://cdn.com/image.jpg')
+  expect(element.alt).toBe('profile picture')
+  expect(element.tagName.toLowerCase()).toBe('img')
+  expect(element.src).toBe('https://cdn.com/image.jpg')
 })
 
-test('img', function () {
+it('img', function () {
   const element = img('profile-short', 'https://cdn.com/image-short.jpg', 'profile-short picture')
-  equal(element.alt, 'profile-short picture')
-  equal(element.tagName.toLowerCase(), 'img')
-  equal(element.src, 'https://cdn.com/image-short.jpg')
+  expect(element.alt).toBe('profile-short picture')
+  expect(element.tagName.toLowerCase()).toBe('img')
+  expect(element.src).toBe('https://cdn.com/image-short.jpg')
 })
 
-test('icon', function () {
+it('icon', function () {
   const element = icon('fas fa-profile')
-  equal(element.className, 'icon fas fa-profile')
+  expect(element.className).toBe('icon fas fa-profile')
 })
 
-test('link', function () {
+it('link', function () {
   const element = link('link', 'go to home page', '#home')
-  equal(element.tagName.toLowerCase(), 'a')
-  equal(element.textContent, 'go to home page')
-  ok(element.href.includes('#home')) // return "about:blank#home" for el.href...
+  expect(element.tagName.toLowerCase()).toBe('a')
+  expect(element.textContent).toBe('go to home page')
+  expect(element.href.includes('#home')) // return "about:blank#home" for el.href....toBeTruthy()
 })
 
-test('link that open in a new tab', function () {
+it('link that open in a new tab', function () {
   const element = link('link', 'go to external page', 'https://duckduckgo.com/', true)
-  equal(element.href, 'https://duckduckgo.com/')
-  equal(element.textContent, 'go to external page')
-  equal(element.target, '_blank')
+  expect(element.href).toBe('https://duckduckgo.com/')
+  expect(element.textContent).toBe('go to external page')
+  expect(element.target).toBe('_blank')
 })
 
-test('dom list ul/li', function () {
+it('dom list ul/li', function () {
   const element = li('item', 'item 1')
-  equal(element.tagName.toLowerCase(), 'li')
-  equal(element.textContent, 'item 1')
+  expect(element.tagName.toLowerCase()).toBe('li')
+  expect(element.textContent).toBe('item 1')
   const list = ul('list', element)
-  equal(list.tagName.toLowerCase(), 'ul')
-  equal(list.textContent, 'item 1')
-  equal(list.childElementCount, 1)
+  expect(list.tagName.toLowerCase()).toBe('ul')
+  expect(list.textContent).toBe('item 1')
+  expect(list.childElementCount).toBe(1)
 })
 
-test('dom backdrop', function () {
+it('dom backdrop', function () {
   const element = backdrop('custom-class')
-  equal(element.tagName.toLowerCase(), 'div')
-  ok(element.classList.contains('backdrop'))
-  ok(element.classList.contains('custom-class'))
+  expect(element.tagName.toLowerCase()).toBe('div')
+  expect(element.classList.contains('backdrop')).toBeTruthy()
+  expect(element.classList.contains('custom-class')).toBeTruthy()
 })
 
-test('dom basics', function () {
+it('dom basics', function () {
   const funcs = [strong, em, small, h1, h2, h3, div]
   funcs.forEach(testFunction => {
     const { name } = testFunction
     const element = testFunction(name)
-    equal(element.tagName.toLowerCase(), name)
-    equal(element.textContent, '')
-    ok(element.classList.contains(name))
+    expect(element.tagName.toLowerCase()).toBe(name)
+    expect(element.textContent).toBe('')
+    expect(element.classList.contains(name)).toBeTruthy()
     const elementContent = testFunction(name, `I really like guacamole with ${name}`)
-    equal(elementContent.tagName.toLowerCase(), name)
-    equal(elementContent.textContent, `I really like guacamole with ${name}`)
+    expect(elementContent.tagName.toLowerCase()).toBe(name)
+    expect(elementContent.textContent).toBe(`I really like guacamole with ${name}`)
   })
 })
 
-test('dom handle multiple children', function () {
+it('dom handle multiple children', function () {
   const element = div('div', [text('p', 'text 1'), text('p', 'text 2')])
-  equal(element.childElementCount, 2)
-  equal(element.textContent, 'text 1text 2')
+  expect(element.childElementCount).toBe(2)
+  expect(element.textContent).toBe('text 1text 2')
 })
 
-test('css link', function () {
+it('css link', function () {
   const element = css('https://cdn.net/style.css')
-  equal(element.href, 'https://cdn.net/style.css')
-  equal(element.rel, 'stylesheet')
-  equal(element.type, 'text/css')
+  expect(element.href).toBe('https://cdn.net/style.css')
+  expect(element.rel).toBe('stylesheet')
+  expect(element.type).toBe('text/css')
 })
 
-test('dive div in a Dave div has Life in a div', function () {
+it('dive div in a Dave div has Life in a div', function () {
   const element = div('Dave', div('dive', 'Life in a div'))
-  equal(element.tagName.toLowerCase(), 'div')
-  equal(element.innerHTML, '<div class="dive">Life in a div</div>')
+  expect(element.tagName.toLowerCase()).toBe('div')
+  expect(element.innerHTML).toBe('<div class="dive">Life in a div</div>')
 })
 
 check('find one', findOne('body')?.tagName, 'BODY')
 check('find all length', findAll('body').length, 1)
 check('find all type', Array.isArray(findAll('body')), true)
 
-test('wait to detect an existing element', async function () {
+it('wait to detect an existing element', async function () {
   const element = await waitToDetect('body', 10)
-  equal(element?.tagName, 'BODY')
+  expect(element?.tagName).toBe('BODY')
 })
-test('wait to detect a non-existing element', async function () {
+it('wait to detect a non-existing element', async function () {
   const element = await waitToDetect('.not-existing', 10)
-  equal(element, undefined)
+  expect(element).toBe(undefined)
 })
 
-test('scroll to height', async function () {
+it('scroll to height', async function () {
   const element = dom('textarea')
   element.textContent = 'Hello World'
-  equal(element.style.height, '')
+  expect(element.style.height).toBe('')
   await scrollToHeightSync(element)
-  ok(element.style.height.includes('px'))
+  expect(element.style.height.includes('px')).toBeTruthy()
 })
 
 check('tw returns a string A', typeof tw(''), 'string')
@@ -152,4 +152,3 @@ check('tw returns a string G', tw`text-red-500 text-blue-500`, 'text-red-500 tex
 check('tw returns a string H', tw``, '')
 check('tw returns a string I', tw(['text-red-500', 'text-blue-500']), 'text-red-500 text-blue-500')
 
-checksRun()

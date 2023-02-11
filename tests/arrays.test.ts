@@ -1,4 +1,5 @@
-import { arrayUnique, check, checksRun, insertValueAfterItem, isArray, pickOne, removeValueFromArray, shuffleArray } from '../src'
+import { arrayUnique, insertValueAfterItem, isArray, pickOne, removeValueFromArray, shuffleArray } from '../src'
+import { check } from './utils'
 
 const elements = ['damn', 'this', 'test', 'is', 'crazy']
 const elementsShuffled = shuffleArray(elements)
@@ -30,4 +31,3 @@ check('insert value after item case C', insertValueAfterItem([1, 'deux', 3], 1, 
 check('insert value after item case D', insertValueAfterItem([1, 2, 3], 4, 4), [1, 2, 3])
 check('insert value after item case E', insertValueAfterItem([], 4, 4), [])
 
-checksRun()

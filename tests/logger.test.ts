@@ -1,4 +1,5 @@
-import { check, checksRun, Logger, LogLevel, red } from '../src'
+import { Logger, LogLevel, red } from '../src'
+import { check } from './utils'
 
 const loggerA = new Logger()
 check('loggerA is active', loggerA.options.isActive, true)
@@ -65,4 +66,3 @@ check('loggerE clean J', loggerE.clean('an undefined ?', undefined), 'an undefin
 check('loggerE clean K', loggerE.clean('a date ?', new Date('2020-01-01')), 'a date ? \'2020-01-01T00:00:00.000Z\'')
 check('loggerE clean L', loggerE.clean('a regexp ?', /Hello world{3,5}/u), 'a regexp ? {}') // not supported for now
 
-checksRun()

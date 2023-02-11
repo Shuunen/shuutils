@@ -1,4 +1,5 @@
-import { check, checksRun, hasOwn, storage } from '../src'
+import { hasOwn, storage } from '../src'
+import { check } from './utils'
 
 interface User { name: string; age: number }
 const key = 'Michael'
@@ -86,4 +87,3 @@ check('storage typeof returnH is object and TS inferred type should be number[]'
 const returnI = storage.get<number>(key, 24)
 check('storage typeof returnI is number and TS inferred type should be number', typeof returnI, 'number')
 
-checksRun()

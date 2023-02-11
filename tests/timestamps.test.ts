@@ -1,4 +1,5 @@
-import { check, checksRun, getTimestamp, getTimestampMs } from '../src'
+import { getTimestamp, getTimestampMs } from '../src'
+import { check } from './utils'
 
 check('specific date', getTimestamp(new Date('1989-05-14')), 611_107_200)
 
@@ -12,4 +13,3 @@ const sizeMs = getTimestampMs().toString().length
 const sizeS = getTimestamp().toString().length
 check('ms is a 1000 times bigger', (sizeMs - sizeS) === 3, true)
 
-checksRun()

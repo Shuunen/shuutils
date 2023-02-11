@@ -16,7 +16,9 @@
         "tests/*"
       ],
       "rules": {
-        "func-names": "off"
+        "func-names": "off",
+        "jsdoc/require-jsdoc": "off",
+        "unicorn/prefer-top-level-await": "off"
       }
     },
     {

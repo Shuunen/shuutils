@@ -1,5 +1,6 @@
 
-import { check, checksRun, hasOwn, sleep } from '../src'
+import { hasOwn, sleep } from '../src'
+import { check } from './utils'
 
 check('hasOwn A', hasOwn({ propA: 1 }, 'propA'), true)
 check('hasOwn B', hasOwn({ propA: 1 }, 'propB'), false)
@@ -8,6 +9,3 @@ check('hasOwn D', hasOwn({ propA: 1 }, 'hasOwnProperty'), false)
 
 check('sleep A', sleep(10), Promise.resolve(10))
 check('sleep B', sleep(20), 20)
-
-checksRun()
-
