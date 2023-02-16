@@ -1,0 +1,22 @@
+// Vitest Snapshot v1
+
+exports[`loggerB inMemoryLogs 1`] = `
+[
+  " info This info 2 should be logged",
+  " info This info 3 should be logged too",
+  " good This success 0 should be logged",
+  " warn This warn 1 should be logged",
+]
+`;
+
+exports[`loggerD inMemoryLogs 1`] = `
+[
+  " info This info 4 should be logged 12",
+  " info This info 5 should be logged too [1,2,3]",
+  " warn This warn 3 should be logged {'keyA':1,'keyB':'John','isKeyC':true}",
+  "error This error 5 should be logged null",
+  "   ✓  This test 4 should be logged undefined",
+  "   ✗  This test 5 should be logged () => 'Hello world'",
+  "debug This debug 1 should be logged true [] {}",
+]
+`;

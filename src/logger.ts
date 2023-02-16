@@ -1,5 +1,5 @@
 
-import { bgGreen, bgRed, blue, gray, red, yellow } from './colors'
+import { bgGreen, bgRed, blue, gray, green, red, yellow } from './colors'
 import { Nb } from './constants'
 import { formatDate, readableTime } from './dates'
 
@@ -8,6 +8,7 @@ export const enum LogLevel {
   Test = 'test',
   Info = 'info',
   Warn = 'warn',
+  Success = 'good',
   Error = 'error', // eslint-disable-line @typescript-eslint/no-shadow
 }
 
@@ -45,6 +46,7 @@ export class Logger {
     LogLevel.Test,
     LogLevel.Info,
     LogLevel.Warn,
+    LogLevel.Success,
     LogLevel.Error,
   ]
 
@@ -152,8 +154,18 @@ export class Logger {
   }
 
   /**
+   * Log a success message
+   * @param stuff the things to log (will be green, as expected)
+   * @example logger.success('Everything went well')
+   */
+  public success (...stuff: unknown[]) {
+    if (!this.shouldLog(LogLevel.Success)) return
+    this.log(green(LogLevel.Success.padStart(this.padding)), stuff)
+  }
+
+  /**
    * Log an error message
-   * @param stuff the things to log
+   * @param stuff the things to log (will be red, such original)
    * @example logger.error('Something went wrong')
    */
   public error (...stuff: unknown[]) {

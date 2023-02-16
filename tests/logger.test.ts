@@ -1,21 +1,23 @@
 import { Logger, LogLevel, red } from '../src'
-import { check } from './utils'
+import { check, checkSnapshot } from './utils'
 
 const loggerA = new Logger()
 check('loggerA is active', loggerA.options.isActive, true)
 loggerA.info('This info 0 should be logged')
 
-const loggerB = new Logger({ isActive: false, willOutputToMemory: true, willOutputToConsole: false })
+const loggerB = new Logger({ isActive: false, willLogDelay: false, willOutputToMemory: true, willOutputToConsole: false })
 check('loggerB is not active', loggerB.options.isActive, false)
 loggerB.info('This info 1 should not be logged')
 loggerB.options.isActive = true
 loggerB.info('This info 2 should be logged')
 loggerB.info('This info 3 should be logged too')
+loggerB.success('This success 0 should be logged')
 loggerB.warn('This warn 1 should be logged')
-check('loggerB 3 inMemoryLogs', loggerB.inMemoryLogs.length, 3)
+checkSnapshot('loggerB inMemoryLogs', loggerB.inMemoryLogs)
 
-const loggerC = new Logger({ willLogDate: true, willLogTime: true, willOutputToConsole: false, minimumLevel: LogLevel.Error, willOutputToMemory: true })
+const loggerC = new Logger({ willLogDate: true, willLogTime: true, willOutputToConsole: false, willLogDelay: true, minimumLevel: LogLevel.Error, willOutputToMemory: true })
 loggerC.warn('This warn 2 should not be logged')
+loggerC.success('This success 1 should not be logged')
 loggerC.error('This error 1 should be logged')
 loggerC.disable()
 loggerC.error('This error 2 should not be logged')
@@ -25,7 +27,8 @@ loggerC.test(true, 'This test 1 should not be logged')
 loggerC.options.minimumLevel = LogLevel.Test
 loggerC.test(true, 'This test 2 should be logged')
 loggerC.test(false, 'This test 3 should be logged')
-check('loggerC 4 inMemoryLogs', loggerC.inMemoryLogs.length, 4)
+// cannot use checkSnapshot because of the date
+check('loggerC has 4 inMemoryLogs', loggerC.inMemoryLogs.length, 4)
 
 const loggerD = new Logger({ willLogDelay: false, willOutputToMemory: true, willOutputToConsole: false })
 loggerD.info('This info 4 should be logged', 12)
@@ -41,16 +44,7 @@ loggerD.test(false, 'This test 5 should be logged', () => 'Hello world')
 loggerD.debug('This debug 1 should be logged', true, [], {})
 loggerD.options.minimumLevel = LogLevel.Info
 loggerD.debug('This debug 2 should not be logged')
-check('loggerD 7 inMemoryLogs', loggerD.inMemoryLogs.length, 7)
-check('loggerD inMemoryLogs', loggerD.inMemoryLogs, [
-  ' info This info 4 should be logged 12',
-  ' info This info 5 should be logged too [1,2,3]',
-  ' warn This warn 3 should be logged {\'keyA\':1,\'keyB\':\'John\',\'isKeyC\':true}',
-  'error This error 5 should be logged null',
-  '   ✓  This test 4 should be logged undefined',
-  '   ✗  This test 5 should be logged () => \'Hello world\'',
-  'debug This debug 1 should be logged true [] {}',
-])
+checkSnapshot('loggerD inMemoryLogs', loggerD.inMemoryLogs)
 
 const loggerE = new Logger({ willOutputToConsole: false })
 check('loggerE clean A', loggerE.clean(), '')
