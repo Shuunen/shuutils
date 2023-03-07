@@ -32,7 +32,7 @@ export function createState<State extends object> (data: State, stateStorage?: S
   }
   const state = new Proxy<State>(data, handler)
   function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback) {
-    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary, putout/putout
+    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
     keys.forEach(stateKey => {
       listeners[stateKey] ||= []
       listeners[stateKey]?.push(callback)
