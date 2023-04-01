@@ -10,8 +10,8 @@ dependencies:
 
 devDependencies:
   '@happy-dom/global-registrator':
-    specifier: '8'
-    version: 8.2.6
+    specifier: '9'
+    version: 9.0.0
   '@types/node':
     specifier: '18'
     version: 18.13.0
@@ -862,12 +862,10 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@happy-dom/global-registrator@8.2.6:
-    resolution: {integrity: sha512-PvXgXE6r+9ryxHd48zsFhuqeTC6Zqz3FTL2UrSD4jsd81dUlHYZfe8kXqCM7G6bFp4bg3+I8mYoaHNAamPmGLg==}
+  /@happy-dom/global-registrator@9.0.0:
+    resolution: {integrity: sha512-96J5YeaD4n0VXk2XIi6WOHyZQQ66HEpzfzP/mN6u9FtN1/A/+p3GwFtziigtiwh2mEEmnPbjxpMnkR35MXzXTg==}
     dependencies:
-      happy-dom: 8.2.6
-    transitivePeerDependencies:
-      - encoding
+      happy-dom: 9.1.0
     dev: true
 
   /@html-eslint/eslint-plugin@0.16.0:
@@ -4994,17 +4992,15 @@ packages:
       uglify-js: 3.17.4
     dev: true
 
-  /happy-dom@8.2.6:
-    resolution: {integrity: sha512-s53VwyMFpQPEZdN00M82i3tFTzz0T4kBVD4tu8b+im99s1NkLK6tfKGCCl2Jmf3ZWfFCRwS+DV2qkR7S1wmIhQ==}
+  /happy-dom@9.1.0:
+    resolution: {integrity: sha512-Z/oOcAJsZjHFOQ/VK8n0CnZBjWucZNeZwFdlDK234vIBW9IVYGWjSUR9ujK6nwsSzJ6vNdYuSZoiag72AzlD0A==}
     dependencies:
       css.escape: 1.5.1
       he: 1.2.0
-      node-fetch: 2.6.9
+      iconv-lite: 0.6.3
       webidl-conversions: 7.0.0
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
-    transitivePeerDependencies:
-      - encoding
     dev: true
 
   /hard-rejection@2.1.0:
@@ -6103,18 +6099,6 @@ packages:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.5.0
-    dev: true
-
-  /node-fetch@2.6.9:
-    resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
     dev: true
 
   /node-releases@2.0.10:
@@ -7545,10 +7529,6 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /tr46@0.0.3:
-    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: true
-
   /trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
     engines: {node: '>=8'}
@@ -8055,10 +8035,6 @@ packages:
       commander: 10.0.0
     dev: true
 
-  /webidl-conversions@3.0.1:
-    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: true
-
   /webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
@@ -8074,13 +8050,6 @@ packages:
   /whatwg-mimetype@3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
     engines: {node: '>=12'}
-    dev: true
-
-  /whatwg-url@5.0.0:
-    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
-    dependencies:
-      tr46: 0.0.3
-      webidl-conversions: 3.0.1
     dev: true
 
   /which-boxed-primitive@1.0.2:
