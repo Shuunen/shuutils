@@ -13,6 +13,7 @@ type DomContent = Node | Node[] | string
 export function dom<T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content: DomContent = '') {
   const element = document.createElement(type)
   element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
+  // eslint-disable-next-line no-unsanitized/property
   if (typeof content === 'string') element.innerHTML = content
   else if (content instanceof Node) element.append(content)
   else content.forEach(node => {

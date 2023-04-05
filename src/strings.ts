@@ -142,9 +142,9 @@ export function crc32 (text: string) {
   for (let index = 0; index < text.length; index += 1) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
-    const key = (code ^ crc) & 0xFF // eslint-disable-line @typescript-eslint/no-magic-numbers, no-bitwise
-    const value = crcTable[key]
-    if (value) crc = value ^ (crc >>> Nb.Eight) // eslint-disable-line no-bitwise, @typescript-eslint/strict-boolean-expressions
+    const key: number = (code ^ crc) & 0xFF // eslint-disable-line @typescript-eslint/no-magic-numbers, no-bitwise
+    const value: number | undefined = crcTable[key]
+    if (value !== undefined && value !== 0) crc = value ^ (crc >>> Nb.Eight) // eslint-disable-line no-bitwise, total-functions/no-unsafe-enum-assignment
   }
   return (Nb.Descending ^ crc) >>> 0 // eslint-disable-line no-bitwise
 }

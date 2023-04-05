@@ -56,6 +56,7 @@
       "error",
       2
     ],
+    "@typescript-eslint/lines-around-comment": "off",
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
@@ -191,6 +192,7 @@
       "error",
       "always"
     ],
+    "total-functions/no-partial-division": "off",
     "unicorn/no-array-for-each": "off",
     "unicorn/no-process-exit": "off",
     "unicorn/prefer-module": "off",

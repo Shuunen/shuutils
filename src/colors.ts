@@ -276,8 +276,8 @@ export function hexToHsl (hex: string) {
   const max = Math.max(colorRed, colorGreen, colorBlue)
   const delta = max - min
   let hue = Number(Nb.HslMin)
-  let saturation = Nb.HslMin
-  let lightness = Nb.HslMin
+  let saturation = Number(Nb.HslMin)
+  let lightness = Number(Nb.HslMin)
   if (delta === 0) hue = Nb.HslMin
   else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % Nb.Six
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + Number(Nb.Two)

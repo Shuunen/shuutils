@@ -66,19 +66,19 @@ it('safe assign H does overwrite with empty string', () => { expect(safeAssign({
 it('safe assign I does not overwrite with empty object', () => { expect(safeAssign({ name: 'John', details: { age: 42, type: 'years' } }, { name: '', details: {} })).toStrictEqual({ name: '', details: { age: 42, type: 'years' } }) })
 it('safe assign J does handle non existing sub object', () => { expect(safeAssign({ name: 'John' }, { details: { age: 42, type: 'years' } })).toStrictEqual({ name: 'John', details: { age: 42, type: 'years' } }) })
 
-it('isRecord on null', () => { expect(isRecord(null)).toBe(false) }) // eslint-disable-line unicorn/no-null
-it('isRecord on an array', () => { expect(isRecord([1, 2])).toBe(false) })
-it('isRecord on an empty array', () => { expect(isRecord([])).toBe(false) })
-it('isRecord on an empty string', () => { expect(isRecord('')).toBe(false) })
-it('isRecord on a number', () => { expect(isRecord(-1)).toBe(false) })
-it('isRecord on an empty record', () => { expect(isRecord({})).toBe(true) })
-it('isRecord on a record', () => { expect(isRecord({ name: 'John' })).toBe(true) })
+it('isRecord A on null', () => { expect(isRecord(null)).toBe(false) }) // eslint-disable-line unicorn/no-null
+it('isRecord B on an array', () => { expect(isRecord([1, 2])).toBe(false) })
+it('isRecord C on an empty array', () => { expect(isRecord([])).toBe(false) })
+it('isRecord D on an empty string', () => { expect(isRecord('')).toBe(false) })
+it('isRecord E on a number', () => { expect(isRecord(-1)).toBe(false) })
+it('isRecord F on an empty record', () => { expect(isRecord({})).toBe(true) })
+it('isRecord G on a record', () => { expect(isRecord({ name: 'John' })).toBe(true) })
 
-it('objectSum on empty object', () => { expect(objectSum({})).toBe(2_745_614_147) })
-it('objectSum is the same on two equally empty objects', () => { expect(objectSum({}) === objectSum(clone({}))).toBe(true) })
-it('objectSum on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toBe(2_822_221_177) })
-it('objectSum on object with a slightly different number', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toBe(3_883_285_438) })
-it('objectSum on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyD: 2, keyC: 3 })).toBe(1_855_582_140) })
-it('objectSum on a large object', () => { expect(objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users, object3 })).toBe(1_861_045_962) })
-it('objectSum is the same on two equals objects', () => { expect(objectSum(object3) === objectSum(clone(object3))).toBe(true) })
+it('objectSum A on empty object', () => { expect(objectSum({})).toBe(2_745_614_147) })
+it('objectSum B is the same on two equally empty objects', () => { expect(objectSum({}) === objectSum(clone({}))).toBe(true) })
+it('objectSum C on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toBe(2_822_221_177) })
+it('objectSum D on object with a slightly different number', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toBe(3_883_285_438) })
+it('objectSum E on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyD: 2, keyC: 3 })).toBe(1_855_582_140) })
+it('objectSum F on a large object', () => { expect(objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users, object3 })).toBe(1_861_045_962) })
+it('objectSum G is the same on two equals objects', () => { expect(objectSum(object3) === objectSum(clone(object3))).toBe(true) })
 

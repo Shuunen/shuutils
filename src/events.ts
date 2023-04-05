@@ -21,6 +21,7 @@ export function emit<T> (name: string, data?: T, media?: Element | HTMLElement |
       console.error('no media provided & no window available')
       return false
     }
+    // eslint-disable-next-line total-functions/no-unsafe-readonly-mutable-assignment
     targetMedia = window
   }
   if (data === undefined) targetMedia.dispatchEvent(new CustomEvent(name))
@@ -42,6 +43,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
       console.error('no media provided & no window available')
       return false
     }
+    // eslint-disable-next-line total-functions/no-unsafe-readonly-mutable-assignment
     targetMedia = window
   }
 
