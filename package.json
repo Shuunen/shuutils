@@ -17,7 +17,7 @@
     "dependency-cruiser": "12",
     "esbuild": "0.17",
     "eslint": "8.37",
-    "eslint-config-hardcore": "31",
+    "eslint-config-hardcore": "35",
     "eslint-plugin-jsdoc": "40",
     "repo-check": "1.30",
     "typescript": "4",
