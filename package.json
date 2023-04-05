@@ -48,8 +48,7 @@
   "scripts": {
     "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && echo build success",
     "build:watch": "watchlist bin src -eager -- npm run build",
-    "check": "repo-check",
-    "ci": "npm run build && npm run lint && npm run check && npm run test && echo ci success",
+    "check": "npm run build && npm run lint && repo-check && npm run test && echo ci success",
     "dev": "npm run test:watch",
     "lint": "tsc --noEmit && eslint --cache --fix --ignore-path .gitignore --ext .js,.ts . && depcruise src --config && echo lint success",
     "lint:watch": "watchlist src tests -eager -- npm run lint",
