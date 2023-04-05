@@ -3,6 +3,11 @@
 
 | command alias | date       | delay   | comment                           |
 | ------------- | ---------- | ------- | --------------------------------- |
+| build         | 2023-04-05 | 130 ms  | stable, small improvement         |
+| tsc-no-emit   | 2023-04-05 | 1,7 sec | maybe typescript 5 bump           |
+| eslint        | 2023-04-05 | 13 sec  | nice improvement, no idea why ^^' |
+| vitest        | 2023-04-05 | 3,7 sec | stable                            |
+| c8-vitest     | 2023-04-05 | 4,0 sec | nice improvement, no idea why ^^' |
 | build         | 2023-02-09 | 145 ms  |                                   |
 | tsc-no-emit   | 2023-02-09 | 1,6 sec |                                   |
 | eslint        | 2023-02-09 | 19 sec  |                                   |
