@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
 import { sleep, throttle } from '../src'
-import { check } from './utils'
 
 let times = 0
 
@@ -38,9 +37,7 @@ it('throttle', async function () {
   expect(times).toBe(2)
 })
 
-check('anAsyncFunctionThatReturn12 A', anAsyncFunctionThatReturn12(), 12)
-check('anAsyncFunctionThatReturn12 B', anAsyncFunctionThatReturn12(), Promise.resolve(12))
-check('anAsyncFunctionThatReturnAnObject A', anAsyncFunctionThatReturnAnObject(), { name: 'John', age: 30 })
-check('anAsyncFunctionThatReturnAnObject B', anAsyncFunctionThatReturnAnObject(), Promise.resolve({ name: 'John', age: 30 }))
+it('anAsyncFunctionThatReturn12 A', async () => { expect(await anAsyncFunctionThatReturn12()).toBe(12) })
+it('anAsyncFunctionThatReturnAnObject A', async () => { expect(await anAsyncFunctionThatReturnAnObject()).toStrictEqual({ name: 'John', age: 30 }) })
 
 

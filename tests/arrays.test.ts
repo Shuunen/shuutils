@@ -1,33 +1,33 @@
+import { expect, it } from 'vitest'
 import { arrayUnique, insertValueAfterItem, isArray, pickOne, removeValueFromArray, shuffleArray } from '../src'
-import { check } from './utils'
 
 const elements = ['damn', 'this', 'test', 'is', 'crazy']
 const elementsShuffled = shuffleArray(elements)
-check('shuffle an array does not affect the original one', (elementsShuffled[0] !== 'damn') || (elementsShuffled[1] !== 'this') || (elementsShuffled[2] !== 'test'), true)
+it('shuffle an array does not affect the original one', () => { expect(elementsShuffled).not.toStrictEqual(elements) })
 
 const elementPicked = pickOne(elements)
-check('pick one returns an element from the array', elementPicked && elements.includes(elementPicked), true)
+it('pick one returns an element from the array', () => { expect(elementPicked && elements.includes(elementPicked)).toStrictEqual(true) })
 
-check('isArray on null', isArray(null), false) // eslint-disable-line unicorn/no-null
-check('isArray on an array', isArray([1, 2]), true)
-check('isArray on an empty array', isArray([]), true)
-check('isArray on an empty string', isArray(''), false)
-check('isArray on a number', isArray(-1), false)
-check('isArray on an empty record', isArray({}), false)
-check('isArray on a record', isArray({ name: 'John' }), false)
+it('isArray on null', () => { expect(isArray(null)).toStrictEqual(false) }) // eslint-disable-line unicorn/no-null
+it('isArray on an array', () => { expect(isArray([1, 2])).toStrictEqual(true) })
+it('isArray on an empty array', () => { expect(isArray([])).toStrictEqual(true) })
+it('isArray on an empty string', () => { expect(isArray('')).toStrictEqual(false) })
+it('isArray on a number', () => { expect(isArray(-1)).toStrictEqual(false) })
+it('isArray on an empty record', () => { expect(isArray({})).toStrictEqual(false) })
+it('isArray on a record', () => { expect(isArray({ name: 'John' })).toStrictEqual(false) })
 
-check('array unique A', arrayUnique([1, 1, 2, 1, 1, 3, 1]), [1, 2, 3])
-check('array unique B', arrayUnique(['plop', 'plop', 2, 'plop', 'plop', 3, 'plop']), ['plop', 2, 3])
-check('array unique C', arrayUnique([{ name: 'John' }, 'plop', { name: 'John' }, 3, 'plop']), [{ name: 'John' }, 'plop', { name: 'John' }, 3])
+it('array unique A', () => { expect(arrayUnique([1, 1, 2, 1, 1, 3, 1])).toStrictEqual([1, 2, 3]) })
+it('array unique B', () => { expect(arrayUnique(['plop', 'plop', 2, 'plop', 'plop', 3, 'plop'])).toStrictEqual(['plop', 2, 3]) })
+it('array unique C', () => { expect(arrayUnique([{ name: 'John' }, 'plop', { name: 'John' }, 3, 'plop'])).toStrictEqual([{ name: 'John' }, 'plop', { name: 'John' }, 3]) })
 
-check('remove value from array case A', removeValueFromArray([1, 2, 3, 4], 2), [1, 3, 4])
-check('remove value from array case B', removeValueFromArray([1, 2, 2, 3], 2), [1, 2, 3])
-check('remove value from array case C', removeValueFromArray([1, 3], 2), [1, 3])
-check('remove value from array case D', removeValueFromArray([], 2), [])
+it('remove value from array case A', () => { expect(removeValueFromArray([1, 2, 3, 4], 2)).toStrictEqual([1, 3, 4]) })
+it('remove value from array case B', () => { expect(removeValueFromArray([1, 2, 2, 3], 2)).toStrictEqual([1, 2, 3]) })
+it('remove value from array case C', () => { expect(removeValueFromArray([1, 3], 2)).toStrictEqual([1, 3]) })
+it('remove value from array case D', () => { expect(removeValueFromArray([], 2)).toStrictEqual([]) })
 
-check('insert value after item case A', insertValueAfterItem([1, 2, 3, 5], 3, 4), [1, 2, 3, 4, 5])
-check('insert value after item case B', insertValueAfterItem([1, 'deux', 3], 3, 4), [1, 'deux', 3, 4])
-check('insert value after item case C', insertValueAfterItem([1, 'deux', 3], 1, 1.5), [1, 1.5, 'deux', 3])
-check('insert value after item case D', insertValueAfterItem([1, 2, 3], 4, 4), [1, 2, 3])
-check('insert value after item case E', insertValueAfterItem([], 4, 4), [])
+it('insert value after item case A', () => { expect(insertValueAfterItem([1, 2, 3, 5], 3, 4)).toStrictEqual([1, 2, 3, 4, 5]) })
+it('insert value after item case B', () => { expect(insertValueAfterItem([1, 'deux', 3], 3, 4)).toStrictEqual([1, 'deux', 3, 4]) })
+it('insert value after item case C', () => { expect(insertValueAfterItem([1, 'deux', 3], 1, 1.5)).toStrictEqual([1, 1.5, 'deux', 3]) })
+it('insert value after item case D', () => { expect(insertValueAfterItem([1, 2, 3], 4, 4)).toStrictEqual([1, 2, 3]) })
+it('insert value after item case E', () => { expect(insertValueAfterItem([], 4, 4)).toStrictEqual([]) })
 

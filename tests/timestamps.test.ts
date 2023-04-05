@@ -1,15 +1,15 @@
+import { expect, it } from 'vitest'
 import { getTimestamp, getTimestampMs } from '../src'
-import { check } from './utils'
 
-check('specific date', getTimestamp(new Date('1989-05-14')), 611_107_200)
+it('specific date', () => { expect(getTimestamp(new Date('1989-05-14'))).toBe(611_107_200) })
 
-check('give positive number', getTimestamp() > 0, true)
+it('give positive number', () => { expect(getTimestamp() > 0).toBe(true) })
 
-check('give date before year 3003', getTimestamp() < 32_603_558_400_000, true)
+it('give date before year 3003', () => { expect(getTimestamp() < 32_603_558_400_000).toBe(true) })
 
-check('ms of a specific date', getTimestampMs(new Date('1989-05-14')), 611_107_200_000)
+it('ms of a specific date', () => { expect(getTimestampMs(new Date('1989-05-14'))).toBe(611_107_200_000) })
 
 const sizeMs = getTimestampMs().toString().length
 const sizeS = getTimestamp().toString().length
-check('ms is a 1000 times bigger', (sizeMs - sizeS) === 3, true)
+it('ms is a 1000 times bigger', () => { expect((sizeMs - sizeS) === 3).toBe(true) })
 

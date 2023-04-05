@@ -1,7 +1,6 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 import { expect, it } from 'vitest'
 import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
-import { check } from './utils'
 
 GlobalRegistrator.register()
 
@@ -121,9 +120,9 @@ it('dive div in a Dave div has Life in a div', function () {
   expect(element.innerHTML).toBe('<div class="dive">Life in a div</div>')
 })
 
-check('find one', findOne('body')?.tagName, 'BODY')
-check('find all length', findAll('body').length, 1)
-check('find all type', Array.isArray(findAll('body')), true)
+it('find one', () => { expect(findOne('body')?.tagName).toBe('BODY') })
+it('find all length', () => { expect(findAll('body').length).toBe(1) })
+it('find all type', () => { expect(Array.isArray(findAll('body'))).toBe(true) })
 
 it('wait to detect an existing element', async function () {
   const element = await waitToDetect('body', 10)
@@ -142,13 +141,13 @@ it('scroll to height', async function () {
   expect(element.style.height.includes('px')).toBeTruthy()
 })
 
-check('tw returns a string A', typeof tw(''), 'string')
-check('tw returns a string B', typeof tw('text-red-500'), 'string')
-check('tw returns a string C', tw('text-red-500 text-blue-500'), 'text-red-500 text-blue-500')
-check('tw returns a string D', tw(''), '')
-check('tw returns a string E', typeof tw``, 'string')
-check('tw returns a string F', typeof tw`text-red-500`, 'string')
-check('tw returns a string G', tw`text-red-500 text-blue-500`, 'text-red-500 text-blue-500')
-check('tw returns a string H', tw``, '')
-check('tw returns a string I', tw(['text-red-500', 'text-blue-500']), 'text-red-500 text-blue-500')
+it('tw returns a string A', () => { expect(typeof tw('')).toBe('string') })
+it('tw returns a string B', () => { expect(typeof tw('text-red-500')).toBe('string') })
+it('tw returns a string C', () => { expect(tw('text-red-500 text-blue-500')).toBe('text-red-500 text-blue-500') })
+it('tw returns a string D', () => { expect(tw('')).toBe('') })
+it('tw returns a string E', () => { expect(typeof tw``).toBe('string') })
+it('tw returns a string F', () => { expect(typeof tw`text-red-500`).toBe('string') })
+it('tw returns a string G', () => { expect(tw`text-red-500 text-blue-500`).toBe('text-red-500 text-blue-500') })
+it('tw returns a string H', () => { expect(tw``).toBe('') })
+it('tw returns a string I', () => { expect(tw(['text-red-500', 'text-blue-500'])).toBe('text-red-500 text-blue-500') })
 

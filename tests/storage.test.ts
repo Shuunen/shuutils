@@ -1,5 +1,5 @@
+import { expect, it } from 'vitest'
 import { hasOwn, storage } from '../src'
-import { check } from './utils'
 
 interface User { name: string; age: number }
 const key = 'Michael'
@@ -7,83 +7,83 @@ const key = 'Michael'
 storage.media = {} as Storage
 
 const returnTestA = storage.get(key)
-check('storage returnTestA', returnTestA)
-check('storage typeof returnTestA', typeof returnTestA, 'undefined')
+it('storage returnTestA', () => { expect(returnTestA).toBe(undefined) })
+it('storage typeof returnTestA', () => { expect(typeof returnTestA).toBe('undefined') })
 
 const returnTestB = storage.get(key, 'default')
-check('storage returnTestB', returnTestB, 'default')
+it('storage returnTestB', () => { expect(returnTestB).toBe('default') })
 
 const returnTestC = storage.get<User>(key)
-check('storage returnTestC', returnTestC)
+it('storage returnTestC', () => { expect(returnTestC).toBe(undefined) })
 
 const returnTestD = storage.get<User>(key, { name: 'default', age: 0 })
-check('storage returnTestD', returnTestD, { name: 'default', age: 0 })
+it('storage returnTestD', () => { expect(returnTestD).toStrictEqual({ name: 'default', age: 0 }) })
 
 const isReturnTestE = storage.get(key, true)
-check('storage returnTestE', isReturnTestE, true)
+it('storage returnTestE', () => { expect(isReturnTestE).toBe(true) })
 
 const returnTestF = storage.get<number>(key)
-check('storage returnTestF', returnTestF)
+it('storage returnTestF', () => { expect(returnTestF).toBe(undefined) })
 
-check('storage get without default value', storage.get(key))
+it('storage get without default value', () => { expect(storage.get(key)).toBe(undefined) })
 
-check('storage has no value for key', storage.has(key), false)
-check('storage set string value for key', storage.set(key, 'Flax'), 'Flax')
-check('storage has string value for key', storage.has(key), true)
+it('storage has no value for key', () => { expect(storage.has(key)).toBe(false) })
+it('storage set string value for key', () => { expect(storage.set(key, 'Flax')).toBe('Flax') })
+it('storage has string value for key', () => { expect(storage.has(key)).toBe(true) })
 
-check('storage set object value for key', storage.set(key, { name: 'Michael', age: 30 }), { name: 'Michael', age: 30 })
-check('storage get object value for key', storage.get<User>(key), { name: 'Michael', age: 30 })
+it('storage set object value for key', () => { expect(storage.set(key, { name: 'Michael', age: 30 })).toStrictEqual({ name: 'Michael', age: 30 }) })
+it('storage get object value for key', () => { expect(storage.get<User>(key)).toStrictEqual({ name: 'Michael', age: 30 }) })
 
-check('storage set number value for key', storage.set(key, 30), 30)
-check('storage get number value for key', storage.get<number>(key), 30)
+it('storage set number value for key', () => { expect(storage.set(key, 30)).toBe(30) })
+it('storage get number value for key', () => { expect(storage.get<number>(key)).toBe(30) })
 
-check('storage set boolean value for key', storage.set(key, true), true)
-check('storage get boolean value for key', storage.get<boolean>(key), true)
+it('storage set boolean value for key', () => { expect(storage.set(key, true)).toBe(true) })
+it('storage get boolean value for key', () => { expect(storage.get<boolean>(key)).toBe(true) })
 
-check('storage set array value for key', storage.set(key, [1, 2, 3]), [1, 2, 3])
-check('storage get array value for key', storage.get<number[]>(key), [1, 2, 3])
+it('storage set array value for key', () => { expect(storage.set(key, [1, 2, 3])).toStrictEqual([1, 2, 3]) })
+it('storage get array value for key', () => { expect(storage.get<number[]>(key)).toStrictEqual([1, 2, 3]) })
 
 // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-check('storage clear value for key', storage.clear(key))
+it('storage clear value for key', () => { expect(storage.clear(key)).toBe(undefined) })
 
-check('storage get return undefined when key is not found', storage.get<User>('John'))
+it('storage get return undefined when key is not found', () => { expect(storage.get<User>('John')).toBe(undefined) })
 
-check('storage get default value when key is not found', storage.get<User>('John', { name: 'John', age: 30 }), { name: 'John', age: 30 })
+it('storage get default value when key is not found', () => { expect(storage.get<User>('John', { name: 'John', age: 30 })).toStrictEqual({ name: 'John', age: 30 }) })
 
 storage.prefix = 'test-'
-check('storage prefix is set', storage.prefix, 'test-')
-check('storage set string value for key with prefix', storage.set(key, 'Hudson'), 'Hudson')
-check('storage get string value for key with prefix', storage.get<string>(key), 'Hudson')
-check('storage has string value for key with prefix', storage.has(key), true)
-check('storage contains a prefixed key', hasOwn(storage.media, 'test-Michael'), true)
+it('storage prefix is set', () => { expect(storage.prefix).toBe('test-') })
+it('storage set string value for key with prefix', () => { expect(storage.set(key, 'Hudson')).toBe('Hudson') })
+it('storage get string value for key with prefix', () => { expect(storage.get<string>(key)).toBe('Hudson') })
+it('storage has string value for key with prefix', () => { expect(storage.has(key)).toBe(true) })
+it('storage contains a prefixed key', () => { expect(hasOwn(storage.media, 'test-Michael')).toBe(true) })
 // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-check('storage clear value for key with prefix', storage.clear(key))
+it('storage clear value for key with prefix', () => { expect(storage.clear(key)).toBe(undefined) })
 
 const returnA = storage.get(key)
-check('storage typeof returnA is undefined and TS inferred type should be unknown', typeof returnA, 'undefined')
+it('storage typeof returnA is undefined and TS inferred type should be unknown', () => { expect(typeof returnA).toBe('undefined') })
 
 const returnB = storage.get(key, 'default')
-check('storage typeof returnB is string and TS inferred type should be string', typeof returnB, 'string')
+it('storage typeof returnB is string and TS inferred type should be string', () => { expect(typeof returnB).toBe('string') })
 
 const returnC = storage.get<User>(key)
-check('storage typeof returnC is undefined and TS inferred type should be User | undefined', typeof returnC, 'undefined')
+it('storage typeof returnC is undefined and TS inferred type should be User | undefined', () => { expect(typeof returnC).toBe('undefined') })
 
 const returnD = storage.get<User>(key, { name: 'default', age: 0 })
-check('storage typeof returnD is object and TS inferred type should be User', typeof returnD, 'object')
+it('storage typeof returnD is object and TS inferred type should be User', () => { expect(typeof returnD).toBe('object') })
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const returnE = storage.get(key, true)
-check('storage typeof returnE is boolean and TS inferred type should be boolean', typeof returnE, 'boolean')
+it('storage typeof returnE is boolean and TS inferred type should be boolean', () => { expect(typeof returnE).toBe('boolean') })
 
 const returnF = storage.get<number>(key)
-check('storage typeof returnF is undefined and TS inferred type should be number | undefined', typeof returnF, 'undefined')
+it('storage typeof returnF is undefined and TS inferred type should be number | undefined', () => { expect(typeof returnF).toBe('undefined') })
 
 const returnG = storage.get(key, 12)
-check('storage typeof returnG is number and TS inferred type should be number', typeof returnG, 'number')
+it('storage typeof returnG is number and TS inferred type should be number', () => { expect(typeof returnG).toBe('number') })
 
 const returnH = storage.get(key, [1, 2, 3])
-check('storage typeof returnH is object and TS inferred type should be number[]', typeof returnH, 'object')
+it('storage typeof returnH is object and TS inferred type should be number[]', () => { expect(typeof returnH).toBe('object') })
 
 const returnI = storage.get<number>(key, 24)
-check('storage typeof returnI is number and TS inferred type should be number', typeof returnI, 'number')
+it('storage typeof returnI is number and TS inferred type should be number', () => { expect(typeof returnI).toBe('number') })
 

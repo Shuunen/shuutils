@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`loggerB inMemoryLogs 1`] = `
+exports[`logger B 1`] = `
 [
   " info This info 2 should be logged",
   " info This info 3 should be logged too",
@@ -9,7 +9,7 @@ exports[`loggerB inMemoryLogs 1`] = `
 ]
 `;
 
-exports[`loggerD inMemoryLogs 1`] = `
+exports[`logger D 1`] = `
 [
   " info This info 4 should be logged 12",
   " info This info 5 should be logged too [1,2,3]",

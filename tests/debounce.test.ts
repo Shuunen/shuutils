@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
 import { debounce, sleep } from '../src'
-import { check } from './utils'
 
 let times = 0
 
@@ -53,16 +52,22 @@ it('debounce B : async function', async function () {
   expect(times).toBe(1)
 })
 
-check('debounce C : return type', typeof myFunctionDebounced, 'function')
+it('debounce C : return type', () => {
+  expect(typeof myFunctionDebounced).toBe('function')
+})
 
-check('debounce D : return type sync', Object.prototype.toString.call(myFunctionDebounced), '[object AsyncFunction]')
+it('debounce D : return type sync', () => {
+  expect(Object.prototype.toString.call(myFunctionDebounced)).toBe('[object AsyncFunction]')
+})
 
 it('debounce E : return type sync resolve', async function () {
   times = 42
   expect(await myFunctionDebounced()).toBe(43)
 })
 
-check('debounce F : return type async', Object.prototype.toString.call(myAsyncFunctionDebounced), '[object AsyncFunction]')
+it('debounce F : return type async', () => {
+  expect(Object.prototype.toString.call(myAsyncFunctionDebounced)).toBe('[object AsyncFunction]')
+})
 
 it('debounce G : return type async resolve', async function () {
   times = 42

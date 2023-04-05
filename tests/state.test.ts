@@ -1,10 +1,11 @@
 import { expect, it } from 'vitest'
 import { createState, storage } from '../src'
-import { check } from './utils'
 
 const { state: stateA, watchState: watchStateA } = createState({ name: 'Michael', age: 30 })
 
-check('state A initial data', stateA, { name: 'Michael', age: 30 })
+it('state A initial data', () => {
+  expect(stateA).toStrictEqual({ name: 'Michael', age: 30 })
+})
 
 it('state A name change', function () {
   stateA.name = 'John'
