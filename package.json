@@ -19,7 +19,7 @@
     "eslint": "8.38",
     "eslint-config-hardcore": "35",
     "eslint-plugin-jsdoc": "41",
-    "repo-check": "1.30",
+    "repo-check": "1.31",
     "typescript": "5.0",
     "vitest": "0.30",
     "watchlist": "0"
