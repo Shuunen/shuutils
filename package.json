@@ -13,7 +13,7 @@
   "devDependencies": {
     "@happy-dom/global-registrator": "9",
     "@types/node": "18",
-    "@vitest/coverage-c8": "0.30",
+    "@vitest/coverage-c8": "0.31",
     "dependency-cruiser": "12",
     "esbuild": "0.17",
     "eslint": "8.39",
@@ -21,7 +21,7 @@
     "eslint-plugin-jsdoc": "43",
     "repo-check": "1.31",
     "typescript": "5.0",
-    "vitest": "0.30",
+    "vitest": "0.31",
     "watchlist": "0"
   },
   "files": [
