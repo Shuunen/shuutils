@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest'
 import { debounce, sleep } from '../src'
+import { expectEqualTypes } from '../src/expect-type'
 
 let times = 0
 
@@ -72,4 +73,8 @@ it('debounce F : return type async', () => {
 it('debounce G : return type async resolve', async function () {
   times = 42
   expect(await myAsyncFunctionDebounced()).toBe(43)
+})
+
+it('debounce H : return types', async () => {
+  expectEqualTypes(await myAsyncFunction(), await myAsyncFunctionDebounced())
 })
