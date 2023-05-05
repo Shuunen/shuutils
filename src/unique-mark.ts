@@ -33,6 +33,7 @@ function getPackageJsonVersion () {
 
 /**
  * Get the files to inject the mark in
+ * @returns {Promise<string[]>} the files to inject the mark in
  */
 async function getTargetFiles () {
   const hasTargetSpecified = process.argv.length === Nb.Three
