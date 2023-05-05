@@ -10,7 +10,7 @@
  */
 export const debounce = <F extends (...parameters: Parameters<F>) => ReturnType<F>> (callback: F, waitFor: number) => {
   let timeout: ReturnType<typeof setTimeout>
-  return async (...parameters: Parameters<F>) => await new Promise(resolve => {
+  return async (...parameters: Parameters<F>) => await new Promise<ReturnType<F>>(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       resolve(callback(...parameters))
