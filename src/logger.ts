@@ -110,7 +110,7 @@ export class Logger {
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
     if (this.options.willLogDelay) prefixes.unshift(this.getDelay())
-    if (this.options.willOutputToConsole) console.log(prefixes.join(' '), ...stuff)
+    if (this.options.willOutputToConsole) console.log(prefixes.join(' '), ...stuff) // eslint-disable-line no-console
     if (this.options.willOutputToMemory) this.addToMemoryLogs(...prefixes, ...stuff)
   }
 

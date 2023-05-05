@@ -46,10 +46,7 @@
       "error",
       "always-multiline"
     ],
-    "@typescript-eslint/consistent-indexed-object-style": [
-      "error",
-      "record"
-    ],
+    "@typescript-eslint/consistent-indexed-object-style": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/indent": [
@@ -99,6 +96,7 @@
     "etc/no-const-enum": "off",
     "etc/no-enum": "off",
     "etc/no-t": "off",
+    "etc/prefer-interface": "off",
     "ext/lines-between-object-properties": "off",
     "func-names": [
       "error",
@@ -162,7 +160,7 @@
     "logical-assignment-operators": "off",
     "max-len": "off",
     "max-statements-per-line": "off",
-    "no-console": "off",
+    "no-console": "error",
     "no-inline-comments": "off",
     "object-curly-spacing": [
       "error",
@@ -174,10 +172,7 @@
       "error",
       "consistent-as-needed"
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "quotes": "off",
     "require-atomic-updates": [
       "error",
       {
@@ -205,7 +200,8 @@
       {
         "allowList": {
           "args": true,
-          "pkg": true
+          "pkg": true,
+          "str": true
         }
       }
     ],
