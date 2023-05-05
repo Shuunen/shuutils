@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { sleep } from './functions'
 import { ellipsis } from './strings'
 import type { NavigatorUserAgent } from './types'

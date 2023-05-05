@@ -15,6 +15,7 @@ import type { PackageJson } from './types'
  * @param value the value to log
  */
 function log (message: string, value = '') {
+  // eslint-disable-next-line no-console
   console.log('unique-mark', blue(message), value)
 }
 

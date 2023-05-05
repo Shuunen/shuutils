@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import assert from 'assert'
 import { build as esbuild } from 'esbuild'
 import { writeFile } from 'fs/promises'

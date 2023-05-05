@@ -209,6 +209,7 @@ export async function waitToDetect (selector: string, wait = 500, nbTries = 0, m
   const element = findOne(selector)
   if (element) return element
   if (nbTries > maxTry) {
+    // eslint-disable-next-line no-console
     console.log(`stop searching after 5 fails to detect : "${selector}"`)
     return undefined
   }

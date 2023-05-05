@@ -10,7 +10,6 @@ import { Nb } from './constants'
  * Example without timezone
  * in  : dateToIsoString(new Date(), true)
  * out : "2018-09-03T15:24:00.366"
- *
  * @param date input date
  * @param shouldRemoveTimezone remove the last z ?
  * @returns string like : "2018-09-03T15:24:00.366Z"

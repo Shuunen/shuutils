@@ -18,6 +18,7 @@ export function emit<T> (name: string, data?: T, media?: Element | HTMLElement |
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
+      // eslint-disable-next-line no-console
       console.error('no media provided & no window available')
       return false
     }
@@ -40,6 +41,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
+      // eslint-disable-next-line no-console
       console.error('no media provided & no window available')
       return false
     }
