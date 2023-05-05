@@ -63,6 +63,7 @@ async function checkTreeShake () {
 
 /**
  * Do the shuutils lib build
+ * @returns {Promise<boolean>} true if the build is ok
  */
 async function doBuild () {
   await esbuild({
