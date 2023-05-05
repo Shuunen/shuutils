@@ -69,6 +69,7 @@ async function checkTreeShake () {
 async function doBuild () {
   await esbuild({
     bundle: true,
+    banner: { js: '// shuutils __unique-mark__' },
     external: ['tiny-glob'], // but not theses
     outdir: 'dist',
     platform: 'node',

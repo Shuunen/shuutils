@@ -46,12 +46,13 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && echo build success",
+    "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && pnpm mark && echo build success",
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm build && pnpm lint && repo-check && pnpm test && echo check success",
     "dev": "pnpm test:watch",
     "lint": "tsc --noEmit && eslint --cache --fix --ext .js,.ts . && depcruise src --config && echo lint success",
     "lint:watch": "watchlist src tests -eager -- pnpm lint",
+    "mark": "node dist/unique-mark.js dist/*.js && echo mark success",
     "postversion": "git push && git push --tags && npm publish",
     "prepack": "pnpm build",
     "preversion": "pnpm check",
