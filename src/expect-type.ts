@@ -1,24 +1,21 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/naming-convention */
-
 /**
  * Check provided type against parameter
- * @param _thing type to compare
- * @returns true
+ * @param thing type to compare
+ * @returns the given `thing` parameter
  * @example checkType<string>('hello')
  * checkType<PersonModel>({ name: 'John' })
  * checkType<PersonModel>(await getPerson())
  */
-export function expectType<Type> (_thing: Type) { return true }
+export function expectType<Type> (thing: Type) { return thing }
 
 /**
  * Check two types, you can provide the type or let TypeScript infer them
- * @param _thingA first type to compare
- * @param _thingB second type to compare
- * @returns true
+ * @param thingA first type to compare
+ * @param thingB second type to compare
+ * @returns parameters like : { thingA, thingB }
  * @example expectEqualTypes(funcA(), funcB())
  * expectEqualTypes(await funcA(), await funcB())
  * expectEqualTypes<PersonModel>({ name: 'John' }, { name: 'John' })
  * expectEqualTypes<PersonModel>({ name: 'John' }, { name: 'John', age: 42 })
  */
-export function expectEqualTypes<TypeA, TypeB extends TypeA> (_thingA: TypeA, _thingB: TypeB) { return true }
+export function expectEqualTypes<TypeA, TypeB extends TypeA> (thingA: TypeA, thingB: TypeB) { return { thingA, thingB } }
