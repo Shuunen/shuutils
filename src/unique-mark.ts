@@ -4,7 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import glob from 'tiny-glob'
 import { blue } from './colors'
-import { Nb } from './constants'
+import { nbThird } from './constants'
 import { formatDate } from './dates'
 import { injectMark, parseJson } from './strings'
 import type { PackageJson } from './types'
@@ -37,9 +37,10 @@ function getPackageJsonVersion () {
  * @returns {Promise<string[]>} the files to inject the mark in
  */
 async function getTargetFiles () {
-  const hasTargetSpecified = process.argv.length === Nb.Three
+  const expectedNbArguments = 3
+  const hasTargetSpecified = process.argv.length === expectedNbArguments
   const defaultTarget = 'public/index.html'
-  const target = (hasTargetSpecified && typeof process.argv[Nb.Third] === 'string') ? (process.argv[Nb.Third] ?? defaultTarget) : defaultTarget
+  const target = (hasTargetSpecified && typeof process.argv[nbThird] === 'string') ? (process.argv[nbThird] ?? defaultTarget) : defaultTarget
   const files = await glob(target)
   if (files.length === 0) throw new Error(`no file found for target "${target}", aborting.`)
   return files

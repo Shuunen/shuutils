@@ -1,6 +1,6 @@
 /* c8 ignore next */
 import { pickOne } from './array-pick-one'
-import { Nb } from './constants'
+import { nbSpacesIndent } from './constants'
 import { flatten } from './object-flatten'
 
 /**
@@ -56,7 +56,7 @@ export function getRandomString () {
  * @returns string, like `"Hello world !"`
  */
 export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>) {
-  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, Nb.Spaces) : template)
+  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, nbSpacesIndent) : template)
   if (data === undefined) return string
   if (string.length === 0) return string
   const flatData = flatten(data)
@@ -124,7 +124,7 @@ export function createCrc32Table () {
   const table: number[] = Array.from({ length: 256 })
   for (let index = 0; index < 256; index += 1) { // eslint-disable-line @typescript-eslint/no-magic-numbers
     let code = index
-    for (let indexB = 0; indexB < Nb.Eight; indexB += 1) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
+    for (let indexB = 0; indexB < 8; indexB += 1) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
     table[index] = code
   }
   return table
@@ -138,15 +138,15 @@ export function createCrc32Table () {
  */
 export function crc32 (text: string) {
   const crcTable = createCrc32Table()
-  let crc = Nb.Descending
+  let crc = -1 // eslint-disable-line @typescript-eslint/no-magic-numbers
   for (let index = 0; index < text.length; index += 1) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
     const key: number = (code ^ crc) & 0xFF // eslint-disable-line @typescript-eslint/no-magic-numbers, no-bitwise
     const value: number | undefined = crcTable[key]
-    if (value !== undefined && value !== 0) crc = value ^ (crc >>> Nb.Eight) // eslint-disable-line no-bitwise, total-functions/no-unsafe-enum-assignment
+    if (value !== undefined && value !== 0) crc = value ^ (crc >>> 8) // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
   }
-  return (Nb.Descending ^ crc) >>> 0 // eslint-disable-line no-bitwise
+  return (-1 ^ crc) >>> 0 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
 }
 
 /**
@@ -189,7 +189,7 @@ export function parseBase64 (string: string) {
   if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
   if (base64.length > 1 && typeof base64[1] === 'string') [, result.base64] = base64
-  result.size = Math.round(result.base64.length * Nb.Three / Nb.Four)
+  result.size = Math.round(result.base64.length * 3 / 4) // eslint-disable-line @typescript-eslint/no-magic-numbers
   return result
 }
 

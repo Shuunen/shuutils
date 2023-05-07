@@ -1,4 +1,4 @@
-import { Nb } from './constants'
+import { nbAfter, nbNoIndex } from './constants'
 import { clone } from './object-clone'
 
 /**
@@ -32,9 +32,9 @@ export function removeValueFromArray<T> (array: T[], value: T) {
  */
 export function insertValueAfterItem<T> (array: T[], item: T, value: T) {
   const index = array.indexOf(item)
-  if (index === Nb.NoIndex) return array
+  if (index === nbNoIndex) return array
   const arrayCopy = clone(array)
-  const start = Math.min(index + Number(Nb.After), arrayCopy.length)
+  const start = Math.min(index + nbAfter, arrayCopy.length)
   arrayCopy.splice(start, 0, value)
   return arrayCopy
 }

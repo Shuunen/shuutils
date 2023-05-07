@@ -1,6 +1,5 @@
 
 import { bgGreen, bgRed, blue, gray, green, red, yellow } from './colors'
-import { Nb } from './constants'
 import { formatDate, readableTime } from './dates'
 
 export const enum LogLevel {
@@ -52,6 +51,8 @@ export class Logger {
 
   private lastLogTimestamp = 0
 
+  private readonly padStart = 7
+
   /**
    * Create a new Logger instance
    * @param options optional, LoggerOptions
@@ -69,11 +70,11 @@ export class Logger {
     const now = Date.now()
     if (this.lastLogTimestamp === 0) {
       this.lastLogTimestamp = now
-      return gray('init'.padStart(Nb.Seven))
+      return gray('init'.padStart(this.padStart))
     }
     const delay = now - this.lastLogTimestamp
     this.lastLogTimestamp = now
-    return gray(`+${readableTime(delay, false)}`.padStart(Nb.Seven))
+    return gray(`+${readableTime(delay, false)}`.padStart(this.padStart))
   }
 
   /**
@@ -183,7 +184,7 @@ export class Logger {
     if (!this.shouldLog(LogLevel.Test)) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
-    const prefix = ' '.repeat(this.padding - Nb.Three)
+    const prefix = ' '.repeat(this.padding - 3) // eslint-disable-line @typescript-eslint/no-magic-numbers
     this.log(prefix + box, stuff)
   }
 

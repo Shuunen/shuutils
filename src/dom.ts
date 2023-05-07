@@ -1,4 +1,3 @@
-import { Nb } from './constants'
 import { sleep } from './functions'
 
 type DomContent = Node | Node[] | string
@@ -226,9 +225,9 @@ export async function waitToDetect (selector: string, wait = 500, nbTries = 0, m
 export async function scrollToHeightSync (element: HTMLElement) {
   const initial = element.style.height
   element.style.height = 'inherit' // eslint-disable-line no-param-reassign
-  const target = element.scrollHeight + Number(Nb.Two)
+  const target = element.scrollHeight + 2 // eslint-disable-line @typescript-eslint/no-magic-numbers
   element.style.height = initial // eslint-disable-line no-param-reassign
-  await sleep(Nb.Ten)
+  await sleep(10) // eslint-disable-line @typescript-eslint/no-magic-numbers
   element.style.height = `${target}px` // eslint-disable-line no-param-reassign
 }
 
