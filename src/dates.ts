@@ -1,4 +1,4 @@
-import { Nb } from './constants'
+import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInYear } from './constants'
 
 /**
  * Convert a date into iso string
@@ -15,7 +15,7 @@ import { Nb } from './constants'
  * @returns string like : "2018-09-03T15:24:00.366Z"
  */
 export function dateToIsoString (date: Date, shouldRemoveTimezone = false) {
-  let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * Nb.MsInMinute)).toISOString()
+  let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * nbMsInMinute)).toISOString()
   if (shouldRemoveTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
   return dateString
 }
@@ -73,19 +73,19 @@ export function formatDate (date: Date, format: string, locale = 'en-US') {
  * @param input a date or a number of milliseconds
  * @param isLong true to return a short version like "3d" instead of "3 days"
  * @returns "1 minute", "4 months" or "1min", "4mon"
- * @example readableTime(3 * Nb.MsInDay) // "3 days"
- * @example readableTime(3 * Nb.MsInDay, true) // "3d"
+ * @example readableTime(3 * nbMsInDay) // "3 days"
+ * @example readableTime(3 * nbMsInDay, false) // "3d"
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function readableTime (input: Date | number, isLong = true) {
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
   // eslint-disable-next-line func-style, jsdoc/require-jsdoc, sonarjs/no-nested-template-literals
   const format = (value: number, long: string, short: string) => `${Math.floor(value)}${isLong ? ` ${long + (Math.floor(value) > 1 ? 's' : '')}` : short}`
-  if (ms < Nb.MsInSecond) return format(ms, 'millisecond', 'ms')
-  if (ms < Nb.MsInMinute) return format(ms / Nb.MsInSecond, 'second', 's')
-  if (ms < Nb.MsInHour) return format(ms / Nb.MsInMinute, 'minute', 'min')
-  if (ms < Nb.MsInDay) return format(ms / Nb.MsInHour, 'hour', 'h')
-  if (ms < Nb.MsInMonth) return format(ms / Nb.MsInDay, 'day', 'd')
-  if (ms < Nb.MsInYear) return format(ms / Nb.MsInMonth, 'month', 'mon')
-  return format(ms / Nb.MsInYear, 'year', 'y')
+  if (ms < nbMsInSecond) return format(ms, 'millisecond', 'ms')
+  if (ms < nbMsInMinute) return format(ms / nbMsInSecond, 'second', 's')
+  if (ms < nbMsInHour) return format(ms / nbMsInMinute, 'minute', 'min')
+  if (ms < nbMsInDay) return format(ms / nbMsInHour, 'hour', 'h')
+  if (ms < nbMsInMonth) return format(ms / nbMsInDay, 'day', 'd')
+  if (ms < nbMsInYear) return format(ms / nbMsInMonth, 'month', 'mon')
+  return format(ms / nbMsInYear, 'year', 'y')
 }

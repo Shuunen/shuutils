@@ -1,12 +1,10 @@
-import { Nb } from './constants'
-
 /**
  * Give timestamp of a date or now in seconds
  * @param date input date
  * @returns number like : 1541258097
  */
 export function getTimestamp (date: Date = new Date()) {
-  return Math.round(date.getTime() / Nb.MsInSecond)
+  return Math.round(date.getTime() / 1000) // eslint-disable-line @typescript-eslint/no-magic-numbers
 }
 
 /**
