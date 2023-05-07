@@ -6,6 +6,7 @@ import path from 'path'
 import glob from 'tiny-glob'
 import { blue } from './colors.js'
 import { formatDate } from './dates.js'
+import { isTestEnvironment } from './environment.js'
 import { injectMark, parseJson } from './strings.js'
 import type { PackageJson } from './types'
 
@@ -105,5 +106,4 @@ async function init () {
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
-if (process.env.NODE_ENV !== 'test') void init()
-
+if (!isTestEnvironment()) void init()
