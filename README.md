@@ -32,9 +32,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
 ## TODO
 
 - [ ] use zod
-- [ ] test unique mark
 - [ ] add willOutputToFile option to the logger
-- [ ] try to ditch the `Number(` around some constant usages like `Nb.xyz`
 
 ## Thanks
 
@@ -49,7 +47,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Shuutils](https://github.com/Shuunen/shuutils) : collection of pure JS utils
-- [UvU](https://github.com/lukeed/uvu) : extremely fast and lightweight test runner for Node.js and the browser
 - [Vitest](https://github.com/vitest-dev/vitest) : super fast vite-native testing framework
 - [Watchlist](https://github.com/lukeed/watchlist) : recursively watch a list of directories & run a command on any file system
 - [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities
