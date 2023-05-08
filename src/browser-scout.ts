@@ -17,7 +17,7 @@ export async function copyToClipboard (stuff: Record<string, unknown> | Record<s
 
 /**
  * Read the clipboard content
- * @returns {string} the content of the clipboard
+ * @returns the content of the clipboard
  */
 export async function readClipboard () {
   console.log('reading clipboard...')
@@ -29,7 +29,6 @@ export async function readClipboard () {
 /**
  * Default callback for onPageChange
  * @param location the new location
- * @returns {void} nothing
  */
 export function onPageChangeDefaultCallback (location: string) {
   console.log(`location changed : ${location} but onPageChange callback is empty`)
@@ -53,9 +52,11 @@ export async function onPageChange (callback = onPageChangeDefaultCallback, wait
  */
 export class BrowserScout {
 
-  public browser: 'Android' | 'Chrome' | 'Edge' | 'Firefox' | 'Internet Explorer' | 'Opera' | 'Safari' | 'Unknown browser' = 'Unknown browser'
+  public browser: 'Android' | 'Chrome' | 'Edge' | 'Firefox' | 'Internet Explorer' | 'iOS' | 'Safari' | 'Unknown browser' = 'Unknown browser'
 
   public isIE = false
+
+  public isMobile = false
 
   public language = 'Unknown language'
 
@@ -63,7 +64,7 @@ export class BrowserScout {
 
   public platform = 'Unknown platform'
 
-  public ua = 'Unknown UA'
+  public userAgent = 'Unknown UA'
 
   public version = 'Unknown version'
 
@@ -84,6 +85,7 @@ export class BrowserScout {
       language: 'Undefined window language',
       platform: 'Undefined window platform',
     }
+    /* c8 ignore next 6 */
     if (typeof window !== 'undefined') {
       extract.userAgent = window.navigator.userAgent
       extract.language = window.navigator.language
@@ -94,68 +96,90 @@ export class BrowserScout {
   }
 
   /**
+   * Return the document in a safe way for non-browser environments
+   * @returns the document
+   */
+  private get document () {
+    /* c8 ignore next */
+    if (typeof document !== 'undefined') return document
+    return { documentElement: {} }
+  }
+
+  /**
    * Detect the browser context
    */
   private detect () {
-    this.ua = this.navigator.userAgent
+    this.userAgent = this.navigator.userAgent
     this.platform = this.getPlatform()
     this.browser = this.getBrowser()
     this.isIE = this.browser === 'Internet Explorer'
     this.version = this.getVersion()
     this.os = this.getOperatingSystem()
+    this.isMobile = this.detectMobile()
     this.language = this.navigator.language
   }
 
   /**
+   * Detect if the browser is running on mobile
+   * @returns true if the browser is running on mobile
+   */
+  private detectMobile () {
+    if ('ontouchstart' in this.document.documentElement) return true
+    if (this.userAgent.includes('Mobile')) return true
+    // eslint-disable-next-line sonarjs/prefer-single-boolean-return
+    if (['Android'].includes(this.browser)) return true
+    return false
+  }
+
+  /**
    * Get the browser name
-   * @returns {string} the browser name
+   * @returns the browser name
    */
   private getBrowser () {
-    if (this.ua.includes('MSIE') || (this.ua.includes('Mozilla') && this.ua.includes('Trident'))) return 'Internet Explorer'
-    if (this.ua.includes('Edg')) return 'Edge'
-    if (this.ua.includes('Chrome')) return 'Chrome'
-    if (this.ua.includes('Opera')) return 'Opera'
-    if (this.ua.includes('Android')) return 'Android'
-    if (this.ua.includes('Firefox')) return 'Firefox'
-    if (this.ua.includes('Safari')) return 'Safari'
+    if (this.userAgent.includes('MSIE') || (this.userAgent.includes('Mozilla') && this.userAgent.includes('Trident'))) return 'Internet Explorer'
+    if (/edg/iu.test(this.userAgent)) return 'Edge'
+    if (/chrome|chromium|crios/iu.test(this.userAgent)) return 'Chrome'
+    if (/firefox|fxios/iu.test(this.userAgent)) return 'Firefox'
+    if (/safari/iu.test(this.userAgent)) return 'Safari'
+    if (/android/iu.test(this.userAgent)) return 'Android'
+    if (/iphone/iu.test(this.userAgent)) return 'iOS'
     return 'Unknown browser'
   }
 
   /**
    * Get the operating system name
-   * @returns {string} the operating system name
+   * @returns the operating system name
    */
-  // eslint-disable-next-line complexity
   private getOperatingSystem () {
-    if (this.ua.includes('Safari') && (this.ua.includes('iPhone') || this.ua.includes('iPad') || this.ua.includes('iPod'))) return 'iOS'
+    if (['Safari', 'iOS'].includes(this.browser)) return 'iOS'
     if (this.platform === 'MacIntel' || this.platform === 'MacPPC') return 'Mac OS X'
     if (this.platform === 'CrOS') return 'ChromeOS'
-    if (this.platform === 'Win32' || this.platform === 'Win64' || this.ua.includes('Windows')) return 'Windows'
-    if (this.ua.includes('Android')) return 'Android'
+    if (this.platform === 'Win32' || this.platform === 'Win64' || this.userAgent.includes('Windows')) return 'Windows'
+    if (this.userAgent.includes('Android')) return 'Android'
     if (this.platform.includes('Linux')) return 'Linux'
     return 'Unknown OS'
   }
 
   /**
    * Get the platform name
-   * @returns {string} the platform name
+   * @returns the platform name
    */
   private getPlatform () {
-    if (this.ua.includes('Chrome') && this.ua.includes('CrOS')) return 'CrOS'
+    if (this.userAgent.includes('Chrome') && this.userAgent.includes('CrOS')) return 'CrOS'
     return this.navigator.platform
   }
 
   /**
    * Get the browser version
-   * @returns {string} the browser version
+   * @returns the browser version
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
   private getVersion () {
-    if (this.ua.includes('MSIE')) return ((/MSIE [\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown MSIE version'
-    if (this.ua.includes('Chrome')) return ((/Chrome\/[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown Chrome version'
-    if (this.ua.includes('Firefox')) return ((/Firefox\/[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown Firefox version'
-    if (this.ua.includes('Version')) return ((/Version\/[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown generic version'
-    if (/rv:\d+/u.test(this.ua)) return ((/rv:[\d.]+/u.exec(this.ua)) ?? [])[1] ?? 'Unknown rv version'
+    if (this.userAgent.includes('MSIE')) return ((/MSIE [\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown MSIE version'
+    if (this.userAgent.includes('Chrome')) return ((/Chrome\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown Chrome version'
+    if (this.userAgent.includes('Firefox')) return ((/Firefox\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown Firefox version'
+    if (this.userAgent.includes('Version')) return ((/Version\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown generic version'
+    if (/rv:\d+/u.test(this.userAgent)) return ((/rv:[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown rv version'
     return 'Unknown version'
   }
 }
