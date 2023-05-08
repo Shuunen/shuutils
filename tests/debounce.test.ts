@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
-import { debounce, sleep } from '../src'
-import { expectEqualTypes } from '../src/expect-type'
+import { debounce, expectEqualTypes, sleep } from '../src'
 
 let times = 0
 
