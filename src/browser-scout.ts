@@ -48,7 +48,8 @@ export async function onPageChange (callback = onPageChangeDefaultCallback, wait
 }
 
 /**
- * Detect the browser context, inspired by this script : https://github.com/benbscholz/detect/blob/master/src/detect.js
+ * Detect the browser context
+ * @copyright inspired from Ben Brooks Scholz https://github.com/benbscholz/detect Copyright (C) 2011
  */
 export class BrowserScout {
 

@@ -36,7 +36,8 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 ## Thanks
 
-- [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) by Just Icon
+- [Angus Croll](https://github.com/angus-c/just) : for the inspiration of some dependency free functions
+- [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) : nice icon
 - [C8](https://github.com/bcoe/c8) : simple & effective cli for code coverage
 - [Dependency-cruiser](https://github.com/sverweij/dependency-cruiser) : handy tool to validate and visualize dependencies
 - [Esbuild](https://github.com/evanw/esbuild) : an extremely fast JavaScript bundler and minifier
