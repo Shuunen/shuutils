@@ -51,21 +51,20 @@ var nbMsInDay = 864e5;
 var nbMsInWeek = 6048e5;
 var nbMsInMonth = 2592e6;
 var nbMsInYear = 31536e6;
+var timeAgoTuples = [
+  [nbMsInMinute, nbMsInSecond, \\"second\\"],
+  [nbMsInHour, nbMsInMinute, \\"minute\\"],
+  [nbMsInDay, nbMsInHour, \\"hour\\"],
+  [nbMsInWeek, nbMsInDay, \\"day\\"],
+  [nbMsInMonth, nbMsInWeek, \\"week\\"],
+  [nbMsInYear, nbMsInMonth, \\"month\\"]
+];
 function readableTimeAgo(input, language = \\"en\\") {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: \\"auto\\" });
   const ms = typeof input === \\"number\\" ? input : Date.now() - input.getTime();
-  if (ms < nbMsInMinute)
-    return rtf.format(-Math.floor(ms / nbMsInSecond), \\"second\\");
-  if (ms < nbMsInHour)
-    return rtf.format(-Math.floor(ms / nbMsInMinute), \\"minute\\");
-  if (ms < nbMsInDay)
-    return rtf.format(-Math.floor(ms / nbMsInHour), \\"hour\\");
-  if (ms < nbMsInWeek)
-    return rtf.format(-Math.floor(ms / nbMsInDay), \\"day\\");
-  if (ms < nbMsInMonth)
-    return rtf.format(-Math.floor(ms / nbMsInWeek), \\"week\\");
-  if (ms < nbMsInYear)
-    return rtf.format(-Math.floor(ms / nbMsInMonth), \\"month\\");
+  for (const [threshold, divisor, unit] of timeAgoTuples)
+    if (ms < threshold)
+      return rtf.format(-Math.floor(ms / divisor), unit);
   return rtf.format(-Math.floor(ms / nbMsInYear), \\"year\\");
 }
 

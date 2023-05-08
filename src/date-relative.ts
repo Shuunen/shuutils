@@ -1,6 +1,15 @@
 import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInWeek, nbMsInYear } from './constants'
 import { dateIso10 } from './dates'
 
+const timeAgoTuples = [
+  [nbMsInMinute, nbMsInSecond, 'second'],
+  [nbMsInHour, nbMsInMinute, 'minute'],
+  [nbMsInDay, nbMsInHour, 'hour'],
+  [nbMsInWeek, nbMsInDay, 'day'],
+  [nbMsInMonth, nbMsInWeek, 'week'],
+  [nbMsInYear, nbMsInMonth, 'month'],
+] as const
+
 /**
  * Make a date readable for us, poor humans
  * Kudos to https://coolaj86.com/articles/time-ago-in-under-50-lines-of-javascript/
@@ -11,12 +20,7 @@ import { dateIso10 } from './dates'
 export function readableTimeAgo (input: Date | number, language = 'en') {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' })
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
-  if (ms < nbMsInMinute) return rtf.format(-Math.floor(ms / nbMsInSecond), 'second')
-  if (ms < nbMsInHour) return rtf.format(-Math.floor(ms / nbMsInMinute), 'minute')
-  if (ms < nbMsInDay) return rtf.format(-Math.floor(ms / nbMsInHour), 'hour')
-  if (ms < nbMsInWeek) return rtf.format(-Math.floor(ms / nbMsInDay), 'day')
-  if (ms < nbMsInMonth) return rtf.format(-Math.floor(ms / nbMsInWeek), 'week')
-  if (ms < nbMsInYear) return rtf.format(-Math.floor(ms / nbMsInMonth), 'month')
+  for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit)
   return rtf.format(-Math.floor(ms / nbMsInYear), 'year')
 }
 
