@@ -13,9 +13,11 @@
   "overrides": [
     {
       "files": [
+        "benchmarks/*",
         "tests/*"
       ],
       "rules": {
+        "@typescript-eslint/no-magic-numbers": "off",
         "func-names": "off",
         "jsdoc/require-jsdoc": "off",
         "unicorn/prefer-top-level-await": "off"
