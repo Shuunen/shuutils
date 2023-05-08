@@ -5,7 +5,7 @@ import { expectEqualTypes } from '../src/expect-type'
 let times = 0
 
 /**
- * @returns {number} the number of times the function has been called
+ * @returns the number of times the function has been called
  */
 function myFunction () {
   times += 1
@@ -15,7 +15,7 @@ function myFunction () {
 const myFunctionDebounced = debounce(myFunction, 100)
 
 /**
- * @returns {Promise<number>} the number of times the function has been called after 50ms
+ * @returns the number of times the function has been called after 50ms
  */
 async function myAsyncFunction () {
   await sleep(50)

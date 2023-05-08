@@ -72,7 +72,7 @@ export function fillTemplate (template: Record<string, unknown> | string, data?:
  * Transform the first letter of a string into capital
  * @param string `"hello John"`
  * @param shouldLower boolean, try to lower the rest of the string when applicable
- * @returns {string}, `"Hello John"`
+ * @returns `"Hello John"`
  */
 export function capitalize (string: string, shouldLower = false) {
   if (!shouldLower) return string.charAt(0).toUpperCase() + string.slice(1)
