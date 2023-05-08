@@ -58,6 +58,7 @@
     "start": "pnpm dev",
     "test": "pnpm test:watch --run && echo test success",
     "test:bench": "vitest bench",
+    "test:update": "vitest --update && echo test update success",
     "test:watch": "vitest --coverage"
   },
   "type": "module",
