@@ -33,6 +33,7 @@
   },
   "include": [
     "*.ts",
+    "benchmarks",
     "bin",
     "src",
     "tests"
