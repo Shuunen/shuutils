@@ -4,7 +4,7 @@ import { nbFifth, nbFourth, nbHslMin, nbHueMax, nbHueStep, nbLightnessMax, nbLon
 /**
  * Reset the string color to the default terminal color
  * @param string the string to reset
- * @returns {string} the string with the reset color
+ * @returns the string with the reset color
  */
 export function reset (string: string) {
   return `\u001B[0m${string}\u001B[0m`
@@ -13,7 +13,7 @@ export function reset (string: string) {
 /**
  * Render a bold string for the terminal
  * @param string the string to render
- * @returns {string} the string with the bold decoration
+ * @returns the string with the bold decoration
  */
 export function bold (string: string) {
   return `\u001B[1m${string}\u001B[22m`
@@ -22,7 +22,7 @@ export function bold (string: string) {
 /**
  * Render a dim string for the terminal
  * @param string the string to render
- * @returns {string} the string with the dim decoration
+ * @returns the string with the dim decoration
  */
 export function dim (string: string) {
   return `\u001B[2m${string}\u001B[22m`
@@ -31,7 +31,7 @@ export function dim (string: string) {
 /**
  * Render a italic string for the terminal
  * @param string the string to render
- * @returns {string} the string with the italic decoration
+ * @returns the string with the italic decoration
  */
 export function italic (string: string) {
   return `\u001B[3m${string}\u001B[23m`
@@ -40,7 +40,7 @@ export function italic (string: string) {
 /**
  * Render a underline string for the terminal
  * @param string the string to render
- * @returns {string} the string with the underline decoration
+ * @returns the string with the underline decoration
  */
 export function underline (string: string) {
   return `\u001B[4m${string}\u001B[24m`
@@ -49,7 +49,7 @@ export function underline (string: string) {
 /**
  * Render a overline string for the terminal
  * @param string the string to render
- * @returns {string} the string with the overline decoration
+ * @returns the string with the overline decoration
  */
 export function overline (string: string) {
   return `\u001B[53m${string}\u001B[55m`
@@ -58,7 +58,7 @@ export function overline (string: string) {
 /**
  * Render an inverse string for the terminal
  * @param string the string to render
- * @returns {string} the string with the inverse decoration
+ * @returns the string with the inverse decoration
  */
 export function inverse (string: string) {
   return `\u001B[7m${string}\u001B[27m`
@@ -67,7 +67,7 @@ export function inverse (string: string) {
 /**
  * Render a strike-through string for the terminal
  * @param string the string to render
- * @returns {string} the string with the strike-through decoration
+ * @returns the string with the strike-through decoration
  */
 export function strikeThrough (string: string) {
   return `\u001B[9m${string}\u001B[29m`
@@ -76,7 +76,7 @@ export function strikeThrough (string: string) {
 /**
  * Render a black string for the terminal
  * @param string the string to render
- * @returns {string} the string with the black color
+ * @returns the string with the black color
  */
 export function black (string: string) {
   return `\u001B[30m${string}\u001B[39m`
@@ -85,7 +85,7 @@ export function black (string: string) {
 /**
  * Render a red string for the terminal
  * @param string the string to render
- * @returns {string} the string with the red color
+ * @returns the string with the red color
  */
 export function red (string: string) {
   return `\u001B[31m${string}\u001B[39m`
@@ -94,7 +94,7 @@ export function red (string: string) {
 /**
  * Render a green string for the terminal
  * @param string the string to render
- * @returns {string} the string with the green color
+ * @returns the string with the green color
  */
 export function green (string: string) {
   return `\u001B[32m${string}\u001B[39m`
@@ -103,7 +103,7 @@ export function green (string: string) {
 /**
  * Render a yellow string for the terminal
  * @param string the string to render
- * @returns {string} the string with the yellow color
+ * @returns the string with the yellow color
  */
 export function yellow (string: string) {
   return `\u001B[33m${string}\u001B[39m`
@@ -112,7 +112,7 @@ export function yellow (string: string) {
 /**
  * Render a blue string for the terminal
  * @param string the string to render
- * @returns {string} the string with the blue color
+ * @returns the string with the blue color
  */
 export function blue (string: string) {
   return `\u001B[34m${string}\u001B[39m`
@@ -121,7 +121,7 @@ export function blue (string: string) {
 /**
  * Render a magenta string for the terminal
  * @param string the string to render
- * @returns {string} the string with the magenta color
+ * @returns the string with the magenta color
  */
 export function magenta (string: string) {
   return `\u001B[35m${string}\u001B[39m`
@@ -130,7 +130,7 @@ export function magenta (string: string) {
 /**
  * Render a cyan string for the terminal
  * @param string the string to render
- * @returns {string} the string with the cyan color
+ * @returns the string with the cyan color
  */
 export function cyan (string: string) {
   return `\u001B[36m${string}\u001B[39m`
@@ -139,7 +139,7 @@ export function cyan (string: string) {
 /**
  * Render a white string for the terminal
  * @param string the string to render
- * @returns {string} the string with the white color
+ * @returns the string with the white color
  */
 export function white (string: string) {
   return `\u001B[37m${string}\u001B[39m`
@@ -148,7 +148,7 @@ export function white (string: string) {
 /**
  * Render a gray string for the terminal
  * @param string the string to render
- * @returns {string} the string with the gray color
+ * @returns the string with the gray color
  */
 export function gray (string: string) {
   return `\u001B[90m${string}\u001B[39m`
@@ -158,7 +158,7 @@ export function gray (string: string) {
 /**
  * Render a string on a black background for the terminal
  * @param string the string to render
- * @returns {string} the string with the black background
+ * @returns the string with the black background
  */
 export function bgBlack (string: string) {
   return `\u001B[40m${string}\u001B[49m`
@@ -167,7 +167,7 @@ export function bgBlack (string: string) {
 /**
  * Render a string on a red background for the terminal
  * @param string the string to render
- * @returns {string} the string with the red background
+ * @returns the string with the red background
  */
 export function bgRed (string: string) {
   return `\u001B[41m${string}\u001B[49m`
@@ -176,7 +176,7 @@ export function bgRed (string: string) {
 /**
  * Render a string on a green background for the terminal
  * @param string the string to render
- * @returns {string} the string with the green background
+ * @returns the string with the green background
  */
 export function bgGreen (string: string) {
   return `\u001B[42m${string}\u001B[49m`
@@ -185,7 +185,7 @@ export function bgGreen (string: string) {
 /**
  * Render a string on a yellow background for the terminal
  * @param string the string to render
- * @returns {string} the string with the yellow background
+ * @returns the string with the yellow background
  */
 export function bgYellow (string: string) {
   return `\u001B[43m${string}\u001B[49m`
@@ -194,7 +194,7 @@ export function bgYellow (string: string) {
 /**
  * Render a string on a blue background for the terminal
  * @param string the string to render
- * @returns {string} the string with the blue background
+ * @returns the string with the blue background
  */
 export function bgBlue (string: string) {
   return `\u001B[44m${string}\u001B[49m`
@@ -203,7 +203,7 @@ export function bgBlue (string: string) {
 /**
  * Render a string on a magenta background for the terminal
  * @param string the string to render
- * @returns {string} the string with the magenta background
+ * @returns the string with the magenta background
  */
 export function bgMagenta (string: string) {
   return `\u001B[45m${string}\u001B[49m`
@@ -212,7 +212,7 @@ export function bgMagenta (string: string) {
 /**
  * Render a string on a cyan background for the terminal
  * @param string the string to render
- * @returns {string} the string with the cyan background
+ * @returns the string with the cyan background
  */
 export function bgCyan (string: string) {
   return `\u001B[46m${string}\u001B[49m`
@@ -221,7 +221,7 @@ export function bgCyan (string: string) {
 /**
  * Render a string on a white background for the terminal
  * @param string the string to render
- * @returns {string} the string with the white background
+ * @returns the string with the white background
  */
 export function bgWhite (string: string) {
   return `\u001B[47m${string}\u001B[49m`
@@ -230,7 +230,7 @@ export function bgWhite (string: string) {
 /**
  * Render a string on a gray background for the terminal
  * @param string the string to render
- * @returns {string} the string with the gray background
+ * @returns the string with the gray background
  */
 export function bgGray (string: string) {
   return `\u001B[100m${string}\u001B[49m`
@@ -239,8 +239,7 @@ export function bgGray (string: string) {
 /**
  * Convert a hex color to rgb
  * @param hex the hex color like "#0f0" or "#00ff00"
- * @returns {object} the rgb color like { colorRed: 12, colorGreen: 24, colorBlue: 42 }
- * @example hexToRgb("#0f0") // { colorRed: 0, colorGreen: 255, colorBlue: 0 }
+ * @returns the rgb color like { colorRed: 12, colorGreen: 24, colorBlue: 42 }
  */
 export function hexToRgb (hex: string) {
   /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -262,7 +261,7 @@ export function hexToRgb (hex: string) {
 /**
  * Transform a HEX color to HSL
  * @param hex "#000000"
- * @returns {string} "hsl(0, 0%, 0%)"
+ * @returns object like { hue: 0, saturation: 0, lightness: 0 }
  */
 // eslint-disable-next-line max-statements
 export function hexToHsl (hex: string) {

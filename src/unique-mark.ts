@@ -24,7 +24,7 @@ function log (message: string, value = '') {
 /**
  * Load the package.json file data
  * @param location the location of the package.json file
- * @returns {string} the package.json version
+ * @returns the package.json version
  */
 export function getPackageJsonVersion (location = path.join(process.cwd(), 'package.json')) {
   if (!existsSync(location)) throw new Error(`package.json was not found in ${location}, aborting.`)
@@ -37,7 +37,7 @@ export function getPackageJsonVersion (location = path.join(process.cwd(), 'pack
 /**
  * Get the files to inject the mark in
  * @param target the glob to get the files from, like "public/index.html" or "public/*.js"
- * @returns {Promise<string[]>} the files to inject the mark in
+ * @returns the files to inject the mark in
  */
 export async function getTargetFiles (target = process.argv[2] ?? 'public/index.html') { // eslint-disable-line @typescript-eslint/no-magic-numbers
   const files = await glob(target)
@@ -51,7 +51,7 @@ export async function getTargetFiles (target = process.argv[2] ?? 'public/index.
  * @param root0.commit the commit hash to use, if empty, will use the last git commit hash
  * @param root0.date the date to use, if empty, will use the current date
  * @param root0.version the version to use, if empty, will use the version from package.json
- * @returns {string} the mark to inject, like "4.2.0 - 123abc45 - 01/01/2021 12:00:00"
+ * @returns the mark to inject, like "4.2.0 - 123abc45 - 01/01/2021 12:00:00"
  */
 export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }) {
   let finalCommit = commit
@@ -68,7 +68,7 @@ export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/M
  * @param root0.mark the mark to inject
  * @param root0.files the files to inject the mark in
  * @param root0.isReadOnly if true, will not write the files to disk (useful for unit tests)
- * @returns {number} the total amount of mark injection in the targeted files
+ * @returns the total amount of mark injection in the targeted files
  */
 export function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mark', files = [], isReadOnly = false }: { placeholder?: string; mark?: string; files?: string[]; isReadOnly?: boolean }) {
   let totalInjections = 0
