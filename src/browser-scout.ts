@@ -1,50 +1,65 @@
-/* eslint-disable no-console */
-import { sleep } from './functions'
-import { ellipsis } from './strings'
 import type { NavigatorUserAgent } from './types'
 
 /* c8 ignore start */
 
+/* eslint-disable @typescript-eslint/naming-convention, regexp/letter-case */
+const browsers = {
+  'Edge': /edge/iu, // keep me first
+  'Chrome': /chrome|chromium|crios/iu,
+  'Firefox': /firefox|fxios/iu,
+  'Internet Explorer': /msie|trident/iu,
+  'Safari': /safari/iu,
+  'Unknown browser': /./u, // keep me last
+} as const
+const operatingSystems = {
+  'Android': /android/iu,
+  'Chrome OS': /CrOS/iu,
+  'iOS': /iphone/iu,
+  'Linux': /linux/iu,
+  'Mac OS': /MacIntel|Macintosh|MacPPC/iu,
+  'Windows': /Win32|Win64|Windows/iu,
+  'Unknown OS': /./u, // keep me last
+} as const
+const versions = {
+  MSIE: /MSIE (?<version>[\d.]+)/iu,
+  Edge: /Edge\/(?<version>[\d.]+)/iu,
+  Chrome: /Chrome\/(?<version>[\d.]+)/iu,
+  Firefox: /Firefox\/(?<version>[\d.]+)/iu,
+  generic: /Version\/(?<version>[\d.]+)/iu,
+  rv: /rv:(?<version>[\d.]+)/iu,
+}
+/* eslint-enable @typescript-eslint/naming-convention, regexp/letter-case */
+
 /**
- * Copy data to the clipboard
- * @param stuff the data to copy
+ * Get the browser version from a user agent string
+ * @param userAgent the user agent string to parse
+ * @returns the browser version
  */
-export async function copyToClipboard (stuff: Record<string, unknown> | Record<string, unknown>[] | string[] | number | string) {
-  const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
-  console.log(`copying to clipboard : ${ellipsis(text)}`)
-  await navigator.clipboard.writeText(text)
+export function getVersion (userAgent: string) {
+  for (const [browser, regex] of Object.entries(versions)) if (regex.test(userAgent)) return regex.exec(userAgent)?.groups?.version ?? `Unknown ${browser} version`
+  return 'Unknown version'
 }
 
 /**
- * Read the clipboard content
- * @returns the content of the clipboard
+ * Get the browser name from a user agent string
+ * @param userAgent the user agent string to parse
+ * @returns the browser name
  */
-export async function readClipboard () {
-  console.log('reading clipboard...')
-  const text = await navigator.clipboard.readText()
-  console.log(`got this text from clipboard : ${ellipsis(text)}`)
-  return text
+export function getBrowser (userAgent: string) {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  for (const [browser, regex] of Object.entries(browsers)) if (regex.test(userAgent)) return browser as keyof typeof browsers
+  return 'Unknown browser'
 }
 
 /**
- * Default callback for onPageChange
- * @param location the new location
+ * Get the operating system name from a user agent string
+ * @param userAgent the user agent string to parse
+ * @returns the operating system name
  */
-export function onPageChangeDefaultCallback (location: string) {
-  console.log(`location changed : ${location} but onPageChange callback is empty`)
-}
-
-/**
- * Detect location.href changes
- * @param callback the callback to call when location.href changes
- * @param wait the time to wait between each check, default 1000ms
- * @param last used for recursion, do not use it
- */
-export async function onPageChange (callback = onPageChangeDefaultCallback, wait = 1000, last = '') {
-  await sleep(wait)
-  const current = document.location.href
-  if (current !== last) callback(current)
-  void onPageChange(callback, wait, current)
+export function getOperatingSystem (userAgent: string) {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  for (const [os, regex] of Object.entries(operatingSystems)) if (regex.test(userAgent)) return os as keyof typeof operatingSystems
+  return 'Unknown OS'
 }
 
 /**
@@ -53,71 +68,50 @@ export async function onPageChange (callback = onPageChangeDefaultCallback, wait
  */
 export class BrowserScout {
 
-  public browser: 'Android' | 'Chrome' | 'Edge' | 'Firefox' | 'Internet Explorer' | 'iOS' | 'Safari' | 'Unknown browser' = 'Unknown browser'
-
-  public isIE = false
-
+  public browser: keyof typeof browsers = 'Unknown browser'
+  public isInternetExplorer = false
   public isMobile = false
-
-  public language = 'Unknown language'
-
-  public os: 'Android' | 'ChromeOS' | 'iOS' | 'Linux' | 'Mac OS X' | 'Unknown OS' | 'Windows' = 'Unknown OS'
-
-  public platform = 'Unknown platform'
-
-  public userAgent = 'Unknown UA'
-
+  public language = typeof window === 'undefined' ? 'Unknown language' : window.navigator.language
+  public os: keyof typeof operatingSystems = 'Unknown OS'
+  public platform = typeof window === 'undefined' ? 'Unknown platform' : ((window.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform') // eslint-disable-line @typescript-eslint/consistent-type-assertions
+  public screenHeight = typeof window === 'undefined' ? 0 : window.screen.height
+  public screenWidth = typeof window === 'undefined' ? 0 : window.screen.width
+  public url = typeof window === 'undefined' ? 'Unknown url' : window.location.href
+  public userAgent = typeof window === 'undefined' ? 'Unknown user agent' : window.navigator.userAgent
   public version = 'Unknown version'
 
   /**
    * BrowserScout constructor
    */
   public constructor () {
-    this.detect()
-  }
-
-  /**
-   * Return the navigator in a safe way for non-browser environments
-   * @returns the navigator
-   */
-  public get navigator () {
-    const extract = {
-      userAgent: 'Undefined window userAgent',
-      language: 'Undefined window language',
-      platform: 'Undefined window platform',
-    }
-    /* c8 ignore next 6 */
-    if (typeof window !== 'undefined') {
-      extract.userAgent = window.navigator.userAgent
-      extract.language = window.navigator.language
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      extract.platform = (window.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform'
-    }
-    return extract
-  }
-
-  /**
-   * Return the document in a safe way for non-browser environments
-   * @returns the document
-   */
-  private get document () {
-    /* c8 ignore next */
-    if (typeof document !== 'undefined') return document
-    return { documentElement: {} }
-  }
-
-  /**
-   * Detect the browser context
-   */
-  private detect () {
-    this.userAgent = this.navigator.userAgent
-    this.platform = this.getPlatform()
-    this.browser = this.getBrowser()
-    this.isIE = this.browser === 'Internet Explorer'
-    this.version = this.getVersion()
-    this.os = this.getOperatingSystem()
+    this.browser = getBrowser(this.userAgent)
+    this.isInternetExplorer = this.browser === 'Internet Explorer'
+    this.version = getVersion(this.userAgent)
+    this.os = getOperatingSystem(this.userAgent)
     this.isMobile = this.detectMobile()
-    this.language = this.navigator.language
+  }
+
+  /**
+   * Return a report of the browser context
+   * @returns a textual report like
+   * - Browser: Chrome 91.0.4472.114
+   * - Language: en-US
+   * - OS: Windows
+   * - Platform: Win32
+   * - Screen : 1920x1080
+   * - Url : https://www.example.com/
+   */
+  public report () {
+    return `
+    - Browser : ${this.browser} ${this.version}
+    - Language : ${this.language}
+    - OS : ${this.os}
+    - Platform : ${this.platform}
+    - Is mobile : ${String(this.isMobile)}
+    - Screen : ${this.screenWidth}x${this.screenHeight}
+    - Url : ${this.url}
+    - User agent : ${this.userAgent}
+    `
   }
 
   /**
@@ -125,63 +119,11 @@ export class BrowserScout {
    * @returns true if the browser is running on mobile
    */
   private detectMobile () {
-    if ('ontouchstart' in this.document.documentElement) return true
+    if ('ontouchstart' in (typeof document === 'undefined' ? {} : document.documentElement)) return true
     if (this.userAgent.includes('Mobile')) return true
     // eslint-disable-next-line sonarjs/prefer-single-boolean-return
     if (['Android'].includes(this.browser)) return true
     return false
-  }
-
-  /**
-   * Get the browser name
-   * @returns the browser name
-   */
-  private getBrowser () {
-    if (this.userAgent.includes('MSIE') || (this.userAgent.includes('Mozilla') && this.userAgent.includes('Trident'))) return 'Internet Explorer'
-    if (/edg/iu.test(this.userAgent)) return 'Edge'
-    if (/chrome|chromium|crios/iu.test(this.userAgent)) return 'Chrome'
-    if (/firefox|fxios/iu.test(this.userAgent)) return 'Firefox'
-    if (/safari/iu.test(this.userAgent)) return 'Safari'
-    if (/android/iu.test(this.userAgent)) return 'Android'
-    if (/iphone/iu.test(this.userAgent)) return 'iOS'
-    return 'Unknown browser'
-  }
-
-  /**
-   * Get the operating system name
-   * @returns the operating system name
-   */
-  private getOperatingSystem () {
-    if (['Safari', 'iOS'].includes(this.browser)) return 'iOS'
-    if (this.platform === 'MacIntel' || this.platform === 'MacPPC') return 'Mac OS X'
-    if (this.platform === 'CrOS') return 'ChromeOS'
-    if (this.platform === 'Win32' || this.platform === 'Win64' || this.userAgent.includes('Windows')) return 'Windows'
-    if (this.userAgent.includes('Android')) return 'Android'
-    if (this.platform.includes('Linux')) return 'Linux'
-    return 'Unknown OS'
-  }
-
-  /**
-   * Get the platform name
-   * @returns the platform name
-   */
-  private getPlatform () {
-    if (this.userAgent.includes('Chrome') && this.userAgent.includes('CrOS')) return 'CrOS'
-    return this.navigator.platform
-  }
-
-  /**
-   * Get the browser version
-   * @returns the browser version
-   */
-  // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-  private getVersion () {
-    if (this.userAgent.includes('MSIE')) return ((/MSIE [\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown MSIE version'
-    if (this.userAgent.includes('Chrome')) return ((/Chrome\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown Chrome version'
-    if (this.userAgent.includes('Firefox')) return ((/Firefox\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown Firefox version'
-    if (this.userAgent.includes('Version')) return ((/Version\/[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown generic version'
-    if (/rv:\d+/u.test(this.userAgent)) return ((/rv:[\d.]+/u.exec(this.userAgent)) ?? [])[1] ?? 'Unknown rv version'
-    return 'Unknown version'
   }
 }
 
