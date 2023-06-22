@@ -273,9 +273,9 @@ export function hexToHsl (hex: string) {
   const min = Math.min(colorRed, colorGreen, colorBlue)
   const max = Math.max(colorRed, colorGreen, colorBlue)
   const delta = max - min
-  let hue = nbHslMin
+  let hue = nbHslMin // eslint-disable-line sonar/no-dead-store
   let saturation = nbHslMin
-  let lightness = nbHslMin
+  let lightness = nbHslMin // eslint-disable-line sonar/no-dead-store
   if (delta === 0) hue = nbHslMin
   else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % nbSeventh
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + nbThird

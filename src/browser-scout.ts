@@ -121,9 +121,7 @@ export class BrowserScout {
   private detectMobile () {
     if ('ontouchstart' in (typeof document === 'undefined' ? {} : document.documentElement)) return true
     if (this.userAgent.includes('Mobile')) return true
-    // eslint-disable-next-line sonarjs/prefer-single-boolean-return
-    if (['Android'].includes(this.browser)) return true
-    return false
+    return ['Android'].includes(this.browser)
   }
 }
 

@@ -8,7 +8,7 @@
  */
 export function flatten (object: Record<string, unknown>, path = '', separator = '.'): Record<string, unknown> {
   // eslint-disable-next-line unicorn/no-array-reduce
-  return Object.keys(object).reduce((accumulator, key: string) => {
+  return Object.keys(object).reduce<Record<string, unknown>>((accumulator, key: string) => {
     const value = object[key]
     const updatedPath = Array.isArray(object) ? `${path}[${key}]` : [path, key].filter(Boolean).join(separator)
     const isObject = [typeof value === 'object', value !== null, !(value instanceof Date), !(value instanceof RegExp), !(Array.isArray(value) && value.length === 0)].every(Boolean)

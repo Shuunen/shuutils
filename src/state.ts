@@ -25,6 +25,7 @@ export function createState<State extends object> (data: State, stateStorage?: S
       })
       return true
     },
+    // eslint-disable-next-line sonar/function-return-type
     get (target: State, key: string | symbol) {
       const value = Reflect.get(target, key)
       return useStorage(key) ? stateStorage?.get(key.toString(), value) : value

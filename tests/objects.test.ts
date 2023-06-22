@@ -75,7 +75,7 @@ it('isRecord F on an empty record', () => { expect(isRecord({})).toBe(true) })
 it('isRecord G on a record', () => { expect(isRecord({ name: 'John' })).toBe(true) })
 
 it('objectSum A on empty object', () => { expect(objectSum({})).toBe(2_745_614_147) })
-it('objectSum B is the same on two equally empty objects', () => { expect(objectSum({}) === objectSum(clone({}))).toBe(true) })
+it('objectSum B is the same on two equally empty objects', () => { expect(objectSum({ name: 'john' }) === objectSum(clone({ name: 'john' }))).toBe(true) })
 it('objectSum C on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toBe(2_822_221_177) })
 it('objectSum D on object with a slightly different number', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toBe(3_883_285_438) })
 it('objectSum E on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyD: 2, keyC: 3 })).toBe(1_855_582_140) })

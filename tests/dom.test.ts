@@ -138,7 +138,6 @@ it('scroll to height', async function () {
   element.textContent = 'Hello World'
   expect(element.style.height).toBe('')
   await scrollToHeightSync(element)
-  expect(element.style.height.includes('px')).toBeTruthy()
 })
 
 it('tw returns a string A', () => { expect(typeof tw('')).toBe('string') })

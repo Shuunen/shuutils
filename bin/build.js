@@ -14,6 +14,7 @@ async function doBuild () {
     platform: 'node',
     entryPoints: await glob('src/*.ts'), // build all ts files let the end-user choose global import like import { aFunc } from 'shuutils' or import { aFunc } from 'shuutils/dist/a-specific-file' to force tree-shaking
     format: 'esm',
+    target: 'es2020',
   })
 }
 
