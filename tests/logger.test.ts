@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { Logger, LogLevel, red } from '../src'
+import { Logger, red } from '../src'
 
 it('logger A', () => {
   const loggerA = new Logger()
@@ -20,7 +20,7 @@ it('logger B', () => {
 })
 
 it('logger C', () => {
-  const loggerC = new Logger({ willLogDate: true, willLogTime: true, willOutputToConsole: false, willLogDelay: true, minimumLevel: LogLevel.Error, willOutputToMemory: true })
+  const loggerC = new Logger({ willLogDate: true, willLogTime: true, willOutputToConsole: false, willLogDelay: true, minimumLevel: '6-error', willOutputToMemory: true })
   loggerC.warn('This warn 2 should not be logged')
   loggerC.success('This success 1 should not be logged')
   loggerC.error('This error 1 should be logged')
@@ -29,7 +29,7 @@ it('logger C', () => {
   loggerC.enable()
   loggerC.error('This error 3 should be logged')
   loggerC.test(true, 'This test 1 should not be logged')
-  loggerC.options.minimumLevel = LogLevel.Test
+  loggerC.options.minimumLevel = '2-test'
   loggerC.test(true, 'This test 2 should be logged')
   loggerC.test(false, 'This test 3 should be logged')
   // cannot use checkSnapshot because of the date
@@ -49,7 +49,7 @@ it('logger D', () => {
   loggerD.test(true, 'This test 4 should be logged', undefined) // eslint-disable-line unicorn/no-useless-undefined
   loggerD.test(false, 'This test 5 should be logged', () => 'Hello world')
   loggerD.debug('This debug 1 should be logged', true, [], {})
-  loggerD.options.minimumLevel = LogLevel.Info
+  loggerD.options.minimumLevel = '3-info'
   loggerD.debug('This debug 2 should not be logged')
   expect(loggerD.inMemoryLogs, 'loggerD inMemoryLogs').toMatchSnapshot()
 })

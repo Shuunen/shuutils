@@ -2,14 +2,7 @@
 import { bgGreen, bgRed, blue, gray, green, red, yellow } from './colors'
 import { formatDate, readableTime } from './dates'
 
-export const enum LogLevel {
-  Debug = 'debug',
-  Test = 'test',
-  Info = 'info',
-  Warn = 'warn',
-  Success = 'good',
-  Error = 'error', // eslint-disable-line @typescript-eslint/no-shadow
-}
+type LogLevel = '1-debug' | '2-test' | '3-info' | '4-warn' | '5-good' | '6-error'
 
 export interface LoggerOptions {
   isActive: boolean
@@ -28,7 +21,7 @@ export class Logger {
 
   public options: LoggerOptions = {
     isActive: true,
-    minimumLevel: LogLevel.Debug,
+    minimumLevel: '1-debug',
     willOutputToConsole: true,
     willOutputToMemory: false,
     willLogDate: false,
@@ -41,12 +34,12 @@ export class Logger {
   private readonly padding: number
 
   private readonly levels: LogLevel[] = [
-    LogLevel.Debug,
-    LogLevel.Test,
-    LogLevel.Info,
-    LogLevel.Warn,
-    LogLevel.Success,
-    LogLevel.Error,
+    '1-debug',
+    '2-test',
+    '3-info',
+    '4-warn',
+    '5-good',
+    '6-error',
   ]
 
   private lastLogTimestamp = 0
@@ -59,7 +52,7 @@ export class Logger {
    */
   public constructor (options?: Partial<LoggerOptions>) {
     if (options) this.options = { ...this.options, ...options }
-    this.padding = Math.max(...this.levels.map((key) => key.length))
+    this.padding = Math.max(...this.levels.map((key) => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
   }
 
   /**
@@ -130,8 +123,8 @@ export class Logger {
    * @example logger.debug('Hello world')
    */
   public debug (...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Debug)) return
-    this.log(LogLevel.Debug.padStart(this.padding), stuff)
+    if (!this.shouldLog('1-debug')) return
+    this.log('debug'.padStart(this.padding), stuff)
   }
 
   /**
@@ -140,8 +133,8 @@ export class Logger {
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
   public info (...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Info)) return
-    this.log(blue(LogLevel.Info.padStart(this.padding)), stuff)
+    if (!this.shouldLog('3-info')) return
+    this.log(blue('info'.padStart(this.padding)), stuff)
   }
 
   /**
@@ -150,18 +143,28 @@ export class Logger {
    * @example logger.warn('Something went wrong')
    */
   public warn (...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Warn)) return
-    this.log(yellow(LogLevel.Warn.padStart(this.padding)), stuff)
+    if (!this.shouldLog('4-warn')) return
+    this.log(yellow('warn'.padStart(this.padding)), stuff)
+  }
+
+  /**
+   * Log a good message
+   * @param stuff the things to log (will be green, as expected)
+   * @example logger.good('Everything went well')
+   */
+  public good (...stuff: unknown[]) {
+    if (!this.shouldLog('5-good')) return
+    this.log(green('good'.padStart(this.padding)), stuff)
   }
 
   /**
    * Log a success message
    * @param stuff the things to log (will be green, as expected)
    * @example logger.success('Everything went well')
+   * @alias good
    */
   public success (...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Success)) return
-    this.log(green(LogLevel.Success.padStart(this.padding)), stuff)
+    this.good(...stuff)
   }
 
   /**
@@ -170,8 +173,8 @@ export class Logger {
    * @example logger.error('Something went wrong')
    */
   public error (...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Error)) return
-    this.log(red(LogLevel.Error.padStart(this.padding)), stuff)
+    if (!this.shouldLog('6-error')) return
+    this.log(red('error'.padStart(this.padding)), stuff)
   }
 
   /**
@@ -181,7 +184,7 @@ export class Logger {
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
   public test (thing: unknown, ...stuff: unknown[]) {
-    if (!this.shouldLog(LogLevel.Test)) return
+    if (!this.shouldLog('2-test')) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
     const prefix = ' '.repeat(this.padding - 3) // eslint-disable-line @typescript-eslint/no-magic-numbers
