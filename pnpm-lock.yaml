@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -29,8 +29,8 @@ devDependencies:
     specifier: '8.43'
     version: 8.43.0
   eslint-config-hardcore:
-    specifier: '37'
-    version: 37.0.0(@babel/core@7.22.5)(@babel/eslint-parser@7.22.5)(@testing-library/dom@9.3.1)(eslint@8.43.0)(typescript@5.1.3)(vue-eslint-parser@9.3.1)
+    specifier: '38'
+    version: 38.0.0(@babel/core@7.22.5)(@babel/eslint-parser@7.22.5)(@testing-library/dom@9.3.1)(eslint@8.43.0)(typescript@5.1.3)(vue-eslint-parser@9.3.1)
   eslint-plugin-jsdoc:
     specifier: '46.2'
     version: 46.2.6(eslint@8.43.0)
@@ -3706,8 +3706,8 @@ packages:
       lodash.zip: 4.2.0
     dev: true
 
-  /eslint-config-hardcore@37.0.0(@babel/core@7.22.5)(@babel/eslint-parser@7.22.5)(@testing-library/dom@9.3.1)(eslint@8.43.0)(typescript@5.1.3)(vue-eslint-parser@9.3.1):
-    resolution: {integrity: sha512-RrLLbcLeL6puLUJS0Rv/pArV3BJzFeBpuikUxz6JNO8aLdDz3sstnUcfCXFWzkcTA74ZV2NK8y4bDykXHxYKug==}
+  /eslint-config-hardcore@38.0.0(@babel/core@7.22.5)(@babel/eslint-parser@7.22.5)(@testing-library/dom@9.3.1)(eslint@8.43.0)(typescript@5.1.3)(vue-eslint-parser@9.3.1):
+    resolution: {integrity: sha512-RY/0MmXOpp5GCHukDszQa0UecYKXeY76cIJGvzfsaPlD6lf13It2LniKf/qif4co17dluqa4IhkqQjhLL5/x8Q==}
     peerDependencies:
       eslint: ^8.39.0
       typescript: '>=4.0.0'
@@ -3755,6 +3755,7 @@ packages:
       eslint-plugin-react-perf: 3.3.1(eslint@8.43.0)
       eslint-plugin-regexp: 1.15.0(eslint@8.43.0)
       eslint-plugin-security: 1.7.1
+      eslint-plugin-simple-import-sort: 10.0.0(eslint@8.43.0)
       eslint-plugin-sonar: 0.12.0(@babel/core@7.22.5)(@typescript-eslint/parser@5.60.0)(eslint@8.43.0)(typescript@5.1.3)
       eslint-plugin-sonarjs: 0.19.0(eslint@8.43.0)
       eslint-plugin-sort-class-members: 1.18.0(eslint@8.43.0)
@@ -4384,6 +4385,14 @@ packages:
     resolution: {integrity: sha512-sMStceig8AFglhhT2LqlU5r+/fn9OwsA72O5bBuQVTssPCdQAOQzL+oMn/ZcpeUY6KcNfLJArgcrsSULNjYYdQ==}
     dependencies:
       safe-regex: 2.1.1
+    dev: true
+
+  /eslint-plugin-simple-import-sort@10.0.0(eslint@8.43.0):
+    resolution: {integrity: sha512-AeTvO9UCMSNzIHRkg8S6c3RPy5YEwKWSQPx3DYghLedo2ZQxowPFLGDN1AZ2evfg6r6mjBSZSLxLFsWSu3acsw==}
+    peerDependencies:
+      eslint: '>=5.0.0'
+    dependencies:
+      eslint: 8.43.0
     dev: true
 
   /eslint-plugin-sonar@0.12.0(@babel/core@7.22.5)(@typescript-eslint/parser@5.60.0)(eslint@8.43.0)(typescript@5.1.3):
