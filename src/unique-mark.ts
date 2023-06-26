@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable import/exports-last */
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, writeFileSync } from 'fs'

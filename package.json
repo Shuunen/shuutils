@@ -18,10 +18,21 @@
     "eslint": "8.43",
     "eslint-config-hardcore": "38",
     "eslint-plugin-jsdoc": "46.3",
+    "pkgroll": "1.10",
     "repo-check": "1.32",
     "typescript": "5.1",
     "vitest": "0.32",
     "watchlist": "0"
+  },
+  "exports": {
+    "import": {
+      "default": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    },
+    "require": {
+      "default": "./dist/index.cjs",
+      "types": "./dist/index.d.cts"
+    }
   },
   "files": [
     "dist"
@@ -36,8 +47,8 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "name": "shuutils",
   "private": false,
   "repository": {
@@ -45,7 +56,8 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && pnpm mark && echo build success",
+    "build": "rm dist -rf && pkgroll --target=esnext --banner:js=//shuutils __unique-mark__ && pnpm mark && echo build success",
+    "build:old": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && pnpm mark && echo build success",
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm build && pnpm lint && repo-check && pnpm test && echo check success",
     "dev": "pnpm test:watch",
@@ -62,6 +74,6 @@
     "test:watch": "vitest --coverage"
   },
   "type": "module",
-  "types": "dist/src/index.d.ts",
+  "types": "./dist/index.d.cts",
   "version": "7.3.0"
 }
