@@ -193,6 +193,7 @@
       "error",
       "never"
     ],
+    "simple-import-sort/imports": "off",
     "space-before-function-paren": [
       "error",
       "always"
