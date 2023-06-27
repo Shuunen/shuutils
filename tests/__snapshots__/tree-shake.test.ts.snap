@@ -20,7 +20,7 @@ exports[`tree-shake test B 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/index.js
+  "output": "// dist/environment.js
 function pickOne(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -28,6 +28,8 @@ function getRandomString() {
   const strings = \\"Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae\\".split(\\",\\");
   return String(pickOne(strings));
 }
+
+// dist/index.js
 function getRandomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -43,7 +45,7 @@ exports[`tree-shake test C 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/index.js
+  "output": "// dist/environment.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;
@@ -51,6 +53,8 @@ var nbMsInDay = 864e5;
 var nbMsInWeek = 6048e5;
 var nbMsInMonth = 2592e6;
 var nbMsInYear = 31536e6;
+
+// dist/index.js
 var timeAgoTuples = [
   [nbMsInMinute, nbMsInSecond, \\"second\\"],
   [nbMsInHour, nbMsInMinute, \\"minute\\"],
