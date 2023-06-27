@@ -23,17 +23,27 @@ async function build (contents: string) {
   }
 }
 
+function clearFileHash (content: string) {
+  return content.replace(/(?<name>[a-z]{3,30})-[a-z\d]+(?<ext>\.js)/giu, '$<name>$<ext>')
+}
+
 it('tree-shake test A', async () => {
-  expect(await build(`import { getRandomNumber } from '.'
-  console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))`)).toMatchSnapshot()
+  const result = await build(`import { getRandomNumber } from '.'
+  console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))`)
+  result.output = clearFileHash(result.output ?? '')
+  expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test B', async () => {
-  expect(await build(`import { getRandomNumber, getRandomString } from '.'
-  console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))`)).toMatchSnapshot()
+  const result = await build(`import { getRandomNumber, getRandomString } from '.'
+  console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))`)
+  result.output = clearFileHash(result.output ?? '')
+  expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test C', async () => {
-  expect(await build(`import { readableTimeAgo } from '.'
-  console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)).toMatchSnapshot()
+  const result = await build(`import { readableTimeAgo } from '.'
+  console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)
+  result.output = clearFileHash(result.output ?? '')
+  expect(result).toMatchSnapshot()
 })
