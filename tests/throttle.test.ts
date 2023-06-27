@@ -16,8 +16,8 @@ async function anAsyncFunctionThatReturn12 () {
 async function anAsyncFunctionThatReturnAnObject () {
   await sleep(5)
   return {
-    name: 'John',
     age: 30,
+    name: 'John',
   }
 }
 
@@ -38,6 +38,6 @@ it('throttle', async function () {
 })
 
 it('anAsyncFunctionThatReturn12 A', async () => { expect(await anAsyncFunctionThatReturn12()).toBe(12) })
-it('anAsyncFunctionThatReturnAnObject A', async () => { expect(await anAsyncFunctionThatReturnAnObject()).toStrictEqual({ name: 'John', age: 30 }) })
+it('anAsyncFunctionThatReturnAnObject A', async () => { expect(await anAsyncFunctionThatReturnAnObject()).toStrictEqual({ age: 30, name: 'John' }) })
 
 

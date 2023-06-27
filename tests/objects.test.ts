@@ -3,7 +3,7 @@
 import { expect, it } from 'vitest'
 import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
 
-const person = { name: 'John', age: 21, details: { favoriteFood: 'sushi' } }
+const person = { age: 21, details: { favoriteFood: 'sushi' }, name: 'John' }
 const personCopy = clone(person)
 personCopy.age = 42
 it('clone a record', () => { expect(personCopy.age).toBe(42) })
@@ -25,46 +25,46 @@ it('access a non-nested property after an undefined property', () => { expect(ac
 
 it('flatten an object', () => { expect(flatten(person)).toStrictEqual({ 'age': 21, 'details.favoriteFood': 'sushi', 'name': 'John' }) })
 it('flatten an object with a custom root path', () => { expect(flatten(person, 'person')).toStrictEqual({ 'person.age': 21, 'person.details.favoriteFood': 'sushi', 'person.name': 'John' }) })
-it('flatten an object containing an array', () => { expect(flatten({ name: 'John', collection: ['pikachu', 'drake'] })).toStrictEqual({ 'name': 'John', 'collection[0]': 'pikachu', 'collection[1]': 'drake' }) })
+it('flatten an object containing an array', () => { expect(flatten({ collection: ['pikachu', 'drake'], name: 'John' })).toStrictEqual({ 'collection[0]': 'pikachu', 'collection[1]': 'drake', 'name': 'John' }) })
 
-const users = [{ name: 'John', age: 21, pic: 'wow.png' }, { name: 'Albert', age: 42 }, { name: 'Sam', age: 22 }, { name: 'Birgit', age: 11 }]
+const users = [{ age: 21, name: 'John', pic: 'wow.png' }, { age: 42, name: 'Albert' }, { age: 22, name: 'Sam' }, { age: 11, name: 'Birgit' }]
 it('sort objects by property without order does not sort', () => { expect(users.sort(byProperty('name'))[0]?.name).toBe('John') })
 it('sort objects by property with asc order does sort', () => { expect(users.sort(byProperty('name', 'asc'))[0]?.name).toBe('Albert') })
 it('sort objects by property with desc order does sort', () => { expect(users.sort(byProperty('name', 'desc'))[0]?.name).toBe('Sam') })
 it('sort objects by property even if some does not have it', () => { expect(users.sort(byProperty('pic', 'asc'))[0]?.pic).toBe('wow.png') })
 
-const object3 = { 'superFun': true, 'notFun': false, 'pretty-good': true, 'size': 'large' }
+const object3 = { 'notFun': false, 'pretty-good': true, 'size': 'large', 'superFun': true }
 // eslint-disable-next-line unicorn/no-useless-undefined
-it('class generator undefined', () => { expect(genClass(undefined)).toBe('') })
-it('class generator null', () => { expect(genClass(null)).toBe('') }) // eslint-disable-line unicorn/no-null
-it('class generator empty string', () => { expect(genClass('')).toBe('') })
-it('class generator string', () => { expect(genClass('one 2   three')).toBe('one 2 three') })
-it('class generator string with cls', () => { expect(genClass('one 2   three', [], ['enabled', 2])).toBe('one 2 three enabled') })
-it('class generator empty', () => { expect(genClass({})).toBe('') })
-it('class generator object', () => { expect(genClass(object3)).toBe('superFun pretty-good size-large') })
-it('class generator object & specific keys', () => { expect(genClass(object3, ['pretty-good'])).toBe('pretty-good') })
-it('class generator object & specific keys & custom class', () => { expect(genClass(object3, ['pretty-good'], ['nice ok'])).toBe('nice ok pretty-good') })
-it('class generator object containing array', () => { expect(genClass({ status: ['visible', 'enabled'] })).toBe('has-status') })
-it('class generator object containing empty array', () => { expect(genClass({ status: [] })).toBe('') })
-it('class generator array', () => { expect(genClass(['one one ', 2, null, 'one', undefined, '   three '])).toBe('one 2 three') }) // eslint-disable-line unicorn/no-null
+it('class generator A undefined', () => { expect(genClass(undefined)).toBe('') })
+it('class generator B null', () => { expect(genClass(null)).toBe('') }) // eslint-disable-line unicorn/no-null
+it('class generator C empty string', () => { expect(genClass('')).toBe('') })
+it('class generator D string', () => { expect(genClass('one 2   three')).toBe('one 2 three') })
+it('class generator E string with cls', () => { expect(genClass('one 2   three', [], ['enabled', 2])).toBe('one 2 three enabled') })
+it('class generator F empty', () => { expect(genClass({})).toBe('') })
+it('class generator G object', () => { expect(genClass(object3)).toMatchInlineSnapshot('"pretty-good size-large superFun"') })
+it('class generator H object & specific keys', () => { expect(genClass(object3, ['pretty-good'])).toBe('pretty-good') })
+it('class generator I object & specific keys & custom class', () => { expect(genClass(object3, ['pretty-good'], ['nice ok'])).toBe('nice ok pretty-good') })
+it('class generator J object containing array', () => { expect(genClass({ status: ['visible', 'enabled'] })).toBe('has-status') })
+it('class generator K object containing empty array', () => { expect(genClass({ status: [] })).toBe('') })
+it('class generator L array', () => { expect(genClass(['one one ', 2, null, 'one', undefined, '   three '])).toBe('one 2 three') }) // eslint-disable-line unicorn/no-null
 
 /* eslint-disable prefer-object-spread, putout/putout */
 it('object assign A simple', () => { expect(Object.assign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' }) })
-it('object assign B limitation, overwrite with undefined', () => { expect(Object.assign({ name: 'John', age: 31 }, { name: 'Claire', age: undefined })).toStrictEqual({ name: 'Claire', age: undefined }) })
-it('object assign C limitation, overwrite with null', () => { expect(Object.assign({ name: 'John', age: 31 }, { name: 'Claire', age: null })).toStrictEqual({ name: 'Claire', age: null }) }) // eslint-disable-line unicorn/no-null
-it('object assign D limitation, loose side data', () => { expect(Object.assign({ name: 'John', details: { age: 42, type: 'years' } }, { name: 'Claire', details: { age: 21 } })).toStrictEqual({ name: 'Claire', details: { age: 21 } }) })
+it('object assign B limitation, overwrite with undefined', () => { expect(Object.assign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toStrictEqual({ age: undefined, name: 'Claire' }) })
+it('object assign C limitation, overwrite with null', () => { expect(Object.assign({ age: 31, name: 'John' }, { age: null, name: 'Claire' })).toStrictEqual({ age: null, name: 'Claire' }) }) // eslint-disable-line unicorn/no-null
+it('object assign D limitation, loose side data', () => { expect(Object.assign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: { age: 21 }, name: 'Claire' })).toStrictEqual({ details: { age: 21 }, name: 'Claire' }) })
 /* eslint-enable prefer-object-spread, putout/putout */
 
 it('safe assign A simple', () => { expect(safeAssign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' }) })
-it('safe assign B does not overwrite with undefined', () => { expect(safeAssign({ name: 'John', age: 31 }, { name: 'Claire', age: undefined })).toStrictEqual({ name: 'Claire', age: 31 }) })
-it('safe assign C does not overwrite with null', () => { expect(safeAssign({ name: 'John', age: 31 }, { name: 'Claire', age: null })).toStrictEqual({ name: 'Claire', age: 31 }) }) // eslint-disable-line unicorn/no-null
-it('safe assign D does not loose side data', () => { expect(safeAssign({ name: 'John', details: { age: 42, type: 'years' } }, { name: 'Claire', details: { age: 21 } })).toStrictEqual({ name: 'Claire', details: { age: 21, type: 'years' } }) })
+it('safe assign B does not overwrite with undefined', () => { expect(safeAssign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toStrictEqual({ age: 31, name: 'Claire' }) })
+it('safe assign C does not overwrite with null', () => { expect(safeAssign({ age: 31, name: 'John' }, { age: null, name: 'Claire' })).toStrictEqual({ age: 31, name: 'Claire' }) }) // eslint-disable-line unicorn/no-null
+it('safe assign D does not loose side data', () => { expect(safeAssign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: { age: 21 }, name: 'Claire' })).toStrictEqual({ details: { age: 21, type: 'years' }, name: 'Claire' }) })
 it('safe assign E 2nd param undefined', () => { expect(safeAssign({ name: 'John' })).toStrictEqual({ name: 'John' }) })
 it('safe assign F 2nd param empty object', () => { expect(safeAssign({ name: 'John' }, {})).toStrictEqual({ name: 'John' }) })
 it('safe assign G 2nd param overwrite', () => { expect(safeAssign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' }) })
-it('safe assign H does overwrite with empty string', () => { expect(safeAssign({ name: 'John', age: 31 }, { name: '' })).toStrictEqual({ name: '', age: 31 }) })
-it('safe assign I does not overwrite with empty object', () => { expect(safeAssign({ name: 'John', details: { age: 42, type: 'years' } }, { name: '', details: {} })).toStrictEqual({ name: '', details: { age: 42, type: 'years' } }) })
-it('safe assign J does handle non existing sub object', () => { expect(safeAssign({ name: 'John' }, { details: { age: 42, type: 'years' } })).toStrictEqual({ name: 'John', details: { age: 42, type: 'years' } }) })
+it('safe assign H does overwrite with empty string', () => { expect(safeAssign({ age: 31, name: 'John' }, { name: '' })).toStrictEqual({ age: 31, name: '' }) })
+it('safe assign I does not overwrite with empty object', () => { expect(safeAssign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: {}, name: '' })).toStrictEqual({ details: { age: 42, type: 'years' }, name: '' }) })
+it('safe assign J does handle non existing sub object', () => { expect(safeAssign({ name: 'John' }, { details: { age: 42, type: 'years' } })).toStrictEqual({ details: { age: 42, type: 'years' }, name: 'John' }) })
 
 it('isRecord A on null', () => { expect(isRecord(null)).toBe(false) }) // eslint-disable-line unicorn/no-null
 it('isRecord B on an array', () => { expect(isRecord([1, 2])).toBe(false) })
@@ -74,11 +74,11 @@ it('isRecord E on a number', () => { expect(isRecord(-1)).toBe(false) })
 it('isRecord F on an empty record', () => { expect(isRecord({})).toBe(true) })
 it('isRecord G on a record', () => { expect(isRecord({ name: 'John' })).toBe(true) })
 
-it('objectSum A on empty object', () => { expect(objectSum({})).toBe(2_745_614_147) })
+it('objectSum A on empty object', () => { expect(objectSum({})).toMatchInlineSnapshot('2745614147') })
 it('objectSum B is the same on two equally empty objects', () => { expect(objectSum({ name: 'john' }) === objectSum(clone({ name: 'john' }))).toBe(true) })
-it('objectSum C on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toBe(2_822_221_177) })
-it('objectSum D on object with a slightly different number', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toBe(3_883_285_438) })
-it('objectSum E on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyD: 2, keyC: 3 })).toBe(1_855_582_140) })
-it('objectSum F on a large object', () => { expect(objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users, object3 })).toBe(1_861_045_962) })
+it('objectSum C on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toMatchInlineSnapshot('2822221177') })
+it('objectSum D on object with a slightly different number', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toMatchInlineSnapshot('3883285438') })
+it('objectSum E on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyC: 3, keyD: 2 })).toMatchInlineSnapshot('1603108510') })
+it('objectSum F on a large object', () => { expect(objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, object3, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users })).toMatchInlineSnapshot('3077461858') })
 it('objectSum G is the same on two equals objects', () => { expect(objectSum(object3) === objectSum(clone(object3))).toBe(true) })
 

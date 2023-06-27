@@ -2,7 +2,7 @@ import type { NavigatorUserAgent } from './types'
 
 /* c8 ignore start */
 
-/* eslint-disable @typescript-eslint/naming-convention, regexp/letter-case */
+/* eslint-disable @typescript-eslint/naming-convention, regexp/letter-case, perfectionist/sort-objects */
 const browsers = {
   'Edge': /edge/iu, // keep me first
   'Chrome': /chrome|chromium|crios/iu,
@@ -28,7 +28,7 @@ const versions = {
   generic: /Version\/(?<version>[\d.]+)/iu,
   rv: /rv:(?<version>[\d.]+)/iu,
 }
-/* eslint-enable @typescript-eslint/naming-convention, regexp/letter-case */
+/* eslint-enable @typescript-eslint/naming-convention, regexp/letter-case, perfectionist/sort-objects */
 
 /**
  * Get the browser version from a user agent string

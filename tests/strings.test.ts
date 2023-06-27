@@ -4,12 +4,12 @@ import { expect, it } from 'vitest'
 import { capitalize, crc32, createCrc32Table, ellipsis, ellipsisWords, fillTemplate, getRandomImageUrl, getRandomString, injectMark, isBase64, isHtml, isJson, isString, parseBase64, parseJson, sanitize, slugify, stringSum } from '../src'
 
 const data = {
-  name: 'Wick',
-  key_ToHappiness: 'Roo-doo-doot-da-doo',
-  quote: 'Bears. Beets. Battlestar Galactica.',
   details: {
     pinCode: 3544,
   },
+  key_ToHappiness: 'Roo-doo-doot-da-doo',
+  name: 'Wick',
+  quote: 'Bears. Beets. Battlestar Galactica.',
 }
 const objectIn = { Andy: '{{ key_ToHappiness }} !' }
 const stringOut = `{
@@ -74,7 +74,7 @@ it('parseBase64 jpeg image', () => { expect(parseBase64('image/jpeg;base64,iVBOR
 it('parseBase64 invalid, missing type', () => { expect(parseBase64(';base64,iVBORw0KGgoYII')).toStrictEqual({ base64: '', size: 0, type: '' }) })
 it('parseBase64 invalid because empty', () => { expect(parseBase64('')).toStrictEqual({ base64: '', size: 0, type: '' }) })
 
-it('parse json valid object string', () => { expect(parseJson('{ "name": "John Cena", "age": 42 }')).toStrictEqual({ error: '', value: { name: 'John Cena', age: 42 } }) })
+it('parse json valid object string', () => { expect(parseJson('{ "name": "John Cena", "age": 42 }')).toStrictEqual({ error: '', value: { age: 42, name: 'John Cena' } }) })
 it('parse json invalid object string', () => { expect(parseJson('{ xyz "name": "John Cena" }')).toStrictEqual({ error: 'JSON invalide : Unexpected token x in JSON at position 2', value: {} }) })
 it('parse json valid array string', () => { expect(parseJson('[ "John Cena", 42 ]')).toStrictEqual({ error: '', value: ['John Cena', 42] }) })
 

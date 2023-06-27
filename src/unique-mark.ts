@@ -70,7 +70,7 @@ export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/M
  * @param root0.isReadOnly if true, will not write the files to disk (useful for unit tests)
  * @returns the total amount of mark injection in the targeted files
  */
-export function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mark', files = [], isReadOnly = false }: { placeholder?: string; mark?: string; files?: string[]; isReadOnly?: boolean }) {
+export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: { files?: string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }) {
   let totalInjections = 0
   const logs: string[] = []
   const markRegex = new RegExp(mark, 'gu') // eslint-disable-line security/detect-non-literal-regexp
@@ -84,7 +84,7 @@ export function injectMarkInFiles ({ placeholder = 'unique-mark', mark = 'no-mar
     logs.push(`injected in ${file} : ${times} time${times > 1 ? 's' : ''}`)
     totalInjections += times
   })
-  return { totalInjections, logs }
+  return { logs, totalInjections }
 }
 
 /* c8 ignore next 19 */
@@ -99,7 +99,7 @@ async function init () {
   if (isVerbose) log(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
   const mark = generateMark({ version })
   if (isVerbose) log('generated mark', mark)
-  const { logs, totalInjections } = injectMarkInFiles({ mark, files })
+  const { logs, totalInjections } = injectMarkInFiles({ files, mark })
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   logs.forEach(line => { log(...(line.split(':') as [string, string])) })
   log('Total injections', String(totalInjections))

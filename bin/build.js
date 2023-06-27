@@ -7,13 +7,13 @@ import glob from 'tiny-glob'
  */
 async function doBuild () {
   await esbuild({
-    bundle: true,
     banner: { js: '// shuutils __unique-mark__' },
+    bundle: true,
+    entryPoints: await glob('src/*.ts'), // build all ts files let the end-user choose global import like import { aFunc } from 'shuutils' or import { aFunc } from 'shuutils/dist/a-specific-file' to force tree-shaking
     external: ['tiny-glob'], // but not theses
+    format: 'esm',
     outdir: 'dist',
     platform: 'node',
-    entryPoints: await glob('src/*.ts'), // build all ts files let the end-user choose global import like import { aFunc } from 'shuutils' or import { aFunc } from 'shuutils/dist/a-specific-file' to force tree-shaking
-    format: 'esm',
     target: 'es2020',
   })
 }

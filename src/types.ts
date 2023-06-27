@@ -43,7 +43,7 @@ export type RecursivePartial<T> = {
 }
 
 export interface PackageJson {
+  description: string
   name: string
   version: string
-  description: string
 }

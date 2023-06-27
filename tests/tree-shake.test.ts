@@ -9,17 +9,17 @@ const resolveDir = path.join(currentDirectory, '../dist') // eslint-disable-line
 async function build (contents: string) {
   const result = await esbuild({
     bundle: true, // eslint-disable-line @typescript-eslint/naming-convention
+    format: 'esm',
     minify: false, // eslint-disable-line @typescript-eslint/naming-convention
     platform: 'node',
-    format: 'esm',
     stdin: { contents, resolveDir },
     write: false, // eslint-disable-line @typescript-eslint/naming-convention
   })
   return {
-    output: result.outputFiles[0]?.text,
-    nbOutputFiles: result.outputFiles.length,
-    warnings: result.warnings,
     errors: result.errors,
+    nbOutputFiles: result.outputFiles.length,
+    output: result.outputFiles[0]?.text,
+    warnings: result.warnings,
   }
 }
 

@@ -21,14 +21,14 @@ describe('simple sort', () => {
   })
 })
 
-type Parent = { firstName: string; lastName: string; age?: number }
+type Parent = { age?: number; firstName: string; lastName: string }
 
-const parent1 = { firstName: 'John', lastName: 'Doe', age: 33 }
-const parent2 = { firstName: 'Jane', lastName: 'Mac', age: 30 }
-const parent3 = { firstName: 'Jack', lastName: 'Doe Li Pra Ne', age: 35 }
-const parent4 = { firstName: 'Jill', lastName: 'Mac-Zipper', age: 32 }
-const parent5 = { firstName: 'Jules', lastName: 'Macintosh', age: 32 }
-const parent6 = { firstName: 'Julien', lastName: 'Ultimate Zozo', age: 32 }
+const parent1 = { age: 33, firstName: 'John', lastName: 'Doe' }
+const parent2 = { age: 30, firstName: 'Jane', lastName: 'Mac' }
+const parent3 = { age: 35, firstName: 'Jack', lastName: 'Doe Li Pra Ne' }
+const parent4 = { age: 32, firstName: 'Jill', lastName: 'Mac-Zipper' }
+const parent5 = { age: 32, firstName: 'Jules', lastName: 'Macintosh' }
+const parent6 = { age: 32, firstName: 'Julien', lastName: 'Ultimate Zozo' }
 const parents: Parent[] = [parent1, parent2, parent3, parent4, parent5, parent6]
 
 function complexSortFunction (parentA: Parent, parentB: Parent) {

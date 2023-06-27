@@ -47,7 +47,7 @@ it('memoize C invalid callback given', () => {
   expect(() => memoize(1 as unknown as () => void)).toThrowErrorMatchingInlineSnapshot('"memoize callback parameter should be a function"')
 })
 
-type Parent = { firstName: string; lastName: string; age?: number }
+type Parent = { age?: number; firstName: string; lastName: string }
 
 let childNameCalls = 0
 
@@ -68,7 +68,7 @@ const memoizedChildName = memoize(childName)
 it('memoize D testing memoized function with objects', () => {
   childNameCalls = 0
   expect(childNameCalls).toBe(0)
-  const parentA = { firstName: 'John', lastName: 'Doe', age: 33 }
+  const parentA = { age: 33, firstName: 'John', lastName: 'Doe' }
   const parentB = { firstName: 'Jane', lastName: 'Mac' }
   expect(memoizedChildName('Michael', parentA, parentB)).toBe('Michael Doe Mac')
   expect(childNameCalls).toBe(1)

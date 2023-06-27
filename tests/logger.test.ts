@@ -8,7 +8,7 @@ it('logger A', () => {
 })
 
 it('logger B', () => {
-  const loggerB = new Logger({ isActive: false, willLogDelay: false, willOutputToMemory: true, willOutputToConsole: false })
+  const loggerB = new Logger({ isActive: false, willLogDelay: false, willOutputToConsole: false, willOutputToMemory: true })
   expect(loggerB.options.isActive).toBe(false)
   loggerB.info('This info 1 should not be logged')
   loggerB.options.isActive = true
@@ -20,7 +20,7 @@ it('logger B', () => {
 })
 
 it('logger C', () => {
-  const loggerC = new Logger({ willLogDate: true, willLogTime: true, willOutputToConsole: false, willLogDelay: true, minimumLevel: '6-error', willOutputToMemory: true })
+  const loggerC = new Logger({ minimumLevel: '6-error', willLogDate: true, willLogDelay: true, willLogTime: true, willOutputToConsole: false, willOutputToMemory: true })
   loggerC.warn('This warn 2 should not be logged')
   loggerC.success('This success 1 should not be logged')
   loggerC.error('This error 1 should be logged')
@@ -37,10 +37,10 @@ it('logger C', () => {
 })
 
 it('logger D', () => {
-  const loggerD = new Logger({ willLogDelay: false, willOutputToMemory: true, willOutputToConsole: false })
+  const loggerD = new Logger({ willLogDelay: false, willOutputToConsole: false, willOutputToMemory: true })
   loggerD.info('This info 4 should be logged', 12)
   loggerD.info('This info 5 should be logged too', [1, 2, 3])
-  loggerD.warn('This warn 3 should be logged', { keyA: 1, keyB: 'John', isKeyC: true })
+  loggerD.warn('This warn 3 should be logged', { isKeyC: true, keyA: 1, keyB: 'John' })
   loggerD.disable()
   loggerD.warn('This warn 4 should not be logged')
   loggerD.error('This error 4 should not be logged')
@@ -56,15 +56,15 @@ it('logger D', () => {
 
 const loggerE = new Logger({ willOutputToConsole: false })
 it('loggerE clean A', () => { expect(loggerE.clean()).toBe('') })
-it('loggerE clean B', () => { expect(loggerE.clean(red('Oh I\'m in red now ?!'))).toBe('Oh I\'m in red now ?!') })
-it('loggerE clean C', () => { expect(loggerE.clean('an array ?', [12, 42])).toBe('an array ? [12,42]') })
-it('loggerE clean D', () => { expect(loggerE.clean('a function ?', () => 'Hello world')).toBe('a function ? () => \'Hello world\'') })
-it('loggerE clean E', () => { expect(loggerE.clean('an object ?', { keyA: 1, keyB: 'John', isFull: true })).toBe('an object ? {\'keyA\':1,\'keyB\':\'John\',\'isFull\':true}') })
-it('loggerE clean F', () => { expect(loggerE.clean('a boolean ?', true)).toBe('a boolean ? true') })
-it('loggerE clean G', () => { expect(loggerE.clean('a number ?', 42)).toBe('a number ? 42') })
-it('loggerE clean H', () => { expect(loggerE.clean('a string ?', 'Hello world')).toBe('a string ? Hello world') })
-it('loggerE clean I', () => { expect(loggerE.clean('a null ?', null)).toBe('a null ? null') }) // eslint-disable-line unicorn/no-null
-it('loggerE clean J', () => { expect(loggerE.clean('an undefined ?', undefined)).toBe('an undefined ? undefined') }) // eslint-disable-line unicorn/no-useless-undefined
-it('loggerE clean K', () => { expect(loggerE.clean('a date ?', new Date('2020-01-01'))).toBe('a date ? \'2020-01-01T00:00:00.000Z\'') })
-it('loggerE clean L', () => { expect(loggerE.clean('a regexp ?', /Hello world{3,5}/u)).toBe('a regexp ? {}') }) // not supported for now
+it('loggerE clean B', () => { expect(loggerE.clean(red('Oh I\'m in red now ?!'))).toMatchInlineSnapshot('"Oh I\'m in red now ?!"') })
+it('loggerE clean C', () => { expect(loggerE.clean('an array ?', [12, 42])).toMatchInlineSnapshot('"an array ? [12,42]"') })
+it('loggerE clean D', () => { expect(loggerE.clean('a function ?', () => 'Hello world')).toMatchInlineSnapshot('"a function ? () => \'Hello world\'"') })
+it('loggerE clean E', () => { expect(loggerE.clean('an object ?', { isFull: true, keyA: 1, keyB: 'John' })).toMatchInlineSnapshot('"an object ? {\'isFull\':true,\'keyA\':1,\'keyB\':\'John\'}"') })
+it('loggerE clean F', () => { expect(loggerE.clean('a boolean ?', true)).toMatchInlineSnapshot('"a boolean ? true"') })
+it('loggerE clean G', () => { expect(loggerE.clean('a number ?', 42)).toMatchInlineSnapshot('"a number ? 42"') })
+it('loggerE clean H', () => { expect(loggerE.clean('a string ?', 'Hello world')).toMatchInlineSnapshot('"a string ? Hello world"') })
+it('loggerE clean I', () => { expect(loggerE.clean('a null ?', null)).toMatchInlineSnapshot('"a null ? null"') }) // eslint-disable-line unicorn/no-null
+it('loggerE clean J', () => { expect(loggerE.clean('an undefined ?', undefined)).toMatchInlineSnapshot('"an undefined ? undefined"') }) // eslint-disable-line unicorn/no-useless-undefined
+it('loggerE clean K', () => { expect(loggerE.clean('a date ?', new Date('2020-01-01'))).toMatchInlineSnapshot('"a date ? \'2020-01-01T00:00:00.000Z\'"') })
+it('loggerE clean L', () => { expect(loggerE.clean('a regexp ?', /Hello world{3,5}/u)).toMatchInlineSnapshot('"a regexp ? {}"') }) // not supported for now
 

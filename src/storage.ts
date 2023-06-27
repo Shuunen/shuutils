@@ -59,14 +59,14 @@ function clear (key: string) {
 }
 
 export const storage = {
+  clear,
+  get,
+  has,
   /* c8 ignore next 2 */
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   media: typeof localStorage === 'undefined' ? {} as Storage : localStorage,
   prefix: '', // prefix all keys in the storage with a custom string
-  get,
   set,
-  has,
-  clear,
 }
 
 export type ShuutilsStorage = typeof storage

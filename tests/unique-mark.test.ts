@@ -28,9 +28,9 @@ it('generateMark A', () => {
 })
 
 it('injectMarkInFiles A successful', () => {
-  expect(injectMarkInFiles({ isReadOnly: true, files: ['src/strings.ts'], mark: fakeMark, placeholder: 'placeholder' })).toMatchSnapshot()
+  expect(injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'placeholder' })).toMatchSnapshot()
 })
 
 it('injectMarkInFiles B fail to find placeholder', () => {
-  expect(() => injectMarkInFiles({ isReadOnly: true, files: ['src/strings.ts'], mark: fakeMark, placeholder: 'nope' })).toThrowErrorMatchingSnapshot()
+  expect(() => injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'nope' })).toThrowErrorMatchingSnapshot()
 })

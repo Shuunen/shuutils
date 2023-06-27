@@ -57,7 +57,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
     return callback(event instanceof CustomEvent ? event.detail : event, event as Event)
   }
   targetMedia.addEventListener(name, onCallback)
-  return { name, callback: onCallback, media }
+  return { callback: onCallback, media, name }
 }
 
 /**
@@ -67,7 +67,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
  * @param root0.name the name of the event to remove the listener from
  * @param root0.callback the callback to remove
  */
-export function off ({ media, name, callback }: Listener) {
+export function off ({ callback, media, name }: Listener) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   media.removeEventListener(name, callback)
 }

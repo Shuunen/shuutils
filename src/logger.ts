@@ -7,11 +7,11 @@ type LogLevel = '1-debug' | '2-test' | '3-info' | '4-warn' | '5-good' | '6-error
 export interface LoggerOptions {
   isActive: boolean
   minimumLevel: LogLevel
+  willLogDate: boolean
+  willLogDelay: boolean
+  willLogTime: boolean
   willOutputToConsole: boolean
   willOutputToMemory: boolean
-  willLogDate: boolean
-  willLogTime: boolean
-  willLogDelay: boolean
 }
 
 /**
@@ -22,11 +22,11 @@ export class Logger {
   public options: LoggerOptions = {
     isActive: true,
     minimumLevel: '1-debug',
+    willLogDate: false,
+    willLogDelay: true,
+    willLogTime: false,
     willOutputToConsole: true,
     willOutputToMemory: false,
-    willLogDate: false,
-    willLogTime: false,
-    willLogDelay: true,
   }
 
   public inMemoryLogs: string[] = []

@@ -2,8 +2,8 @@ import { expect, it } from 'vitest'
 import { expectEqualTypes, expectType } from '../src'
 
 interface Person {
-  name: string
   age: number
+  name: string
 }
 
 it('expectType A valid', () => {
@@ -16,12 +16,12 @@ it('expectType B invalid', () => {
 })
 
 it('expectType C complex', () => {
-  expect(expectType<Person>({ name: 'John', age: 42 })).toBeTruthy()
+  expect(expectType<Person>({ age: 42, name: 'John' })).toBeTruthy()
 })
 
 it('expectType D complex invalid', () => {
   // @ts-expect-error invalid type here
-  expect(expectType<Person>({ name: 'John', age: '42' })).toBeTruthy()
+  expect(expectType<Person>({ age: '42', name: 'John' })).toBeTruthy()
 })
 
 it('expectEqualTypes A inferred valid', () => {
@@ -34,12 +34,12 @@ it('expectEqualTypes B inferred invalid', () => {
 })
 
 it('expectEqualTypes C inferred complex valid', () => {
-  expect(expectEqualTypes({ name: 'John', age: 42 }, { name: 'Johnny', age: 6 })).toBeTruthy()
+  expect(expectEqualTypes({ age: 42, name: 'John' }, { age: 6, name: 'Johnny' })).toBeTruthy()
 })
 
 it('expectEqualTypes D inferred complex invalid', () => {
   // @ts-expect-error invalid type here
-  expect(expectEqualTypes({ name: 'John', age: 42 }, { name: 'Johnny', age: '66' })).toBeTruthy()
+  expect(expectEqualTypes({ age: 42, name: 'John' }, { age: '66', name: 'Johnny' })).toBeTruthy()
 })
 
 it('expectEqualTypes E specified valid', () => {
@@ -52,15 +52,15 @@ it('expectEqualTypes F specified invalid', () => {
 })
 
 it('expectEqualTypes G specified complex valid', () => {
-  expect(expectEqualTypes<Person, Person>({ name: 'John', age: 42 }, { name: 'Johnny', age: 31 })).toBeTruthy()
+  expect(expectEqualTypes<Person, Person>({ age: 42, name: 'John' }, { age: 31, name: 'Johnny' })).toBeTruthy()
 })
 
 it('expectEqualTypes H specified complex invalid', () => {
   // @ts-expect-error invalid type here
-  expect(expectEqualTypes<Person, Person>({ name: 'John', age: 42 }, { name: 'Johnny', age: '31' })).toBeTruthy()
+  expect(expectEqualTypes<Person, Person>({ age: 42, name: 'John' }, { age: '31', name: 'Johnny' })).toBeTruthy()
 })
 
 it('expectEqualTypes I specified type mismatch', () => {
   // @ts-expect-error invalid type here
-  expect(expectEqualTypes<Person, string>({ name: 'John', age: 42 }, 'Johnny')).toBeTruthy()
+  expect(expectEqualTypes<Person, string>({ age: 42, name: 'John' }, 'Johnny')).toBeTruthy()
 })

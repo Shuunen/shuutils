@@ -1,10 +1,10 @@
 import { expect, it } from 'vitest'
 import { createState, storage } from '../src'
 
-const { state: stateA, watchState: watchStateA } = createState({ name: 'Michael', age: 30 })
+const { state: stateA, watchState: watchStateA } = createState({ age: 30, name: 'Michael' })
 
 it('state A initial data', () => {
-  expect(stateA).toStrictEqual({ name: 'Michael', age: 30 })
+  expect(stateA).toStrictEqual({ age: 30, name: 'Michael' })
 })
 
 it('state A name change', function () {
@@ -31,7 +31,7 @@ it('state B with storage and specific keys to store', function () {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/naming-convention, camelcase
   storage.media = { stateB_age: 12, stateB_excluded: ':(' } as unknown as Storage
   storage.prefix = 'stateB_'
-  const { state: stateB } = createState({ name: 'Clara', age: 42, excluded: ':)' }, storage, ['name', 'age'])
+  const { state: stateB } = createState({ age: 42, excluded: ':)', name: 'Clara' }, storage, ['name', 'age'])
   expect(stateB.name, 'name loaded from initial data because not in storage').toBe('Clara')
   expect(stateB.age, 'age loaded from storage that takes precedence over initial data because it is in the sync props').toBe(12)
   expect(stateB.excluded, 'excluded loaded from initial data event if present in storage, because it was not in the synced props').toBe(':)')

@@ -244,14 +244,14 @@ export function bgGray (string: string) {
 export function hexToRgb (hex: string) {
   /* eslint-disable @typescript-eslint/restrict-template-expressions */
   if (hex.length === nbShortHex) return {
-    colorRed: Number(`0x${hex[nbSecond]}${hex[nbSecond]}`),
-    colorGreen: Number(`0x${hex[nbThird]}${hex[nbThird]}`),
     colorBlue: Number(`0x${hex[nbFourth]}${hex[nbFourth]}`),
+    colorGreen: Number(`0x${hex[nbThird]}${hex[nbThird]}`),
+    colorRed: Number(`0x${hex[nbSecond]}${hex[nbSecond]}`),
   }
   if (hex.length === nbLongHex) return {
-    colorRed: Number(`0x${hex[nbSecond]}${hex[nbThird]}`),
-    colorGreen: Number(`0x${hex[nbFourth]}${hex[nbFifth]}`),
     colorBlue: Number(`0x${hex[nbSixth]}${hex[nbSeventh]}`),
+    colorGreen: Number(`0x${hex[nbFourth]}${hex[nbFifth]}`),
+    colorRed: Number(`0x${hex[nbSecond]}${hex[nbThird]}`),
   }
   /* eslint-enable @typescript-eslint/restrict-template-expressions */
   throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${nbShortHex} or ${nbLongHex} instead of : ${hex.length}`)
@@ -265,7 +265,7 @@ export function hexToRgb (hex: string) {
  */
 // eslint-disable-next-line max-statements
 export function hexToHsl (hex: string) {
-  let { colorRed, colorGreen, colorBlue } = hexToRgb(hex) // Convert hex to RGB first
+  let { colorBlue, colorGreen, colorRed } = hexToRgb(hex) // Convert hex to RGB first
   // Then to HSL
   colorRed /= nbRgbMax
   colorGreen /= nbRgbMax
@@ -287,6 +287,6 @@ export function hexToHsl (hex: string) {
   saturation = delta === 0 ? 0 : delta / (1 - Math.abs(nbThird * lightness - 1))
   saturation = Math.round(saturation * nbSaturationMax)
   lightness = Math.round(lightness * nbLightnessMax)
-  return { hue, saturation, lightness }
+  return { hue, lightness, saturation }
 }
 

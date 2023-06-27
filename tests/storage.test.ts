@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { hasOwn, storage } from '../src'
 
-interface User { name: string; age: number }
+interface User { age: number; name: string }
 const key = 'Michael'
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 storage.media = {} as Storage
@@ -16,8 +16,8 @@ it('storage returnTestB', () => { expect(returnTestB).toBe('default') })
 const returnTestC = storage.get<User>(key)
 it('storage returnTestC', () => { expect(returnTestC).toBe(undefined) })
 
-const returnTestD = storage.get<User>(key, { name: 'default', age: 0 })
-it('storage returnTestD', () => { expect(returnTestD).toStrictEqual({ name: 'default', age: 0 }) })
+const returnTestD = storage.get<User>(key, { age: 0, name: 'default' })
+it('storage returnTestD', () => { expect(returnTestD).toStrictEqual({ age: 0, name: 'default' }) })
 
 const isReturnTestE = storage.get(key, true)
 it('storage returnTestE', () => { expect(isReturnTestE).toBe(true) })
@@ -31,8 +31,8 @@ it('storage has no value for key', () => { expect(storage.has(key)).toBe(false) 
 it('storage set string value for key', () => { expect(storage.set(key, 'Flax')).toBe('Flax') })
 it('storage has string value for key', () => { expect(storage.has(key)).toBe(true) })
 
-it('storage set object value for key', () => { expect(storage.set(key, { name: 'Michael', age: 30 })).toStrictEqual({ name: 'Michael', age: 30 }) })
-it('storage get object value for key', () => { expect(storage.get<User>(key)).toStrictEqual({ name: 'Michael', age: 30 }) })
+it('storage set object value for key', () => { expect(storage.set(key, { age: 30, name: 'Michael' })).toStrictEqual({ age: 30, name: 'Michael' }) })
+it('storage get object value for key', () => { expect(storage.get<User>(key)).toStrictEqual({ age: 30, name: 'Michael' }) })
 
 it('storage set number value for key', () => { expect(storage.set(key, 30)).toBe(30) })
 it('storage get number value for key', () => { expect(storage.get<number>(key)).toBe(30) })
@@ -48,7 +48,7 @@ it('storage clear value for key', () => { expect(storage.clear(key)).toBe(undefi
 
 it('storage get return undefined when key is not found', () => { expect(storage.get<User>('John')).toBe(undefined) })
 
-it('storage get default value when key is not found', () => { expect(storage.get<User>('John', { name: 'John', age: 30 })).toStrictEqual({ name: 'John', age: 30 }) })
+it('storage get default value when key is not found', () => { expect(storage.get<User>('John', { age: 30, name: 'John' })).toStrictEqual({ age: 30, name: 'John' }) })
 
 storage.prefix = 'test-'
 it('storage prefix is set', () => { expect(storage.prefix).toBe('test-') })
@@ -68,7 +68,7 @@ it('storage typeof returnB is string and TS inferred type should be string', () 
 const returnC = storage.get<User>(key)
 it('storage typeof returnC is undefined and TS inferred type should be User | undefined', () => { expect(typeof returnC).toBe('undefined') })
 
-const returnD = storage.get<User>(key, { name: 'default', age: 0 })
+const returnD = storage.get<User>(key, { age: 0, name: 'default' })
 it('storage typeof returnD is object and TS inferred type should be User', () => { expect(typeof returnD).toBe('object') })
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
