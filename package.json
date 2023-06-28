@@ -17,7 +17,7 @@
     "esbuild": "0.18",
     "eslint": "8.43",
     "eslint-config-hardcore": "39.0",
-    "eslint-plugin-jsdoc": "46.3",
+    "eslint-plugin-jsdoc": "46.4",
     "pkgroll": "1.10",
     "repo-check": "1.32",
     "typescript": "5.1",
