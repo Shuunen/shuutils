@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@happy-dom/global-registrator':
-    specifier: '9'
-    version: 9.20.3
+    specifier: '10'
+    version: 10.0.0
   '@types/node':
     specifier: '18'
     version: 18.16.18
@@ -879,10 +879,10 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@happy-dom/global-registrator@9.20.3:
-    resolution: {integrity: sha512-B0QBs7KNa6QnypXUMSFZLf38Lttwqtfw2fWG+BiJfzn93rITQxDTxwHMIYIWJIYUmmidjITOCEwYbA0O0Vjgjg==}
+  /@happy-dom/global-registrator@10.0.0:
+    resolution: {integrity: sha512-xzE6TCDgw22ntMvsi4jwbxy7gk7ZaftiFmgx7L4Az5yfLZpmRFIjNFnM05qWisUKIZptcUle1x4nOeBOwEr8qA==}
     dependencies:
-      happy-dom: 9.20.3
+      happy-dom: 10.0.3
     dev: true
 
   /@html-eslint/eslint-plugin@0.19.0:
@@ -5302,8 +5302,8 @@ packages:
       uglify-js: 3.17.4
     dev: true
 
-  /happy-dom@9.20.3:
-    resolution: {integrity: sha512-eBsgauT435fXFvQDNcmm5QbGtYzxEzOaX35Ia+h6yP/wwa4xSWZh1CfP+mGby8Hk6Xu59mTkpyf72rUXHNxY7A==}
+  /happy-dom@10.0.3:
+    resolution: {integrity: sha512-WkCP+Z5fX6U5PY+yHP3ElV5D9PoxRAHRWPFq3pG9rg/6Hjf5ak7dozAgSCywsTRUq2qfa8vV8OQvUy5pRXy8EQ==}
     dependencies:
       css.escape: 1.5.1
       entities: 4.5.0
