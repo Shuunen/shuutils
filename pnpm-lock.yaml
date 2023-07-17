@@ -38,8 +38,8 @@ devDependencies:
     specifier: '1.10'
     version: 1.10.0(typescript@5.1.3)
   repo-check:
-    specifier: '1.32'
-    version: 1.32.0
+    specifier: '1.33'
+    version: 1.33.0
   typescript:
     specifier: '5.1'
     version: 5.1.3
@@ -7688,8 +7688,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /repo-check@1.32.0:
-    resolution: {integrity: sha512-jZc/u9gszyc9I2s7RAKRGQfOMi3y3Oex/jgVimxbBpFBj/8wOhw8i442Ps/CA/8RaZHAjY86kUxc0heJKSKmJA==}
+  /repo-check@1.33.0:
+    resolution: {integrity: sha512-PhoLWdABA/YkUfo4LH1TNoH0aZG/ELbVt14IF5aRdwQLQFCALI9PX/NlXDcnhf7UsLKdI2Dduhc1rCQwmJDjqA==}
     hasBin: true
     dependencies:
       arg: 5.0.2
