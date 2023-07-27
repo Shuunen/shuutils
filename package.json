@@ -16,7 +16,7 @@
     "dependency-cruiser": "13",
     "esbuild": "0.18",
     "eslint": "8.45",
-    "eslint-config-hardcore": "40.1",
+    "eslint-config-hardcore": "41.0",
     "eslint-plugin-jsdoc": "46.4",
     "pkgroll": "1.10",
     "repo-check": "1.33",
