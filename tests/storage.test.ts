@@ -50,6 +50,8 @@ it('storage get return undefined when key is not found', () => { expect(storage.
 
 it('storage get default value when key is not found', () => { expect(storage.get<User>('John', { age: 30, name: 'John' })).toStrictEqual({ age: 30, name: 'John' }) })
 
+it('storage get default value when key is found but empty string', () => { expect(storage.get('myKey', 'default')).toStrictEqual('default') })
+
 storage.prefix = 'test-'
 it('storage prefix is set', () => { expect(storage.prefix).toBe('test-') })
 it('storage set string value for key with prefix', () => { expect(storage.set(key, 'Hudson')).toBe('Hudson') })

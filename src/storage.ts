@@ -18,7 +18,7 @@ function get<T = unknown> (key: string, defaultValue?: T) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
-  if (data === undefined || data === null) return defaultValue
+  if (data === undefined || data === null || data === '') return defaultValue
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const { error, value } = parseJson<T>(data)
   // eslint-disable-next-line no-warning-comments, @typescript-eslint/consistent-type-assertions
