@@ -109,7 +109,7 @@ export function ellipsis (stringIn = '', maxLength = 50) {
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
 export function isJson (string: string) {
-  // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex
+  // eslint-disable-next-line security/detect-unsafe-regex
   const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
   if (!hasValidStart) return false
   try { JSON.parse(string) } catch { return false }

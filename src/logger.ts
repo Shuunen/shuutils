@@ -80,7 +80,7 @@ export class Logger {
     return stuff
       .map(thing => typeof thing === 'object' ? JSON.stringify(thing) : String(thing))
       .join(' ')
-      // eslint-disable-next-line security/detect-unsafe-regex, unicorn/no-unsafe-regex, no-control-regex, regexp/no-control-character
+      // eslint-disable-next-line security/detect-unsafe-regex, no-control-regex, regexp/no-control-character
       .replace(/[\u001B\u009B][#();?[]*(?:\d{1,4}(?:;\d{0,4})*)?[\d<=>A-ORZcf-nqry]/gu, '')
       .replace(/"/gu, '\'')
   }

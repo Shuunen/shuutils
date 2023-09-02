@@ -17,7 +17,6 @@ export function createState<State extends object> (data: State, stateStorage?: S
   const useStorage = (key: string | symbol) => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey)) // eslint-disable-line func-style
   const listeners: Partial<Record<StateKey, StateCallback[]>> = {}
   const handler: ProxyHandler<State> = {
-    // eslint-disable-next-line sonar/function-return-type
     get (target: State, key: string | symbol) {
       const value = Reflect.get(target, key)
       return useStorage(key) ? stateStorage?.get(key.toString(), value) : value
