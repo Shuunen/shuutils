@@ -21,7 +21,7 @@ interface UserAgentLowEntropyJson {
 }
 
 interface NavigatorUserAgentData extends UserAgentLowEntropyJson {
-  getHighEntropyValues: (hints: string[]) => Promise<UserAgentDataValues>
+  getHighEntropyValues: (hints: readonly string[]) => Promise<UserAgentDataValues>
   toJSON: () => UserAgentLowEntropyJson // eslint-disable-line @typescript-eslint/naming-convention
 }
 
@@ -38,7 +38,6 @@ export interface NavigatorExtract {
 
 export type RecursivePartial<T> = {
   [P in keyof T]?:
-  // eslint-disable-next-line putout/putout
   T[P] extends (infer U)[] ? RecursivePartial<U>[] : T[P] extends Record<string, unknown> ? RecursivePartial<T[P]> : T[P]
 }
 
@@ -46,4 +45,8 @@ export interface PackageJson {
   description: string
   name: string
   version: string
+}
+
+export type Mutable<Type> = {
+  -readonly [Key in keyof Type]: Type[Key]
 }

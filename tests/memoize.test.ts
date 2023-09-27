@@ -58,7 +58,7 @@ let childNameCalls = 0
  * @param parentB the second parent
  * @returns the full name of the child
  */
-function childName (firstName: string, parentA: Parent, parentB: Parent) {
+function childName (firstName: string, parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
   childNameCalls += 1
   return `${firstName} ${parentA.lastName} ${parentB.lastName}`
 }

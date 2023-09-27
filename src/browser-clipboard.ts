@@ -7,7 +7,7 @@ import { ellipsis } from './strings'
  * Copy data to the clipboard
  * @param stuff the data to copy
  */
-export async function copyToClipboard (stuff: Record<string, unknown> | Record<string, unknown>[] | string[] | number | string) {
+export async function copyToClipboard (stuff: Readonly<Record<string, unknown>> | ReadonlyArray<Readonly<Record<string, unknown>>> | ReadonlyArray<string> | number | string) {
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
   console.log(`copying to clipboard : ${ellipsis(text)}`)
   await navigator.clipboard.writeText(text)

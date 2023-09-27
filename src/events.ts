@@ -13,8 +13,7 @@ export interface Listener {
  * @param media the media to emit the event from, like window or a dom element
  * @returns true if the event is emitted
  */
-export function emit<T> (name: string, data?: T, media?: Element | HTMLElement | Window) {
-  // eslint-disable-next-line putout/putout
+export function emit<T> (name: string, data?: Readonly<T>, media?: Element | HTMLElement | Window) {
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
@@ -67,7 +66,7 @@ export function on<T> (name: string, callback: (data: T, event: Event) => unknow
  * @param root0.name the name of the event to remove the listener from
  * @param root0.callback the callback to remove
  */
-export function off ({ callback, media, name }: Listener) {
+export function off ({ callback, media, name }: Readonly<Listener>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   media.removeEventListener(name, callback)
 }

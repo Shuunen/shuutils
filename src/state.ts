@@ -12,7 +12,7 @@ type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown
  * @param onlyStoreKeys The keys to sync with the storage object, if empty all keys will be synced
  * @returns The state object and a watch function
  */
-export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []) { // eslint-disable-line putout/putout
+export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []) { // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
   type StateKey = keyof State
   const useStorage = (key: string | symbol) => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey)) // eslint-disable-line func-style
   const listeners: Partial<Record<StateKey, StateCallback[]>> = {}
@@ -31,7 +31,7 @@ export function createState<State extends object> (data: State, stateStorage?: S
     },
   }
   const state = new Proxy<State>(data, handler)
-  function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback) {
+  function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback) { // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
     const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
     keys.forEach(stateKey => {
       listeners[stateKey] ||= []

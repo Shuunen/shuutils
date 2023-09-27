@@ -4,9 +4,9 @@ import { clone } from './object-clone'
  * Remove a value from an array
  * @param array the array to remove the value from
  * @param value the value to remove
- * @returns the array without the value
+ * @returns a copy of the array without the value
  */
-export function removeValueFromArray<T> (array: T[], value: T) {
+export function removeValueFromArray<T> (array: ReadonlyArray<T>, value: T) {
   if (!array.includes(value)) return array
   const arrayCopy = clone(array)
   arrayCopy.splice(arrayCopy.indexOf(value), 1)

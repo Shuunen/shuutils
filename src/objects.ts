@@ -12,7 +12,7 @@ type GenClassTypes = string[] | boolean | number | string | null | undefined
  * @param path the full path to access nested property
  * @returns the nested property value
  */
-export function access (object: Record<string, unknown>, path: string) {
+export function access (object: Readonly<Record<string, unknown>>, path: string) {
   return flatten(object)[path]
 }
 
@@ -58,8 +58,8 @@ export function isRecord (value: unknown) {
  * @param sources Object(s) to sequentially merge
  * @returns The resulting object merged
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export function safeAssign (target: Record<string, unknown>, ...sources: Record<string, unknown>[]): Record<string, unknown> {
+// eslint-disable-next-line sonarjs/cognitive-complexity, @typescript-eslint/prefer-readonly-parameter-types
+export function safeAssign (target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]): Record<string, unknown> {
   if (sources.length === 0) return target
   const source = sources.shift()
   if (isRecord(target) && isRecord(source))
@@ -81,7 +81,7 @@ export function safeAssign (target: Record<string, unknown>, ...sources: Record<
  * @param cls optional, additional classes to add, ex: "add-me"
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity
+// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, @typescript-eslint/prefer-readonly-parameter-types
 export function genClass (object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
   const list = clone(cls)
   if (object === null || object === undefined) list.unshift('')
@@ -105,7 +105,7 @@ export function genClass (object: GenClassTypes | GenClassTypes[] | Record<strin
  * @param object the object to generate checksum from
  * @returns the checksum
  */
-export function objectSum (object: Record<string, unknown>) {
+export function objectSum (object: Readonly<Record<string, unknown>>) {
   return stringSum(JSON.stringify(object))
 }
 

@@ -31,7 +31,7 @@ const parent5 = { age: 32, firstName: 'Jules', lastName: 'Macintosh' }
 const parent6 = { age: 32, firstName: 'Julien', lastName: 'Ultimate Zozo' }
 const parents: Parent[] = [parent1, parent2, parent3, parent4, parent5, parent6]
 
-function complexSortFunction (parentA: Parent, parentB: Parent) {
+function complexSortFunction (parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
   return objectSum(parentA) - objectSum(parentB)
 }
 
