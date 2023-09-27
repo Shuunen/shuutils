@@ -55,7 +55,7 @@ export function getRandomString () {
  * @param data input object, like `{ name: "world" }`
  * @returns string, like `"Hello world !"`
  */
-export function fillTemplate (template: Record<string, unknown> | string, data?: Record<string, unknown>) {
+export function fillTemplate (template: Readonly<Record<string, unknown>> | string, data?: Readonly<Record<string, unknown>>) {
   let string = (typeof template === 'object' ? JSON.stringify(template, undefined, nbSpacesIndent) : template)
   if (data === undefined) return string
   if (string.length === 0) return string

@@ -50,7 +50,7 @@ export class Logger {
    * Create a new Logger instance
    * @param options optional, LoggerOptions
    */
-  public constructor (options?: Partial<LoggerOptions>) {
+  public constructor (options?: Readonly<Partial<LoggerOptions>>) {
     if (options) this.options = { ...this.options, ...options }
     this.padding = Math.max(...this.levels.map((key) => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
   }
@@ -76,7 +76,7 @@ export class Logger {
    * @returns the cleaned log line
    * @example logger.stuffToCleanLine(['Hello', 'world', 42]) // "Hello world 42"
    */
-  public clean (...stuff: unknown[]) {
+  public clean (...stuff: Readonly<unknown[]>) {
     return stuff
       .map(thing => typeof thing === 'object' ? JSON.stringify(thing) : String(thing))
       .join(' ')
@@ -90,7 +90,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.addToMemoryLogs(['Hello', 'world', 42])
    */
-  public addToMemoryLogs (...stuff: unknown[]) {
+  public addToMemoryLogs (...stuff: Readonly<unknown[]>) {
     this.inMemoryLogs.push(this.clean(...stuff))
   }
 
@@ -99,7 +99,7 @@ export class Logger {
    * @param prefix the prefix to add before the message
    * @param stuff the things to log
    */
-  private log (prefix: string, stuff: unknown[]) {
+  private log (prefix: string, stuff: Readonly<unknown[]>) {
     const prefixes = [prefix]
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
@@ -122,7 +122,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.debug('Hello world')
    */
-  public debug (...stuff: unknown[]) {
+  public debug (...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('1-debug')) return
     this.log('debug'.padStart(this.padding), stuff)
   }
@@ -132,7 +132,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
-  public info (...stuff: unknown[]) {
+  public info (...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('3-info')) return
     this.log(blue('info'.padStart(this.padding)), stuff)
   }
@@ -142,7 +142,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.warn('Something went wrong')
    */
-  public warn (...stuff: unknown[]) {
+  public warn (...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('4-warn')) return
     this.log(yellow('warn'.padStart(this.padding)), stuff)
   }
@@ -152,7 +152,7 @@ export class Logger {
    * @param stuff the things to log (will be green, as expected)
    * @example logger.good('Everything went well')
    */
-  public good (...stuff: unknown[]) {
+  public good (...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('5-good')) return
     this.log(green('good'.padStart(this.padding)), stuff)
   }
@@ -163,7 +163,7 @@ export class Logger {
    * @example logger.success('Everything went well')
    * @alias good
    */
-  public success (...stuff: unknown[]) {
+  public success (...stuff: Readonly<unknown[]>) {
     this.good(...stuff)
   }
 
@@ -172,7 +172,7 @@ export class Logger {
    * @param stuff the things to log (will be red, such original)
    * @example logger.error('Something went wrong')
    */
-  public error (...stuff: unknown[]) {
+  public error (...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('6-error')) return
     this.log(red('error'.padStart(this.padding)), stuff)
   }
@@ -183,7 +183,7 @@ export class Logger {
    * @param {...any} stuff the things to log
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
-  public test (thing: unknown, ...stuff: unknown[]) {
+  public test (thing: unknown, ...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('2-test')) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')

@@ -57,7 +57,7 @@ export async function getTargetFiles (target = process.argv[2] ?? 'public/index.
  * @param root0.version the version to use, if empty, will use the version from package.json
  * @returns the mark to inject, like "4.2.0 - 123abc45 - 01/01/2021 12:00:00"
  */
-export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }) {
+export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }: Readonly<{ commit?: string; date?: string; version?: string }>) {
   let finalCommit = commit
   /* c8 ignore next */
   if (commit === '') finalCommit = execSync('git rev-parse --short HEAD', { cwd: process.cwd() }).toString().trim()
@@ -74,7 +74,7 @@ export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/M
  * @param root0.isReadOnly if true, will not write the files to disk (useful for unit tests)
  * @returns the total amount of mark injection in the targeted files
  */
-export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: { files?: string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }) {
+export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: Readonly<{ files?: readonly string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }>) {
   let totalInjections = 0
   const logs: string[] = []
   const markRegex = new RegExp(mark, 'gu') // eslint-disable-line security/detect-non-literal-regexp

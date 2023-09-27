@@ -48,12 +48,12 @@ it('class generator J object containing array', () => { expect(genClass({ status
 it('class generator K object containing empty array', () => { expect(genClass({ status: [] })).toBe('') })
 it('class generator L array', () => { expect(genClass(['one one ', 2, null, 'one', undefined, '   three '])).toBe('one 2 three') }) // eslint-disable-line unicorn/no-null
 
-/* eslint-disable prefer-object-spread, putout/putout */
+/* eslint-disable prefer-object-spread */
 it('object assign A simple', () => { expect(Object.assign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' }) })
 it('object assign B limitation, overwrite with undefined', () => { expect(Object.assign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toStrictEqual({ age: undefined, name: 'Claire' }) })
 it('object assign C limitation, overwrite with null', () => { expect(Object.assign({ age: 31, name: 'John' }, { age: null, name: 'Claire' })).toStrictEqual({ age: null, name: 'Claire' }) }) // eslint-disable-line unicorn/no-null
 it('object assign D limitation, loose side data', () => { expect(Object.assign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: { age: 21 }, name: 'Claire' })).toStrictEqual({ details: { age: 21 }, name: 'Claire' }) })
-/* eslint-enable prefer-object-spread, putout/putout */
+/* eslint-enable prefer-object-spread */
 
 it('safe assign A simple', () => { expect(safeAssign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' }) })
 it('safe assign B does not overwrite with undefined', () => { expect(safeAssign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toStrictEqual({ age: 31, name: 'Claire' }) })

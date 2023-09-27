@@ -17,7 +17,7 @@ const timeAgoTuples = [
  * @param language the language to use, default is "en"
  * @returns "a minute ago", "4 days ago"
  */
-export function readableTimeAgo (input: Date | number, language = 'en') {
+export function readableTimeAgo (input: Readonly<Date> | number, language = 'en') {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' })
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
   for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit)

@@ -41,6 +41,7 @@ const samples = [
   [daysAgo(364), '12 months ago'],
   [daysAgo(365), 'last year'],
 ]
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 samples.forEach(([input, expected], index) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   it(`should calculate time ago correctly (index ${index})`, () => { expect(readableTimeAgo(input as Date | number)).toBe(expected) })

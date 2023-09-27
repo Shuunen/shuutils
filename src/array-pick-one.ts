@@ -3,6 +3,6 @@
  * @param items like : ["great", "place", "pine"]
  * @returns item like : "pine"
  */
-export function pickOne<T> (items: T[]) {
+export function pickOne<Type> (items: ReadonlyArray<Type>) {
   return items[Math.floor(Math.random() * items.length)]
 }
