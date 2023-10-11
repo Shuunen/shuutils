@@ -4,6 +4,5 @@
  * @returns item like : "pine"
  */
 export function pickOne<T> (items: T[]) {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return items[Math.floor(Math.random() * items.length)] as T
+  return items[Math.floor(Math.random() * items.length)]
 }

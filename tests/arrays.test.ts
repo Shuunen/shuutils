@@ -6,7 +6,9 @@ const elementsShuffled = shuffleArray(elements)
 it('shuffle an array does not affect the original one', () => { expect(elementsShuffled).not.toStrictEqual(elements) })
 
 const elementPicked = pickOne(elements)
-it('pick one returns an element from the array', () => { expect(elementPicked && elements.includes(elementPicked)).toStrictEqual(true) })
+const isUndefinedPicked = pickOne([false].filter(Boolean))
+it('pick one returns an element from the array', () => { expect(elementPicked !== undefined && elements.includes(elementPicked)).toStrictEqual(true) })
+it('pick one returns undefined', () => { expect(isUndefinedPicked).toBeUndefined() })
 
 it('array unique A', () => { expect(arrayUnique([1, 1, 2, 1, 1, 3, 1])).toStrictEqual([1, 2, 3]) })
 it('array unique B', () => { expect(arrayUnique(['plop', 'plop', 2, 'plop', 'plop', 3, 'plop'])).toStrictEqual(['plop', 2, 3]) })
