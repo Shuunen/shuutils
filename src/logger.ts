@@ -118,13 +118,26 @@ export class Logger {
   }
 
   /**
+   * Log a message if log level allows it
+   * @param prefix the prefix to add before the message
+   * @param level the log level to check
+   * @param stuff the things to log
+   * @param color a function to colorize the prefix
+   * @example logger.logIf('debug', '1-debug', ['Hello', 'world', 42])
+   */
+  // eslint-disable-next-line @typescript-eslint/max-params
+  private logIf (prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (str: string) => string) {
+    if (!this.shouldLog(level)) return
+    this.log(color(prefix.padStart(this.padding)), stuff)
+  }
+
+  /**
    * Log a debug message
    * @param stuff the things to log
    * @example logger.debug('Hello world')
    */
   public debug (...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('1-debug')) return
-    this.log('debug'.padStart(this.padding), stuff)
+    this.logIf('debug', '1-debug', stuff, gray)
   }
 
   /**
@@ -133,8 +146,7 @@ export class Logger {
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
   public info (...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('3-info')) return
-    this.log(blue('info'.padStart(this.padding)), stuff)
+    this.logIf('info', '3-info', stuff, blue)
   }
 
   /**
@@ -143,8 +155,7 @@ export class Logger {
    * @example logger.warn('Something went wrong')
    */
   public warn (...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('4-warn')) return
-    this.log(yellow('warn'.padStart(this.padding)), stuff)
+    this.logIf('warn', '4-warn', stuff, yellow)
   }
 
   /**
@@ -153,8 +164,7 @@ export class Logger {
    * @example logger.good('Everything went well')
    */
   public good (...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('5-good')) return
-    this.log(green('good'.padStart(this.padding)), stuff)
+    this.logIf('good', '5-good', stuff, green)
   }
 
   /**
@@ -173,8 +183,7 @@ export class Logger {
    * @example logger.error('Something went wrong')
    */
   public error (...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('6-error')) return
-    this.log(red('error'.padStart(this.padding)), stuff)
+    this.logIf('error', '6-error', stuff, red)
   }
 
   /**
