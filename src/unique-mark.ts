@@ -40,6 +40,10 @@ export function getPackageJsonVersion (location = path.join(process.cwd(), 'pack
  * @returns the files to inject the mark in
  */
 export async function getTargetFiles (target = process.argv[2] ?? 'public/index.html') { // eslint-disable-line @typescript-eslint/no-magic-numbers
+  // if ends with something like *.js
+  const extension = /\*.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
+  // suggests to use *.{js} to capture all files (limitation of tiny-glob)
+  if (extension !== '') log(`you should use *.{${extension}} to capture all files with that extension (limitation of tiny-glob)`)
   const files = await glob(target)
   if (files.length === 0) throw new Error(`no file found for target "${target}", aborting.`)
   return files
@@ -76,7 +80,7 @@ export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-
   const markRegex = new RegExp(mark, 'gu') // eslint-disable-line security/detect-non-literal-regexp
   files.forEach(file => {
     const content = readFileSync(file, 'utf8')
-    if (!content.includes(placeholder)) throw new Error(`could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`)
+    if (!content.includes(placeholder) && files.length === 1) throw new Error(`could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`)
     const updatedContent = injectMark(content, placeholder, mark)
     const times = updatedContent.match(markRegex)?.length /* c8 ignore next */ ?? 0 // eslint-disable-line regexp/prefer-regexp-exec
     /* c8 ignore next 2 */
@@ -102,7 +106,7 @@ async function init () {
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   logs.forEach(line => { log(...(line.split(':') as [string, string])) })
-  log('Total injections', String(totalInjections))
+  log('total injections', String(totalInjections))
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
