@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/eslintrc",
   "env": {
     "browser": false,
     "es6": true,
@@ -85,6 +86,7 @@
       "error",
       "always"
     ],
+    "@typescript-eslint/prefer-destructuring": "off",
     "@typescript-eslint/prefer-readonly-parameter-types": [
       "error",
       {
@@ -201,6 +203,7 @@
       "consistent-as-needed"
     ],
     "quotes": "off",
+    "regexp/require-unicode-sets-regexp": "off",
     "require-atomic-updates": [
       "error",
       {
@@ -236,10 +239,5 @@
       }
     ],
     "unicorn/switch-case-braces": "off"
-  },
-  "settings": {
-    "repo-check": {
-      "remove-me": "plugin:@typescript-eslint/all"
-    }
   }
 }

@@ -53,7 +53,7 @@ export function icon (classes = '') {
  * @param willOpenInNewTab true if the link should open in a new tab
  * @returns the generated link element
  */
-// eslint-disable-next-line max-params
+// eslint-disable-next-line @typescript-eslint/max-params
 export function link (classes: string, content: DomContent, href: string, willOpenInNewTab = false) {
   const element = dom('a', classes, content)
   element.href = href
@@ -202,7 +202,7 @@ export function findAll (selector: string, context: Document | HTMLElement = doc
  * @param maxTry the max number of tries, default 5
  * @returns the element or undefined if not found
  */
-// eslint-disable-next-line max-params
+// eslint-disable-next-line @typescript-eslint/max-params
 export async function waitToDetect (selector: string, wait = 500, nbTries = 0, maxTry = 5): Promise<Element | undefined> {
   await sleep(wait)
   const element = findOne(selector)
