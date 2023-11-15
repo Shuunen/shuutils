@@ -61,7 +61,7 @@ export function fillTemplate (template: Readonly<Record<string, unknown>> | stri
   if (string.length === 0) return string
   const flatData = flatten(data)
   for (const [key, value] of Object.entries(flatData)) {
-    // eslint-disable-next-line require-unicode-regexp, security/detect-non-literal-regexp
+    // eslint-disable-next-line security/detect-non-literal-regexp
     const regex = new RegExp(`(/?\\*?{{?\\s*${key}\\s*}?}\\*?/?)`, 'g')
     string = string.replace(regex, String(value))
   }
@@ -230,7 +230,7 @@ export function injectMark (content: string, placeholder: string, mark: string) 
   /* eslint-disable security/detect-non-literal-regexp */
   return content
     .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)
-    // eslint-disable-next-line require-unicode-regexp
+     
     .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
     .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`, 'u'), `$1${mark}$2`)
     .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`, 'u'), `$1${mark}$2`)
