@@ -8,7 +8,7 @@ import { clone } from './object-clone'
  * @param value the value to add
  * @returns the array with the value added (if it didn't already exist)
  */
-export function insertValueAfterItem<T> (array: ReadonlyArray<T>, item: T, value: T) {
+export function insertValueAfterItem<Type> (array: ReadonlyArray<Type>, item: Type, value: Type) {
   const index = array.indexOf(item)
   if (index === nbNoIndex) return array
   const arrayCopy = clone(array)

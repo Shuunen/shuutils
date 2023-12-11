@@ -4,8 +4,8 @@ import { parseJson } from './strings'
 function get (key: string, defaultValue: string): string
 function get (key: string, defaultValue: boolean): boolean // eslint-disable-line @typescript-eslint/naming-convention
 function get (key: string, defaultValue: number): number
-function get<T = unknown> (key: string, defaultValue: T): T
-function get<T = unknown> (key: string): T | undefined
+function get<Type = unknown> (key: string, defaultValue: Type): Type
+function get<Type = unknown> (key: string): Type | undefined
 
 /**
  * Get a value from the storage media
@@ -13,15 +13,15 @@ function get<T = unknown> (key: string): T | undefined
  * @param defaultValue The default value to return if the key is not found
  * @returns The value or defaultValue if not found
  */
-function get<T = unknown> (key: string, defaultValue?: T) {
+function get<Type = unknown> (key: string, defaultValue?: Type) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
   if (data === undefined || data === null || data === '') return defaultValue
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const { error, value } = parseJson<T>(data)
+  const { error, value } = parseJson<Type>(data)
   // eslint-disable-next-line no-warning-comments, @typescript-eslint/consistent-type-assertions
-  if (error) return data as T // TODO: wait... what ?!
+  if (error) return data as Type // TODO: wait... what ?!
   return value
 }
 
@@ -31,7 +31,7 @@ function get<T = unknown> (key: string, defaultValue?: T) {
  * @param data The value to set
  * @returns The given value
  */
-function set<T> (key: string, data: T) {
+function set<Type> (key: string, data: Type) {
   const path = storage.prefix + key
   const value = typeof data === 'string' ? data : JSON.stringify(data)
   Reflect.set(storage.media, path, value)

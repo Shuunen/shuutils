@@ -8,9 +8,9 @@
  * @param waitFor the time to wait before calling the function
  * @returns promise with a resolve type of the original function’s return type
  */
-export const debounce = <F extends (...parameters: Parameters<F>) => ReturnType<F>> (callback: F, waitFor: number) => {
+export const debounce = <Method extends (...parameters: Parameters<Method>) => ReturnType<Method>> (callback: Method, waitFor: number) => {
   let timeout: ReturnType<typeof setTimeout>
-  return async (...parameters: Parameters<F>) => await new Promise<ReturnType<F>>(resolve => {
+  return async (...parameters: Parameters<Method>) => await new Promise<ReturnType<Method>>(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       resolve(callback(...parameters))

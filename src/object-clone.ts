@@ -5,7 +5,7 @@ import type { Mutable } from './types'
  * @param object like : `{ name : "Pine" }`
  * @returns item copy like : `{ name : "Pine" }`
  */
-export function clone<T> (object: Readonly<T>) {
+export function clone<Type> (object: Readonly<Type>) {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return JSON.parse(JSON.stringify(object)) as Mutable<T>
+  return JSON.parse(JSON.stringify(object)) as Mutable<Type>
 }

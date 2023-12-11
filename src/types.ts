@@ -36,9 +36,9 @@ export interface NavigatorExtract {
   userAgent: string
 }
 
-export type RecursivePartial<T> = {
-  [P in keyof T]?:
-  T[P] extends (infer U)[] ? RecursivePartial<U>[] : T[P] extends Record<string, unknown> ? RecursivePartial<T[P]> : T[P]
+export type RecursivePartial<Type> = {
+  [Key in keyof Type]?:
+  Type[Key] extends (infer Under)[] ? RecursivePartial<Under>[] : Type[Key] extends Record<string, unknown> ? RecursivePartial<Type[Key]> : Type[Key]
 }
 
 export interface PackageJson {

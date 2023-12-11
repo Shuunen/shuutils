@@ -198,13 +198,13 @@ export function parseBase64 (string: string) {
  * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
-export function parseJson<T> (json: string) {
+export function parseJson<Type> (json: string) {
   let error = ''
   let value = {}
   if (json !== '') try {
     value = JSON.parse(json) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
   } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` } // eslint-disable-line @typescript-eslint/consistent-type-assertions
-  return { error, value: value as T } // eslint-disable-line @typescript-eslint/consistent-type-assertions
+  return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions
 }
 
 /**

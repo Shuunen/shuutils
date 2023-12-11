@@ -13,7 +13,7 @@ export interface Listener {
  * @param media the media to emit the event from, like window or a dom element
  * @returns true if the event is emitted
  */
-export function emit<T> (name: string, data?: Readonly<T>, media?: Element | HTMLElement | Window) {
+export function emit<Data> (name: string, data?: Readonly<Data>, media?: Element | HTMLElement | Window) {
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {
@@ -35,7 +35,7 @@ export function emit<T> (name: string, data?: Readonly<T>, media?: Element | HTM
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
  */
-export function on<T> (name: string, callback: (data: T, event: Event) => unknown, media?: Element | HTMLElement | Window) {
+export function on<Data> (name: string, callback: (data: Data, event: Event) => unknown, media?: Element | HTMLElement | Window) {
   let targetMedia = media
   if (targetMedia === undefined) {
     if (typeof window === 'undefined') {

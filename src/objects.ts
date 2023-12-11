@@ -26,10 +26,10 @@ export function access (object: Readonly<Record<string, unknown>>, path: string)
  * @returns the sorted array
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export function byProperty<T extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = '') {
+export function byProperty<Type extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = '') {
   if (order === '') return () => 0
   const sortOrder = order === 'asc' ? nbAscending : nbDescending
-  return (recordA: T, recordB: T) => {
+  return (recordA: Type, recordB: Type) => {
     const valueA = recordA[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     if (!valueA && valueB) return sortOrder

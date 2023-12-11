@@ -9,7 +9,7 @@ type DomContent = Node | Node[] | string
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated dom element
  */
-export function dom<T extends keyof HTMLElementTagNameMap> (type: T, classes = '', content: DomContent = '') {
+export function dom<Tag extends keyof HTMLElementTagNameMap> (type: Tag, classes = '', content: DomContent = '') {
   const element = document.createElement(type)
   element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
   // eslint-disable-next-line no-unsanitized/property
