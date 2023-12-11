@@ -198,7 +198,6 @@ export function parseBase64 (string: string) {
  * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
-// eslint-disable-next-line etc/no-misused-generics
 export function parseJson<T> (json: string) {
   let error = ''
   let value = {}
@@ -230,7 +229,6 @@ export function injectMark (content: string, placeholder: string, mark: string) 
   /* eslint-disable security/detect-non-literal-regexp */
   return content
     .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)
-     
     .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
     .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`, 'u'), `$1${mark}$2`)
     .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`, 'u'), `$1${mark}$2`)

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable etc/no-misused-generics */
 import { parseJson } from './strings'
 
 function get (key: string, defaultValue: string): string

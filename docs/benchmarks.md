@@ -1,21 +1,25 @@
 
 # Benchmarks
 
-| command alias | date       | delay   | comment                           |
-| ------------- | ---------- | ------- | --------------------------------- |
-| build         | 2023-04-05 | 130 ms  | stable, small improvement         |
-| tsc-no-emit   | 2023-04-05 | 1,7 sec | maybe typescript 5 bump           |
-| eslint        | 2023-04-05 | 13 sec  | nice improvement, no idea why ^^' |
-| vitest        | 2023-04-05 | 3,7 sec | stable                            |
-| c8-vitest     | 2023-04-05 | 4,0 sec | nice improvement, no idea why ^^' |
-| build         | 2023-02-09 | 145 ms  |                                   |
-| tsc-no-emit   | 2023-02-09 | 1,6 sec |                                   |
-| eslint        | 2023-02-09 | 19 sec  |                                   |
-| uvu           | 2023-02-09 | 2,6 sec |                                   |
-| uvu-happy-dom | 2023-02-09 | 1,7 sec | happy was imported in dom.test.ts |
-| c8-uvu        | 2023-02-09 | 3,5 sec | 900 ms for coverage               |
-| vitest        | 2023-02-11 | 3,8 sec |                                   |
-| c8-vitest     | 2023-02-11 | 5,3 sec | 1,5 sec for coverage              |
+| date       | command alias | delay   | comment                           | machine            |
+| ---------- | ------------- | ------- | --------------------------------- | ------------------ |
+| 2023-02-09 | build         | 145 ms  |                                   |                    |
+| 2023-02-09 | c8-uvu        | 3,5 sec | 900 ms for coverage               |                    |
+| 2023-02-09 | eslint        | 19 sec  |                                   |                    |
+| 2023-02-09 | tsc-no-emit   | 1,6 sec |                                   |                    |
+| 2023-02-09 | uvu           | 2,6 sec |                                   |                    |
+| 2023-02-09 | uvu-happy-dom | 1,7 sec | happy was imported in dom.test.ts |                    |
+| 2023-02-11 | c8-vitest     | 5,3 sec | 1,5 sec for coverage              |                    |
+| 2023-02-11 | vitest        | 3,8 sec |                                   |                    |
+| 2023-04-05 | build         | 130 ms  | stable, small improvement         |                    |
+| 2023-04-05 | c8-vitest     | 4,0 sec | nice improvement, no idea why ^^' |                    |
+| 2023-04-05 | eslint        | 13 sec  | nice improvement, no idea why ^^' |                    |
+| 2023-04-05 | tsc-no-emit   | 1,7 sec | maybe typescript 5 bump           |                    |
+| 2023-04-05 | vitest        | 3,7 sec | stable                            |                    |
+| 2023-12-11 | build         | 202 ms  | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2023-12-11 | eslint        | 13 sec  | stable                            | NZXL Win11 Node 20 |
+| 2023-12-11 | tsc-no-emit   | 2,5 sec | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2023-12-11 | vitest        | 5,7 sec | que paso ?!?                      | NZXL Win11 Node 20 |
 
 Command aliases :
 

@@ -25,7 +25,7 @@ export function access (object: Readonly<Record<string, unknown>>, path: string)
  * @param order the order to sort, default is ascending
  * @returns the sorted array
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity, etc/no-misused-generics
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function byProperty<T extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = '') {
   if (order === '') return () => 0
   const sortOrder = order === 'asc' ? nbAscending : nbDescending

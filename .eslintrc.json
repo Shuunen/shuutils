@@ -103,6 +103,7 @@
       "error",
       "always-multiline"
     ],
+    "compat/compat": "off",
     "curly": [
       "error",
       "multi"
@@ -112,6 +113,7 @@
     "etc/no-deprecated": "off",
     "etc/no-enum": "off",
     "etc/no-internal": "off",
+    "etc/no-misused-generics": "off",
     "etc/no-t": "off",
     "etc/prefer-interface": "off",
     "ext/lines-between-object-properties": "off",
@@ -128,7 +130,6 @@
         "min": 2
       }
     ],
-    "compat/compat": "off",
     "import/export": "off",
     "import/extensions": "off",
     "import/first": "off",
