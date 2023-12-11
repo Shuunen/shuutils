@@ -3,16 +3,28 @@ import { sleep, throttle } from '../src'
 
 let times = 0
 
+/**
+ * A function that increment a counter
+ * @returns {number} the number of times the function has been called
+ */
 function myFunction () {
   times += 1
   return times
 }
 
+/**
+ * An async function that return 12
+ * @returns {Promise<number>} the number 12
+ */
 async function anAsyncFunctionThatReturn12 () {
   await sleep(5)
   return 12
 }
 
+/**
+ * An async function that return an object
+ * @returns {Promise<{ age: number, name: string }>} an object
+ */
 async function anAsyncFunctionThatReturnAnObject () {
   await sleep(5)
   return {
@@ -21,7 +33,7 @@ async function anAsyncFunctionThatReturnAnObject () {
   }
 }
 
-it('throttle', async function () {
+it('throttle A', async function throttleA () {
   times = 0
   const myFunctionThrottled = throttle(myFunction, 100)
   expect(times).toBe(0)

@@ -24,7 +24,7 @@ async function myAsyncFunction () {
 
 const myAsyncFunctionDebounced = debounce(myAsyncFunction, 100)
 
-it('debounce A : sync function', async function () {
+it('debounce A : sync function', async function debounceA () {
   times = 0
   expect(times).toBe(0)
   void myFunctionDebounced()
@@ -37,7 +37,7 @@ it('debounce A : sync function', async function () {
   expect(times).toBe(1)
 })
 
-it('debounce B : async function', async function () {
+it('debounce B : async function', async function debounceB () {
   times = 0
   expect(times).toBe(0)
   void myAsyncFunctionDebounced()
@@ -60,7 +60,7 @@ it('debounce D : return type sync', () => {
   expect(Object.prototype.toString.call(myFunctionDebounced)).toBe('[object AsyncFunction]')
 })
 
-it('debounce E : return type sync resolve', async function () {
+it('debounce E : return type sync resolve', async function debounceE () {
   times = 42
   expect(await myFunctionDebounced()).toBe(43)
 })
@@ -69,7 +69,7 @@ it('debounce F : return type async', () => {
   expect(Object.prototype.toString.call(myAsyncFunctionDebounced)).toBe('[object AsyncFunction]')
 })
 
-it('debounce G : return type async resolve', async function () {
+it('debounce G : return type async resolve', async function debounceG () {
   times = 42
   expect(await myAsyncFunctionDebounced()).toBe(43)
 })

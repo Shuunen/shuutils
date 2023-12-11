@@ -14,18 +14,6 @@
   "overrides": [
     {
       "files": [
-        "benchmarks/*",
-        "tests/*"
-      ],
-      "rules": {
-        "@typescript-eslint/no-magic-numbers": "off",
-        "func-names": "off",
-        "jsdoc/require-jsdoc": "off",
-        "unicorn/prefer-top-level-await": "off"
-      }
-    },
-    {
-      "files": [
         "*.js"
       ],
       "rules": {
@@ -140,6 +128,7 @@
         "min": 2
       }
     ],
+    "compat/compat": "off",
     "import/export": "off",
     "import/extensions": "off",
     "import/first": "off",

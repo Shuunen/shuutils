@@ -3,10 +3,17 @@ import { memoize, objectSum } from '../src'
 
 // Maybe try to bench other memoize functions from https://gist.github.com/thetallweeks/a55cc2fedfd65d16b9ea
 
+/**
+ * A simple sort function
+ * @param numberA the first number
+ * @param numberB the second number
+ * @returns {number} the difference between the two numbers
+ */
 function simpleSortFunction (numberA: number, numberB: number) {
   return numberA - numberB
 }
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const numbers = [1, 5, 4, 2, 2, 3, 1, 2, 3]
 
 const memoizedSimpleSortFunction = memoize(simpleSortFunction)
@@ -31,6 +38,12 @@ const parent5 = { age: 32, firstName: 'Jules', lastName: 'Macintosh' }
 const parent6 = { age: 32, firstName: 'Julien', lastName: 'Ultimate Zozo' }
 const parents: Parent[] = [parent1, parent2, parent3, parent4, parent5, parent6]
 
+/**
+ * A complex sort function
+ * @param parentA the first parent
+ * @param parentB the second parent
+ * @returns {number} the difference between the two parents
+ */
 function complexSortFunction (parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
   return objectSum(parentA) - objectSum(parentB)
 }

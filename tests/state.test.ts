@@ -7,13 +7,16 @@ it('state A initial data', () => {
   expect(stateA).toStrictEqual({ age: 30, name: 'Michael' })
 })
 
-it('state A name change', function () {
+it('state A name change', () => {
   stateA.name = 'John'
   expect(stateA.name).toBe('John')
 })
 
-it('state A watch callback', function () {
+it('state A watch callback', () => {
   let callbackCalls = 0
+  /**
+   *
+   */
   function callback () {
     callbackCalls += 1
   }
@@ -27,7 +30,7 @@ it('state A watch callback', function () {
   expect(callbackCalls, 'callback not called when age changed').toBe(2)
 })
 
-it('state B with storage and specific keys to store', function () {
+it('state B with storage and specific keys to store', () => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/naming-convention, camelcase
   storage.media = { stateB_age: 12, stateB_excluded: ':(' } as unknown as Storage
   storage.prefix = 'stateB_'
@@ -40,7 +43,7 @@ it('state B with storage and specific keys to store', function () {
   expect(storage.media.stateB_name, 'name synced in storage').toBe('John')
 })
 
-it('state C with storage and all keys stored by default', function () {
+it('state C with storage and all keys stored by default', () => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/naming-convention, camelcase
   storage.media = { stateC_age: 12, stateC_included: ':D' } as unknown as Storage
   storage.prefix = 'stateC_'
@@ -52,8 +55,11 @@ it('state C with storage and all keys stored by default', function () {
   expect(storage.get('age'), 'age synced in storage').toBe(14)
 })
 
-it('state D multiple watch', function () {
+it('state D multiple watch', () => {
   let callbackCalls = 0
+  /**
+   *
+   */
   function callbackA () {
     callbackCalls += 1
   }
@@ -65,9 +71,12 @@ it('state D multiple watch', function () {
   expect(callbackCalls, 'callback A called twice').toBe(2)
 })
 
-it('state E watch all', function () {
+it('state E watch all', () => {
   let callbackCalls = 0
   let callbackKey = ''
+  /**
+   * @param updatedKey the key that has been updated
+   */
   function callbackB (updatedKey: string) {
     callbackCalls += 1
     callbackKey = updatedKey

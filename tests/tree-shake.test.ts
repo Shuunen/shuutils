@@ -6,6 +6,11 @@ import { expect, it } from 'vitest'
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
 const resolveDir = path.join(currentDirectory, '../dist') // eslint-disable-line unicorn/prevent-abbreviations
 
+/**
+ * Build a file using esbuild
+ * @param contents the contents of the file
+ * @returns {Promise<{ errors: import('esbuild').Message[], nbOutputFiles: number, output: string, warnings: import('esbuild').Message[] }>} the result of the build
+ */
 async function build (contents: string) {
   const result = await esbuild({
     bundle: true, // eslint-disable-line @typescript-eslint/naming-convention
@@ -23,6 +28,11 @@ async function build (contents: string) {
   }
 }
 
+/**
+ * Remove the hash from the file
+ * @param content the content of the file
+ * @returns {string} the content of the file without the hash
+ */
 function clearFileHash (content: string) {
   return content.replace(/(?<name>[a-z]{3,30})-[a-z\d]+(?<ext>\.js)/giu, '$<name>$<ext>')
 }
