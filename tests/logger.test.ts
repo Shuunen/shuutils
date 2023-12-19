@@ -16,11 +16,14 @@ it('logger B', () => {
   loggerB.info('This info 3 should be logged too')
   loggerB.success('This success 0 should be logged')
   loggerB.warn('This warn 1 should be logged')
+  loggerB.fix('This fix 1 should be logged', 42)
+  loggerB.error('This error 0 should be logged', { isKeyA: true, keyB: 'John' })
+  loggerB.error(new Error('This error 1 should be logged too'))
   expect(loggerB.inMemoryLogs, 'loggerB inMemoryLogs').toMatchSnapshot()
 })
 
 it('logger C', () => {
-  const loggerC = new Logger({ minimumLevel: '6-error', willLogDate: true, willLogDelay: true, willLogTime: true, willOutputToConsole: false, willOutputToMemory: true })
+  const loggerC = new Logger({ minimumLevel: '7-error', willLogDate: true, willLogDelay: true, willLogTime: true, willOutputToConsole: false, willOutputToMemory: true })
   loggerC.warn('This warn 2 should not be logged')
   loggerC.success('This success 1 should not be logged')
   loggerC.error('This error 1 should be logged')

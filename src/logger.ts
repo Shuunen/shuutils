@@ -1,8 +1,8 @@
 
-import { bgGreen, bgRed, blue, gray, green, red, yellow } from './colors'
+import { bgGreen, bgRed, blue, cyan, gray, green, red, yellow } from './colors'
 import { formatDate, readableTime } from './dates'
 
-type LogLevel = '1-debug' | '2-test' | '3-info' | '4-warn' | '5-good' | '6-error'
+type LogLevel = '1-debug' | '2-test' | '3-info' | '4-fix' | '5-warn' | '6-good' | '7-error'
 
 export interface LoggerOptions {
   isActive: boolean
@@ -37,9 +37,10 @@ export class Logger {
     '1-debug',
     '2-test',
     '3-info',
-    '4-warn',
-    '5-good',
-    '6-error',
+    '4-fix',
+    '5-warn',
+    '6-good',
+    '7-error',
   ]
 
   private lastLogTimestamp = 0
@@ -71,10 +72,10 @@ export class Logger {
   }
 
   /**
-   * Clean a log line
+   * Log anything into a clean string-like line
    * @param stuff the things to log
    * @returns the cleaned log line
-   * @example logger.stuffToCleanLine(['Hello', 'world', 42]) // "Hello world 42"
+   * @example logger.clean(['Hello', { name: "world" }, 42]) // "Hello { "name": "world" } 42"
    */
   public clean (...stuff: Readonly<unknown[]>) {
     return stuff
@@ -150,12 +151,21 @@ export class Logger {
   }
 
   /**
+   * Log a fix message
+   * @param stuff the things to log
+   * @example logger.fix('This is a fix')
+   */
+  public fix (...stuff: Readonly<unknown[]>) {
+    this.logIf('fix', '4-fix', stuff, cyan)
+  }
+
+  /**
    * Log a warn message
    * @param stuff the things to log
    * @example logger.warn('Something went wrong')
    */
   public warn (...stuff: Readonly<unknown[]>) {
-    this.logIf('warn', '4-warn', stuff, yellow)
+    this.logIf('warn', '5-warn', stuff, yellow)
   }
 
   /**
@@ -164,7 +174,7 @@ export class Logger {
    * @example logger.good('Everything went well')
    */
   public good (...stuff: Readonly<unknown[]>) {
-    this.logIf('good', '5-good', stuff, green)
+    this.logIf('good', '6-good', stuff, green)
   }
 
   /**
@@ -183,7 +193,8 @@ export class Logger {
    * @example logger.error('Something went wrong')
    */
   public error (...stuff: Readonly<unknown[]>) {
-    this.logIf('error', '6-error', stuff, red)
+    const errors = stuff.map(thing => thing instanceof Error ? thing.message : thing)
+    this.logIf('error', '7-error', errors, red)
   }
 
   /**
