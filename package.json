@@ -56,8 +56,7 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && pkgroll --target=esnext && node bin/banner && pnpm mark && echo build success",
-    "build:old": "rm dist -rf && tsc --emitDeclarationOnly && node bin/build && pnpm mark && echo build success",
+    "build": "rm dist -rf && node bin/list && pkgroll --target=esnext && node bin/banner && pnpm mark && echo build success",
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
