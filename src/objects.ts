@@ -2,6 +2,7 @@ import { arrayUnique } from './array-unique'
 import { nbAscending, nbDescending } from './constants'
 import { clone } from './object-clone'
 import { flatten } from './object-flatten'
+import { objectSerialize } from './object-serializer'
 import { stringSum } from './strings'
 
 type GenClassTypes = string[] | boolean | number | string | null | undefined
@@ -106,6 +107,6 @@ export function genClass (object: GenClassTypes | GenClassTypes[] | Record<strin
  * @returns the checksum
  */
 export function objectSum (object: Readonly<Record<string, unknown>>) {
-  return stringSum(JSON.stringify(object))
+  return stringSum(objectSerialize(object))
 }
 

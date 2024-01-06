@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from 'vitest'
 import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
+import { objectEqual } from '../src/object-equal'
 
 const person = { age: 21, details: { favoriteFood: 'sushi' }, name: 'John' }
 const personCopy = clone(person)
@@ -74,6 +75,9 @@ it('isRecord E on a number', () => { expect(isRecord(-1)).toBe(false) })
 it('isRecord F on an empty record', () => { expect(isRecord({})).toBe(true) })
 it('isRecord G on a record', () => { expect(isRecord({ name: 'John' })).toBe(true) })
 
+const object4 = { foo: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+const object4ButAnotherReference = { foo: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+const object4ButDeepRegexDifferent = { foo: { bar: 'foo', regex: /^oh\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
 it('objectSum A on empty object', () => { expect(objectSum({})).toMatchInlineSnapshot('2745614147') })
 it('objectSum B is the same on two equally empty objects', () => { expect(objectSum({ name: 'john' }) === objectSum(clone({ name: 'john' }))).toBe(true) })
 it('objectSum C on object with numbers', () => { expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toMatchInlineSnapshot('2822221177') })
@@ -81,4 +85,14 @@ it('objectSum D on object with a slightly different number', () => { expect(obje
 it('objectSum E on object with a slightly different key', () => { expect(objectSum({ keyA: 1, keyC: 3, keyD: 2 })).toMatchInlineSnapshot('1603108510') })
 it('objectSum F on a large object', () => { expect(objectSum({ abyss: 1, backInTime: 'was a good movie', clearlyHugeObjectThere: 33_514_149_687, details: {}, object3, propE: 5, propF: 6, propG: 7, propH: 8, propI: 9, propJ: 10, users })).toMatchInlineSnapshot('3077461858') })
 it('objectSum G is the same on two equals objects', () => { expect(objectSum(object3) === objectSum(clone(object3))).toBe(true) })
+it('objectSum H is the same on two equals objects with nested objects', () => { expect(objectSum(object4) === objectSum(object4ButAnotherReference)).toBe(true) })
+it('objectSum I is different with a deep slight modification', () => { expect(objectSum(object4) !== objectSum(object4ButDeepRegexDifferent)).toBe(true) })
 
+it('objectEqual A true for empty objects', () => { expect(objectEqual({}, {})).toBe(true) })
+it('objectEqual B true for objects with same keys', () => { expect(objectEqual({ keyA: 1, keyB: 2, keyC: 3 }, { keyA: 1, keyB: 2, keyC: 3 })).toBe(true) })
+it('objectEqual C false for objects with different keys', () => { expect(objectEqual({ keyA: 1, keyB: 2, keyC: 3 }, { keyA: 1, keyB: 2, keyD: 3 })).toBe(false) })
+it('objectEqual D false for objects with different values', () => { expect(objectEqual({ keyA: 1, keyB: 2, keyC: 3 }, { keyA: 1, keyB: 2, keyC: 4 })).toBe(false) })
+it('objectEqual E true with objects containing same literals', () => { expect(objectEqual({ bar: 2, foo: 1 }, { bar: 2, foo: 1 })).toBe(true) })
+it('objectEqual F true for deeply nested objects', () => { expect(objectEqual({ foo: { bar: 'foo', regex: /^ho\d+$/iu } }, { foo: { bar: 'foo', regex: /^ho\d+$/iu } })).toBe(true) })
+it('objectEqual H false with objects containing different literals', () => { expect(objectEqual({ bar: 1, foo: 1 }, { bar: 2, foo: 1 })).toBe(false) })
+it('objectEqual I true with same objects but different references', () => { expect(objectEqual(object4, object4ButAnotherReference)).toBe(true) })

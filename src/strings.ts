@@ -2,6 +2,7 @@
 import { pickOne } from './array-pick-one'
 import { nbSpacesIndent } from './constants'
 import { flatten } from './object-flatten'
+import { objectDeserialize } from './object-serializer'
 
 /**
  * Clean a string from special characters
@@ -202,7 +203,7 @@ export function parseJson<Type> (json: string) {
   let error = ''
   let value = {}
   if (json !== '') try {
-    value = JSON.parse(json) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+    value = objectDeserialize(json) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
   } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` } // eslint-disable-line @typescript-eslint/consistent-type-assertions
   return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions
 }

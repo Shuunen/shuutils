@@ -1,3 +1,4 @@
+import { objectDeserialize, objectSerialize } from './object-serializer'
 import type { Mutable } from './types'
 
 /**
@@ -7,5 +8,5 @@ import type { Mutable } from './types'
  */
 export function clone<Type> (object: Readonly<Type>) {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return JSON.parse(JSON.stringify(object)) as Mutable<Type>
+  return objectDeserialize(objectSerialize(object)) as Mutable<Type>
 }
