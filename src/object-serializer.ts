@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { objectSort } from './object-sort'
+
 // currently handled : RegExp, Function
 // to be handled later : Map, Set, undefined, Infinity, NaN, -Infinity, -0, +0, Circular references...
 
@@ -36,10 +38,11 @@ function reviver (_key: string, value?: unknown) {
 /**
  * Serializes an object to a string, using JSON.stringify with enhanced support for functions & regex
  * @param object the object to serialize to a string
+ * @param willSortKeys if true, the order of keys will be sorted alpha before serialization
  * @returns the serialized object as a string
  */
-export function objectSerialize (object: Readonly<Record<string, unknown>>) {
-  return JSON.stringify(object, replacer)
+export function objectSerialize (object: Readonly<Record<string, unknown>>, willSortKeys = false) {
+  return JSON.stringify(willSortKeys ? objectSort(object) : object, replacer)
 }
 
 /**

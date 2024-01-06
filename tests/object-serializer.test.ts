@@ -12,6 +12,7 @@ it('objectSerialize B date', () => { expect(objectSerialize({ date: new Date('20
 it('objectSerialize C regex', () => { expect(objectSerialize({ regex: /^ho\d+$/iu })).toMatchInlineSnapshot('"{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\\\d+$"}}"') })
 it('objectSerialize D arrow function', () => { expect(objectSerialize({ func: () => 42 })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"() => 42"}}"') })
 it('objectSerialize E function', () => { expect(objectSerialize({ func: add })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"function add(numberA, numberB) {\\n  return numberA + numberB;\\n}"}}"') })
+it('objectSerialize F object with sort', () => { expect(objectSerialize({ object: { name: 'John', age: 42 }, id: 123_456 }, true)).toMatchInlineSnapshot('"{"id":123456,"object":{"age":42,"name":"John"}}"') })  // eslint-disable-line perfectionist/sort-objects
 
 it('objectDeserialize A string', () => {
   expect(objectDeserialize('{"name":"John"}')).toMatchInlineSnapshot(`
