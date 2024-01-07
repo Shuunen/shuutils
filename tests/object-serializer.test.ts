@@ -1,9 +1,22 @@
+/* eslint-disable unicorn/no-null */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable jsdoc/require-jsdoc */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { expect, it } from 'vitest'
 import { objectDeserialize, objectSerialize } from '../src/object-serializer'
+
+const person = {
+  age: 21,
+  canPush: null,
+  details: { dateOfBirth: new Date('2001-12-22'), favoriteFood: 'sushi', hatedFood: undefined },
+  isNameValid: true,
+  name: 'John',
+  nameRegex: /^jo/iu,
+  nameValidator: (input: string) => (input.length > 3),
+  pets: ['Médoc', 'T-Rex', 'Angel'],
+  petsDetails: [{ age: 3, name: 'Médoc' }, { age: 5, name: 'T-Rex' }, { age: 1, name: 'Angel' }],
+}
 
 function add (numberA: number, numberB: number) { return numberA + numberB }
 
@@ -13,6 +26,54 @@ it('objectSerialize C regex', () => { expect(objectSerialize({ regex: /^ho\d+$/i
 it('objectSerialize D arrow function', () => { expect(objectSerialize({ func: () => 42 })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"() => 42"}}"') })
 it('objectSerialize E function', () => { expect(objectSerialize({ func: add })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"function add(numberA, numberB) {\\n  return numberA + numberB;\\n}"}}"') })
 it('objectSerialize F object with sort', () => { expect(objectSerialize({ object: { name: 'John', age: 42 }, id: 123_456 }, true)).toMatchInlineSnapshot('"{"id":123456,"object":{"age":42,"name":"John"}}"') })  // eslint-disable-line perfectionist/sort-objects
+it('objectSerialize G person', () => { expect(objectSerialize(person)).toMatchInlineSnapshot('"{"age":21,"canPush":null,"details":{"dateOfBirth":{"__strDate__":"2001-12-22T00:00:00.000Z"},"favoriteFood":"sushi","hatedFood":{"__strUndefined__":true}},"isNameValid":true,"name":"John","nameRegex":{"__strRegexFlags__":"iu","__strRegexSource__":"^jo"},"nameValidator":{"__strFunction__":"(input) => input.length > 3"},"pets":["Médoc","T-Rex","Angel"],"petsDetails":[{"age":3,"name":"Médoc"},{"age":5,"name":"T-Rex"},{"age":1,"name":"Angel"}]}"') })
+it('objectSerialize H person beautified', () => {
+  expect(JSON.parse(objectSerialize(person))).toMatchInlineSnapshot(`
+    {
+      "age": 21,
+      "canPush": null,
+      "details": {
+        "dateOfBirth": {
+          "__strDate__": "2001-12-22T00:00:00.000Z",
+        },
+        "favoriteFood": "sushi",
+        "hatedFood": {
+          "__strUndefined__": true,
+        },
+      },
+      "isNameValid": true,
+      "name": "John",
+      "nameRegex": {
+        "__strRegexFlags__": "iu",
+        "__strRegexSource__": "^jo",
+      },
+      "nameValidator": {
+        "__strFunction__": "(input) => input.length > 3",
+      },
+      "pets": [
+        "Médoc",
+        "T-Rex",
+        "Angel",
+      ],
+      "petsDetails": [
+        {
+          "age": 3,
+          "name": "Médoc",
+        },
+        {
+          "age": 5,
+          "name": "T-Rex",
+        },
+        {
+          "age": 1,
+          "name": "Angel",
+        },
+      ],
+    }
+  `)
+})
+it('objectSerialize I handle null', () => { expect(objectSerialize({ nameNull: null })).toMatchInlineSnapshot('"{"nameNull":null}"') })
+it('objectSerialize J handle undefined', () => { expect(objectSerialize({ nameUndefined: undefined })).toMatchInlineSnapshot('"{"nameUndefined":{"__strUndefined__":true}}"') })
 
 it('objectDeserialize A string', () => {
   expect(objectDeserialize('{"name":"John"}')).toMatchInlineSnapshot(`
@@ -21,6 +82,7 @@ it('objectDeserialize A string', () => {
   }
 `)
 })
+
 it('objectDeserialize B date', () => {
   const object = objectDeserialize('{"date":{"__strDate__":"2021-01-01T00:00:00.000Z"}}')
   expect(object).toMatchInlineSnapshot(`
@@ -30,6 +92,7 @@ it('objectDeserialize B date', () => {
   `)
   expect(object.date instanceof Date).toBe(true)
 })
+
 it('objectDeserialize C regex', () => {
   const object = objectDeserialize('{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\\\d+$"}}')
   expect(object).toMatchInlineSnapshot(`
@@ -39,6 +102,7 @@ it('objectDeserialize C regex', () => {
   `)
   expect(object.regex.test('ho123')).toBe(true)
 })
+
 it('objectDeserialize D arrow function', () => {
   const object = objectDeserialize('{"func":{"__strFunction__":"() => 42"}}')
   expect(object).toMatchInlineSnapshot(`
@@ -48,6 +112,7 @@ it('objectDeserialize D arrow function', () => {
   `)
   expect(object.func()).toBe(42)
 })
+
 it('objectDeserialize E function', () => {
   const object = objectDeserialize('{"func":{"__strFunction__":"function add(numberA, numberB) {\\n  return numberA + numberB;\\n}"}}')
   expect(object).toMatchInlineSnapshot(`
@@ -56,4 +121,95 @@ it('objectDeserialize E function', () => {
     }
   `)
   expect(object.func(1, 2)).toBe(3)
+})
+
+it('objectDeserialize F nested Date', () => {
+  const object = objectDeserialize('{"age":21,"details":{"dateOfBirth":{"__strDate__":"2001-12-22T00:00:00.000Z"},"favoriteFood":"sushi"},"name":"John","nameValid":true}')
+  expect(object).toMatchInlineSnapshot(`
+    {
+      "age": 21,
+      "details": {
+        "dateOfBirth": 2001-12-22T00:00:00.000Z,
+        "favoriteFood": "sushi",
+      },
+      "name": "John",
+      "nameValid": true,
+    }
+  `)
+  expect(object.details.dateOfBirth instanceof Date).toBe(true)
+})
+
+it('objectDeserialize G does not affect original object', () => {
+  const originalObject = { dateOfBirth: new Date('2001-12-22T00:00:00.000Z'), name: 'John' }
+  const string = objectSerialize(originalObject)
+  const deserializedObject = objectDeserialize(string)
+  expect(originalObject).toMatchInlineSnapshot(`
+    {
+      "dateOfBirth": 2001-12-22T00:00:00.000Z,
+      "name": "John",
+    }
+  `)
+  expect(deserializedObject).toMatchInlineSnapshot(`
+    {
+      "dateOfBirth": 2001-12-22T00:00:00.000Z,
+      "name": "John",
+    }
+  `)
+})
+
+// eslint-disable-next-line max-statements
+it('objectDeserialize H person', () => {
+  const object = objectDeserialize('{"age":21,"canPush":null,"details":{"dateOfBirth":{"__strDate__":"2001-12-22T00:00:00.000Z"},"favoriteFood":"sushi","hatedFood":{"__strUndefined__":true}},"isNameValid":true,"name":"John","nameRegex":{"__strRegexFlags__":"iu","__strRegexSource__":"^jo"},"nameValidator":{"__strFunction__":"(input) => input.length > 3"},"pets":["Médoc","T-Rex","Angel"],"petsDetails":[{"age":3,"name":"Médoc"},{"age":5,"name":"T-Rex"},{"age":1,"name":"Angel"}]}')
+  expect(object).toMatchInlineSnapshot(`
+    {
+      "age": 21,
+      "canPush": null,
+      "details": {
+        "dateOfBirth": 2001-12-22T00:00:00.000Z,
+        "favoriteFood": "sushi",
+      },
+      "isNameValid": true,
+      "name": "John",
+      "nameRegex": /\\^jo/iu,
+      "nameValidator": [Function],
+      "pets": [
+        "Médoc",
+        "T-Rex",
+        "Angel",
+      ],
+      "petsDetails": [
+        {
+          "age": 3,
+          "name": "Médoc",
+        },
+        {
+          "age": 5,
+          "name": "T-Rex",
+        },
+        {
+          "age": 1,
+          "name": "Angel",
+        },
+      ],
+    }
+  `)
+  expect(object.age).toBe(21)
+  expect(object.canPush).toBe(null)
+  expect(object.details.dateOfBirth instanceof Date).toBe(true)
+  expect(object.details.favoriteFood).toBe('sushi')
+  expect(object.details.hatedFood).toBe(undefined)
+  expect(object.nameRegex instanceof RegExp).toBe(true)
+  expect(object.nameRegex.test('John')).toBe(true)
+  expect(object.nameValidator('Jo')).toBe(false)
+  expect(object.nameValidator('John')).toBe(true)
+  expect(typeof object.age).toBe('number')
+  expect(typeof object.nameValidator).toBe('function')
+  expect(typeof object.details).toBe('object')
+  expect(typeof object.details.dateOfBirth).toBe('object')
+  expect(typeof object.pets).toBe('object')
+  expect(typeof object.petsDetails).toBe('object')
+  expect(Array.isArray(object.pets)).toBe(true)
+  expect(Array.isArray(object.petsDetails)).toBe(true)
+  expect(object.pets.length).toBe(3)
+  expect(object.petsDetails[0].name).toBe('Médoc')
 })

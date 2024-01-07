@@ -5,35 +5,47 @@ import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safe
 import { objectEqual } from '../src/object-equal'
 import { objectSort } from '../src/object-sort'
 
-const person = { age: 21, details: { favoriteFood: 'sushi' }, name: 'John' }
-const personCopy = clone(person)
-personCopy.age = 42
-it('clone a record', () => { expect(personCopy.age).toBe(42) })
-it('clone a record does not affect the original one', () => { expect(person.age).toBe(21) })
+// eslint-disable-next-line jsdoc/require-jsdoc
+const person = { age: 21, details: { dateOfBirth: new Date('2001-12-22'), favoriteFood: 'sushi' }, name: 'John', nameRegex: /^jo/iu, nameValid: true, nameValidator: (input: string) => (input.length > 3) }
+const personClone = clone(person)
+const personCloneMODIFIED = clone(person)
+personCloneMODIFIED.age = 42
+it('clone A record', () => { expect(personCloneMODIFIED.age).toBe(42) })
+it('clone B record does not affect the original one', () => { expect(person.age).toBe(21) })
 
 const persons = ['John', 'Fanny']
 const personsCopy = clone(persons)
 personsCopy[1] = 'Bob'
-it('clone an array', () => { expect(personsCopy[1]).toBe('Bob') })
-it('clone an array does not affect the original one', () => { expect(persons[1]).toBe('Fanny') })
+it('clone C array', () => { expect(personsCopy[1]).toBe('Bob') })
+it('clone D array does not affect the original one', () => { expect(persons[1]).toBe('Fanny') })
+it('clone E original and clone are have the same objectSum', () => { expect(objectSum(person)).toBe(objectSum(personClone)) })
+it('clone F original and clone are equals via objectEqual', () => { expect(objectEqual(person, personClone)).toBe(true) })
+it('clone G two clones are equals via objectEqual', () => { expect(objectEqual(clone(person), clone(person))).toBe(true) })
+it('clone H cloned values keep their type', () => {
+  const cloned = clone(person)
+  expect(typeof cloned.nameValidator).toBe('function')
+  expect(typeof cloned.nameRegex).toBe('object')
+  expect(cloned.nameRegex instanceof RegExp).toBe(true)
+  expect(typeof cloned.details.dateOfBirth).toBe('object')
+  expect(cloned.details.dateOfBirth instanceof Date).toBe(true)
+})
+it('clone I debug', () => { expect({ person, personCopy: personCloneMODIFIED }).toMatchSnapshot() })
 
-it('clone is a better name', () => { expect(clone(person)).toStrictEqual(clone(person)) })
+it('access A nested existing property access', () => { expect(access(person, 'details.favoriteFood')).toBe('sushi') })
+it('access B nested non-existing property access', () => { expect(typeof access(person, 'details.favoriteDrink')).toBe('undefined') })
+it('access C non-nested property', () => { expect(access({ name: 'John Cena' }, 'name')).toBe('John Cena') })
+it('access D non-existing non-nested property', () => { expect(typeof access({ name: 'John Cena' }, 'age')).toBe('undefined') })
+it('access E non-nested property after an undefined property', () => { expect(access({ age: undefined, name: 'John Cena' }, 'name')).toBe('John Cena') })
 
-it('nested existing property access', () => { expect(access(person, 'details.favoriteFood')).toBe('sushi') })
-it('nested non-existing property access', () => { expect(typeof access(person, 'details.favoriteDrink')).toBe('undefined') })
-it('access a non-nested property', () => { expect(access({ name: 'John Cena' }, 'name')).toBe('John Cena') })
-it('access a non-existing non-nested property', () => { expect(typeof access({ name: 'John Cena' }, 'age')).toBe('undefined') })
-it('access a non-nested property after an undefined property', () => { expect(access({ age: undefined, name: 'John Cena' }, 'name')).toBe('John Cena') })
-
-it('flatten an object', () => { expect(flatten(person)).toStrictEqual({ 'age': 21, 'details.favoriteFood': 'sushi', 'name': 'John' }) })
-it('flatten an object with a custom root path', () => { expect(flatten(person, 'person')).toStrictEqual({ 'person.age': 21, 'person.details.favoriteFood': 'sushi', 'person.name': 'John' }) })
-it('flatten an object containing an array', () => { expect(flatten({ collection: ['pikachu', 'drake'], name: 'John' })).toStrictEqual({ 'collection[0]': 'pikachu', 'collection[1]': 'drake', 'name': 'John' }) })
+it('flatten A object', () => { expect(flatten(person)).toMatchSnapshot() })
+it('flatten B object with a custom root path', () => { expect(flatten(person, 'person')).toMatchSnapshot() })
+it('flatten C object containing an array', () => { expect(flatten({ collection: ['pikachu', 'drake'], name: 'John' })).toMatchSnapshot() })
 
 const users = [{ age: 21, name: 'John', pic: 'wow.png' }, { age: 42, name: 'Albert' }, { age: 22, name: 'Sam' }, { age: 11, name: 'Birgit' }]
-it('sort objects by property without order does not sort', () => { expect(users.sort(byProperty('name'))[0]?.name).toBe('John') })
-it('sort objects by property with asc order does sort', () => { expect(users.sort(byProperty('name', 'asc'))[0]?.name).toBe('Albert') })
-it('sort objects by property with desc order does sort', () => { expect(users.sort(byProperty('name', 'desc'))[0]?.name).toBe('Sam') })
-it('sort objects by property even if some does not have it', () => { expect(users.sort(byProperty('pic', 'asc'))[0]?.pic).toBe('wow.png') })
+it('sort byProperty A without order does not sort', () => { expect(users.sort(byProperty('name'))[0]?.name).toBe('John') })
+it('sort byProperty B with asc order does sort', () => { expect(users.sort(byProperty('name', 'asc'))[0]?.name).toBe('Albert') })
+it('sort byProperty C with desc order does sort', () => { expect(users.sort(byProperty('name', 'desc'))[0]?.name).toBe('Sam') })
+it('sort byProperty D even if some does not have it', () => { expect(users.sort(byProperty('pic', 'asc'))[0]?.pic).toBe('wow.png') })
 
 const object3 = { 'notFun': false, 'pretty-good': true, 'size': 'large', 'superFun': true }
 // eslint-disable-next-line unicorn/no-useless-undefined
