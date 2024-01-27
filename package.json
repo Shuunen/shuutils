@@ -14,7 +14,7 @@
     "@types/node": "20",
     "@vitest/coverage-v8": "1.2",
     "dependency-cruiser": "16",
-    "esbuild": "0.19",
+    "esbuild": "0.20",
     "eslint": "8.56",
     "eslint-config-hardcore": "45.1",
     "eslint-plugin-jsdoc": "48.0",
