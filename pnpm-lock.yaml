@@ -32,8 +32,8 @@ devDependencies:
     specifier: '45.1'
     version: 45.1.1(@babel/core@7.23.7)(@babel/eslint-parser@7.23.3)(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)(vue-eslint-parser@9.3.2)
   eslint-plugin-jsdoc:
-    specifier: '48.1'
-    version: 48.1.0(eslint@8.56.0)
+    specifier: '48.2'
+    version: 48.2.0(eslint@8.56.0)
   pkgroll:
     specifier: '2.0'
     version: 2.0.1(typescript@5.3.3)
@@ -4694,8 +4694,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-jsdoc@48.1.0(eslint@8.56.0):
-    resolution: {integrity: sha512-g9S8ukmTd1DVcV/xeBYPPXOZ6rc8WJ4yi0+MVxJ1jBOrz5kmxV9gJJQ64ltCqIWFnBChLIhLVx3tbTSarqVyFA==}
+  /eslint-plugin-jsdoc@48.2.0(eslint@8.56.0):
+    resolution: {integrity: sha512-O2B1XLBJnUCRkggFzUQ+PBYJDit8iAgXdlu8ucolqGrbmOWPvttZQZX8d1sC0MbqDMSLs8SHSQxaNPRY1RQREg==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
