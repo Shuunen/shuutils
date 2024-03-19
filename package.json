@@ -10,7 +10,7 @@
   },
   "description": "utils collection",
   "devDependencies": {
-    "@happy-dom/global-registrator": "13",
+    "@happy-dom/global-registrator": "14",
     "@types/node": "20",
     "@vitest/coverage-v8": "1.4",
     "dependency-cruiser": "16",
