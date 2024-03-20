@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable jsdoc/require-jsdoc */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { expect, it } from 'vitest'
 import { objectDeserialize, objectSerialize } from '../src/object-serializer'
 
@@ -74,6 +73,13 @@ it('objectSerialize H person beautified', () => {
 })
 it('objectSerialize I handle null', () => { expect(objectSerialize({ nameNull: null })).toMatchInlineSnapshot('"{"nameNull":null}"') })
 it('objectSerialize J handle undefined', () => { expect(objectSerialize({ nameUndefined: undefined })).toMatchInlineSnapshot('"{"nameUndefined":{"__strUndefined__":true}}"') })
+
+it('objectSerialize K', () => {
+  const object = { keyC: 3, keyA: undefined, keyB: 2 } // eslint-disable-line perfectionist/sort-objects
+  const serialized = JSON.stringify(objectSerialize(object, true))
+  expect(serialized).toMatchInlineSnapshot('""{\\"keyA\\":{\\"__strUndefined__\\":true},\\"keyB\\":2,\\"keyC\\":3}""')
+})
+
 
 it('objectDeserialize A string', () => {
   expect(objectDeserialize('{"name":"John"}')).toMatchInlineSnapshot(`
@@ -212,4 +218,15 @@ it('objectDeserialize H person', () => {
   expect(Array.isArray(object.petsDetails)).toBe(true)
   expect(object.pets.length).toBe(3)
   expect(object.petsDetails[0].name).toBe('Médoc')
+})
+
+it('objectDeserialize I simple', () => {
+  const serialized = '{"keyA":{"__strUndefined__":true},"keyB":2,"keyC":3}'
+  const object = objectDeserialize(serialized)
+  expect(object).toMatchInlineSnapshot(`
+    {
+      "keyB": 2,
+      "keyC": 3,
+    }
+  `)
 })

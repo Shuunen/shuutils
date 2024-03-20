@@ -17,6 +17,7 @@ export interface LoggerOptions {
 /**
  * Logger class
  */
+// eslint-disable-next-line no-restricted-syntax
 export class Logger {
 
   public options: LoggerOptions = {

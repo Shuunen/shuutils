@@ -42,6 +42,7 @@ function replacer (this: any, key: string, value?: Readonly<unknown>) { // eslin
  * @returns the value of the object
  */
 function reviver (_key: string, value?: unknown) {
+  /* c8 ignore next */
   if (value === undefined || value === null) return value
   if (typeof value !== 'object') return value // @ts-expect-error non-standard properties
   if ('__strRegexFlags__' in value && '__strRegexSource__' in value) return new RegExp(value.__strRegexSource__, value.__strRegexFlags__) // eslint-disable-line security/detect-non-literal-regexp
@@ -68,8 +69,8 @@ export function objectSerialize (object: Readonly<Record<string, unknown>>, will
  * @returns the deserialized object
  */
 export function objectDeserialize (string: string) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return JSON.parse(string, reviver)
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+  return JSON.parse(string, reviver) as Record<number | string, any>
 }
 
 // note 1 : detecting Date objects in replacer function
