@@ -12,7 +12,7 @@
   "devDependencies": {
     "@happy-dom/global-registrator": "14",
     "@types/node": "20",
-    "@vitest/coverage-v8": "1.5",
+    "@vitest/coverage-v8": "1.6",
     "dependency-cruiser": "16",
     "esbuild": "0.20",
     "eslint": "8.57",
@@ -21,7 +21,7 @@
     "pkgroll": "2.0",
     "repo-check": "1.35",
     "typescript": "5.4",
-    "vitest": "1.5",
+    "vitest": "1.6",
     "watchlist": "0"
   },
   "exports": {
