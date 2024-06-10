@@ -76,7 +76,6 @@ export function formatDate (date: Readonly<Date>, format: string, locale = 'en-U
  * @example readableTime(3 * nbMsInDay) // "3 days"
  * @example readableTime(3 * nbMsInDay, false) // "3d"
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function readableTime (input: Readonly<Date> | number, isLong = true) {
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
   // eslint-disable-next-line func-style, jsdoc/require-jsdoc, sonarjs/no-nested-template-literals

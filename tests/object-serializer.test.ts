@@ -21,9 +21,9 @@ function add (numberA: number, numberB: number) { return numberA + numberB }
 
 it('objectSerialize A string', () => { expect(objectSerialize({ name: 'John' })).toBe('{"name":"John"}') })
 it('objectSerialize B date', () => { expect(objectSerialize({ date: new Date('2021-01-01T00:00:00.000Z') })).toMatchInlineSnapshot('"{"date":{"__strDate__":"2021-01-01T00:00:00.000Z"}}"') })
-it('objectSerialize C regex', () => { expect(objectSerialize({ regex: /^ho\d+$/iu })).toMatchInlineSnapshot('"{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\\\d+$"}}"') })
+it('objectSerialize C regex', () => { expect(objectSerialize({ regex: /^ho\d+$/iu })).toMatchInlineSnapshot(String.raw`"{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\d+$"}}"`) })
 it('objectSerialize D arrow function', () => { expect(objectSerialize({ func: () => 42 })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"() => 42"}}"') })
-it('objectSerialize E function', () => { expect(objectSerialize({ func: add })).toMatchInlineSnapshot('"{"func":{"__strFunction__":"function add(numberA, numberB) {\\n  return numberA + numberB;\\n}"}}"') })
+it('objectSerialize E function', () => { expect(objectSerialize({ func: add })).toMatchInlineSnapshot(String.raw`"{"func":{"__strFunction__":"function add(numberA, numberB) {\n  return numberA + numberB;\n}"}}"`) })
 it('objectSerialize F object with sort', () => { expect(objectSerialize({ object: { name: 'John', age: 42 }, id: 123_456 }, true)).toMatchInlineSnapshot('"{"id":123456,"object":{"age":42,"name":"John"}}"') })  // eslint-disable-line perfectionist/sort-objects
 it('objectSerialize G person', () => { expect(objectSerialize(person)).toMatchInlineSnapshot('"{"age":21,"canPush":null,"details":{"dateOfBirth":{"__strDate__":"2001-12-22T00:00:00.000Z"},"favoriteFood":"sushi","hatedFood":{"__strUndefined__":true}},"isNameValid":true,"name":"John","nameRegex":{"__strRegexFlags__":"iu","__strRegexSource__":"^jo"},"nameValidator":{"__strFunction__":"(input) => input.length > 3"},"pets":["Médoc","T-Rex","Angel"],"petsDetails":[{"age":3,"name":"Médoc"},{"age":5,"name":"T-Rex"},{"age":1,"name":"Angel"}]}"') })
 it('objectSerialize H person beautified', () => {
@@ -77,7 +77,7 @@ it('objectSerialize J handle undefined', () => { expect(objectSerialize({ nameUn
 it('objectSerialize K', () => {
   const object = { keyC: 3, keyA: undefined, keyB: 2 } // eslint-disable-line perfectionist/sort-objects
   const serialized = JSON.stringify(objectSerialize(object, true))
-  expect(serialized).toMatchInlineSnapshot('""{\\"keyA\\":{\\"__strUndefined__\\":true},\\"keyB\\":2,\\"keyC\\":3}""')
+  expect(serialized).toMatchInlineSnapshot(String.raw`""{\"keyA\":{\"__strUndefined__\":true},\"keyB\":2,\"keyC\":3}""`)
 })
 
 
@@ -100,7 +100,7 @@ it('objectDeserialize B date', () => {
 })
 
 it('objectDeserialize C regex', () => {
-  const object = objectDeserialize('{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\\\d+$"}}')
+  const object = objectDeserialize(String.raw`{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\d+$"}}`)
   expect(object).toMatchInlineSnapshot(`
     {
       "regex": /\\^ho\\\\d\\+\\$/iu,
@@ -120,7 +120,7 @@ it('objectDeserialize D arrow function', () => {
 })
 
 it('objectDeserialize E function', () => {
-  const object = objectDeserialize('{"func":{"__strFunction__":"function add(numberA, numberB) {\\n  return numberA + numberB;\\n}"}}')
+  const object = objectDeserialize(String.raw`{"func":{"__strFunction__":"function add(numberA, numberB) {\n  return numberA + numberB;\n}"}}`)
   expect(object).toMatchInlineSnapshot(`
     {
       "func": [Function],

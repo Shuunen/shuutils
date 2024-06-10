@@ -18,8 +18,9 @@ export function createState<State extends object> (data: State, stateStorage?: S
   const listeners: Partial<Record<StateKey, StateCallback[]>> = {}
   const handler: ProxyHandler<State> = {
     get (target: State, key: string | symbol) {
-      const value = Reflect.get(target, key)
-      return useStorage(key) ? stateStorage?.get(key.toString(), value) : value
+      const localValue: State[StateKey] = Reflect.get(target, key) // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (useStorage(key)) return stateStorage!.get(key.toString(), localValue)
+      return localValue
     },
     set (target: State, key: string | symbol, value: unknown) {
       Reflect.set(target, key, value)
