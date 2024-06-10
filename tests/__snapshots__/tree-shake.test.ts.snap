@@ -20,7 +20,7 @@ exports[`tree-shake test B 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/environment.js
+  "output": "// dist/environment-C_L5l6Ng.js
 function pickOne(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -45,7 +45,7 @@ exports[`tree-shake test C 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/environment.js
+  "output": "// dist/environment-C_L5l6Ng.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;

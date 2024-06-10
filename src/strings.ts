@@ -203,7 +203,7 @@ export function parseJson<Type> (json: string) {
   let error = ''
   let value = {}
   if (json !== '') try {
-    value = objectDeserialize(json) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+    value = objectDeserialize(json)
   } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` } // eslint-disable-line @typescript-eslint/consistent-type-assertions
   return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions
 }
