@@ -10,7 +10,7 @@
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
-      "ES2020",
+      "ESNext",
       "DOM"
     ],
     "module": "ES2020",
@@ -28,6 +28,7 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
+    "target": "ESNext",
     "types": [
       "node"
     ],

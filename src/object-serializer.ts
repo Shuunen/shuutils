@@ -31,7 +31,7 @@ function replacer (this: any, key: string, value?: Readonly<unknown>) { // eslin
   if (value instanceof RegExp) return { __strRegexFlags__: value.flags, __strRegexSource__: value.source }
   if (typeof value === 'function') return { __strFunction__: value.toString() }
   // cannot do this : if (value instanceof Date) { console.log('replacer return toISOString'); return { __strDate__: value.toISOString() } } // see note 1, instead we do this :
-  if (this[key] instanceof Date) return { __strDate__: this[key].toISOString() } // eslint-disable-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
+  if (this[key] instanceof Date) return { __strDate__: this[key].toISOString() } // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   return value
 }
 

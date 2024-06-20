@@ -35,8 +35,8 @@ export function createState<State extends object> (data: State, stateStorage?: S
   function watchState (key: StateKey | StateKey[] | '*', callback: StateCallback) { // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
     const keys = key === '*' ? (Object.keys(state) as StateKey[]) : Array.isArray(key) ? key : [key] // eslint-disable-line no-nested-ternary
     keys.forEach(stateKey => {
-      listeners[stateKey] ||= []
-      listeners[stateKey]?.push(callback)
+      if (listeners[stateKey] === undefined) listeners[stateKey] = [callback] // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
+      else listeners[stateKey]!.push(callback)
     })
   }
   return { state, watchState }

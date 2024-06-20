@@ -6,23 +6,23 @@
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
-    "tiny-glob": "0"
+    "tiny-glob": "0.2"
   },
   "description": "utils collection",
   "devDependencies": {
-    "@happy-dom/global-registrator": "14",
-    "@types/node": "20",
+    "@happy-dom/global-registrator": "14.12",
+    "@types/node": "20.14",
     "@vitest/coverage-v8": "1.6",
-    "dependency-cruiser": "16",
+    "dependency-cruiser": "16.3",
     "esbuild": "0.21",
     "eslint": "8.57",
     "eslint-config-hardcore": "46.0",
     "eslint-plugin-jsdoc": "48.2",
     "pkgroll": "2.1",
-    "repo-check": "1.35",
-    "typescript": "5.4",
+    "repo-check": "1.36",
+    "typescript": "5.5",
     "vitest": "1.6",
-    "watchlist": "0"
+    "watchlist": "0.3"
   },
   "exports": {
     "import": {
