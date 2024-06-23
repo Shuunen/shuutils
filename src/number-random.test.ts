@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { getRandomNumber } from '../src'
+import { getRandomNumber } from './number-random'
 
 it('getRandomNumber 0 min by default', () => { expect(getRandomNumber() >= 0).toBe(true) })
 it('getRandomNumber 100 max by default', () => { expect(getRandomNumber() <= 100).toBe(true) })

@@ -19,6 +19,7 @@ const stringOut = `{
 it('sanitize a basic word', () => { expect(sanitize('Superbe')).toBe('superbe') })
 it('sanitize a basic sentence', () => { expect(sanitize('Superbe météo aujourd\'hui')).toBe('superbe meteo aujourd hui') })
 it('sanitize a complex sentence', () => { expect(sanitize(' d\'emblée€|| la@ PLUIE,,:& pùïs un cOup dê tonnerre_ !! Et puis 2 !? Mais qu\'est-ce qui se trame...')).toBe('d emblee la pluie puis un coup de tonnerre et puis 2 mais qu est ce qui se trame') })
+it('sanitize text with tags', () => { expect(sanitize('<div>Superbe météo aujourd\'hui</div>', false)).toBe('Superbe meteo aujourd hui') })
 
 const expected = 'oh-ma-darling'
 it('slugify A simple', () => { expect(slugify('Oh ma darling')).toBe(expected) })

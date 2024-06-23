@@ -3,20 +3,24 @@ import { pickOne } from './array-pick-one'
 import { nbSpacesIndent } from './constants'
 import { flatten } from './object-flatten'
 import { objectDeserialize } from './object-serializer'
+import { removeAccents } from './string-remove-accents'
 
 /**
  * Clean a string from special characters
  * @param sentence like "Hello, my name is John Doe !"
+ * @param willLower lowercase the output
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export function sanitize (sentence: string) {
-  return sentence
-    .trim()
-    .replace(/['’-]/gu, ' ')
-    .normalize('NFD')
-    .replace(/[^\d\sa-z]/giu, '')
-    .replace(/\s{2,}/gu, ' ')
-    .toLowerCase()
+export function sanitize (sentence: string, willLower = true) {
+  const text = removeAccents(sentence)
+    .trim() // remove leading and trailing spaces
+    // eslint-disable-next-line regexp/no-super-linear-move
+    .replace(/<[^>]+>/gu, ' ') // remove any tags
+    .replace(/['’-]/gu, ' ') // replace quotes and hyphens with spaces
+    .replace(/[^\d\sa-z]/giu, '') // remove all non-alphanumeric characters
+    .replace(/\s+/gu, ' ') // replace multiple spaces with one
+    .trim() // final trim
+  return willLower ? text.toLowerCase() : text
 }
 
 /**

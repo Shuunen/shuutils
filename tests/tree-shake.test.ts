@@ -57,3 +57,10 @@ it('tree-shake test C', async () => {
   result.output = clearFileHash(result.output ?? '')
   expect(result).toMatchSnapshot()
 })
+
+it('tree-shake test D', async () => {
+  const result = await build(`import { toastSuccess } from '.'
+  console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))`)
+  result.output = clearFileHash(result.output ?? '')
+  expect(result).toMatchSnapshot()
+})
