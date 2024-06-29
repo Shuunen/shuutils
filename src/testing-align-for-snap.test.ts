@@ -21,5 +21,5 @@ it('cleanForSnap C - American date', () => {
 })
 
 it('cleanForSnap D - Date instance', () => {
-  expect(alignForSnap(new Date('2024-05-16T17:36:32'))).toMatchInlineSnapshot('""2024-05-16T15:36:32.000Z""')
+  expect(alignForSnap(new Date('2024-05-16T17:36:32'))).toMatchInlineSnapshot('""xxxx-xx-xxTxx:xx:xx.000Z""')
 })
