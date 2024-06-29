@@ -5,6 +5,11 @@
     "es6": true,
     "node": true
   },
+  "ignorePatterns": [
+    "coverage/",
+    "dist/",
+    "node_modules/"
+  ],
   "extends": [
     "plugin:unicorn/all",
     "hardcore",

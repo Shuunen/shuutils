@@ -20,12 +20,18 @@
 | 2023-12-11 | eslint        | 13 sec  | stable                            | NZXL Win11 Node 20 |
 | 2023-12-11 | tsc-no-emit   | 2,5 sec | que paso ?!?                      | NZXL Win11 Node 20 |
 | 2023-12-11 | vitest        | 5,7 sec | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2024-06-29 | build         | 1,8 sec | new build via pkgroll             | Duc Win11 Node 20  |
+| 2024-06-29 | c8-vitest     | 3,0 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
+| 2024-06-29 | eslint        | 7,6 sec | 2x better with Duc ? *doubt*      | Duc Win11 Node 20  |
+| 2024-06-29 | tsc-no-emit   | 1,2 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
+| 2024-06-29 | vitest        | 2,5 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
 
 Command aliases :
 
-- build : `hyperfine --runs 20 --warmup 3 'node bin/build'`
+- build (deprecated since 06/2024) : `hyperfine --runs 20 --warmup 3 'node bin/build'`
+- build : `hyperfine --runs 20 --warmup 3 'npx pkgroll --target=esnext'`
 - tsc-no-emit : `hyperfine --runs 5 --warmup 3 'node node_modules/typescript/bin/tsc --noEmit'`
-- eslint : `hyperfine --runs 5 --warmup 3 'node node_modules/eslint/bin/eslint --fix --ignore-path .gitignore --ext .js,.ts .'`
+- eslint : `hyperfine --runs 5 --warmup 3 'node node_modules/eslint/bin/eslint --ext .js,.ts .'`
 - uvu : `hyperfine --runs 10 --warmup 3 'node node_modules/uvu/bin -r tsm -r jsdom-global/register tests'`
 - uvu-happy-dom : `hyperfine --runs 10 --warmup 3 'node node_modules/uvu/bin -r tsm tests'`
 - c8-uvu : `hyperfine --runs 10 --warmup 3 'node node_modules/c8/bin/c8 node_modules/uvu/bin -r tsm -r jsdom-global/register tests'`

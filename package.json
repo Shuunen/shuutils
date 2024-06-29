@@ -63,7 +63,7 @@
     "lint": "pnpm lint:tsc && pnpm lint:biome && pnpm lint:eslint && pnpm lint:dep && echo lint success",
     "lint:biome": "echo no biome yet",
     "lint:dep": "depcruise src --config && echo lint:dep success",
-    "lint:eslint": "eslint --cache --max-warnings 0 --ext .ts,.ts . && echo lint:eslint success",
+    "lint:eslint": "eslint --cache --max-warnings 0 --ext .js,.ts . && echo lint:eslint success",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",
     "lint:watch": "watchlist src tests -eager -- pnpm lint",
     "mark": "node dist/unique-mark.js dist/**/* && echo mark success",
