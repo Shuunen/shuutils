@@ -58,16 +58,41 @@ it('logger D', () => {
 })
 
 const loggerE = new Logger({ willOutputToConsole: false })
-it('loggerE clean A', () => { expect(loggerE.clean()).toBe('') })
-it('loggerE clean B', () => { expect(loggerE.clean(red('Oh I\'m in red now ?!'))).toMatchInlineSnapshot('"Oh I\'m in red now ?!"') })
-it('loggerE clean C', () => { expect(loggerE.clean('an array ?', [12, 42])).toMatchInlineSnapshot('"an array ? [12,42]"') })
-it('loggerE clean D', () => { expect(loggerE.clean('a function ?', () => 'Hello world')).toMatchInlineSnapshot('"a function ? () => \'Hello world\'"') })
-it('loggerE clean E', () => { expect(loggerE.clean('an object ?', { isFull: true, keyA: 1, keyB: 'John' })).toMatchInlineSnapshot('"an object ? {\'isFull\':true,\'keyA\':1,\'keyB\':\'John\'}"') })
-it('loggerE clean F', () => { expect(loggerE.clean('a boolean ?', true)).toMatchInlineSnapshot('"a boolean ? true"') })
-it('loggerE clean G', () => { expect(loggerE.clean('a number ?', 42)).toMatchInlineSnapshot('"a number ? 42"') })
-it('loggerE clean H', () => { expect(loggerE.clean('a string ?', 'Hello world')).toMatchInlineSnapshot('"a string ? Hello world"') })
-it('loggerE clean I', () => { expect(loggerE.clean('a null ?', null)).toMatchInlineSnapshot('"a null ? null"') }) // eslint-disable-line unicorn/no-null
-it('loggerE clean J', () => { expect(loggerE.clean('an undefined ?', undefined)).toMatchInlineSnapshot('"an undefined ? undefined"') }) // eslint-disable-line unicorn/no-useless-undefined
-it('loggerE clean K', () => { expect(loggerE.clean('a date ?', new Date('2020-01-01'))).toMatchInlineSnapshot('"a date ? \'2020-01-01T00:00:00.000Z\'"') })
-it('loggerE clean L', () => { expect(loggerE.clean('a regexp ?', /Hello world{3,5}/u)).toMatchInlineSnapshot('"a regexp ? {}"') }) // not supported for now
-
+it('loggerE clean A', () => {
+  expect(loggerE.clean()).toBe('')
+})
+it('loggerE clean B', () => {
+  expect(loggerE.clean(red("Oh I'm in red now ?!"))).toMatchInlineSnapshot('"Oh I\'m in red now ?!"')
+})
+it('loggerE clean C', () => {
+  expect(loggerE.clean('an array ?', [12, 42])).toMatchInlineSnapshot('"an array ? [12,42]"')
+})
+it('loggerE clean D', () => {
+  expect(loggerE.clean('a function ?', () => 'Hello world')).toMatchInlineSnapshot('"a function ? () => \'Hello world\'"')
+})
+it('loggerE clean E', () => {
+  expect(loggerE.clean('an object ?', { isFull: true, keyA: 1, keyB: 'John' })).toMatchInlineSnapshot("\"an object ? {'isFull':true,'keyA':1,'keyB':'John'}\"")
+})
+it('loggerE clean F', () => {
+  expect(loggerE.clean('a boolean ?', true)).toMatchInlineSnapshot('"a boolean ? true"')
+})
+it('loggerE clean G', () => {
+  expect(loggerE.clean('a number ?', 42)).toMatchInlineSnapshot('"a number ? 42"')
+})
+it('loggerE clean H', () => {
+  expect(loggerE.clean('a string ?', 'Hello world')).toMatchInlineSnapshot('"a string ? Hello world"')
+})
+it('loggerE clean I', () => {
+  // eslint-disable-next-line unicorn/no-null
+  expect(loggerE.clean('a null ?', null)).toMatchInlineSnapshot('"a null ? null"')
+})
+it('loggerE clean J', () => {
+  // eslint-disable-next-line unicorn/no-useless-undefined
+  expect(loggerE.clean('an undefined ?', undefined)).toMatchInlineSnapshot('"an undefined ? undefined"')
+})
+it('loggerE clean K', () => {
+  expect(loggerE.clean('a date ?', new Date('2020-01-01'))).toMatchInlineSnapshot('"a date ? \'2020-01-01T00:00:00.000Z\'"')
+})
+it('loggerE clean L', () => {
+  expect(loggerE.clean('a regexp ?', /Hello world{3,5}/u)).toMatchInlineSnapshot('"a regexp ? {}"')
+}) // not supported for now

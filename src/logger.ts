@@ -19,18 +19,9 @@ export interface LoggerOptions {
  */
 // eslint-disable-next-line no-restricted-syntax
 export class Logger {
-
   private lastLogTimestamp = 0
 
-  private readonly levels: LogLevel[] = [
-    '1-debug',
-    '2-test',
-    '3-info',
-    '4-fix',
-    '5-warn',
-    '6-good',
-    '7-error',
-  ]
+  private readonly levels: LogLevel[] = ['1-debug', '2-test', '3-info', '4-fix', '5-warn', '6-good', '7-error']
 
   private readonly padStart = 7
 
@@ -52,16 +43,16 @@ export class Logger {
    * Create a new Logger instance
    * @param options optional, LoggerOptions
    */
-  public constructor (options?: Readonly<Partial<LoggerOptions>>) {
+  public constructor(options?: Readonly<Partial<LoggerOptions>>) {
     if (options) this.options = { ...this.options, ...options }
-    this.padding = Math.max(...this.levels.map((key) => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
+    this.padding = Math.max(...this.levels.map(key => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
   }
 
   /**
    * Calculate the delay since the last log
    * @returns the delay like "+12ms"
    */
-  private getDelay () {
+  private getDelay() {
     const now = Date.now()
     if (this.lastLogTimestamp === 0) {
       this.lastLogTimestamp = now
@@ -77,11 +68,12 @@ export class Logger {
    * @param prefix the prefix to add before the message
    * @param stuff the things to log
    */
-  private log (prefix: string, stuff: Readonly<unknown[]>) {
+  private log(prefix: string, stuff: Readonly<unknown[]>) {
     const prefixes = [prefix]
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
     if (this.options.willLogDelay) prefixes.unshift(this.getDelay())
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     if (this.options.willOutputToConsole) console.log(prefixes.join(' '), ...stuff) // eslint-disable-line no-console
     if (this.options.willOutputToMemory) this.addToMemoryLogs(...prefixes, ...stuff)
   }
@@ -95,7 +87,7 @@ export class Logger {
    * @example logger.logIf('debug', '1-debug', ['Hello', 'world', 42])
    */
   // eslint-disable-next-line @typescript-eslint/max-params
-  private logIf (prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
+  private logIf(prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
     if (!this.shouldLog(level)) return
     this.log(color(prefix.padStart(this.padding)), stuff)
   }
@@ -105,7 +97,7 @@ export class Logger {
    * @param level the log level to check
    * @returns true if the log should be output
    */
-  private shouldLog (level: LogLevel) {
+  private shouldLog(level: LogLevel) {
     return this.options.isActive && this.levels.indexOf(level) >= this.levels.indexOf(this.options.minimumLevel)
   }
 
@@ -114,10 +106,9 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.addToMemoryLogs(['Hello', 'world', 42])
    */
-  public addToMemoryLogs (...stuff: Readonly<unknown[]>) {
+  public addToMemoryLogs(...stuff: Readonly<unknown[]>) {
     this.inMemoryLogs.push(this.clean(...stuff))
   }
-
 
   /**
    * Log anything into a clean string-like line
@@ -125,13 +116,12 @@ export class Logger {
    * @returns the cleaned log line
    * @example logger.clean(['Hello', { name: "world" }, 42]) // "Hello { "name": "world" } 42"
    */
-  public clean (...stuff: Readonly<unknown[]>) {
+  public clean(...stuff: Readonly<unknown[]>) {
     return stuff
-      .map(thing => typeof thing === 'object' ? JSON.stringify(thing) : String(thing))
-      .join(' ')
-      // eslint-disable-next-line no-control-regex
+      .map(thing => (typeof thing === 'object' ? JSON.stringify(thing) : String(thing)))
+      .join(' ') // eslint-disable-next-line no-control-regex
       .replace(/[\u001B\u009B][#();?[]*(?:\d{1,4}(?:;\d{0,4})*)?[\d<=>A-ORZcf-nqry]/gu, '')
-      .replace(/"/gu, '\'')
+      .replace(/"/gu, "'")
   }
 
   /**
@@ -139,21 +129,21 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.debug('Hello world')
    */
-  public debug (...stuff: Readonly<unknown[]>) {
+  public debug(...stuff: Readonly<unknown[]>) {
     this.logIf('debug', '1-debug', stuff, gray)
   }
 
   /**
    * Disable the logger output
    */
-  public disable () {
+  public disable() {
     this.options.isActive = false
   }
 
   /**
    * Enable the logger output
    */
-  public enable () {
+  public enable() {
     this.options.isActive = true
   }
 
@@ -162,8 +152,8 @@ export class Logger {
    * @param stuff the things to log (will be red, such original)
    * @example logger.error('Something went wrong')
    */
-  public error (...stuff: Readonly<unknown[]>) {
-    const errors = stuff.map(thing => thing instanceof Error ? thing.message : thing)
+  public error(...stuff: Readonly<unknown[]>) {
+    const errors = stuff.map(thing => (thing instanceof Error ? thing.message : thing))
     this.logIf('error', '7-error', errors, red)
   }
 
@@ -172,7 +162,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.fix('This is a fix')
    */
-  public fix (...stuff: Readonly<unknown[]>) {
+  public fix(...stuff: Readonly<unknown[]>) {
     this.logIf('fix', '4-fix', stuff, cyan)
   }
 
@@ -181,7 +171,7 @@ export class Logger {
    * @param stuff the things to log (will be green, as expected)
    * @example logger.good('Everything went well')
    */
-  public good (...stuff: Readonly<unknown[]>) {
+  public good(...stuff: Readonly<unknown[]>) {
     this.logIf('good', '6-good', stuff, green)
   }
 
@@ -190,7 +180,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
-  public info (...stuff: Readonly<unknown[]>) {
+  public info(...stuff: Readonly<unknown[]>) {
     this.logIf('info', '3-info', stuff, blue)
   }
 
@@ -200,7 +190,7 @@ export class Logger {
    * @example logger.success('Everything went well')
    * @alias good
    */
-  public success (...stuff: Readonly<unknown[]>) {
+  public success(...stuff: Readonly<unknown[]>) {
     this.good(...stuff)
   }
 
@@ -210,7 +200,7 @@ export class Logger {
    * @param {...any} stuff the things to log
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
-  public test (thing: unknown, ...stuff: Readonly<unknown[]>) {
+  public test(thing: unknown, ...stuff: Readonly<unknown[]>) {
     if (!this.shouldLog('2-test')) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
@@ -223,8 +213,7 @@ export class Logger {
    * @param stuff the things to log
    * @example logger.warn('Something went wrong')
    */
-  public warn (...stuff: Readonly<unknown[]>) {
+  public warn(...stuff: Readonly<unknown[]>) {
     this.logIf('warn', '5-warn', stuff, yellow)
   }
 }
-

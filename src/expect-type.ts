@@ -6,7 +6,9 @@
  * checkType<PersonModel>({ name: 'John' })
  * checkType<PersonModel>(await getPerson())
  */
-export function expectType<Type> (thing: Type) { return thing }
+export function expectType<Type>(thing: Type) {
+  return thing
+}
 
 /**
  * Check two types, you can provide the type or let TypeScript infer them
@@ -18,4 +20,6 @@ export function expectType<Type> (thing: Type) { return thing }
  * expectEqualTypes<PersonModel>({ name: 'John' }, { name: 'John' })
  * expectEqualTypes<PersonModel>({ name: 'John' }, { name: 'John', age: 42 })
  */
-export function expectEqualTypes<TypeA, TypeB extends TypeA> (thingA: TypeA, thingB: TypeB) { return { thingA, thingB } }
+export function expectEqualTypes<TypeA, TypeB extends TypeA>(thingA: TypeA, thingB: TypeB) {
+  return { thingA, thingB }
+}

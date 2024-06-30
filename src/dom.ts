@@ -9,7 +9,7 @@ type DomContent = Node | Node[] | string
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated dom element
  */
-export function dom<Tag extends keyof HTMLElementTagNameMap> (type: Tag, classes = '', content: DomContent = '') {
+export function dom<Tag extends keyof HTMLElementTagNameMap>(type: Tag, classes = '', content: DomContent = '') {
   const element = document.createElement(type)
   element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
   if (typeof content === 'string') element.innerHTML = content
@@ -25,7 +25,7 @@ export function dom<Tag extends keyof HTMLElementTagNameMap> (type: Tag, classes
  * @param alt the alt text of the image
  * @returns the generated image element
  */
-export function img (classes: string, source: string, alt: string) {
+export function img(classes: string, source: string, alt: string) {
   const element = dom('img', classes)
   element.alt = alt
   element.src = source
@@ -38,7 +38,7 @@ export const image = img
  * @param classes the custom classes to add to the element
  * @returns the generated icon element
  */
-export function icon (classes = '') {
+export function icon(classes = '') {
   return dom('i', `icon ${classes}`)
 }
 
@@ -51,7 +51,7 @@ export function icon (classes = '') {
  * @returns the generated link element
  */
 // eslint-disable-next-line @typescript-eslint/max-params
-export function link (classes: string, content: DomContent, href: string, willOpenInNewTab = false) {
+export function link(classes: string, content: DomContent, href: string, willOpenInNewTab = false) {
   const element = dom('a', classes, content)
   element.href = href
   if (willOpenInNewTab) element.target = '_blank'
@@ -64,7 +64,7 @@ export function link (classes: string, content: DomContent, href: string, willOp
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated paragraph element
  */
-export function text (classes: string, content: DomContent = '') {
+export function text(classes: string, content: DomContent = '') {
   return dom('p', classes, content)
 }
 
@@ -74,7 +74,7 @@ export function text (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated strong element
  */
-export function strong (classes: string, content: DomContent = '') {
+export function strong(classes: string, content: DomContent = '') {
   return dom('strong', classes, content)
 }
 
@@ -84,7 +84,7 @@ export function strong (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated emphasis element
  */
-export function em (classes: string, content: DomContent = '') {
+export function em(classes: string, content: DomContent = '') {
   return dom('em', classes, content)
 }
 
@@ -94,7 +94,7 @@ export function em (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated small element
  */
-export function small (classes: string, content: DomContent = '') {
+export function small(classes: string, content: DomContent = '') {
   return dom('small', classes, content)
 }
 
@@ -104,7 +104,7 @@ export function small (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export function h1 (classes: string, content: DomContent = '') {
+export function h1(classes: string, content: DomContent = '') {
   return dom('h1', classes, content)
 }
 
@@ -114,7 +114,7 @@ export function h1 (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export function h2 (classes: string, content: DomContent = '') {
+export function h2(classes: string, content: DomContent = '') {
   return dom('h2', classes, content)
 }
 
@@ -124,7 +124,7 @@ export function h2 (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated heading element
  */
-export function h3 (classes: string, content: DomContent = '') {
+export function h3(classes: string, content: DomContent = '') {
   return dom('h3', classes, content)
 }
 
@@ -134,7 +134,7 @@ export function h3 (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated list element
  */
-export function ul (classes: string, content: DomContent = '') {
+export function ul(classes: string, content: DomContent = '') {
   return dom('ul', classes, content)
 }
 
@@ -144,7 +144,7 @@ export function ul (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated list element
  */
-export function li (classes: string, content: DomContent = '') {
+export function li(classes: string, content: DomContent = '') {
   return dom('li', classes, content)
 }
 
@@ -154,7 +154,7 @@ export function li (classes: string, content: DomContent = '') {
  * @param content the content of the element, can be a string, another dom element or an array of dom elements
  * @returns the generated div element
  */
-export function div (classes: string, content: DomContent = '') {
+export function div(classes: string, content: DomContent = '') {
   return dom('div', classes, content)
 }
 
@@ -163,7 +163,7 @@ export function div (classes: string, content: DomContent = '') {
  * @param href the href/src
  * @returns the link element, ex: &lt;link type="text/css" href="../styles.css" rel="stylesheet" />
  */
-export function css (href: string) {
+export function css(href: string) {
   const element = dom('link')
   element.href = href
   element.rel = 'stylesheet'
@@ -177,7 +177,7 @@ export function css (href: string) {
  * @param context the dom context to search in
  * @returns the element or null if not found
  */
-export function findOne (selector: string, context: Document | HTMLElement = document) {
+export function findOne(selector: string, context: Document | HTMLElement = document) {
   return context.querySelector(selector)
 }
 
@@ -187,7 +187,7 @@ export function findOne (selector: string, context: Document | HTMLElement = doc
  * @param context the context to search in, document by default
  * @returns array of found elements
  */
-export function findAll (selector: string, context: Document | HTMLElement = document) {
+export function findAll(selector: string, context: Document | HTMLElement = document) {
   return Array.from(context.querySelectorAll(selector))
 }
 
@@ -201,11 +201,13 @@ export function findAll (selector: string, context: Document | HTMLElement = doc
  * @returns the element or undefined if not found
  */
 // eslint-disable-next-line @typescript-eslint/max-params
-export async function waitToDetect (selector: string, wait = 500, nbTries = 0, maxTry = 5, willLog = false) {
+export async function waitToDetect(selector: string, wait = 500, nbTries = 0, maxTry = 5, willLog = false) {
   await sleep(wait)
   const element = findOne(selector)
   if (element) return element
   if (nbTries > maxTry) {
+    /* c8 ignore next 2 */
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     if (willLog) console.log(`stop searching after 5 fails to detect : "${selector}"`) // eslint-disable-line no-console
     return undefined // eslint-disable-line unicorn/no-useless-undefined
   }
@@ -219,7 +221,7 @@ export async function waitToDetect (selector: string, wait = 500, nbTries = 0, m
  * ```
  * @param element the element to set height to
  */
-export async function scrollToHeightSync (element: HTMLElement) {
+export async function scrollToHeightSync(element: HTMLElement) {
   const initial = element.style.height
   element.style.height = 'inherit'
   const target = element.scrollHeight + 2 // eslint-disable-line @typescript-eslint/no-magic-numbers
@@ -233,7 +235,7 @@ export async function scrollToHeightSync (element: HTMLElement) {
  * @param classes the classes to add to the backdrop
  * @returns the backdrop element
  */
-export function backdrop (classes: string) {
+export function backdrop(classes: string) {
   return div(`backdrop ${classes} fixed top-0 left-0 z-10 w-full h-full opacity-0 pointer-events-none`)
 }
 
@@ -242,7 +244,7 @@ export function backdrop (classes: string) {
  * @param classes the classes to return
  * @returns the classes as a string
  */
-export function tw (classes: Readonly<TemplateStringsArray> | Readonly<string[]> | string) {
+export function tw(classes: Readonly<TemplateStringsArray> | Readonly<string[]> | string) {
   if (typeof classes === 'string') return classes
   return classes.join(' ')
 }

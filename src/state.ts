@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable jsdoc/require-jsdoc */
 import type { ShuutilsStorage } from './storage'
@@ -12,29 +12,34 @@ type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown
  * @param onlyStoreKeys The keys to sync with the storage object, if empty all keys will be synced
  * @returns The state object and a watch function
  */
-export function createState<State extends object> (data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []) { // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
+export function createState<State extends object>(data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []) {
   type StateKey = keyof State
   const useStorage = (key: string | symbol) => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey))
   const listeners: Partial<Record<StateKey, StateCallback[]>> = {}
   const handler: ProxyHandler<State> = {
-    get (target: State, key: string | symbol) {
-      const localValue: State[StateKey] = Reflect.get(target, key) // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      if (useStorage(key)) return stateStorage!.get(key.toString(), localValue)
+    get(target: State, key: string | symbol) {
+      const localValue: State[StateKey] = Reflect.get(target, key)
+      if (useStorage(key)) return stateStorage?.get(key.toString(), localValue)
       return localValue
     },
-    set (target: State, key: string | symbol, value: unknown) {
+    set(target: State, key: string | symbol, value: unknown) {
       Reflect.set(target, key, value)
       if (useStorage(key)) stateStorage?.set(key.toString(), value)
-      listeners[key as StateKey]?.forEach(callback => { callback(key.toString(), value) })// eslint-disable-line unicorn/no-array-for-each
+      const callbacks = listeners[key as StateKey] ?? []
+      for (const callback of callbacks) callback(key.toString(), value)
       return true
     },
   }
   const state = new Proxy<State>(data, handler)
-  function watchState (key: '*' | StateKey | StateKey[], callback: StateCallback) { // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
-    const keys = key === '*' ? (Object.keys(state) as StateKey[]) : (Array.isArray(key) ? key : [key])
-    for (const stateKey of keys)
-      if (listeners[stateKey] === undefined) listeners[stateKey] = [callback] // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
-      else listeners[stateKey]!.push(callback)
+  function watchState(key: '*' | StateKey | StateKey[], callback: StateCallback) {
+    const all = Object.keys(state) as StateKey[]
+    const some = Array.isArray(key) ? key : [key as StateKey]
+    const keys = key === '*' ? all : some
+    for (const stateKey of keys) {
+      const list = listeners[stateKey]
+      if (list === undefined) listeners[stateKey] = [callback]
+      else list.push(callback)
+    }
   }
   return { state, watchState }
 }

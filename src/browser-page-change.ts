@@ -7,7 +7,8 @@ import { sleep } from './functions'
  * Default callback for onPageChange
  * @param location the new location
  */
-function onPageChangeDefaultCallback (location: string) {
+function onPageChangeDefaultCallback(location: string) {
+  // biome-ignore lint/suspicious/noConsoleLog: <explanation>
   console.log(`location changed : ${location} but onPageChange callback is empty`)
 }
 
@@ -17,7 +18,7 @@ function onPageChangeDefaultCallback (location: string) {
  * @param wait the time to wait between each check, default 1000ms
  * @param last used for recursion, do not use it
  */
-export async function onPageChange (callback = onPageChangeDefaultCallback, wait = 1000, last = '') {
+export async function onPageChange(callback = onPageChangeDefaultCallback, wait = 1000, last = '') {
   await sleep(wait)
   const current = document.location.href
   if (current !== last) callback(current)

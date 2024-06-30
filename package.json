@@ -10,6 +10,7 @@
   },
   "description": "utils collection",
   "devDependencies": {
+    "@biomejs/biome": "1.8",
     "@happy-dom/global-registrator": "14.12",
     "@types/node": "20.14",
     "@vitest/coverage-v8": "1.6",
@@ -60,7 +61,7 @@
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
     "lint": "pnpm lint:tsc && pnpm lint:biome && pnpm lint:eslint && pnpm lint:dep && echo lint success",
-    "lint:biome": "echo no biome yet",
+    "lint:biome": "biome lint --error-on-warnings --write --unsafe && biome format --write && echo lint:biome success",
     "lint:dep": "depcruise src --config && echo lint:dep success",
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",

@@ -6,7 +6,7 @@ let times = 0
 /**
  * @returns the number of times the function has been called
  */
-function myFunction () {
+function myFunction() {
   times += 1
   return times
 }
@@ -16,7 +16,7 @@ const myFunctionDebounced = debounce(myFunction, 100)
 /**
  * @returns the number of times the function has been called after 50ms
  */
-async function myAsyncFunction () {
+async function myAsyncFunction() {
   await sleep(50)
   times += 1
   return times

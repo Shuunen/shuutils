@@ -22,8 +22,7 @@ describe('clone simple object bench', () => {
   })
 })
 
-
-function getComplexObject () {
+function getComplexObject() {
   return {
     address: {
       city: `New York ${Math.random().toString()}`,

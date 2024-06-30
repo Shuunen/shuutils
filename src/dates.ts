@@ -14,8 +14,8 @@ import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInY
  * @param shouldRemoveTimezone remove the last z ?
  * @returns string like : "2018-09-03T15:24:00.366Z"
  */
-export function dateToIsoString (date: Readonly<Date>, shouldRemoveTimezone = false) {
-  let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * nbMsInMinute)).toISOString()
+export function dateToIsoString(date: Readonly<Date>, shouldRemoveTimezone = false) {
+  let dateString = new Date(date.getTime() - date.getTimezoneOffset() * nbMsInMinute).toISOString()
   if (shouldRemoveTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
   return dateString
 }
@@ -25,7 +25,7 @@ export function dateToIsoString (date: Readonly<Date>, shouldRemoveTimezone = fa
  * @param date input date
  * @returns string like : "2019-12-31"
  */
-export function dateIso10 (date: Readonly<Date> = new Date()) {
+export function dateIso10(date: Readonly<Date> = new Date()) {
   return String(date.toISOString().split('T')[0])
 }
 
@@ -36,9 +36,9 @@ export function dateIso10 (date: Readonly<Date> = new Date()) {
  * @param locale the locale to use, default is en-US
  * @returns a string like : "2018-09-03"
  */
-export function formatDate (date: Readonly<Date>, format: string, locale = 'en-US') {
+export function formatDate(date: Readonly<Date>, format: string, locale = 'en-US') {
   // eslint-disable-next-line complexity
-  return format.replace(/y{4}|yy|M{4}|MM|dd|d|e{4}|e{3}|HH|mm|ss|\s/gu, (match) => {
+  return format.replace(/y{4}|yy|M{4}|MM|dd|d|e{4}|e{3}|HH|mm|ss|\s/gu, match => {
     switch (match) {
       case 'yyyy':
         return date.toLocaleDateString(locale, { year: 'numeric' })
@@ -76,8 +76,8 @@ export function formatDate (date: Readonly<Date>, format: string, locale = 'en-U
  * @example readableTime(3 * nbMsInDay) // "3 days"
  * @example readableTime(3 * nbMsInDay, false) // "3d"
  */
-export function readableTime (input: Readonly<Date> | number, isLong = true) {
-  const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
+export function readableTime(input: Readonly<Date> | number, isLong = true) {
+  const ms = typeof input === 'number' ? input : Date.now() - input.getTime()
   // eslint-disable-next-line jsdoc/require-jsdoc
   const format = (value: number, long: string, short: string) => `${Math.floor(value)}${isLong ? ` ${long + (Math.floor(value) > 1 ? 's' : '')}` : short}`
   if (ms < nbMsInSecond) return format(ms, 'millisecond', 'ms')

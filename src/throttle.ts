@@ -5,7 +5,7 @@
  * @param timeout the time to wait before each function call
  * @returns a throttled function
  */
-export function throttle<Method extends (...parameters: readonly any[]) => ReturnType<Method>> (callback: Method, timeout: number) { // eslint-disable-line @typescript-eslint/no-explicit-any
+export function throttle<Method extends (...parameters: readonly unknown[]) => ReturnType<Method>>(callback: Method, timeout: number) {
   let isReady = true
   return (...parameters: Parameters<Method>) => {
     if (!isReady) return

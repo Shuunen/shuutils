@@ -2,7 +2,6 @@ import { execSync } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import glob from 'tiny-glob'
-
 import { blue } from './colors.js'
 import { formatDate } from './dates.js'
 import { isTestEnvironment } from './environment.js'
@@ -15,9 +14,9 @@ import type { PackageJson } from './types'
  * @param message the message to log
  * @param value the value to log
  */
-function log (message: string, value = '') {
-  // eslint-disable-next-line no-console
-  console.log('unique-mark', blue(message), value)
+function log(message: string, value = '') {
+  // biome-ignore lint/suspicious/noConsoleLog: it's ok here
+  console.log('unique-mark', blue(message), value) // eslint-disable-line no-console
 }
 
 /**
@@ -25,7 +24,7 @@ function log (message: string, value = '') {
  * @param location the location of the package.json file
  * @returns the package.json version
  */
-export function getPackageJsonVersion (location = path.join(process.cwd(), 'package.json')) {
+export function getPackageJsonVersion(location = path.join(process.cwd(), 'package.json')) {
   if (!existsSync(location)) throw new Error(`package.json was not found in ${location}, aborting.`)
   const content = readFileSync(location, 'utf8')
   const { error, value } = parseJson<PackageJson>(content)
@@ -38,7 +37,8 @@ export function getPackageJsonVersion (location = path.join(process.cwd(), 'pack
  * @param target the glob to get the files from, like "public/index.html" or "public/*.js"
  * @returns the files to inject the mark in
  */
-export async function getTargetFiles (target = process.argv[2] ?? 'public/index.html') { // eslint-disable-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export async function getTargetFiles(target = process.argv[2] ?? 'public/index.html') {
   // if ends with something like *.js
   const extension = /\*.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
   // suggests to use *.{js} to capture all files (limitation of tiny-glob)
@@ -56,13 +56,12 @@ export async function getTargetFiles (target = process.argv[2] ?? 'public/index.
  * @param root0.version the version to use, if empty, will use the version from package.json
  * @returns the mark to inject, like "4.2.0 - 123abc45 - 01/01/2021 12:00:00"
  */
-export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }: Readonly<{ commit?: string; date?: string; version?: string }>) {
+export function generateMark({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }: Readonly<{ commit?: string; date?: string; version?: string }>) {
   let finalCommit = commit
   /* c8 ignore next */
   if (commit === '') finalCommit = execSync('git rev-parse --short HEAD', { cwd: process.cwd() }).toString().trim()
   return `${version} - ${finalCommit} - ${date}`
 }
-
 
 /**
  * Inject the mark in the files
@@ -74,13 +73,21 @@ export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/M
  * @returns the total amount of mark injection in the targeted files
  */
 // eslint-disable-next-line max-statements, complexity
-export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: Readonly<{ files?: readonly string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }>) {
+export function injectMarkInFiles({
+  files = [],
+  isReadOnly = false,
+  mark = 'no-mark',
+  placeholder = 'unique-mark',
+}: Readonly<{ files?: readonly string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }>) {
   let totalInjections = 0
   const logs: string[] = []
   const markRegex = new RegExp(mark, 'gu')
   for (const file of files) {
     const content = readFileSync(file, 'utf8')
-    if (!content.includes(placeholder) && files.length === 1) throw new Error(`could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`)
+    if (!content.includes(placeholder) && files.length === 1)
+      throw new Error(
+        `could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`,
+      )
     const updatedContent = injectMark(content, placeholder, mark)
     const times = updatedContent.match(markRegex)?.length /* c8 ignore next */ ?? 0
     /* c8 ignore next 2 */
@@ -95,7 +102,7 @@ export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-
 /**
  * Main function
  */
-async function init () {
+async function init() {
   const isVerbose = process.argv.includes('-v') || process.argv.includes('--verbose')
   if (isVerbose) log('starting...')
   const version = getPackageJsonVersion()

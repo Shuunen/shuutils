@@ -1,9 +1,15 @@
 {
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "cSpell.words": [
     "bitness",
     "caramail",
     "Cena",
+    "Croll",
     "Pepe",
     "pikachu",
     "plusplus",
@@ -15,5 +21,6 @@
     "activityBar.background": "#410A76",
     "titleBar.activeBackground": "#5B0EA5",
     "titleBar.activeForeground": "#FDFBFF"
-  }
+  },
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": false
 }

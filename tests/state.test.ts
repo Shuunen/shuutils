@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { expect, it } from 'vitest'
 import { createState, storage } from '../src'
 
@@ -17,7 +20,7 @@ it('state A watch callback', () => {
   /**
    *
    */
-  function callback () {
+  function callback() {
     callbackCalls += 1
   }
   watchStateA('name', callback)
@@ -31,7 +34,7 @@ it('state A watch callback', () => {
 })
 
 it('state B with storage and specific keys to store', () => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/naming-convention, camelcase
+  // biome-ignore lint/style/useNamingConvention: <explanation>
   storage.media = { stateB_age: 12, stateB_excluded: ':(' } as unknown as Storage
   storage.prefix = 'stateB_'
   const { state: stateB } = createState({ age: 42, excluded: ':)', name: 'Clara' }, storage, ['name', 'age'])
@@ -44,7 +47,7 @@ it('state B with storage and specific keys to store', () => {
 })
 
 it('state C with storage and all keys stored by default', () => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/naming-convention, camelcase
+  // biome-ignore lint/style/useNamingConvention: <explanation>
   storage.media = { stateC_age: 12, stateC_included: ':D' } as unknown as Storage
   storage.prefix = 'stateC_'
   const { state: stateC } = createState({ age: 42, included: 'but im gonna be ignored :(' }, storage)
@@ -60,7 +63,7 @@ it('state D multiple watch', () => {
   /**
    *
    */
-  function callbackA () {
+  function callbackA() {
     callbackCalls += 1
   }
   watchStateA(['name', 'age'], callbackA)
@@ -77,7 +80,7 @@ it('state E watch all', () => {
   /**
    * @param updatedKey the key that has been updated
    */
-  function callbackB (updatedKey: string) {
+  function callbackB(updatedKey: string) {
     callbackCalls += 1
     callbackKey = updatedKey
   }
@@ -90,4 +93,3 @@ it('state E watch all', () => {
   expect(callbackCalls, 'callback B called twice').toBe(2)
   expect(callbackKey, 'callback B called with age key').toBe('age')
 })
-

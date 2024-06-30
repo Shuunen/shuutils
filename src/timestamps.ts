@@ -3,7 +3,7 @@
  * @param date input date
  * @returns number like : 1541258097
  */
-export function getTimestamp (date: Readonly<Date> = new Date()) {
+export function getTimestamp(date: Readonly<Date> = new Date()) {
   return Math.round(date.getTime() / 1000) // eslint-disable-line @typescript-eslint/no-magic-numbers
 }
 
@@ -12,6 +12,6 @@ export function getTimestamp (date: Readonly<Date> = new Date()) {
  * @param date input date
  * @returns number like : 1541258116567
  */
-export function getTimestampMs (date: Readonly<Date> = new Date()) {
+export function getTimestampMs(date: Readonly<Date> = new Date()) {
   return date.getTime()
 }

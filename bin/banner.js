@@ -12,7 +12,7 @@ const shebang = '#!/usr/bin/env node'
  * @param {string} filePath - The file path
  * @param {string} line - The line to add
  */
-function addLine (filePath, line) {
+function addLine(filePath, line) {
   let content = readFileSync(filePath, 'utf8')
   if (content.includes(shebang)) content = content.replace(shebang, '')
   if (content.includes(line)) return
@@ -23,7 +23,7 @@ function addLine (filePath, line) {
  * Do the shuutils lib build
  * @returns {Promise<void>}
  */
-async function addLines () {
+async function addLines() {
   const files = await glob('dist/*')
   for (const filePath of files) {
     addLine(filePath, banner)

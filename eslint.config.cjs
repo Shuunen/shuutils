@@ -6,7 +6,4 @@
 // @ts-expect-error missing types
 const shuunen = require('eslint-plugin-shuunen')
 
-module.exports = [
-  ...shuunen.configs.base,
-  ...shuunen.configs.typescript,
-]
+module.exports = [...shuunen.configs.base, ...shuunen.configs.typescript]

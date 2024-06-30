@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { parseJson } from './strings'
 
-function get (key: string, defaultValue: string): string
-function get (key: string, defaultValue: boolean): boolean // eslint-disable-line @typescript-eslint/naming-convention
-function get (key: string, defaultValue: number): number
-function get<Type = unknown> (key: string, defaultValue: Type): Type
-function get<Type = unknown> (key: string): Type | undefined
+function get(key: string, defaultValue: string): string
+function get(key: string, defaultValue: boolean): boolean // eslint-disable-line @typescript-eslint/naming-convention
+function get(key: string, defaultValue: number): number
+function get<Type = unknown>(key: string, defaultValue: Type): Type
+function get<Type = unknown>(key: string): Type | undefined
 
 /**
  * Get a value from the storage media
@@ -13,7 +13,7 @@ function get<Type = unknown> (key: string): Type | undefined
  * @param defaultValue The default value to return if the key is not found
  * @returns The value or defaultValue if not found
  */
-function get<Type = unknown> (key: string, defaultValue?: Type) {
+function get<Type = unknown>(key: string, defaultValue?: Type) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
@@ -31,7 +31,7 @@ function get<Type = unknown> (key: string, defaultValue?: Type) {
  * @param data The value to set
  * @returns The given value
  */
-function set<Type> (key: string, data: Type) {
+function set<Type>(key: string, data: Type) {
   const path = storage.prefix + key
   const value = typeof data === 'string' ? data : JSON.stringify(data)
   Reflect.set(storage.media, path, value)
@@ -43,7 +43,7 @@ function set<Type> (key: string, data: Type) {
  * @param key The key of the value to check
  * @returns true if storage has a value for the given key
  */
-function has (key: string) {
+function has(key: string) {
   return get(key) !== undefined
 }
 
@@ -51,7 +51,7 @@ function has (key: string) {
  * Remove a value from the storage
  * @param key The key of the value to remove
  */
-function clear (key: string) {
+function clear(key: string) {
   const path = storage.prefix + key
   // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
   delete storage.media[path]
@@ -63,7 +63,7 @@ export const storage = {
   has,
   /* c8 ignore next 2 */
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  media: typeof localStorage === 'undefined' ? {} as Storage : localStorage,
+  media: typeof localStorage === 'undefined' ? ({} as Storage) : localStorage,
   prefix: '', // prefix all keys in the storage with a custom string
   set,
 }

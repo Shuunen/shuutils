@@ -120,16 +120,22 @@ it('dive div in a Dave div has Life in a div', () => {
   expect(element.innerHTML).toBe('<div class="dive">Life in a div</div>')
 })
 
-it('find one', () => { expect(findOne('body')?.tagName).toBe('BODY') })
-it('find all length', () => { expect(findAll('body').length).toBe(1) })
-it('find all type', () => { expect(Array.isArray(findAll('body'))).toBe(true) })
+it('find one', () => {
+  expect(findOne('body')?.tagName).toBe('BODY')
+})
+it('find all length', () => {
+  expect(findAll('body').length).toBe(1)
+})
+it('find all type', () => {
+  expect(Array.isArray(findAll('body'))).toBe(true)
+})
 
 it('wait to detect an existing element', async () => {
   const element = await waitToDetect('body', 10)
   expect(element?.tagName).toBe('BODY')
 })
 it('wait to detect a non-existing element', async () => {
-  const element = await waitToDetect('.not-existing', 10)
+  const element = await waitToDetect('.not-existing', 10, 2, 5, true)
   expect(element).toBe(undefined)
 })
 
@@ -140,13 +146,30 @@ it('scroll to height', async () => {
   await scrollToHeightSync(element)
 })
 
-it('tw returns a string A', () => { expect(typeof tw('')).toBe('string') })
-it('tw returns a string B', () => { expect(typeof tw('text-red-500')).toBe('string') })
-it('tw returns a string C', () => { expect(tw('text-red-500 text-blue-500')).toBe('text-red-500 text-blue-500') })
-it('tw returns a string D', () => { expect(tw('')).toBe('') })
-it('tw returns a string E', () => { expect(typeof tw``).toBe('string') })
-it('tw returns a string F', () => { expect(typeof tw`text-red-500`).toBe('string') })
-it('tw returns a string G', () => { expect(tw`text-red-500 text-blue-500`).toBe('text-red-500 text-blue-500') })
-it('tw returns a string H', () => { expect(tw``).toBe('') })
-it('tw returns a string I', () => { expect(tw(['text-red-500', 'text-blue-500'])).toBe('text-red-500 text-blue-500') })
-
+it('tw returns a string A', () => {
+  expect(typeof tw('')).toBe('string')
+})
+it('tw returns a string B', () => {
+  expect(typeof tw('text-red-500')).toBe('string')
+})
+it('tw returns a string C', () => {
+  expect(tw('text-red-500 text-blue-500')).toBe('text-red-500 text-blue-500')
+})
+it('tw returns a string D', () => {
+  expect(tw('')).toBe('')
+})
+it('tw returns a string E', () => {
+  expect(typeof tw``).toBe('string')
+})
+it('tw returns a string F', () => {
+  expect(typeof tw`text-red-500`).toBe('string')
+})
+it('tw returns a string G', () => {
+  expect(tw`text-red-500 text-blue-500`).toBe('text-red-500 text-blue-500')
+})
+it('tw returns a string H', () => {
+  expect(tw``).toBe('')
+})
+it('tw returns a string I', () => {
+  expect(tw(['text-red-500', 'text-blue-500'])).toBe('text-red-500 text-blue-500')
+})

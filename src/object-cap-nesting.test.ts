@@ -56,4 +56,3 @@ it('capNesting B - Level 2', () => {
 it('capNesting C - Cap more than available', () => {
   expect(capNesting(myObject, 10)).toStrictEqual(myObject)
 })
-

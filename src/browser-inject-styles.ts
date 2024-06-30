@@ -6,9 +6,12 @@
  * @example injectStyles('https://example.com/styles.css')
  * @example injectStyles('body { background-color: red; }')
  */
-export function injectStyles (string = '') {
-  // eslint-disable-next-line no-console
-  if (string.length === 0) { console.log('injectStyles : cannot inject empty styles'); return }
+export function injectStyles(string = '') {
+  if (string.length === 0) {
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    console.log('injectStyles : cannot inject empty styles') // eslint-disable-line no-console
+    return
+  }
   if (string.includes('://') && !string.includes('\n') && string.includes('.css')) {
     document.querySelector('head')?.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${string}" />`)
     return

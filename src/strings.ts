@@ -11,7 +11,7 @@ import { removeAccents } from './string-remove-accents'
  * @param willLower lowercase the output
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export function sanitize (sentence: string, willLower = true) {
+export function sanitize(sentence: string, willLower = true) {
   const text = removeAccents(sentence)
     .trim() // remove leading and trailing spaces
     .replace(/<[^>]+>/gu, ' ') // remove any tags
@@ -27,7 +27,7 @@ export function sanitize (sentence: string, willLower = true) {
  * @param string input string like `"Slug % ME with // Love !"`
  * @returns string like `"slug-me-with-love"`
  */
-export function slugify (string: string) {
+export function slugify(string: string) {
   return sanitize(string) // Clean the string
     .replace(/\W+/giu, '-') // Replace all non word with dash
     .replace(/^-+/u, '') // Trim dash from start
@@ -38,7 +38,7 @@ export function slugify (string: string) {
  * Give a random url that point to an image
  * @returns string like `"https://server.com/image.png"`
  */
-export function getRandomImageUrl () {
+export function getRandomImageUrl() {
   const images = 'https://bulma.io/images/placeholders/128x128.png,https://via.placeholder.com/150,https://bulma.io/images/placeholders/64x64.png'.split(',')
   return String(pickOne(images))
 }
@@ -47,8 +47,11 @@ export function getRandomImageUrl () {
  * Give a random word or sentence without signification
  * @returns string like `"Bolowey Opnet"`
  */
-export function getRandomString () {
-  const strings = 'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae'.split(',')
+export function getRandomString() {
+  const strings =
+    'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae'.split(
+      ',',
+    )
   return String(pickOne(strings))
 }
 
@@ -58,8 +61,8 @@ export function getRandomString () {
  * @param data input object, like `{ name: "world" }`
  * @returns string, like `"Hello world !"`
  */
-export function fillTemplate (template: Readonly<Record<string, unknown>> | string, data?: Readonly<Record<string, unknown>>) {
-  let string = (typeof template === 'object' ? JSON.stringify(template, undefined, nbSpacesIndent) : template)
+export function fillTemplate(template: Readonly<Record<string, unknown>> | string, data?: Readonly<Record<string, unknown>>) {
+  let string = typeof template === 'object' ? JSON.stringify(template, undefined, nbSpacesIndent) : template
   if (data === undefined) return string
   if (string.length === 0) return string
   const flatData = flatten(data)
@@ -76,7 +79,7 @@ export function fillTemplate (template: Readonly<Record<string, unknown>> | stri
  * @param shouldLower boolean, try to lower the rest of the string when applicable
  * @returns `"Hello John"`
  */
-export function capitalize (string: string, shouldLower = false) {
+export function capitalize(string: string, shouldLower = false) {
   if (!shouldLower) return string.charAt(0).toUpperCase() + string.slice(1)
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 }
@@ -87,7 +90,7 @@ export function capitalize (string: string, shouldLower = false) {
  * @param maxWords 3 for example
  * @returns `"Hello my dear..."`
  */
-export function ellipsisWords (stringIn = '', maxWords = 5) {
+export function ellipsisWords(stringIn = '', maxWords = 5) {
   const stringOut = stringIn.split(' ').splice(0, maxWords).join(' ')
   if (stringOut === stringIn) return stringIn
   return `${stringOut}...`
@@ -99,7 +102,7 @@ export function ellipsisWords (stringIn = '', maxWords = 5) {
  * @param maxLength 8 for example
  * @returns `"Hello my..."`
  */
-export function ellipsis (stringIn = '', maxLength = 50) {
+export function ellipsis(stringIn = '', maxLength = 50) {
   const stringOut = stringIn.slice(0, maxLength)
   if (stringOut === stringIn) return stringIn
   return `${stringOut}...`
@@ -110,20 +113,25 @@ export function ellipsis (stringIn = '', maxLength = 50) {
  * @param string `'{ "name": "Johnny" }'`
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
-export function isJson (string: string) {
+export function isJson(string: string) {
   const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
   if (!hasValidStart) return false
-  try { JSON.parse(string) } catch { return false }
+  try {
+    JSON.parse(string)
+  } catch {
+    return false
+  }
   return true
 }
 
 /**
  * Create a CRC32 table
+ * @param length the length of the table
  * @returns a table of 256 numbers
  */
-export function createCrc32Table () {
-  const table: number[] = Array.from({ length: 256 })
-  for (let index = 0; index < 256; index += 1) { // eslint-disable-line @typescript-eslint/no-magic-numbers
+export function createCrc32Table(length = 256) {
+  const table: number[] = Array.from({ length })
+  for (let index = 0; index < length; index += 1) {
     let code = index
     for (let indexB = 0; indexB < 8; indexB += 1) code = code & 0x01 ? 3_988_292_384 ^ (code >>> 1) : code >>> 1 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
     table[index] = code
@@ -137,13 +145,13 @@ export function createCrc32Table () {
  * @param text the string to checksum
  * @returns the checksum like `3547`
  */
-export function crc32 (text: string) {
+export function crc32(text: string) {
   const crcTable = createCrc32Table()
   let crc = -1
   for (let index = 0; index < text.length; index += 1) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
-    const key: number = (code ^ crc) & 0xFF // eslint-disable-line @typescript-eslint/no-magic-numbers, no-bitwise
+    const key: number = (code ^ crc) & 0xff // eslint-disable-line unicorn/number-literal-case, @typescript-eslint/no-magic-numbers, no-bitwise
     const value: number | undefined = crcTable[key]
     if (value !== undefined && value !== 0) crc = value ^ (crc >>> 8) // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
   }
@@ -155,7 +163,7 @@ export function crc32 (text: string) {
  * @param string `"Hello my dear friend"`
  * @returns the checksum like `3547`
  */
-export function stringSum (string: string) {
+export function stringSum(string: string) {
   return crc32(string)
 }
 
@@ -164,8 +172,8 @@ export function stringSum (string: string) {
  * @param value the value to check
  * @returns true if the value is a string
  */
-export function isString (value: unknown) {
-  return (typeof value === 'string')
+export function isString(value: unknown) {
+  return typeof value === 'string'
 }
 
 /**
@@ -173,7 +181,7 @@ export function isString (value: unknown) {
  * @param string the string to check
  * @returns true if the string is a base64 string
  */
-export function isBase64 (string: string) {
+export function isBase64(string: string) {
   return /^(?:data:)?[\w/]+;base64,[\w+/=]+$/u.test(string)
 }
 
@@ -182,14 +190,14 @@ export function isBase64 (string: string) {
  * @param string the base64 string to parse
  * @returns the parsed string like `{ base64: 'iVBORw0KGgoYII=', size: 11, type: 'image/png' }`
  */
-export function parseBase64 (string: string) {
+export function parseBase64(string: string) {
   const result = { base64: '', size: 0, type: '' }
   if (!isBase64(string)) return result
   const type = /[^:]\w+\/[\w+.-]+(?=;|,)/u.exec(string)
   if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
   if (base64.length > 1 && typeof base64[1] === 'string') [, result.base64] = base64
-  result.size = Math.round(result.base64.length * 3 / 4) // eslint-disable-line @typescript-eslint/no-magic-numbers
+  result.size = Math.round((result.base64.length * 3) / 4) // eslint-disable-line @typescript-eslint/no-magic-numbers
   return result
 }
 
@@ -198,12 +206,16 @@ export function parseBase64 (string: string) {
  * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
-export function parseJson<Type> (json: string) {
+export function parseJson<Type>(json: string) {
   let error = ''
   let value = {}
-  if (json !== '') try {
-    value = objectDeserialize(json)
-  } catch (error_) { error = `JSON invalide : ${(error_ as Error).message}` } // eslint-disable-line @typescript-eslint/consistent-type-assertions
+  if (json !== '')
+    try {
+      value = objectDeserialize(json)
+    } catch (error_) {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      error = `JSON invalide : ${(error_ as Error).message}`
+    }
   return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions
 }
 
@@ -212,7 +224,7 @@ export function parseJson<Type> (json: string) {
  * @param string the string to check
  * @returns true if the string contains HTML
  */
-export function isHtml (string: string) {
+export function isHtml(string: string) {
   return /<[^>]+>/u.test(string)
 }
 
@@ -224,11 +236,10 @@ export function isHtml (string: string) {
  * @param mark the mark to inject
  * @returns the new string with the mark injected
  */
-export function injectMark (content: string, placeholder: string, mark: string) {
+export function injectMark(content: string, placeholder: string, mark: string) {
   return content
     .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)
     .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark) // eslint-disable-line require-unicode-regexp
     .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`, 'u'), `$1${mark}$2`)
     .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`, 'u'), `$1${mark}$2`)
 }
-

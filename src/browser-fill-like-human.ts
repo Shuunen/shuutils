@@ -10,7 +10,7 @@ import { getRandomNumber } from './number-random'
  * @example await utils.fillLikeHuman(input, 'hello world')
  */
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export async function fillLikeHuman (input: HTMLInputElement, value: string) {
+export async function fillLikeHuman(input: HTMLInputElement, value: string) {
   input.focus()
   for (const char of value) {
     input.value += char

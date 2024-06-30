@@ -13,7 +13,7 @@ type GenClassTypes = boolean | null | number | string | string[] | undefined
  * @param path the full path to access nested property
  * @returns the nested property value
  */
-export function access (object: Readonly<Record<string, unknown>>, path: string) {
+export function access(object: Readonly<Record<string, unknown>>, path: string) {
   return flatten(object)[path]
 }
 
@@ -26,7 +26,7 @@ export function access (object: Readonly<Record<string, unknown>>, path: string)
  * @param order the order to sort, default is ascending
  * @returns the sorted array
  */
-export function byProperty<Type extends Record<string, unknown>> (property: string, order: '' | 'asc' | 'desc' = '') {
+export function byProperty<Type extends Record<string, unknown>>(property: string, order: '' | 'asc' | 'desc' = '') {
   if (order === '') return () => 0
   const sortOrder = order === 'asc' ? nbAscending : nbDescending
   return (recordA: Type, recordB: Type) => {
@@ -34,7 +34,8 @@ export function byProperty<Type extends Record<string, unknown>> (property: stri
     const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     if (!valueA && valueB) return sortOrder
     if (valueA && !valueB) return -sortOrder
-    const result = (valueA < valueB) ? nbDescending : ((valueA > valueB) ? nbAscending : 0)
+    if (valueA === valueB) return 0
+    const result = valueA < valueB ? nbDescending : nbAscending
     return result * sortOrder
   }
 }
@@ -44,13 +45,21 @@ export function byProperty<Type extends Record<string, unknown>> (property: stri
  * @param value the value to check
  * @returns true if value is an object/record
  */
-export function isRecord (value: unknown) {
-  return (
-    value !== null &&
-    (typeof value === 'object' || typeof value === 'function') &&
-    !Array.isArray(value)
-  )
+export function isRecord(value: unknown) {
+  return value !== null && (typeof value === 'object' || typeof value === 'function') && !Array.isArray(value)
 }
+
+/**
+ * Generate a unique string checksum from an object
+ * @param object the object to generate checksum from
+ * @param willSortKeys if true, the order of keys will be sorted alpha before checksum
+ * @returns the checksum
+ */
+export function objectSum(object: Readonly<Record<string, unknown>>, willSortKeys = false) {
+  return stringSum(objectSerialize(object, willSortKeys))
+}
+
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types, complexity */
 
 /**
  * Like Object.assign but only non-null/undefined values can overwrite
@@ -58,8 +67,8 @@ export function isRecord (value: unknown) {
  * @param sources Object(s) to sequentially merge
  * @returns The resulting object merged
  */
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export function safeAssign (target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]) {
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+export function safeAssign(target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]) {
   if (sources.length === 0) return target
   const source = sources.shift()
   if (isRecord(target) && isRecord(source))
@@ -79,8 +88,8 @@ export function safeAssign (target: Record<string, unknown>, ...sources: Readonl
  * @param cls optional, additional classes to add, ex: "add-me"
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types, complexity
-export function genClass (object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+export function genClass(object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
   const list = clone(cls)
   if (object === null || object === undefined) list.unshift('')
   else if (typeof object !== 'object') list.unshift(...String(object).split(' '))
@@ -96,14 +105,3 @@ export function genClass (object: GenClassTypes | GenClassTypes[] | Record<strin
   }
   return arrayUnique(list.map(String)).join(' ').trim().replace(/\s+/gu, ' ')
 }
-
-/**
- * Generate a unique string checksum from an object
- * @param object the object to generate checksum from
- * @param willSortKeys if true, the order of keys will be sorted alpha before checksum
- * @returns the checksum
- */
-export function objectSum (object: Readonly<Record<string, unknown>>, willSortKeys = false) {
-  return stringSum(objectSerialize(object, willSortKeys))
-}
-

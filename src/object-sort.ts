@@ -16,11 +16,12 @@ type IndexedObject = Record<string, unknown>
  * @param comparator an optional comparator for sorting keys of objects
  * @returns the new sorted array
  */
-export function arraySort<ArrayType extends unknown[]> (subject: ArrayType, comparator?: KeyComparator) {
+export function arraySort<ArrayType extends unknown[]>(subject: ArrayType, comparator?: KeyComparator) {
   const result = []
   for (let value of subject) {
     if (value !== null && value !== undefined)
-      if (Array.isArray(value)) value = arraySort(value, comparator) // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      if (Array.isArray(value))
+        value = arraySort(value, comparator) // eslint-disable-next-line @typescript-eslint/no-use-before-define
       else if (typeof value === 'object') value = objectSort(value as IndexedObject, comparator)
     result.push(value)
   }
@@ -33,7 +34,7 @@ export function arraySort<ArrayType extends unknown[]> (subject: ArrayType, comp
  * @param comparator an optional comparator for sorting keys of objects
  * @returns the new sorted object
  */
-export function objectSort<ObjectType extends IndexedObject> (subject: ObjectType, comparator?: KeyComparator) {
+export function objectSort<ObjectType extends IndexedObject>(subject: ObjectType, comparator?: KeyComparator) {
   const result: IndexedObject = {} as ObjectType
   const sortedKeys = Object.keys(subject).sort(comparator)
   for (const key of sortedKeys) {

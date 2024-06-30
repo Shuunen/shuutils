@@ -22,6 +22,7 @@ interface UserAgentLowEntropyJson {
 
 interface NavigatorUserAgentData extends UserAgentLowEntropyJson {
   getHighEntropyValues: (hints: readonly string[]) => Promise<UserAgentDataValues>
+  // biome-ignore lint/style/useNamingConvention: <explanation>
   toJSON: () => UserAgentLowEntropyJson // eslint-disable-line @typescript-eslint/naming-convention
 }
 
@@ -37,8 +38,7 @@ export interface NavigatorExtract {
 }
 
 export type RecursivePartial<Type> = {
-  [Key in keyof Type]?:
-  Type[Key] extends (infer Under)[] ? RecursivePartial<Under>[] : Type[Key] extends Record<string, unknown> ? RecursivePartial<Type[Key]> : Type[Key]
+  [Key in keyof Type]?: Type[Key] extends (infer Under)[] ? RecursivePartial<Under>[] : Type[Key] extends Record<string, unknown> ? RecursivePartial<Type[Key]> : Type[Key]
 }
 
 export interface PackageJson {

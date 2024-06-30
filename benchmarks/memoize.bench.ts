@@ -9,7 +9,7 @@ import { memoize, objectSum } from '../src'
  * @param numberB the second number
  * @returns {number} the difference between the two numbers
  */
-function simpleSortFunction (numberA: number, numberB: number) {
+function simpleSortFunction(numberA: number, numberB: number) {
   return numberA - numberB
 }
 
@@ -44,7 +44,7 @@ const parents: Parent[] = [parent1, parent2, parent3, parent4, parent5, parent6]
  * @param parentB the second parent
  * @returns {number} the difference between the two parents
  */
-function complexSortFunction (parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
+function complexSortFunction(parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
   return objectSum(parentA) - objectSum(parentB)
 }
 

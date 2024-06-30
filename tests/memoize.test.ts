@@ -9,7 +9,7 @@ let addCalls = 0
  * @param numberB the second number
  * @returns the sum of the two numbers
  */
-function add (numberA: number, numberB: number) {
+function add(numberA: number, numberB: number) {
   addCalls += 1
   return numberA + numberB
 }
@@ -58,7 +58,7 @@ let childNameCalls = 0
  * @param parentB the second parent
  * @returns the full name of the child
  */
-function childName (firstName: string, parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
+function childName(firstName: string, parentA: Readonly<Parent>, parentB: Readonly<Parent>) {
   childNameCalls += 1
   return `${firstName} ${parentA.lastName} ${parentB.lastName}`
 }
@@ -78,7 +78,6 @@ it('memoize D testing memoized function with objects', () => {
   expect(memoizedChildName('Michael', parentA, parentB)).toBe('Michael Doe Mac')
   expect(childNameCalls).toBe(2)
 })
-
 
 it('memoize E : return types', () => {
   expectEqualTypes(add(1, 2), memoizedAdd(1, 2))

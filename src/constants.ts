@@ -1,4 +1,3 @@
-
 // time
 export const nbMsInSecond = 1000
 export const nbSecondsInMinute = 60
