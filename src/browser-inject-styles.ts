@@ -10,10 +10,8 @@ export function injectStyles (string = '') {
   // eslint-disable-next-line no-console
   if (string.length === 0) { console.log('injectStyles : cannot inject empty styles'); return }
   if (string.includes('://') && !string.includes('\n') && string.includes('.css')) {
-    // eslint-disable-next-line no-unsanitized/method
     document.querySelector('head')?.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${string}" />`)
     return
   }
-  // eslint-disable-next-line no-unsanitized/method
   document.body.insertAdjacentHTML('beforeend', `<style>${string}</style>`)
 }

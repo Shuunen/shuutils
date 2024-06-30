@@ -1,6 +1,6 @@
 // for each file in dist folder, add a line at the top of the file
 
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import glob from 'tiny-glob'
 
 const binaries = ['unique-mark.js']
@@ -21,7 +21,7 @@ function addLine (filePath, line) {
 
 /**
  * Do the shuutils lib build
- * @returns void
+ * @returns {Promise<void>}
  */
 async function addLines () {
   const files = await glob('dist/*')
@@ -31,5 +31,5 @@ async function addLines () {
   }
 }
 
-// @ts-ignore
+// @ts-expect-error warn about the top-level await
 await addLines()

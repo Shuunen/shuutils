@@ -1,9 +1,9 @@
 import { expect, it } from 'vitest'
-import { isFirefox, bgBlack, bgBlue, bgCyan, bgGray, bgGreen, bgMagenta, bgRed, bgWhite, bgYellow, black, blue, bold, cyan, dim, gray, green, hexToHsl, hexToRgb, inverse, italic, magenta, overline, red, reset, strikeThrough, underline, white, yellow, addColorCode } from '../src'
+import { addColorCode, bgBlack, bgBlue, bgCyan, bgGray, bgGreen, bgMagenta, bgRed, bgWhite, bgYellow, black, blue, bold, cyan, dim, gray, green, hexToHsl, hexToRgb, inverse, isFirefox, italic, magenta, overline, red, reset, strikeThrough, underline, white, yellow } from '../src'
 
 it('is not Firefox', () => { expect(isFirefox()).toBe(false) })
 
-it('add color code', () => { expect(addColorCode(22,32, 'test')).toMatchSnapshot() })
+it('add color code', () => { expect(addColorCode(22, 32, 'test')).toMatchSnapshot() })
 
 it('color reset', () => { expect(reset('test')).toMatchSnapshot() })
 it('color bold', () => { expect(bold('test')).toMatchSnapshot() })

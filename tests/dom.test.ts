@@ -89,7 +89,7 @@ it('dom backdrop', () => {
 
 it('dom basics', () => {
   const funcs = [strong, em, small, h1, h2, h3, div]
-  funcs.forEach(testFunction => {
+  for (const testFunction of funcs) {
     const { name } = testFunction
     const element = testFunction(name)
     expect(element.tagName.toLowerCase()).toBe(name)
@@ -98,7 +98,7 @@ it('dom basics', () => {
     const elementContent = testFunction(name, `I really like guacamole with ${name}`)
     expect(elementContent.tagName.toLowerCase()).toBe(name)
     expect(elementContent.textContent).toBe(`I really like guacamole with ${name}`)
-  })
+  }
 })
 
 it('dom handle multiple children', () => {

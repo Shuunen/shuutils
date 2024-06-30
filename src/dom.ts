@@ -12,12 +12,9 @@ type DomContent = Node | Node[] | string
 export function dom<Tag extends keyof HTMLElementTagNameMap> (type: Tag, classes = '', content: DomContent = '') {
   const element = document.createElement(type)
   element.className = classes // eslint-disable-line unicorn/no-keyword-prefix
-  // eslint-disable-next-line no-unsanitized/property
   if (typeof content === 'string') element.innerHTML = content
   else if (content instanceof Node) element.append(content)
-  else content.forEach(node => {
-    element.append(node)
-  })
+  else for (const node of content) element.append(node)
   return element
 }
 
@@ -200,19 +197,19 @@ export function findAll (selector: string, context: Document | HTMLElement = doc
  * @param wait time to wait in ms between each try, default 500ms
  * @param nbTries used for recursion, do not use it
  * @param maxTry the max number of tries, default 5
+ * @param willLog true if the function should log when it stops searching
  * @returns the element or undefined if not found
  */
 // eslint-disable-next-line @typescript-eslint/max-params
-export async function waitToDetect (selector: string, wait = 500, nbTries = 0, maxTry = 5): Promise<Element | undefined> {
+export async function waitToDetect (selector: string, wait = 500, nbTries = 0, maxTry = 5, willLog = false) {
   await sleep(wait)
   const element = findOne(selector)
   if (element) return element
   if (nbTries > maxTry) {
-    // eslint-disable-next-line no-console
-    console.log(`stop searching after 5 fails to detect : "${selector}"`)
-    return undefined
+    if (willLog) console.log(`stop searching after 5 fails to detect : "${selector}"`) // eslint-disable-line no-console
+    return undefined // eslint-disable-line unicorn/no-useless-undefined
   }
-  return await waitToDetect(selector, wait, nbTries + 1, maxTry)
+  return waitToDetect(selector, wait, nbTries + 1, maxTry)
 }
 
 /**
@@ -224,11 +221,11 @@ export async function waitToDetect (selector: string, wait = 500, nbTries = 0, m
  */
 export async function scrollToHeightSync (element: HTMLElement) {
   const initial = element.style.height
-  element.style.height = 'inherit' // eslint-disable-line no-param-reassign
+  element.style.height = 'inherit'
   const target = element.scrollHeight + 2 // eslint-disable-line @typescript-eslint/no-magic-numbers
-  element.style.height = initial // eslint-disable-line no-param-reassign
+  element.style.height = initial
   await sleep(10) // eslint-disable-line @typescript-eslint/no-magic-numbers
-  element.style.height = `${target}px` // eslint-disable-line no-param-reassign
+  element.style.height = `${target}px` // eslint-disable-line require-atomic-updates
 }
 
 /**
@@ -245,7 +242,7 @@ export function backdrop (classes: string) {
  * @param classes the classes to return
  * @returns the classes as a string
  */
-export function tw (classes: Readonly<string[]> | Readonly<TemplateStringsArray> | string) {
+export function tw (classes: Readonly<TemplateStringsArray> | Readonly<string[]> | string) {
   if (typeof classes === 'string') return classes
   return classes.join(' ')
 }

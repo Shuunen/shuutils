@@ -1,4 +1,3 @@
-/* eslint-disable sonar/no-wildcard-import */
 export * from './array-insert-after'
 export * from './array-pick-one'
 export * from './array-remove-value'

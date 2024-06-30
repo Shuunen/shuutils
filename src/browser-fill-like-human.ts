@@ -13,7 +13,7 @@ import { getRandomNumber } from './number-random'
 export async function fillLikeHuman (input: HTMLInputElement, value: string) {
   input.focus()
   for (const char of value) {
-    input.value += char // eslint-disable-line no-param-reassign
+    input.value += char
     await sleep(getRandomNumber(40, 80)) // eslint-disable-line no-await-in-loop, @typescript-eslint/no-magic-numbers
   }
   input.dispatchEvent(new Event('input', { bubbles: true })) // eslint-disable-line @typescript-eslint/naming-convention

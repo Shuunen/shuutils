@@ -6,7 +6,7 @@
  * @param delay - The delay in milliseconds before removing the element.
  */
 function toastHide (element: HTMLElement, delay = 200) {
-  element.style.transform = 'translateX(300px)' // eslint-disable-line no-param-reassign
+  element.style.transform = 'translateX(300px)'
   setTimeout(() => { element.remove() }, delay)
 }
 
@@ -17,7 +17,7 @@ function toastHide (element: HTMLElement, delay = 200) {
  */
 function toastShow (element: HTMLElement, delay = 100) {
   document.body.append(element)
-  setTimeout(() => { element.style.transform = 'translateX(0)' }, delay) // eslint-disable-line no-param-reassign
+  setTimeout(() => { element.style.transform = 'translateX(0)' }, delay)
 }
 
 /**
@@ -36,7 +36,6 @@ function toastAdd (type: 'error' | 'success', message = '', delay = 0, padding =
   const background = type === 'success' ? 'forestgreen' : 'firebrick'
   const icon = type === 'success' ? '✔' : '✖' // @ts-expect-error it works (๑◕ܫ◕๑)
   element.style = `position: fixed; display: flex; align-items: center; gap: 8px; bottom: ${bottom + padding}px; right: 20px; z-index: 99999; padding: 5px 14px 6px 10px; background-color: ${background}; color: white; border-radius: 7px; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); font-size: 18px; transition: transform 0.2s ease-in-out; transform: translateX(300px);`
-  // eslint-disable-next-line no-unsanitized/property
   element.innerHTML = `<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">${icon}</span><span style="margin-top: -1px;">${message}</span>`
   toastShow(element)
   if (delay > 0) setTimeout(() => { toastHide(element) }, delay)

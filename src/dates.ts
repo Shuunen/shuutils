@@ -78,7 +78,7 @@ export function formatDate (date: Readonly<Date>, format: string, locale = 'en-U
  */
 export function readableTime (input: Readonly<Date> | number, isLong = true) {
   const ms = typeof input === 'number' ? input : (Date.now() - input.getTime())
-  // eslint-disable-next-line func-style, jsdoc/require-jsdoc, sonarjs/no-nested-template-literals
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const format = (value: number, long: string, short: string) => `${Math.floor(value)}${isLong ? ` ${long + (Math.floor(value) > 1 ? 's' : '')}` : short}`
   if (ms < nbMsInSecond) return format(ms, 'millisecond', 'ms')
   if (ms < nbMsInMinute) return format(ms / nbMsInSecond, 'second', 's')

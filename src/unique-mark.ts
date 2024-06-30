@@ -1,7 +1,6 @@
-/* eslint-disable import/exports-last */
-import { execSync } from 'child_process'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
-import path from 'path'
+import { execSync } from 'node:child_process'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import path from 'node:path'
 import glob from 'tiny-glob'
 
 import { blue } from './colors.js'
@@ -74,20 +73,21 @@ export function generateMark ({ commit = '', date = formatDate(new Date(), 'dd/M
  * @param root0.isReadOnly if true, will not write the files to disk (useful for unit tests)
  * @returns the total amount of mark injection in the targeted files
  */
+// eslint-disable-next-line max-statements, complexity
 export function injectMarkInFiles ({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: Readonly<{ files?: readonly string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }>) {
   let totalInjections = 0
   const logs: string[] = []
-  const markRegex = new RegExp(mark, 'gu') // eslint-disable-line security/detect-non-literal-regexp
-  files.forEach(file => {
+  const markRegex = new RegExp(mark, 'gu')
+  for (const file of files) {
     const content = readFileSync(file, 'utf8')
     if (!content.includes(placeholder) && files.length === 1) throw new Error(`could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`)
     const updatedContent = injectMark(content, placeholder, mark)
-    const times = updatedContent.match(markRegex)?.length /* c8 ignore next */ ?? 0 // eslint-disable-line regexp/prefer-regexp-exec
+    const times = updatedContent.match(markRegex)?.length /* c8 ignore next */ ?? 0
     /* c8 ignore next 2 */
     if (!isReadOnly) writeFileSync(file, updatedContent)
     logs.push(`injected in ${file} : ${times} time${times > 1 ? 's' : ''}`)
     totalInjections += times
-  })
+  }
   return { logs, totalInjections }
 }
 
@@ -105,7 +105,7 @@ async function init () {
   if (isVerbose) log('generated mark', mark)
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  logs.forEach(line => { log(...(line.split(':') as [string, string])) })
+  for (const line of logs) log(...(line.split(':') as [string, string]))
   log('total injections', String(totalInjections))
 }
 

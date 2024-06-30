@@ -41,11 +41,10 @@ const samples = [
   [daysAgo(364), '12 months ago'],
   [daysAgo(365), 'last year'],
 ]
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-samples.forEach(([input, expected], index) => {
+
+for (const [index, [input, expected]] of samples.entries())
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   it(`should calculate time ago correctly (index ${index})`, () => { expect(readableTimeAgo(input as Date | number)).toBe(expected) })
-})
 
 const date = new Date('2021-09-02T07:08:28')
 it('format date as (space) HH:mm:ss', () => { expect(formatDate(date, ' HH:mm:ss')).toBe(' 07:08:28') })

@@ -4,10 +4,8 @@
  * @returns promise that resolve in the provided time
  */
 export async function sleep (ms = 1000) {
-  // eslint-disable-next-line promise/avoid-new, no-promise-executor-return
-  return await new Promise(resolve => setTimeout(() => {
-    resolve(ms)
-  }, ms))
+  // eslint-disable-next-line no-promise-executor-return
+  return new Promise(resolve => setTimeout(() => { resolve(ms) }, ms))
 }
 
 /**
@@ -17,5 +15,5 @@ export async function sleep (ms = 1000) {
  * @returns true if the object has the property
  */
 export function hasOwn (object: object, property: string) {
-  return Object.prototype.hasOwnProperty.call(object, property)
+  return Object.hasOwn(object, property)
 }

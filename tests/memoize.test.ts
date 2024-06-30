@@ -9,7 +9,7 @@ let addCalls = 0
  * @param numberB the second number
  * @returns the sum of the two numbers
  */
-function add (numberA: number, numberB: number): number {
+function add (numberA: number, numberB: number) {
   addCalls += 1
   return numberA + numberB
 }

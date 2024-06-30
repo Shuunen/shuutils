@@ -33,7 +33,7 @@ async function anAsyncFunctionThatReturnAnObject () {
   }
 }
 
-it('throttle A', async function throttleA () {
+it('throttle A', async () => {
   times = 0
   const myFunctionThrottled = throttle(myFunction, 100)
   expect(times).toBe(0)

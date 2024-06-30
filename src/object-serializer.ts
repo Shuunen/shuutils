@@ -45,7 +45,7 @@ function reviver (_key: string, value?: unknown) {
   /* c8 ignore next */
   if (value === undefined || value === null) return value
   if (typeof value !== 'object') return value // @ts-expect-error non-standard properties
-  if ('__strRegexFlags__' in value && '__strRegexSource__' in value) return new RegExp(value.__strRegexSource__, value.__strRegexFlags__) // eslint-disable-line security/detect-non-literal-regexp
+  if ('__strRegexFlags__' in value && '__strRegexSource__' in value) return new RegExp(value.__strRegexSource__, value.__strRegexFlags__)
   if ('__strFunction__' in value) return new Function(`return ${value.__strFunction__}`)() /* eslint-disable-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-implied-eval, no-new-func, @typescript-eslint/restrict-template-expressions */ /* @ts-expect-error non-standard properties */
   if ('__strDate__' in value) return new Date(value.__strDate__)
   // here we return undefined but JSON.parse will just remove the key from the object, not great but in the end it's the same result, myObject.undefinedKey will be undefined either in { undefinedKey: undefined } or in { } ... ^^'

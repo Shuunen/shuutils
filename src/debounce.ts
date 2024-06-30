@@ -1,6 +1,4 @@
-/* eslint-disable promise/avoid-new */
 /* eslint-disable @typescript-eslint/init-declarations */
-/* eslint-disable func-style */
 
 /**
  * Debounce any function
@@ -10,7 +8,7 @@
  */
 export const debounce = <Method extends (...parameters: Parameters<Method>) => ReturnType<Method>> (callback: Method, waitFor: number) => {
   let timeout: ReturnType<typeof setTimeout>
-  return async (...parameters: Parameters<Method>) => await new Promise<ReturnType<Method>>(resolve => {
+  return async (...parameters: Parameters<Method>) => new Promise<ReturnType<Method>>(resolve => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       resolve(callback(...parameters))

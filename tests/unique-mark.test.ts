@@ -19,7 +19,7 @@ it('getTargetFiles A list markdown files at root dir', async () => {
 })
 
 it('getTargetFiles B list non existent files', async () => {
-  await expect(async () => await getTargetFiles()).rejects.toThrowErrorMatchingSnapshot()
+  await expect(async () => getTargetFiles()).rejects.toThrowErrorMatchingSnapshot()
 })
 
 const fakeMark = '9.7.8 - xyz - 07/05/2023 17:26:35'

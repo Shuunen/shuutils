@@ -5,7 +5,7 @@ import { flatten } from './object-flatten'
 import { objectSerialize } from './object-serializer'
 import { stringSum } from './strings'
 
-type GenClassTypes = string[] | boolean | number | string | null | undefined
+type GenClassTypes = boolean | null | number | string | string[] | undefined
 
 /**
  * Access nested property
@@ -34,7 +34,7 @@ export function byProperty<Type extends Record<string, unknown>> (property: stri
     const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
     if (!valueA && valueB) return sortOrder
     if (valueA && !valueB) return -sortOrder
-    const result = (valueA < valueB) ? nbDescending : ((valueA > valueB) ? nbAscending : 0) // eslint-disable-line no-nested-ternary
+    const result = (valueA < valueB) ? nbDescending : ((valueA > valueB) ? nbAscending : 0)
     return result * sortOrder
   }
 }
@@ -58,18 +58,16 @@ export function isRecord (value: unknown) {
  * @param sources Object(s) to sequentially merge
  * @returns The resulting object merged
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity, @typescript-eslint/prefer-readonly-parameter-types
-export function safeAssign (target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]): Record<string, unknown> {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+export function safeAssign (target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]) {
   if (sources.length === 0) return target
   const source = sources.shift()
   if (isRecord(target) && isRecord(source))
     for (const key in source)
       if (isRecord(source[key])) {
-        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-        if (!target[key]) Object.assign(target, { [key]: {} })
+        if (!target[key]) Object.assign(target, { [key]: {} }) // eslint-disable-line @typescript-eslint/strict-boolean-expressions
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         safeAssign(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>)
-        // eslint-disable-next-line sonarjs/elseif-without-else
       } else if (source[key] !== null && source[key] !== undefined) Object.assign(target, { [key]: source[key] })
   return safeAssign(target, ...sources)
 }
@@ -81,7 +79,7 @@ export function safeAssign (target: Record<string, unknown>, ...sources: Readonl
  * @param cls optional, additional classes to add, ex: "add-me"
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
-// eslint-disable-next-line complexity, sonarjs/cognitive-complexity, @typescript-eslint/prefer-readonly-parameter-types
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types, complexity
 export function genClass (object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
   const list = clone(cls)
   if (object === null || object === undefined) list.unshift('')
@@ -93,7 +91,6 @@ export function genClass (object: GenClassTypes | GenClassTypes[] | Record<strin
       const value = object[key]
       if (typeof value === 'boolean' && value) list.push(key)
       else if (typeof value === 'string' && value.length > 0) list.push(`${key}-${value}`)
-      // eslint-disable-next-line sonarjs/elseif-without-else
       else if (Array.isArray(value) && value.length > 0) list.push(`has-${key}`)
     }
   }

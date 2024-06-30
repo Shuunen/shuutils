@@ -4,7 +4,7 @@
  * @param callback the function to memoize
  * @returns a memoized function
  */
-export function memoize<Callback extends (...args: Parameters<Callback>) => any> (callback: Callback) { // eslint-disable-line @typescript-eslint/no-explicit-any
+export function memoize<Callback extends (...arguments_: Parameters<Callback>) => any> (callback: Callback) { // eslint-disable-line @typescript-eslint/no-explicit-any
   if (typeof callback !== 'function') throw new Error('memoize callback parameter should be a function')
   const cache: Record<string, ReturnType<Callback>> = {}
   /**
@@ -12,7 +12,7 @@ export function memoize<Callback extends (...args: Parameters<Callback>) => any>
    * @param parameters the arguments to pass to the callback
    * @returns the result of the callback
    */
-  function memoized (...parameters: Parameters<Callback>): ReturnType<Callback> {
+  function memoized (...parameters: Parameters<Callback>) {
     const key = JSON.stringify(parameters)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     if (!(key in cache)) cache[key] = callback(...parameters)

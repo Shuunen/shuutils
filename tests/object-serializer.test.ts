@@ -163,7 +163,6 @@ it('objectDeserialize G does not affect original object', () => {
   `)
 })
 
-// eslint-disable-next-line max-statements
 it('objectDeserialize H person', () => {
   const object = objectDeserialize('{"age":21,"canPush":null,"details":{"dateOfBirth":{"__strDate__":"2001-12-22T00:00:00.000Z"},"favoriteFood":"sushi","hatedFood":{"__strUndefined__":true}},"isNameValid":true,"name":"John","nameRegex":{"__strRegexFlags__":"iu","__strRegexSource__":"^jo"},"nameValidator":{"__strFunction__":"(input) => input.length > 3"},"pets":["Médoc","T-Rex","Angel"],"petsDetails":[{"age":3,"name":"Médoc"},{"age":5,"name":"T-Rex"},{"age":1,"name":"Angel"}]}')
   expect(object).toMatchInlineSnapshot(`

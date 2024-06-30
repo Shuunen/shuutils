@@ -14,7 +14,6 @@ import { removeAccents } from './string-remove-accents'
 export function sanitize (sentence: string, willLower = true) {
   const text = removeAccents(sentence)
     .trim() // remove leading and trailing spaces
-    // eslint-disable-next-line regexp/no-super-linear-move
     .replace(/<[^>]+>/gu, ' ') // remove any tags
     .replace(/['’-]/gu, ' ') // replace quotes and hyphens with spaces
     .replace(/[^\d\sa-z]/giu, '') // remove all non-alphanumeric characters
@@ -32,7 +31,6 @@ export function slugify (string: string) {
   return sanitize(string) // Clean the string
     .replace(/\W+/giu, '-') // Replace all non word with dash
     .replace(/^-+/u, '') // Trim dash from start
-    // eslint-disable-next-line regexp/no-super-linear-move
     .replace(/-+$/u, '') // Trim dash from end
 }
 
@@ -66,8 +64,7 @@ export function fillTemplate (template: Readonly<Record<string, unknown>> | stri
   if (string.length === 0) return string
   const flatData = flatten(data)
   for (const [key, value] of Object.entries(flatData)) {
-    // eslint-disable-next-line security/detect-non-literal-regexp
-    const regex = new RegExp(`(/?\\*?{{?\\s*${key}\\s*}?}\\*?/?)`, 'g')
+    const regex = new RegExp(`(/?\\*?{{?\\s*${key}\\s*}?}\\*?/?)`, 'g') // eslint-disable-line require-unicode-regexp
     string = string.replace(regex, String(value))
   }
   return string
@@ -114,7 +111,6 @@ export function ellipsis (stringIn = '', maxLength = 50) {
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
 export function isJson (string: string) {
-  // eslint-disable-next-line security/detect-unsafe-regex
   const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
   if (!hasValidStart) return false
   try { JSON.parse(string) } catch { return false }
@@ -143,7 +139,7 @@ export function createCrc32Table () {
  */
 export function crc32 (text: string) {
   const crcTable = createCrc32Table()
-  let crc = -1 // eslint-disable-line @typescript-eslint/no-magic-numbers
+  let crc = -1
   for (let index = 0; index < text.length; index += 1) {
     /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
@@ -151,7 +147,7 @@ export function crc32 (text: string) {
     const value: number | undefined = crcTable[key]
     if (value !== undefined && value !== 0) crc = value ^ (crc >>> 8) // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
   }
-  return (-1 ^ crc) >>> 0 // eslint-disable-line no-bitwise, @typescript-eslint/no-magic-numbers
+  return (-1 ^ crc) >>> 0 // eslint-disable-line no-bitwise
 }
 
 /**
@@ -189,7 +185,6 @@ export function isBase64 (string: string) {
 export function parseBase64 (string: string) {
   const result = { base64: '', size: 0, type: '' }
   if (!isBase64(string)) return result
-  // eslint-disable-next-line regexp/no-super-linear-move
   const type = /[^:]\w+\/[\w+.-]+(?=;|,)/u.exec(string)
   if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
@@ -218,7 +213,6 @@ export function parseJson<Type> (json: string) {
  * @returns true if the string contains HTML
  */
 export function isHtml (string: string) {
-  // eslint-disable-next-line regexp/no-super-linear-move
   return /<[^>]+>/u.test(string)
 }
 
@@ -231,12 +225,10 @@ export function isHtml (string: string) {
  * @returns the new string with the mark injected
  */
 export function injectMark (content: string, placeholder: string, mark: string) {
-  /* eslint-disable security/detect-non-literal-regexp */
   return content
     .replace(new RegExp(`__${placeholder}__`, 'gu'), mark)
-    .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark)
+    .replace(new RegExp(`{{1,2}${placeholder}}{1,2}`, 'g'), mark) // eslint-disable-line require-unicode-regexp
     .replace(new RegExp(`(<[a-z]+ .*id="${placeholder}"[^>]*>)[^<]*(</[a-z]+>)`, 'u'), `$1${mark}$2`)
     .replace(new RegExp(`(<meta name="${placeholder}" content=")[^"]*(")`, 'u'), `$1${mark}$2`)
-  /* eslint-enable security/detect-non-literal-regexp */
 }
 

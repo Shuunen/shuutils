@@ -12,7 +12,7 @@ export function capNesting (object: Readonly<Record<string, unknown>>, maxLevel 
    * @param currentLevel - The current nesting level.
    * @returns The capped object.
    */
-  function capHelper (currentObject: typeof object | null, currentLevel: number) {
+  function capHelper (currentObject: null | typeof object, currentLevel: number) {
     if (currentLevel > maxLevel) return '...'
     if (typeof currentObject !== 'object' || currentObject === null) return currentObject
     const result = Array.isArray(currentObject) ? [] : {} // @ts-expect-error type issue

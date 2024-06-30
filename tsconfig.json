@@ -36,6 +36,8 @@
   },
   "include": [
     "*.ts",
+    "*.cjs",
+    ".*.cjs",
     "benchmarks",
     "bin",
     "src",

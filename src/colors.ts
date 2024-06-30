@@ -178,7 +178,6 @@ export function gray (string: string) {
   return addColorCode(90, 39, string)
 }
 
-
 /**
  * Render a string on a black background for the terminal
  * @param string the string to render
@@ -266,7 +265,6 @@ export function bgGray (string: string) {
  * @returns the rgb color like { colorRed: 12, colorGreen: 24, colorBlue: 42 }
  */
 export function hexToRgb (hex: string) {
-  /* eslint-disable @typescript-eslint/restrict-template-expressions */
   if (hex.length === nbShortHex) return {
     colorBlue: Number(`0x${hex[nbFourth]}${hex[nbFourth]}`),
     colorGreen: Number(`0x${hex[nbThird]}${hex[nbThird]}`),
@@ -277,7 +275,6 @@ export function hexToRgb (hex: string) {
     colorGreen: Number(`0x${hex[nbFourth]}${hex[nbFifth]}`),
     colorRed: Number(`0x${hex[nbSecond]}${hex[nbThird]}`),
   }
-  /* eslint-enable @typescript-eslint/restrict-template-expressions */
   throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${nbShortHex} or ${nbLongHex} instead of : ${hex.length}`)
 }
 
@@ -297,9 +294,9 @@ export function hexToHsl (hex: string) {
   const min = Math.min(colorRed, colorGreen, colorBlue)
   const max = Math.max(colorRed, colorGreen, colorBlue)
   const delta = max - min
-  let hue = nbHslMin // eslint-disable-line sonar/no-dead-store
-  let saturation = nbHslMin
-  let lightness = nbHslMin // eslint-disable-line sonar/no-dead-store
+  let hue = nbHslMin // eslint-disable-line no-useless-assignment
+  let saturation = nbHslMin // eslint-disable-line no-useless-assignment
+  let lightness = nbHslMin // eslint-disable-line no-useless-assignment
   if (delta === 0) hue = nbHslMin
   else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % nbSeventh
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + nbThird
