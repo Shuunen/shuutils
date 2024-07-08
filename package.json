@@ -13,7 +13,7 @@
     "@biomejs/biome": "1.8",
     "@happy-dom/global-registrator": "14.12",
     "@types/node": "20.14",
-    "@vitest/coverage-v8": "1.6",
+    "@vitest/coverage-v8": "2.0",
     "dependency-cruiser": "16.3",
     "esbuild": "0.23",
     "eslint": "*",
@@ -21,7 +21,7 @@
     "pkgroll": "2.1",
     "repo-check": "1.36",
     "typescript": "5.5",
-    "vitest": "1.6",
+    "vitest": "2.0",
     "watchlist": "0.3"
   },
   "exports": {
