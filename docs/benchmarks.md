@@ -1,31 +1,33 @@
 
 # Benchmarks
 
-| date       | command alias | delay   | comment                                 | machine            |
-| ---------- | ------------- | ------- | --------------------------------------- | ------------------ |
-| 2023-02-09 | build         | 145 ms  |                                         |                    |
-| 2023-02-09 | c8-uvu        | 3,5 sec | 900 ms for coverage                     |                    |
-| 2023-02-09 | eslint        | 19 sec  |                                         |                    |
-| 2023-02-09 | tsc-no-emit   | 1,6 sec |                                         |                    |
-| 2023-02-09 | uvu           | 2,6 sec |                                         |                    |
-| 2023-02-09 | uvu-happy-dom | 1,7 sec | happy was imported in dom.test.ts       |                    |
-| 2023-02-11 | c8-vitest     | 5,3 sec | 1,5 sec for coverage                    |                    |
-| 2023-02-11 | vitest        | 3,8 sec |                                         |                    |
-| 2023-04-05 | build         | 130 ms  | stable, small improvement               |                    |
-| 2023-04-05 | c8-vitest     | 4,0 sec | nice improvement, no idea why ^^'       |                    |
-| 2023-04-05 | eslint        | 13 sec  | nice improvement, no idea why ^^'       |                    |
-| 2023-04-05 | tsc-no-emit   | 1,7 sec | maybe typescript 5 bump                 |                    |
-| 2023-04-05 | vitest        | 3,7 sec | stable                                  |                    |
-| 2023-12-11 | build         | 202 ms  | que paso ?!?                            | NZXL Win11 Node 20 |
-| 2023-12-11 | eslint        | 13 sec  | stable                                  | NZXL Win11 Node 20 |
-| 2023-12-11 | tsc-no-emit   | 2,5 sec | que paso ?!?                            | NZXL Win11 Node 20 |
-| 2023-12-11 | vitest        | 5,7 sec | que paso ?!?                            | NZXL Win11 Node 20 |
-| 2024-06-29 | build         | 1,8 sec | new build via pkgroll                   | Duc Win11 Node 20  |
-| 2024-06-29 | c8-vitest     | 3,0 sec | seems ISO with better hardware          | Duc Win11 Node 20  |
-| 2024-06-29 | eslint        | 7,6 sec | 2x faster with Duc ? *doubt*            | Duc Win11 Node 20  |
-| 2024-06-29 | tsc-no-emit   | 1,2 sec | seems ISO with better hardware          | Duc Win11 Node 20  |
-| 2024-06-29 | vitest        | 2,5 sec | seems ISO with better hardware          | Duc Win11 Node 20  |
-| 2024-06-30 | eslint        | 4,5 sec | 2x faster with eslint-plugin-shuunen ^^ | Duc Win11 Node 20  |
+| date       | command alias | delay   | comment                           | machine            |
+| ---------- | ------------- | ------- | --------------------------------- | ------------------ |
+| 2023-02-09 | build         | 145 ms  |                                   |                    |
+| 2023-02-09 | c8-uvu        | 3,5 sec | 900 ms for coverage               |                    |
+| 2023-02-09 | eslint        | 19 sec  |                                   |                    |
+| 2023-02-09 | tsc-no-emit   | 1,6 sec |                                   |                    |
+| 2023-02-09 | uvu           | 2,6 sec |                                   |                    |
+| 2023-02-09 | uvu-happy-dom | 1,7 sec | happy was imported in dom.test.ts |                    |
+| 2023-02-11 | c8-vitest     | 5,3 sec | 1,5 sec for coverage              |                    |
+| 2023-02-11 | vitest        | 3,8 sec |                                   |                    |
+| 2023-04-05 | build         | 130 ms  | stable, small improvement         |                    |
+| 2023-04-05 | c8-vitest     | 4,0 sec | nice improvement, no idea why ^^' |                    |
+| 2023-04-05 | eslint        | 13 sec  | nice improvement, no idea why ^^' |                    |
+| 2023-04-05 | tsc-no-emit   | 1,7 sec | maybe typescript 5 bump           |                    |
+| 2023-04-05 | vitest        | 3,7 sec | stable                            |                    |
+| 2023-12-11 | build         | 202 ms  | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2023-12-11 | eslint        | 13 sec  | stable                            | NZXL Win11 Node 20 |
+| 2023-12-11 | tsc-no-emit   | 2,5 sec | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2023-12-11 | vitest        | 5,7 sec | que paso ?!?                      | NZXL Win11 Node 20 |
+| 2024-06-29 | build         | 1,8 sec | new build via pkgroll             | Duc Win11 Node 20  |
+| 2024-06-29 | c8-vitest     | 3,0 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
+| 2024-06-29 | eslint        | 7,6 sec | 2x faster with Duc ? *doubt*      | Duc Win11 Node 20  |
+| 2024-06-29 | tsc-no-emit   | 1,2 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
+| 2024-06-29 | vitest        | 2,5 sec | seems ISO with better hardware    | Duc Win11 Node 20  |
+| 2024-06-30 | eslint        | 4,5 sec | 2x faster with eslint-pg-shuunen  | Duc Win11 Node 20  |
+| 2024-07-07 | eslint        | 6,5 sec | eslint-plugin-shuunen 0.1         | Gram Zorin Node 20 |
+| 2024-07-08 | eslint        | 6,4 sec | eslint-plugin-shuunen 0.2         | Gram Zorin Node 20 |
 
 Command aliases :
 
