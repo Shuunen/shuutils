@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-concat */
-/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-lines */
 /** @type {import('dependency-cruiser').IConfiguration} */

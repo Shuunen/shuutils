@@ -17,7 +17,7 @@
     "dependency-cruiser": "16.3",
     "esbuild": "0.23",
     "eslint": "*",
-    "eslint-plugin-shuunen": "0.2",
+    "eslint-plugin-shuunen": "0.3",
     "pkgroll": "2.1",
     "repo-check": "1.37",
     "typescript": "5.5",
