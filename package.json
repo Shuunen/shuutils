@@ -19,7 +19,7 @@
     "eslint": "*",
     "eslint-plugin-shuunen": "0.1.1",
     "pkgroll": "2.1",
-    "repo-check": "1.36",
+    "repo-check": "1.37",
     "typescript": "5.5",
     "vitest": "2.0",
     "watchlist": "0.3"
