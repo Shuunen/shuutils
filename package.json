@@ -18,7 +18,7 @@
     "esbuild": "0.23",
     "eslint": "*",
     "eslint-plugin-shuunen": "0.3",
-    "pkgroll": "2.1",
+    "pkgroll": "2.4",
     "repo-check": "1.37",
     "typescript": "5.5",
     "vitest": "2.0",

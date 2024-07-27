@@ -20,7 +20,7 @@ exports[`tree-shake test B 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/environment.js
+  "output": "// dist/environment-B2F7H_Ns.js
 function pickOne(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -47,7 +47,7 @@ exports[`tree-shake test C 1`] = `
 {
   "errors": [],
   "nbOutputFiles": 1,
-  "output": "// dist/environment.js
+  "output": "// dist/environment-B2F7H_Ns.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;
@@ -68,9 +68,7 @@ var timeAgoTuples = [
 function readableTimeAgo(input, language = "en") {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: "auto" });
   const ms = typeof input === "number" ? input : Date.now() - input.getTime();
-  for (const [threshold, divisor, unit] of timeAgoTuples)
-    if (ms < threshold)
-      return rtf.format(-Math.floor(ms / divisor), unit);
+  for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
   return rtf.format(-Math.floor(ms / nbMsInYear), "year");
 }
 
