@@ -7,7 +7,6 @@
 [![Publish size](https://img.shields.io/bundlephobia/min/shuutils?label=publish%20size)](https://bundlephobia.com/package/shuutils)
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Shuunen/shuutils?style=flat)](https://codeclimate.com/github/Shuunen/shuutils)
-[![Scrutinizer Score](https://scrutinizer-ci.com/g/Shuunen/shuutils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Shuunen/shuutils)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
