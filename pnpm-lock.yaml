@@ -14,8 +14,8 @@ devDependencies:
     specifier: '1.8'
     version: 1.8.3
   '@happy-dom/global-registrator':
-    specifier: '15.4'
-    version: 15.4.0
+    specifier: '15.6'
+    version: 15.6.0
   '@types/node':
     specifier: '20.16'
     version: 20.16.0
@@ -690,11 +690,11 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     dev: true
 
-  /@happy-dom/global-registrator@15.4.0:
-    resolution: {integrity: sha512-53w0wOCbOr6ARZYJL5x8KwOqeXqPtgCCc46MDWaVWMKEjHyaWkq7/OUSIZarg6hbviM66llgVoeIZBWaisIgiA==}
+  /@happy-dom/global-registrator@15.6.0:
+    resolution: {integrity: sha512-zdOfJ7ElhpUYBOILlh5ZzBYBRjCrCSG+THTHlcC49pSjUqmX1g0nP9rFe1Lpkvg4q32zx+JvCzmj0BY8PzP2AA==}
     engines: {node: '>=18.0.0'}
     dependencies:
-      happy-dom: 15.4.0
+      happy-dom: 15.6.0
     dev: true
 
   /@humanwhocodes/module-importer@1.0.1:
@@ -2253,8 +2253,8 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
-  /happy-dom@15.4.0:
-    resolution: {integrity: sha512-XODtsNmhWEFWaUWHH56JLHdsshbyJR5AB5fRtzR0pfDwr9Of3YA20h4D+Gy2trArrEvnZDRjZPyqfU8UGVVU8g==}
+  /happy-dom@15.6.0:
+    resolution: {integrity: sha512-M2ikOwrC5+KVofexnA0DZbQ0/hSHm2ZFKCmS3Ora11KGNHgHBdlRzZ/dzpDDPxQyqko3yNohFepJclG2T0GeZQ==}
     engines: {node: '>=18.0.0'}
     dependencies:
       entities: 4.5.0
