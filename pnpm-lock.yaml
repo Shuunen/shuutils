@@ -35,8 +35,8 @@ devDependencies:
     specifier: '0.3'
     version: 0.3.0(eslint@9.8.0)(tailwindcss@3.4.7)(typescript@5.6.2)
   pkgroll:
-    specifier: '2.4'
-    version: 2.4.1(typescript@5.6.2)
+    specifier: '2.5'
+    version: 2.5.0(typescript@5.6.2)
   repo-check:
     specifier: '1.37'
     version: 1.37.1
@@ -2878,8 +2878,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /pkgroll@2.4.1(typescript@5.6.2):
-    resolution: {integrity: sha512-lIQv67Ynv85N5RNAoWF0Wit7vlifds4yOM5K64gclmDzNacbI18dLYpYRHk1/8XR5bLI37b+MWb2y/Fj/MQ+JA==}
+  /pkgroll@2.5.0(typescript@5.6.2):
+    resolution: {integrity: sha512-nIbxukMp9i63is1Aq8wIHZcNcJyZJRZ340HF7yP3y+TBZ5P34ARI67dBChvCz4DKPaEZu8hRHM+mnDw3G471uA==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
