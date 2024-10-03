@@ -15,7 +15,7 @@
     "@types/node": "20.16",
     "@vitest/coverage-v8": "2.1",
     "dependency-cruiser": "16.4",
-    "esbuild": "0.23",
+    "esbuild": "0.24",
     "eslint": "*",
     "eslint-plugin-shuunen": "0.3",
     "pkgroll": "2.5",
