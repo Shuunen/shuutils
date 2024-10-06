@@ -1,6 +1,6 @@
-import { build as esbuild } from 'esbuild'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { build as esbuild } from 'esbuild'
 import { expect, it } from 'vitest'
 
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url))

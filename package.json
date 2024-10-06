@@ -51,7 +51,7 @@
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
     "lint": "pnpm lint:tsc && pnpm lint:biome && pnpm lint:eslint && pnpm lint:dep && echo lint success",
-    "lint:biome": "biome lint --error-on-warnings --write --unsafe && biome format --write && echo lint:biome success",
+    "lint:biome": "biome check --error-on-warnings --write --unsafe && echo lint:biome success",
     "lint:dep": "depcruise src --config && echo lint:dep success",
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",
