@@ -140,7 +140,7 @@ export function browserContext() {
     isMobile: isMobile(userAgent),
     language: typeof window === 'undefined' ? 'Unknown language' : window.navigator.language,
     os: getOperatingSystem(userAgent),
-    platform: typeof window === 'undefined' ? 'Unknown platform' : (window.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform', // eslint-disable-line @typescript-eslint/consistent-type-assertions
+    platform: typeof window === 'undefined' ? 'Unknown platform' : ((window.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform'), // eslint-disable-line @typescript-eslint/consistent-type-assertions
     screenHeight: typeof window === 'undefined' ? 0 : window.screen.height,
     screenWidth: typeof window === 'undefined' ? 0 : window.screen.width,
     url: typeof window === 'undefined' ? 'Unknown url' : window.location.href,

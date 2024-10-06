@@ -16,6 +16,7 @@ import type { PackageJson } from './types'
  */
 function log(message: string, value = '') {
   // biome-ignore lint/suspicious/noConsoleLog: it's ok here
+  // biome-ignore lint/suspicious/noConsole: it's ok here
   console.log('unique-mark', blue(message), value) // eslint-disable-line no-console
 }
 

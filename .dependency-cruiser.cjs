@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-concat */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-lines */
 /** @type {import('dependency-cruiser').IConfiguration} */
@@ -37,7 +36,7 @@ module.exports = {
       to: {},
     },
     {
-      comment: 'A module depends on a node core module that has been deprecated. Find an alternative - these are ' + "bound to exist - node doesn't deprecate lightly.",
+      comment: "A module depends on a node core module that has been deprecated. Find an alternative - these are bound to exist - node doesn't deprecate lightly.",
       from: {},
       name: 'no-deprecated-core',
       severity: 'warn',

@@ -206,8 +206,9 @@ export async function waitToDetect(selector: string, wait = 500, nbTries = 0, ma
   const element = findOne(selector)
   if (element) return element
   if (nbTries > maxTry) {
-    /* c8 ignore next 2 */
+    /* c8 ignore next 3 */
     // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    // biome-ignore lint/suspicious/noConsole: it's ok here
     if (willLog) console.log(`stop searching after 5 fails to detect : "${selector}"`) // eslint-disable-line no-console
     return undefined // eslint-disable-line unicorn/no-useless-undefined
   }

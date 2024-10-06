@@ -9,6 +9,7 @@
 export function injectStyles(string = '') {
   if (string.length === 0) {
     // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    // biome-ignore lint/suspicious/noConsole: it's ok here
     console.log('injectStyles : cannot inject empty styles') // eslint-disable-line no-console
     return
   }

@@ -30,6 +30,7 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 - [ ] use zod
 - [ ] add willOutputToFile option to the logger
+- [ ] re-enable useTopLevelRegex in biome
 
 ## Thanks
 

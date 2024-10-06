@@ -13,6 +13,7 @@ export async function copyToClipboard(
 ) {
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)
   // biome-ignore lint/suspicious/noConsoleLog: it's ok here
+  // biome-ignore lint/suspicious/noConsole: it's ok here
   if (willLog) console.log(`copying to clipboard : ${ellipsis(text)}`)
   await navigator.clipboard.writeText(text)
 }
@@ -24,9 +25,11 @@ export async function copyToClipboard(
  */
 export async function readClipboard(willLog = false) {
   // biome-ignore lint/suspicious/noConsoleLog: it's ok here
+  // biome-ignore lint/suspicious/noConsole: it's ok here
   if (willLog) console.log('reading clipboard...')
   const text = await navigator.clipboard.readText()
   // biome-ignore lint/suspicious/noConsoleLog: it's ok here
+  // biome-ignore lint/suspicious/noConsole: it's ok here
   if (willLog) console.log(`got this text from clipboard : ${ellipsis(text)}`)
   return text
 }

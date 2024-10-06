@@ -9,6 +9,7 @@ import { sleep } from './functions'
  */
 function onPageChangeDefaultCallback(location: string) {
   // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+  // biome-ignore lint/suspicious/noConsole: it's ok here
   console.log(`location changed : ${location} but onPageChange callback is empty`)
 }
 

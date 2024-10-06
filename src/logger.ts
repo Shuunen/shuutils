@@ -74,6 +74,7 @@ export class Logger {
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
     if (this.options.willLogDelay) prefixes.unshift(this.getDelay())
     // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    // biome-ignore lint/suspicious/noConsole: it's ok here
     if (this.options.willOutputToConsole) console.log(prefixes.join(' '), ...stuff) // eslint-disable-line no-console
     if (this.options.willOutputToMemory) this.addToMemoryLogs(...prefixes, ...stuff)
   }
@@ -117,11 +118,16 @@ export class Logger {
    * @example logger.clean(['Hello', { name: "world" }, 42]) // "Hello { "name": "world" } 42"
    */
   public clean(...stuff: Readonly<unknown[]>) {
-    return stuff
-      .map(thing => (typeof thing === 'object' ? JSON.stringify(thing) : String(thing)))
-      .join(' ') // eslint-disable-next-line no-control-regex
-      .replace(/[\u001B\u009B][#();?[]*(?:\d{1,4}(?:;\d{0,4})*)?[\d<=>A-ORZcf-nqry]/gu, '')
-      .replace(/"/gu, "'")
+    /* eslint-disable no-control-regex */
+    return (
+      stuff
+        .map(thing => (typeof thing === 'object' ? JSON.stringify(thing) : String(thing)))
+        .join(' ')
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+        .replace(/[\u001B\u009B][#();?[]*(?:\d{1,4}(?:;\d{0,4})*)?[\d<=>A-ORZcf-nqry]/gu, '')
+        .replace(/"/gu, "'")
+    )
+    /* eslint-enable no-control-regex */
   }
 
   /**
