@@ -29,10 +29,10 @@
     }
   },
   "linter": {
+    "enabled": true,
     "ignore": [
       "src/index.ts"
     ],
-    "enabled": true,
     "rules": {
       "all": true,
       "complexity": {
@@ -49,6 +49,7 @@
       "style": {
         "noDefaultExport": "off",
         "noImplicitBoolean": "off",
+        "noUnusedTemplateLiteral": "off",
         "useBlockStatements": "off"
       },
       "suspicious": {
