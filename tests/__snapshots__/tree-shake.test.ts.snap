@@ -1,26 +1,50 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`tree-shake test A 1`] = `
-{
-  "errors": [],
-  "nbOutputFiles": 1,
-  "output": "// dist/index.js
+"
+  1 files built
+
+  0 warnings
+  
+  0 errors
+  
+  ╔══════════════════════════╗
+  ║  Input start             ║
+  ╚══════════════════════════╝
+  import { getRandomNumber } from '.'
+  console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))
+  ╔══════════════════════════╗
+  ║  Input end, output start ║
+  ╚══════════════════════════╝
+  // dist/index.js
 function getRandomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // <stdin>
 console.log("tree-shaking test A, only using getRandomNumber", getRandomNumber(1, 10));
-",
-  "warnings": [],
-}
+  ╔══════════════════════════╗
+  ║  Output end              ║
+  ╚══════════════════════════╝"
 `;
 
 exports[`tree-shake test B 1`] = `
-{
-  "errors": [],
-  "nbOutputFiles": 1,
-  "output": "// dist/environment-B2F7H_Ns.js
+"
+  1 files built
+
+  0 warnings
+  
+  0 errors
+  
+  ╔══════════════════════════╗
+  ║  Input start             ║
+  ╚══════════════════════════╝
+  import { getRandomNumber, getRandomString } from '.'
+  console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))
+  ╔══════════════════════════╗
+  ║  Input end, output start ║
+  ╚══════════════════════════╝
+  // dist/logger.js
 function pickOne(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -38,16 +62,28 @@ function getRandomNumber(min = 0, max = 100) {
 
 // <stdin>
 console.log("tree-shaking test B, using getRandomNumber and getRandomString", getRandomNumber(1, 10), getRandomString(10));
-",
-  "warnings": [],
-}
+  ╔══════════════════════════╗
+  ║  Output end              ║
+  ╚══════════════════════════╝"
 `;
 
 exports[`tree-shake test C 1`] = `
-{
-  "errors": [],
-  "nbOutputFiles": 1,
-  "output": "// dist/environment-B2F7H_Ns.js
+"
+  1 files built
+
+  0 warnings
+  
+  0 errors
+  
+  ╔══════════════════════════╗
+  ║  Input start             ║
+  ╚══════════════════════════╝
+  import { readableTimeAgo } from '.'
+  console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())
+  ╔══════════════════════════╗
+  ║  Input end, output start ║
+  ╚══════════════════════════╝
+  // dist/logger.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;
@@ -74,16 +110,28 @@ function readableTimeAgo(input, language = "en") {
 
 // <stdin>
 console.log("tree-shaking test C, only using readableTimeAgo", readableTimeAgo());
-",
-  "warnings": [],
-}
+  ╔══════════════════════════╗
+  ║  Output end              ║
+  ╚══════════════════════════╝"
 `;
 
 exports[`tree-shake test D 1`] = `
-{
-  "errors": [],
-  "nbOutputFiles": 1,
-  "output": "// dist/index.js
+"
+  1 files built
+
+  0 warnings
+  
+  0 errors
+  
+  ╔══════════════════════════╗
+  ║  Input start             ║
+  ╚══════════════════════════╝
+  import { toastSuccess } from '.'
+  console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))
+  ╔══════════════════════════╗
+  ║  Input end, output start ║
+  ╚══════════════════════════╝
+  // dist/index.js
 function toastHide(element, delay = 200) {
   element.style.transform = "translateX(300px)";
   setTimeout(() => {
@@ -117,7 +165,7 @@ function toastSuccess(message, delay = 2e3) {
 
 // <stdin>
 console.log("tree-shaking test D, using toastSuccess", toastSuccess("my message"));
-",
-  "warnings": [],
-}
+  ╔══════════════════════════╗
+  ║  Output end              ║
+  ╚══════════════════════════╝"
 `;

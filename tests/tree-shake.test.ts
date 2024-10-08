@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build as esbuild } from 'esbuild'
@@ -5,6 +6,15 @@ import { expect, it } from 'vitest'
 
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
 const resolveDir = path.join(currentDirectory, '../dist') // eslint-disable-line unicorn/prevent-abbreviations
+
+/**
+ * Remove the hash from the file
+ * @param content the content of the file
+ * @returns {string} the content of the file without the hash
+ */
+function clearFileHash(content: string) {
+  return content.replace(/(?<name>[a-z]{3,30})-[a-z\d]+(?<ext>\.js)/giu, '$<name>$<ext>')
+}
 
 /**
  * Build a file using esbuild
@@ -20,47 +30,46 @@ async function build(contents: string) {
     stdin: { contents, resolveDir },
     write: false, // eslint-disable-line @typescript-eslint/naming-convention
   })
-  return {
-    errors: result.errors,
-    nbOutputFiles: result.outputFiles.length,
-    output: result.outputFiles[0]?.text,
-    warnings: result.warnings,
-  }
-}
+  return `
+  ${result.outputFiles.length} files built
 
-/**
- * Remove the hash from the file
- * @param content the content of the file
- * @returns {string} the content of the file without the hash
- */
-function clearFileHash(content: string) {
-  return content.replace(/(?<name>[a-z]{3,30})-[a-z\d]+(?<ext>\.js)/giu, '$<name>$<ext>')
+  ${result.warnings.length} warnings
+  ${result.warnings.map(warning => warning.text).join('\n')}
+  ${result.errors.length} errors
+  ${result.errors.map(error => error.text).join('\n')}
+  ╔══════════════════════════╗
+  ║  Input start             ║
+  ╚══════════════════════════╝
+  ${contents.trim()}
+  ╔══════════════════════════╗
+  ║  Input end, output start ║
+  ╚══════════════════════════╝
+  ${clearFileHash(result.outputFiles[0]?.text ?? '').trim()}
+  ╔══════════════════════════╗
+  ║  Output end              ║
+  ╚══════════════════════════╝`
 }
 
 it('tree-shake test A', async () => {
   const result = await build(`import { getRandomNumber } from '.'
   console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))`)
-  result.output = clearFileHash(result.output ?? '')
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test B', async () => {
   const result = await build(`import { getRandomNumber, getRandomString } from '.'
   console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))`)
-  result.output = clearFileHash(result.output ?? '')
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test C', async () => {
   const result = await build(`import { readableTimeAgo } from '.'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)
-  result.output = clearFileHash(result.output ?? '')
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test D', async () => {
   const result = await build(`import { toastSuccess } from '.'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))`)
-  result.output = clearFileHash(result.output ?? '')
   expect(result).toMatchSnapshot()
 })
