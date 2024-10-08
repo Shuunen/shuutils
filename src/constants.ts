@@ -54,3 +54,6 @@ export const nbHueStep = 60
 export const nbHueMax = 360
 // formatting
 export const nbSpacesIndent = 2
+// percentages
+export const nbPercentMin = 0
+export const nbPercentMax = 100

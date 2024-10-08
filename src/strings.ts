@@ -1,5 +1,4 @@
 /* c8 ignore next */
-import { pickOne } from './array-pick-one'
 import { nbSpacesIndent } from './constants'
 import { flatten } from './object-flatten'
 import { objectDeserialize } from './object-serializer'
@@ -15,8 +14,8 @@ export function sanitize(sentence: string, willLower = true) {
   const text = removeAccents(sentence)
     .trim() // remove leading and trailing spaces
     .replace(/<[^>]+>/gu, ' ') // remove any tags
-    .replace(/['’-]/gu, ' ') // replace quotes and hyphens with spaces
-    .replace(/[^\d\sa-z]/giu, '') // remove all non-alphanumeric characters
+    .replace(/[/'’-]/gu, ' ') // replace separators with spaces
+    .replace(/[^\d\sa-z]/giu, '') // remove remaining non-alphanumeric characters
     .replace(/\s+/gu, ' ') // replace multiple spaces with one
     .trim() // final trim
   return willLower ? text.toLowerCase() : text
@@ -32,27 +31,6 @@ export function slugify(string: string) {
     .replace(/\W+/giu, '-') // Replace all non word with dash
     .replace(/^-+/u, '') // Trim dash from start
     .replace(/-+$/u, '') // Trim dash from end
-}
-
-/**
- * Give a random url that point to an image
- * @returns string like `"https://server.com/image.png"`
- */
-export function getRandomImageUrl() {
-  const images = 'https://bulma.io/images/placeholders/128x128.png,https://via.placeholder.com/150,https://bulma.io/images/placeholders/64x64.png'.split(',')
-  return String(pickOne(images))
-}
-
-/**
- * Give a random word or sentence without signification
- * @returns string like `"Bolowey Opnet"`
- */
-export function getRandomString() {
-  const strings =
-    'Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae'.split(
-      ',',
-    )
-  return String(pickOne(strings))
 }
 
 /**
@@ -108,13 +86,15 @@ export function ellipsis(stringIn = '', maxLength = 50) {
   return `${stringOut}...`
 }
 
+export const jsonStartRegex = /^(?:\[\s*)?\{\s*"/u
+
 /**
  * Check if the given string is a JSON object
  * @param string `'{ "name": "Johnny" }'`
  * @returns the parsed object `{ name: 'Johnny' }` or `false` if the parsing failed
  */
 export function isJson(string: string) {
-  const hasValidStart = /^(?:\[\s*)?\{\s*"/u.test(string)
+  const hasValidStart = jsonStartRegex.test(string)
   if (!hasValidStart) return false
   try {
     JSON.parse(string)
@@ -176,14 +156,18 @@ export function isString(value: unknown) {
   return typeof value === 'string'
 }
 
+export const base64Regex = /^(?:data:)?[\w/]+;base64,[\w+/=]+$/u
+
 /**
  * Check if the string is a base64 string
  * @param string the string to check
  * @returns true if the string is a base64 string
  */
 export function isBase64(string: string) {
-  return /^(?:data:)?[\w/]+;base64,[\w+/=]+$/u.test(string)
+  return base64Regex.test(string)
 }
+
+export const base64TypeRegex = /[^:]\w+\/[\w+.-]+(?=;|,)/u
 
 /**
  * Parse a base64 string
@@ -193,7 +177,7 @@ export function isBase64(string: string) {
 export function parseBase64(string: string) {
   const result = { base64: '', size: 0, type: '' }
   if (!isBase64(string)) return result
-  const type = /[^:]\w+\/[\w+.-]+(?=;|,)/u.exec(string)
+  const type = base64TypeRegex.exec(string)
   if (type && typeof type[0] === 'string') [result.type] = type
   const base64 = string.split('base64,')
   if (base64.length > 1 && typeof base64[1] === 'string') [, result.base64] = base64

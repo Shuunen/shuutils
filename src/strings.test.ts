@@ -8,8 +8,6 @@ import {
   ellipsis,
   ellipsisWords,
   fillTemplate,
-  getRandomImageUrl,
-  getRandomString,
   injectMark,
   isBase64,
   isHtml,
@@ -20,7 +18,7 @@ import {
   sanitize,
   slugify,
   stringSum,
-} from '../src'
+} from '.'
 
 const data = {
   details: {
@@ -67,13 +65,6 @@ it('slugify D expected is expected', () => {
 })
 it('slugify E OMG o_O', () => {
   expect(slugify('  -Oh mà  dârling .?! --')).toBe(expected)
-})
-
-it('random image', () => {
-  expect(getRandomImageUrl().length > 0).toBe(true)
-})
-it('random string', () => {
-  expect(getRandomString().length > 0).toBe(true)
 })
 
 it('fill a template string without mustaches and data', () => {

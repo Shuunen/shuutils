@@ -36,6 +36,16 @@ export function daysAgo(nbDays = 0) {
 }
 
 /**
+ * Return a relative Date in the future
+ * @param nbDays the number of days to add to today
+ * @returns a Date
+ * @example daysFromNow(1) // tomorrow
+ */
+export function daysFromNow(nbDays = 0) {
+  return daysAgo(-nbDays)
+}
+
+/**
  * Return a relative date formatted to ISO 10
  * @param nbDays the number of days to subtract from today
  * @returns a string like : "2019-12-31"

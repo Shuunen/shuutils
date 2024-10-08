@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/class-methods-use-this */
 import { bgGreen, bgRed, blue, cyan, gray, green, red, yellow } from './colors'
 import { formatDate, readableTime } from './dates'
+import { isVerbose } from './flags'
 
 type LogLevel = '1-debug' | '2-test' | '3-info' | '4-fix' | '5-warn' | '6-good' | '7-error'
 
@@ -16,22 +17,24 @@ export interface LoggerOptions {
 
 /**
  * Logger class
+ * @example const logger = new Logger()
+ * @example const logger = new Logger({ isActive: false, minimumLevel: '3-info', willLogDate: false, willLogDelay: true, willLogTime: false, willOutputToConsole: true, willOutputToMemory: false })
  */
 // eslint-disable-next-line no-restricted-syntax
 export class Logger {
-  private lastLogTimestamp = 0
+  #lastLogTimestamp = 0
 
-  private readonly levels: LogLevel[] = ['1-debug', '2-test', '3-info', '4-fix', '5-warn', '6-good', '7-error']
+  readonly #levels: LogLevel[] = ['1-debug', '2-test', '3-info', '4-fix', '5-warn', '6-good', '7-error']
 
-  private readonly padStart = 7
+  readonly #padStart = 7
 
-  private readonly padding: number
+  readonly #padding: number
 
   public inMemoryLogs: string[] = []
 
   public options: LoggerOptions = {
     isActive: true,
-    minimumLevel: '1-debug',
+    minimumLevel: /* c8 ignore next */ isVerbose() ? '1-debug' : '3-info',
     willLogDate: false,
     willLogDelay: true,
     willLogTime: false,
@@ -45,22 +48,22 @@ export class Logger {
    */
   public constructor(options?: Readonly<Partial<LoggerOptions>>) {
     if (options) this.options = { ...this.options, ...options }
-    this.padding = Math.max(...this.levels.map(key => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
+    this.#padding = Math.max(...this.#levels.map(key => key.length - 2)) // eslint-disable-line @typescript-eslint/no-magic-numbers
   }
 
   /**
    * Calculate the delay since the last log
    * @returns the delay like "+12ms"
    */
-  private getDelay() {
+  #getDelay() {
     const now = Date.now()
-    if (this.lastLogTimestamp === 0) {
-      this.lastLogTimestamp = now
-      return gray('init'.padStart(this.padStart))
+    if (this.#lastLogTimestamp === 0) {
+      this.#lastLogTimestamp = now
+      return gray('init'.padStart(this.#padStart))
     }
-    const delay = now - this.lastLogTimestamp
-    this.lastLogTimestamp = now
-    return gray(`+${readableTime(delay, false)}`.padStart(this.padStart))
+    const delay = now - this.#lastLogTimestamp
+    this.#lastLogTimestamp = now
+    return gray(`+${readableTime(delay, false)}`.padStart(this.#padStart))
   }
 
   /**
@@ -68,14 +71,15 @@ export class Logger {
    * @param prefix the prefix to add before the message
    * @param stuff the things to log
    */
-  private log(prefix: string, stuff: Readonly<unknown[]>) {
+  #log(prefix: string, stuff: Readonly<unknown[]>) {
     const prefixes = [prefix]
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
-    if (this.options.willLogDelay) prefixes.unshift(this.getDelay())
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
-    // biome-ignore lint/suspicious/noConsole: it's ok here
-    if (this.options.willOutputToConsole) console.log(prefixes.join(' '), ...stuff) // eslint-disable-line no-console
+    if (this.options.willLogDelay) prefixes.unshift(this.#getDelay())
+    if (this.options.willOutputToConsole)
+      // biome-ignore lint/suspicious/noConsoleLog: it's ok
+      // biome-ignore lint/suspicious/noConsole: <explanation>
+      console.log(prefixes.join(' '), ...stuff) // eslint-disable-line no-console
     if (this.options.willOutputToMemory) this.addToMemoryLogs(...prefixes, ...stuff)
   }
 
@@ -88,9 +92,9 @@ export class Logger {
    * @example logger.logIf('debug', '1-debug', ['Hello', 'world', 42])
    */
   // eslint-disable-next-line @typescript-eslint/max-params
-  private logIf(prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
-    if (!this.shouldLog(level)) return
-    this.log(color(prefix.padStart(this.padding)), stuff)
+  #logIf(prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
+    if (!this.#shouldLog(level)) return
+    this.#log(color(prefix.padStart(this.#padding)), stuff)
   }
 
   /**
@@ -98,8 +102,8 @@ export class Logger {
    * @param level the log level to check
    * @returns true if the log should be output
    */
-  private shouldLog(level: LogLevel) {
-    return this.options.isActive && this.levels.indexOf(level) >= this.levels.indexOf(this.options.minimumLevel)
+  #shouldLog(level: LogLevel) {
+    return this.options.isActive && this.#levels.indexOf(level) >= this.#levels.indexOf(this.options.minimumLevel)
   }
 
   /**
@@ -123,7 +127,7 @@ export class Logger {
       stuff
         .map(thing => (typeof thing === 'object' ? JSON.stringify(thing) : String(thing)))
         .join(' ')
-        // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: it's ok, daddy is here
         .replace(/[\u001B\u009B][#();?[]*(?:\d{1,4}(?:;\d{0,4})*)?[\d<=>A-ORZcf-nqry]/gu, '')
         .replace(/"/gu, "'")
     )
@@ -136,7 +140,7 @@ export class Logger {
    * @example logger.debug('Hello world')
    */
   public debug(...stuff: Readonly<unknown[]>) {
-    this.logIf('debug', '1-debug', stuff, gray)
+    this.#logIf('debug', '1-debug', stuff, gray)
   }
 
   /**
@@ -160,7 +164,7 @@ export class Logger {
    */
   public error(...stuff: Readonly<unknown[]>) {
     const errors = stuff.map(thing => (thing instanceof Error ? thing.message : thing))
-    this.logIf('error', '7-error', errors, red)
+    this.#logIf('error', '7-error', errors, red)
   }
 
   /**
@@ -169,7 +173,7 @@ export class Logger {
    * @example logger.fix('This is a fix')
    */
   public fix(...stuff: Readonly<unknown[]>) {
-    this.logIf('fix', '4-fix', stuff, cyan)
+    this.#logIf('fix', '4-fix', stuff, cyan)
   }
 
   /**
@@ -178,7 +182,7 @@ export class Logger {
    * @example logger.good('Everything went well')
    */
   public good(...stuff: Readonly<unknown[]>) {
-    this.logIf('good', '6-good', stuff, green)
+    this.#logIf('good', '6-good', stuff, green)
   }
 
   /**
@@ -187,7 +191,7 @@ export class Logger {
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
   public info(...stuff: Readonly<unknown[]>) {
-    this.logIf('info', '3-info', stuff, blue)
+    this.#logIf('info', '3-info', stuff, blue)
   }
 
   /**
@@ -207,11 +211,11 @@ export class Logger {
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
   public test(thing: unknown, ...stuff: Readonly<unknown[]>) {
-    if (!this.shouldLog('2-test')) return
+    if (!this.#shouldLog('2-test')) return
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
-    const prefix = ' '.repeat(this.padding - 3) // eslint-disable-line @typescript-eslint/no-magic-numbers
-    this.log(prefix + box, stuff)
+    const prefix = ' '.repeat(this.#padding - 3) // eslint-disable-line @typescript-eslint/no-magic-numbers
+    this.#log(prefix + box, stuff)
   }
 
   /**
@@ -220,6 +224,6 @@ export class Logger {
    * @example logger.warn('Something went wrong')
    */
   public warn(...stuff: Readonly<unknown[]>) {
-    this.logIf('warn', '5-warn', stuff, yellow)
+    this.#logIf('warn', '5-warn', stuff, yellow)
   }
 }

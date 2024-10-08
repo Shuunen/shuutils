@@ -8,8 +8,6 @@ import { Logger } from './logger.js'
 import { injectMark, parseJson } from './strings.js'
 import type { PackageJson } from './types'
 
-const logger = new Logger()
-
 /**
  * Load the package.json file data
  * @param location the location of the package.json file
@@ -94,13 +92,13 @@ export function injectMarkInFiles({
  * Main function
  */
 async function init() {
-  const isVerbose = process.argv.includes('-v') || process.argv.includes('--verbose')
-  if (isVerbose) logger.info('starting...')
+  const logger = new Logger()
+  logger.debug('starting...')
   const version = getPackageJsonVersion()
   const files = await getTargetFiles()
-  if (isVerbose) logger.info(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
+  logger.debug(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
   const mark = generateMark({ version })
-  if (isVerbose) logger.info('generated mark', mark)
+  logger.debug('generated mark', mark)
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   for (const line of logs) logger.info(...(line.split(':') as [string, string]))

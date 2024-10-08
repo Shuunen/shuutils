@@ -51,14 +51,14 @@ async function build(contents: string) {
 }
 
 it('tree-shake test A', async () => {
-  const result = await build(`import { getRandomNumber } from '.'
-  console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))`)
+  const result = await build(`import { randomNumber } from '.'
+  console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))`)
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test B', async () => {
-  const result = await build(`import { getRandomNumber, getRandomString } from '.'
-  console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))`)
+  const result = await build(`import { randomNumber, randomString } from '.'
+  console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))`)
   expect(result).toMatchSnapshot()
 })
 

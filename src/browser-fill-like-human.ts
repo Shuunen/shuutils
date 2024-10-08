@@ -1,6 +1,6 @@
 /* c8 ignore start */
 import { sleep } from './functions'
-import { getRandomNumber } from './number-random'
+import { randomNumber } from './random'
 
 /**
  * Fill an input like a human would do
@@ -14,7 +14,7 @@ export async function fillLikeHuman(input: HTMLInputElement, value: string) {
   input.focus()
   for (const char of value) {
     input.value += char
-    await sleep(getRandomNumber(40, 80)) // eslint-disable-line no-await-in-loop, @typescript-eslint/no-magic-numbers
+    await sleep(randomNumber(40, 80)) // eslint-disable-line no-await-in-loop, @typescript-eslint/no-magic-numbers
   }
   input.dispatchEvent(new Event('input', { bubbles: true })) // eslint-disable-line @typescript-eslint/naming-convention
   input.dispatchEvent(new Event('change', { bubbles: true })) // eslint-disable-line @typescript-eslint/naming-convention

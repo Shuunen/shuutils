@@ -11,18 +11,18 @@ exports[`tree-shake test A 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { getRandomNumber } from '.'
-  console.log('tree-shaking test A, only using getRandomNumber', getRandomNumber(1, 10))
+  import { randomNumber } from '.'
+  console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
   // dist/index.js
-function getRandomNumber(min = 0, max = 100) {
+function randomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // <stdin>
-console.log("tree-shaking test A, only using getRandomNumber", getRandomNumber(1, 10));
+console.log("tree-shaking test A, only using randomNumber", randomNumber(1, 10));
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"
@@ -39,29 +39,28 @@ exports[`tree-shake test B 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { getRandomNumber, getRandomString } from '.'
-  console.log('tree-shaking test B, using getRandomNumber and getRandomString', getRandomNumber(1, 10), getRandomString(10))
+  import { randomNumber, randomString } from '.'
+  console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/logger.js
+  // dist/index.js
 function pickOne(items) {
+  if (items.length === 0) throw new Error("Array is empty");
   return items[Math.floor(Math.random() * items.length)];
 }
-function getRandomString() {
+function randomString() {
   const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(
     ","
   );
-  return String(pickOne(strings));
+  return pickOne(strings);
 }
-
-// dist/index.js
-function getRandomNumber(min = 0, max = 100) {
+function randomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // <stdin>
-console.log("tree-shaking test B, using getRandomNumber and getRandomString", getRandomNumber(1, 10), getRandomString(10));
+console.log("tree-shaking test B, using randomNumber and randomString", randomNumber(1, 10), randomString(10));
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"
@@ -83,7 +82,7 @@ exports[`tree-shake test C 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/logger.js
+  // dist/environment.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;

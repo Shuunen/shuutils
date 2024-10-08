@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { hasOwn, sleep } from '../src'
+import { functionReturningUndefined, functionReturningVoid, hasOwn, sleep } from '../src'
 
 it('hasOwn A', () => {
   expect(hasOwn({ propA: 1 }, 'propA')).toBe(true)
@@ -19,4 +19,14 @@ it('sleep A', async () => {
 })
 it('sleep B', async () => {
   expect(await sleep(20)).toBe(20)
+})
+
+it('functionReturningVoid A', () => {
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+  expect(functionReturningVoid()).toMatchInlineSnapshot(`undefined`)
+})
+
+it('functionReturningUndefined A', () => {
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+  expect(functionReturningUndefined()).toMatchInlineSnapshot(`undefined`)
 })

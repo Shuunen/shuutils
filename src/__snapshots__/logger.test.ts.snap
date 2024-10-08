@@ -18,8 +18,5 @@ exports[`logger D 1`] = `
   " info This info 5 should be logged too [1,2,3]",
   " warn This warn 3 should be logged {'isKeyC':true,'keyA':1,'keyB':'John'}",
   "error This error 5 should be logged null",
-  "   ✓  This test 4 should be logged undefined",
-  "   ✗  This test 5 should be logged () => 'Hello world'",
-  "debug This debug 1 should be logged true [] {}",
 ]
 `;

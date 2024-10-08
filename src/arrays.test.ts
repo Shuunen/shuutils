@@ -1,19 +1,10 @@
 import { expect, it } from 'vitest'
-import { arrayUnique, insertValueAfterItem, pickOne, removeValueFromArray, shuffleArray } from '../src'
+import { arrayUnique, insertValueAfterItem, removeValueFromArray, shuffleArray } from '.'
 
 const elements = ['damn', 'this', 'test', 'is', 'crazy']
 const elementsShuffled = shuffleArray(elements)
 it('shuffle an array does not affect the original one', () => {
   expect(elementsShuffled).not.toStrictEqual(elements)
-})
-
-const elementPicked = pickOne(elements)
-const isUndefinedPicked = pickOne([false].filter(Boolean))
-it('pick one returns an element from the array', () => {
-  expect(elementPicked !== undefined && elements.includes(elementPicked)).toStrictEqual(true)
-})
-it('pick one returns undefined', () => {
-  expect(isUndefinedPicked).toBeUndefined()
 })
 
 it('array unique A', () => {
