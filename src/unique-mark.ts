@@ -2,23 +2,13 @@ import { execSync } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import glob from 'tiny-glob'
-import { blue } from './colors.js'
 import { formatDate } from './dates.js'
 import { isTestEnvironment } from './environment.js'
+import { Logger } from './logger.js'
 import { injectMark, parseJson } from './strings.js'
 import type { PackageJson } from './types'
 
-/* c8 ignore next 9 */
-/**
- * Log a message to the console
- * @param message the message to log
- * @param value the value to log
- */
-function log(message: string, value = '') {
-  // biome-ignore lint/suspicious/noConsoleLog: it's ok here
-  // biome-ignore lint/suspicious/noConsole: it's ok here
-  console.log('unique-mark', blue(message), value) // eslint-disable-line no-console
-}
+const logger = new Logger()
 
 /**
  * Load the package.json file data
@@ -39,11 +29,11 @@ export function getPackageJsonVersion(location = path.join(process.cwd(), 'packa
  * @returns the files to inject the mark in
  */
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-export async function getTargetFiles(target = process.argv[2] ?? 'public/index.html') {
+export async function getTargetFiles(target = process.argv[2] ?? '') {
+  if (target === '') throw new Error('no target specified, aborting.')
   // if ends with something like *.js
-  const extension = /\*.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
-  // suggests to use *.{js} to capture all files (limitation of tiny-glob)
-  if (extension !== '') log(`you should use *.{${extension}} to capture all files with that extension (limitation of tiny-glob)`)
+  const extension = /\.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
+  if (extension !== '') throw new Error(`you need to use *.{${extension}} to capture all files with that extension, it's a limitation of tiny-glob, aborting.`)
   const files = await glob(target)
   if (files.length === 0) throw new Error(`no file found for target "${target}", aborting.`)
   return files
@@ -99,22 +89,23 @@ export function injectMarkInFiles({
   return { logs, totalInjections }
 }
 
-/* c8 ignore next 19 */
+/* c8 ignore start */
 /**
  * Main function
  */
 async function init() {
   const isVerbose = process.argv.includes('-v') || process.argv.includes('--verbose')
-  if (isVerbose) log('starting...')
+  if (isVerbose) logger.info('starting...')
   const version = getPackageJsonVersion()
   const files = await getTargetFiles()
-  if (isVerbose) log(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
+  if (isVerbose) logger.info(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
   const mark = generateMark({ version })
-  if (isVerbose) log('generated mark', mark)
+  if (isVerbose) logger.info('generated mark', mark)
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  for (const line of logs) log(...(line.split(':') as [string, string]))
-  log('total injections', String(totalInjections))
+  for (const line of logs) logger.info(...(line.split(':') as [string, string]))
+  if (totalInjections === 0) logger.info('files found but no mark found for injection')
+  else logger.success('total injections :', String(totalInjections))
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
