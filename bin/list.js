@@ -16,5 +16,4 @@ async function listEntries() {
   writeFileSync(path.join(cwd(), 'src/index.ts'), list.join('\n'))
 }
 
-// @ts-expect-error warn about the top-level await
 await listEntries()

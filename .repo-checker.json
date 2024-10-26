@@ -1,7 +1,7 @@
 {
   "devDepsOnly": false,
   "license": "MIT",
-  "maxSizeKo": 40,
+  "maxSizeKo": 100,
   "npmPackage": true,
   "userMail": "romain.racamier@gmail.com",
   "userName": "Romain Racamier-Lafon"

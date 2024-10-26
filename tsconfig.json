@@ -13,7 +13,7 @@
       "ESNext",
       "DOM"
     ],
-    "module": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,

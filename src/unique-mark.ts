@@ -96,7 +96,7 @@ async function init() {
   logger.debug('starting...')
   const version = getPackageJsonVersion()
   const files = await getTargetFiles()
-  logger.debug(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark`, files.join(', '))
+  logger.debug(`found ${files.length} file${files.length > 1 ? 's' : ''} to inject mark :`, files.join(', '))
   const mark = generateMark({ version })
   logger.debug('generated mark', mark)
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })

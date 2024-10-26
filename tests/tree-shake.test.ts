@@ -51,25 +51,25 @@ async function build(contents: string) {
 }
 
 it('tree-shake test A', async () => {
-  const result = await build(`import { randomNumber } from '.'
+  const result = await build(`import { randomNumber } from 'shuutils'
   console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))`)
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test B', async () => {
-  const result = await build(`import { randomNumber, randomString } from '.'
+  const result = await build(`import { randomNumber, randomString } from 'shuutils'
   console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))`)
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test C', async () => {
-  const result = await build(`import { readableTimeAgo } from '.'
+  const result = await build(`import { readableTimeAgo } from 'shuutils'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)
   expect(result).toMatchSnapshot()
 })
 
 it('tree-shake test D', async () => {
-  const result = await build(`import { toastSuccess } from '.'
+  const result = await build(`import { toastSuccess } from 'shuutils'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))`)
   expect(result).toMatchSnapshot()
 })

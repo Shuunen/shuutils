@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package",
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "bin": {
-    "unique-mark": "./dist/unique-mark.js"
+    "unique-mark": "./dist/unique-mark.cjs"
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
@@ -12,14 +12,15 @@
   "devDependencies": {
     "@biomejs/biome": "1.9",
     "@happy-dom/global-registrator": "15.7",
+    "@rollup/plugin-typescript": "12.1",
     "@types/node": "20.17",
     "@vitest/coverage-v8": "2.1",
     "dependency-cruiser": "16.5",
     "esbuild": "0.24",
     "eslint": "*",
     "eslint-plugin-shuunen": "0.3",
-    "pkgroll": "2.5",
-    "repo-check": "1.37",
+    "repo-check": "1.38",
+    "rollup": "4.24",
     "typescript": "5.6",
     "vitest": "2.1",
     "watchlist": "0.3"
@@ -37,8 +38,14 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/shuutils.cjs.js",
+  "module": "./dist/shuutils.esm.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/shuutils.esm.mjs",
+      "require": "./dist/shuutils.cjs.js"
+    }
+  },
   "name": "shuutils",
   "private": false,
   "repository": {
@@ -46,7 +53,7 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && node bin/list && pkgroll --target=esnext && node bin/banner && pnpm mark && echo build success",
+    "build": "rm dist -rf && node bin/list && rollup -c && pnpm mark && echo build success",
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
@@ -56,7 +63,7 @@
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",
     "lint:watch": "watchlist src tests -eager -- pnpm lint",
-    "mark": "node dist/unique-mark.js dist/**/* && echo mark success",
+    "mark": "node dist/unique-mark.cjs dist/*.{js,cjs,mjs} && echo mark success",
     "postversion": "git push && git push --tags && npm publish",
     "prepack": "pnpm build",
     "preversion": "pnpm check",
@@ -67,6 +74,6 @@
     "test:watch": "vitest --coverage"
   },
   "type": "module",
-  "types": "./dist/index.d.cts",
+  "types": "./dist/src/index.d.ts",
   "version": "9.1.0"
 }

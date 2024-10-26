@@ -11,12 +11,12 @@ exports[`tree-shake test A 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { randomNumber } from '.'
+  import { randomNumber } from 'shuutils'
   console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/index.js
+  // dist/shuutils.esm.mjs
 function randomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -39,20 +39,19 @@ exports[`tree-shake test B 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { randomNumber, randomString } from '.'
+  import { randomNumber, randomString } from 'shuutils'
   console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/index.js
+  // dist/shuutils.esm.mjs
 function pickOne(items) {
-  if (items.length === 0) throw new Error("Array is empty");
+  if (items.length === 0)
+    throw new Error("Array is empty");
   return items[Math.floor(Math.random() * items.length)];
 }
 function randomString() {
-  const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(
-    ","
-  );
+  const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(",");
   return pickOne(strings);
 }
 function randomNumber(min = 0, max = 100) {
@@ -77,12 +76,12 @@ exports[`tree-shake test C 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { readableTimeAgo } from '.'
+  import { readableTimeAgo } from 'shuutils'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/environment.js
+  // dist/shuutils.esm.mjs
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;
@@ -90,8 +89,6 @@ var nbMsInDay = 864e5;
 var nbMsInWeek = 6048e5;
 var nbMsInMonth = 2592e6;
 var nbMsInYear = 31536e6;
-
-// dist/index.js
 var timeAgoTuples = [
   [nbMsInMinute, nbMsInSecond, "second"],
   [nbMsInHour, nbMsInMinute, "minute"],
@@ -103,7 +100,9 @@ var timeAgoTuples = [
 function readableTimeAgo(input, language = "en") {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: "auto" });
   const ms = typeof input === "number" ? input : Date.now() - input.getTime();
-  for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
+  for (const [threshold, divisor, unit] of timeAgoTuples)
+    if (ms < threshold)
+      return rtf.format(-Math.floor(ms / divisor), unit);
   return rtf.format(-Math.floor(ms / nbMsInYear), "year");
 }
 
@@ -125,12 +124,12 @@ exports[`tree-shake test D 1`] = `
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { toastSuccess } from '.'
+  import { toastSuccess } from 'shuutils'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/index.js
+  // dist/shuutils.esm.mjs
 function toastHide(element, delay = 200) {
   element.style.transform = "translateX(300px)";
   setTimeout(() => {
