@@ -74,3 +74,11 @@ Thanks goes to these wonderful people :
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Shuunen/shuutils.svg?variant=adaptive)](https://starchart.cc/Shuunen/shuutils)
+
+## Page views
+
+[![Free Website Counter](https://www.websitecounterfree.com/c.php?d=9&id=60672&s=12)](https://www.websitecounterfree.com)
