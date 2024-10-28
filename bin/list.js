@@ -13,7 +13,8 @@ async function listEntries() {
   const list = files
     .filter(file => !(file.includes('shuutils.ts') || file.includes('unique-mark.ts') || file.includes('.test.ts')))
     .map(file => `export * from './${file.replace('.ts', '')}'`)
-  writeFileSync(path.join(cwd(), 'src/shuutils.ts'), list.join('\n'))
+  const content = `${list.join('\n')}\n`
+  writeFileSync(path.join(cwd(), 'src/shuutils.ts'), content)
 }
 
 await listEntries()
