@@ -20,7 +20,7 @@
     "eslint": "*",
     "eslint-plugin-shuunen": "0.3",
     "repo-check": "1.38",
-    "rollup": "4.24",
+    "tsup": "8.3",
     "typescript": "5.6",
     "vitest": "2.1",
     "watchlist": "0.3"
@@ -38,12 +38,11 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "./dist/shuutils.cjs.js",
-  "module": "./dist/shuutils.esm.mjs",
+  "main": "./dist/shuutils.js",
   "exports": {
     ".": {
-      "import": "./dist/shuutils.esm.mjs",
-      "require": "./dist/shuutils.cjs.js"
+      "import": "./dist/shuutils.js",
+      "require": "./dist/shuutils.cjs"
     }
   },
   "name": "shuutils",
@@ -53,7 +52,7 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "rm dist -rf && node bin/list && rollup -c && pnpm mark && echo build success",
+    "build": "node bin/list && tsup-node && pnpm mark && echo build success",
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
@@ -74,6 +73,6 @@
     "test:watch": "vitest --coverage"
   },
   "type": "module",
-  "types": "./dist/src/index.d.ts",
+  "types": "./dist/shuutils.d.ts",
   "version": "10.0.0"
 }

@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { browserContext, browserReport, getBrowser, getOperatingSystem, getVersion, isMobile } from '../src'
+import { browserContext, browserReport, getBrowser, getOperatingSystem, getVersion, isMobile } from '../src/shuutils'
 
 const context = browserContext()
 

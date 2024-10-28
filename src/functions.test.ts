@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { functionReturningUndefined, functionReturningVoid, hasOwn, sleep } from '../src'
+import { functionReturningUndefined, functionReturningVoid, hasOwn, sleep } from './shuutils'
 
 it('hasOwn A', () => {
   expect(hasOwn({ propA: 1 }, 'propA')).toBe(true)

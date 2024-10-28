@@ -18,7 +18,7 @@ import {
   sanitize,
   slugify,
   stringSum,
-} from '.'
+} from './shuutils'
 
 const data = {
   details: {

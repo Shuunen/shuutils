@@ -3,9 +3,9 @@
 /* eslint-disable jsdoc/require-jsdoc */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { expect, it } from 'vitest'
-import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src'
 import { objectEqual } from '../src/object-equal'
 import { objectSort } from '../src/object-sort'
+import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src/shuutils'
 
 const person = {
   age: 21,

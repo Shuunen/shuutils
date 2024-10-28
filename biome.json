@@ -31,7 +31,7 @@
   "linter": {
     "enabled": true,
     "ignore": [
-      "src/index.ts"
+      "src/shuutils.ts"
     ],
     "rules": {
       "all": true,

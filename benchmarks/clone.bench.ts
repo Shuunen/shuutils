@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable jsdoc/require-jsdoc */
 import { bench, describe } from 'vitest'
-import { Logger, browserContext, clone } from '../src'
+import { Logger, browserContext, clone } from '../src/shuutils'
 
 const simple = {
   address: {

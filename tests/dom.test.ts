@@ -1,6 +1,29 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 import { expect, it } from 'vitest'
-import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, image, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src'
+import {
+  backdrop,
+  css,
+  div,
+  dom,
+  em,
+  findAll,
+  findOne,
+  h1,
+  h2,
+  h3,
+  icon,
+  image,
+  img,
+  li,
+  link,
+  scrollToHeightSync,
+  small,
+  strong,
+  text,
+  tw,
+  ul,
+  waitToDetect,
+} from '../src/shuutils'
 
 GlobalRegistrator.register()
 

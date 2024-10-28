@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { arrayUnique, insertValueAfterItem, removeValueFromArray, shuffleArray } from '.'
+import { arrayUnique, insertValueAfterItem, removeValueFromArray, shuffleArray } from './shuutils'
 
 const elements = ['damn', 'this', 'test', 'is', 'crazy']
 const elementsShuffled = shuffleArray(elements)

@@ -11,9 +11,9 @@ async function listEntries() {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const files = await glob('*.ts', { cwd: path.join(cwd(), 'src/'), filesOnly: true })
   const list = files
-    .filter(file => !(file.includes('index.ts') || file.includes('unique-mark.ts') || file.includes('.test.ts')))
+    .filter(file => !(file.includes('shuutils.ts') || file.includes('unique-mark.ts') || file.includes('.test.ts')))
     .map(file => `export * from './${file.replace('.ts', '')}'`)
-  writeFileSync(path.join(cwd(), 'src/index.ts'), list.join('\n'))
+  writeFileSync(path.join(cwd(), 'src/shuutils.ts'), list.join('\n'))
 }
 
 await listEntries()

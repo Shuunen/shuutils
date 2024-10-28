@@ -30,7 +30,7 @@ import {
   underline,
   white,
   yellow,
-} from '../src'
+} from '../src/shuutils'
 
 it('is not Firefox', () => {
   expect(isFirefox()).toBe(false)

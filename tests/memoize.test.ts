@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { expectEqualTypes, memoize } from '../src'
+import { expectEqualTypes, memoize } from '../src/shuutils'
 
 let addCalls = 0
 

@@ -16,7 +16,7 @@ exports[`tree-shake test A 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/shuutils.esm.mjs
+  // dist/shuutils.js
 function randomNumber(min = 0, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -44,14 +44,15 @@ exports[`tree-shake test B 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/shuutils.esm.mjs
+  // dist/shuutils.js
 function pickOne(items) {
-  if (items.length === 0)
-    throw new Error("Array is empty");
+  if (items.length === 0) throw new Error("Array is empty");
   return items[Math.floor(Math.random() * items.length)];
 }
 function randomString() {
-  const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(",");
+  const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(
+    ","
+  );
   return pickOne(strings);
 }
 function randomNumber(min = 0, max = 100) {
@@ -81,7 +82,7 @@ exports[`tree-shake test C 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/shuutils.esm.mjs
+  // dist/shuutils.js
 var nbMsInSecond = 1e3;
 var nbMsInMinute = 6e4;
 var nbMsInHour = 36e5;
@@ -100,9 +101,7 @@ var timeAgoTuples = [
 function readableTimeAgo(input, language = "en") {
   const rtf = new Intl.RelativeTimeFormat(language, { numeric: "auto" });
   const ms = typeof input === "number" ? input : Date.now() - input.getTime();
-  for (const [threshold, divisor, unit] of timeAgoTuples)
-    if (ms < threshold)
-      return rtf.format(-Math.floor(ms / divisor), unit);
+  for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
   return rtf.format(-Math.floor(ms / nbMsInYear), "year");
 }
 
@@ -129,7 +128,7 @@ exports[`tree-shake test D 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // dist/shuutils.esm.mjs
+  // dist/shuutils.js
 function toastHide(element, delay = 200) {
   element.style.transform = "translateX(300px)";
   setTimeout(() => {
@@ -148,9 +147,9 @@ function toastAdd(type, message = "", delay = 0, padding = 20) {
   const last = document.querySelector(".shu-toast:nth-last-child(1 of .shu-toast)")?.getBoundingClientRect().top;
   const bottom = last === void 0 ? 0 : window.innerHeight - last;
   const background = type === "success" ? "forestgreen" : "firebrick";
-  const icon = type === "success" ? "\\u2714" : "\\u2716";
+  const icon2 = type === "success" ? "\\u2714" : "\\u2716";
   element.style = \`position: fixed; display: flex; align-items: center; gap: 8px; bottom: \${bottom + padding}px; right: 20px; z-index: 99999; padding: 5px 14px 6px 10px; background-color: \${background}; color: white; border-radius: 7px; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); font-size: 18px; transition: transform 0.2s ease-in-out; transform: translateX(300px);\`;
-  element.innerHTML = \`<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">\${icon}</span><span style="margin-top: -1px;">\${message}</span>\`;
+  element.innerHTML = \`<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">\${icon2}</span><span style="margin-top: -1px;">\${message}</span>\`;
   toastShow(element);
   if (delay > 0)
     setTimeout(() => {

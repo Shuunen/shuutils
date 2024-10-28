@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { Logger, red } from '../src'
+import { Logger, red } from './shuutils'
 
 it('logger A', () => {
   const loggerA = new Logger()

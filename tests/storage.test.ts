@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { hasOwn, storage } from '../src'
+import { hasOwn, storage } from '../src/shuutils'
 
 interface User {
   age: number

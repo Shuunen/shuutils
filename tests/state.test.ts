@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { expect, it } from 'vitest'
-import { createState, storage } from '../src'
+import { createState, storage } from '../src/shuutils'
 
 const { state: stateA, watchState: watchStateA } = createState({ age: 30, name: 'Michael' })
 

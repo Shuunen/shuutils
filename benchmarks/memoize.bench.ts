@@ -1,5 +1,5 @@
 import { bench, describe } from 'vitest'
-import { memoize, objectSum } from '../src'
+import { memoize, objectSum } from '../src/shuutils'
 
 // Maybe try to bench other memoize functions from https://gist.github.com/thetallweeks/a55cc2fedfd65d16b9ea
 

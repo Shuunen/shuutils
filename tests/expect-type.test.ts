@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { expectEqualTypes, expectType } from '../src'
+import { expectEqualTypes, expectType } from '../src/shuutils'
 
 interface Person {
   age: number

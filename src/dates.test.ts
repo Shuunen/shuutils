@@ -1,5 +1,18 @@
 import { expect, it } from 'vitest'
-import { dateIso10, dateToIsoString, daysAgo, daysAgoIso10, formatDate, nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInSecond, nbMsInYear, readableTime, readableTimeAgo } from '../src'
+import {
+  dateIso10,
+  dateToIsoString,
+  daysAgo,
+  daysAgoIso10,
+  formatDate,
+  nbMsInDay,
+  nbMsInHour,
+  nbMsInMinute,
+  nbMsInSecond,
+  nbMsInYear,
+  readableTime,
+  readableTimeAgo,
+} from './shuutils'
 
 const today = new Date()
 
