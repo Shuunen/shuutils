@@ -14,8 +14,8 @@ devDependencies:
     specifier: '1.9'
     version: 1.9.3
   '@happy-dom/global-registrator':
-    specifier: '15.10'
-    version: 15.10.1
+    specifier: '15.11'
+    version: 15.11.0
   '@rollup/plugin-typescript':
     specifier: '12.1'
     version: 12.1.1(typescript@5.6.2)
@@ -705,11 +705,11 @@ packages:
       levn: 0.4.1
     dev: true
 
-  /@happy-dom/global-registrator@15.10.1:
-    resolution: {integrity: sha512-XdFWUDju07BvuztUVBcY/XgceSXMaicTjISGPnxDvFPCmEhBH/K9TNuGYNg4pe0wNN2WrBIp32tgAo78EJ+ODw==}
+  /@happy-dom/global-registrator@15.11.0:
+    resolution: {integrity: sha512-VOuc/CzW/FaOrH3+1qIo75CM7hCxtyT78nKpPvhbOn61Q8jSAFI3iKqUx1pG3gtSqxN8DnuL3iv/BdT5lQ5wGA==}
     engines: {node: '>=18.0.0'}
     dependencies:
-      happy-dom: 15.10.1
+      happy-dom: 15.11.0
     dev: true
 
   /@humanfs/core@0.19.0:
@@ -2248,8 +2248,8 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
-  /happy-dom@15.10.1:
-    resolution: {integrity: sha512-FuGnj/qIB4QnBL6fWmD7Wnh6STxevLgOVWB6+nopDGgWG1+t9CXkNB2ldZ+iqwD2UKxD2D0SU8el8A6AX6Q1+g==}
+  /happy-dom@15.11.0:
+    resolution: {integrity: sha512-/zyxHbXriYJ8b9Urh43ILk/jd9tC07djURnJuAimJ3tJCOLOzOUp7dEHDwJOZyzROlrrooUhr/0INZIDBj1Bjw==}
     engines: {node: '>=18.0.0'}
     dependencies:
       entities: 4.5.0
