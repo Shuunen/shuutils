@@ -11,5 +11,6 @@ export function isTestEnvironment() {
  * @returns true if the environment is a browser environment
  */
 export function isBrowserEnvironment() {
-  return typeof window !== 'undefined'
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return globalThis.matchMedia !== undefined
 }

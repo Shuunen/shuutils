@@ -6,7 +6,7 @@ interface User {
   name: string
 }
 const key = 'Michael'
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
 storage.media = {} as Storage
 
 const returnTestA = storage.get(key)

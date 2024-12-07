@@ -100,7 +100,7 @@ async function init() {
   const mark = generateMark({ version })
   logger.debug('generated mark', mark)
   const { logs, totalInjections } = injectMarkInFiles({ files, mark })
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   for (const line of logs) logger.info(...(line.split(':') as [string, string]))
   if (totalInjections === 0) logger.info('files found but no mark found for injection')
   else logger.success('total injections :', String(totalInjections))

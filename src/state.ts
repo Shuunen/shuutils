@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion */
 /* eslint-disable jsdoc/require-jsdoc */
 import type { ShuutilsStorage } from './storage'
 

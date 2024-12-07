@@ -1,3 +1,4 @@
+import { isBrowserEnvironment } from './environment'
 import type { NavigatorUserAgent } from './types'
 
 /* c8 ignore start */
@@ -61,7 +62,7 @@ type BrowserContext = Readonly<{
  * @returns the user agent string
  */
 export function getUserAgent() {
-  return typeof window === 'undefined' ? 'Unknown user agent' : window.navigator.userAgent
+  return isBrowserEnvironment() ? globalThis.navigator.userAgent : 'Unknown user agent'
 }
 
 /**
@@ -80,7 +81,7 @@ export function getVersion(userAgent = getUserAgent()) {
  * @returns the browser name
  */
 export function getBrowser(userAgent = getUserAgent()) {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   for (const [browser, regex] of Object.entries(browsers)) if (regex.test(userAgent)) return browser as keyof typeof browsers
   return 'Unknown browser'
 }
@@ -91,7 +92,7 @@ export function getBrowser(userAgent = getUserAgent()) {
  * @returns the operating system name
  */
 export function getOperatingSystem(userAgent = getUserAgent()) {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   for (const [os, regex] of Object.entries(operatingSystems)) if (regex.test(userAgent)) return os as keyof typeof operatingSystems
   return 'Unknown OS'
 }
@@ -132,18 +133,19 @@ export function browserReport(context: BrowserContext) {
  * @copyright inspired from Ben Brooks Scholz https://github.com/benbscholz/detect Copyright (C) 2011
  */
 export function browserContext() {
+  const isBrowser = isBrowserEnvironment()
   const userAgent = getUserAgent()
   const browser = getBrowser(userAgent)
   return {
     browser,
     isInternetExplorer: browser === 'Internet Explorer',
     isMobile: isMobile(userAgent),
-    language: typeof window === 'undefined' ? 'Unknown language' : window.navigator.language,
+    language: isBrowser ? globalThis.navigator.language : 'Unknown language',
     os: getOperatingSystem(userAgent),
-    platform: typeof window === 'undefined' ? 'Unknown platform' : ((window.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform'), // eslint-disable-line @typescript-eslint/consistent-type-assertions
-    screenHeight: typeof window === 'undefined' ? 0 : window.screen.height,
-    screenWidth: typeof window === 'undefined' ? 0 : window.screen.width,
-    url: typeof window === 'undefined' ? 'Unknown url' : window.location.href,
+    platform: isBrowser ? ((globalThis.navigator as NavigatorUserAgent).userAgentData?.platform ?? 'Unknown platform') : 'Unknown platform', // eslint-disable-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
+    screenHeight: isBrowser ? globalThis.screen.height : 0,
+    screenWidth: isBrowser ? globalThis.screen.width : 0,
+    url: isBrowser ? globalThis.location.href : 'Unknown url',
     userAgent,
     version: getVersion(userAgent),
   } satisfies BrowserContext

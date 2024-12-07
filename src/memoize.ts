@@ -20,6 +20,6 @@ export function memoize<Callback extends (...arguments_: Parameters<Callback>) =
     return cache[key]! // eslint-disable-line @typescript-eslint/no-non-null-assertion
   }
   memoized.cache = cache
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   return memoized as unknown as Callback
 }

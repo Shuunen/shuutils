@@ -23,9 +23,10 @@ import {
  * @returns boolean if the browser is Firefox
  */
 export function isFirefox() {
-  /* c8 ignore next 3 */
-  if (typeof window === 'undefined') return false
-  return window.navigator.userAgent.includes('Firefox')
+  /* c8 ignore next 4 */
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (globalThis.navigator === undefined) return false
+  return globalThis.navigator.userAgent.includes('Firefox')
 }
 
 /**

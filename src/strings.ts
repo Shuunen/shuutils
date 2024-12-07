@@ -190,6 +190,7 @@ export function parseBase64(string: string) {
  * @param json a string containing json like `'{ "name": "John Doe", "age": 32 }'`
  * @returns an object like `{ name: 'John Doe', age: 32 }`
  */
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function parseJson<Type>(json: string) {
   let error = ''
   let value = {}
@@ -197,10 +198,10 @@ export function parseJson<Type>(json: string) {
     try {
       value = objectDeserialize(json)
     } catch (error_) {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
       error = `JSON invalide : ${(error_ as Error).message}`
     }
-  return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions
+  return { error, value: value as Type } // eslint-disable-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
 }
 
 /**

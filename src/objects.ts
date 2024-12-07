@@ -30,8 +30,8 @@ export function byProperty<Type extends Record<string, unknown>>(property: strin
   if (order === '') return () => 0
   const sortOrder = order === 'asc' ? nbAscending : nbDescending
   return (recordA: Type, recordB: Type) => {
-    const valueA = recordA[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
-    const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions
+    const valueA = recordA[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
+    const valueB = recordB[property] as number // eslint-disable-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
     if (!valueA && valueB) return sortOrder
     if (valueA && !valueB) return -sortOrder
     if (valueA === valueB) return 0
@@ -75,7 +75,7 @@ export function safeAssign(target: Record<string, unknown>, ...sources: Readonly
     for (const key in source)
       if (isRecord(source[key])) {
         if (!target[key]) Object.assign(target, { [key]: {} }) // eslint-disable-line @typescript-eslint/strict-boolean-expressions
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
         safeAssign(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>)
       } else if (source[key] !== null && source[key] !== undefined) Object.assign(target, { [key]: source[key] })
   return safeAssign(target, ...sources)

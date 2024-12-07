@@ -29,6 +29,7 @@ export function getLangFromPath(path: string) {
 // eslint-disable-next-line complexity
 export function handlePlural(translated: string, data?: Readonly<Record<string, unknown>>) {
   if (!translated.includes('|')) return fillTemplate(translated, data)
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const count = Number.parseInt(String(data?.count ?? '1'), 10)
   const [a = '', b = '', c = ''] = translated.split(' | ') // eslint-disable-line id-length
   if (c.length > 0 && count > 1) return fillTemplate(c, data)

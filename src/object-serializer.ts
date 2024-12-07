@@ -47,7 +47,7 @@ function reviver(_key: string, value?: unknown) {
   if (value === undefined || value === null) return value
   if (typeof value !== 'object') return value // @ts-expect-error non-standard properties
   if ('__strRegexFlags__' in value && '__strRegexSource__' in value) return new RegExp(value.__strRegexSource__, value.__strRegexFlags__)
-  // eslint-disable-next-line no-new-func, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-implied-eval, @typescript-eslint/restrict-template-expressions
+  // eslint-disable-next-line no-new-func, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-implied-eval, @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-call
   if ('__strFunction__' in value) return new Function(`return ${value.__strFunction__}`)() /* @ts-expect-error non-standard properties */
   if ('__strDate__' in value) return new Date(value.__strDate__)
   // here we return undefined but JSON.parse will just remove the key from the object, not great but in the end it's the same result, myObject.undefinedKey will be undefined either in { undefinedKey: undefined } or in { } ... ^^'
@@ -71,7 +71,7 @@ export function objectSerialize(object: Readonly<Record<string, unknown>>, willS
  * @returns the deserialized object
  */
 export function objectDeserialize(string: string) {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   return JSON.parse(string, reviver) as Record<number | string, unknown>
 }
 

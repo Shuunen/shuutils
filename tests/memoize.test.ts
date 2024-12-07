@@ -43,7 +43,7 @@ it('memoize B testing memoized function', () => {
 })
 
 it('memoize C invalid callback given', () => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   expect(() => memoize(1 as unknown as () => void)).toThrowErrorMatchingInlineSnapshot('[Error: memoize callback parameter should be a function]')
 })
 

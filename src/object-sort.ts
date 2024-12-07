@@ -2,7 +2,7 @@
 // Copyright © Benjamin Lupton
 // Artistic License 2.0
 
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion */
 
 /** A typical comparator for sorting object keys */
 type KeyComparator = (a: string, b: string) => number

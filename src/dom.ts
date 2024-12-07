@@ -245,7 +245,7 @@ export function backdrop(classes: string) {
  * @param classes the classes to return
  * @returns the classes as a string
  */
-export function tw(classes: Readonly<TemplateStringsArray> | Readonly<string[]> | string) {
+export function tw(classes: Readonly<string[]> | Readonly<TemplateStringsArray> | string) {
   if (typeof classes === 'string') return classes
   return classes.join(' ')
 }

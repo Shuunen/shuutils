@@ -3,6 +3,8 @@ import path from 'node:path'
 import { cwd } from 'node:process'
 import glob from 'tiny-glob'
 
+const { log } = console
+
 /**
  * List entries in src folder
  * @returns {Promise<void>}
@@ -12,9 +14,10 @@ async function listEntries() {
   const files = await glob('*.ts', { cwd: path.join(cwd(), 'src/'), filesOnly: true })
   const list = files
     .filter(file => !(file.includes('shuutils.ts') || file.includes('unique-mark.ts') || file.includes('.test.ts')))
-    .map(file => `export * from './${file.replace('.ts', '')}'`)
+    .map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${file.replace('.ts', '')}'`)
   const content = `${list.join('\n')}\n`
   writeFileSync(path.join(cwd(), 'src/shuutils.ts'), content)
+  log('src/shuutils.ts updated !')
 }
 
 await listEntries()

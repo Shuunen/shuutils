@@ -8,7 +8,7 @@ import { ellipsis } from './strings'
  * @param willLog if true, will console log the data before copying
  */
 export async function copyToClipboard(
-  stuff: Readonly<Record<string, unknown>> | number | readonly Readonly<Record<string, unknown>>[] | readonly string[] | string,
+  stuff: number | Readonly<Record<string, unknown>> | readonly Readonly<Record<string, unknown>>[] | readonly string[] | string,
   willLog = false,
 ) {
   const text = typeof stuff === 'string' ? stuff : JSON.stringify(stuff)

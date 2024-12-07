@@ -4,7 +4,7 @@ import { parseJson } from './strings'
 function get(key: string, defaultValue: string): string
 function get(key: string, defaultValue: boolean): boolean // eslint-disable-line @typescript-eslint/naming-convention
 function get(key: string, defaultValue: number): number
-function get<Type = unknown>(key: string, defaultValue: Type): Type
+function get<Type = unknown>(key: string, defaultValue: Type): Type // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function get<Type = unknown>(key: string): Type | undefined
 
 /**
@@ -20,7 +20,7 @@ function get<Type = unknown>(key: string, defaultValue?: Type) {
   if (data === undefined || data === null || data === '') return defaultValue
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const { error, value } = parseJson<Type>(data)
-  // eslint-disable-next-line no-warning-comments, @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line no-warning-comments, @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   if (error) return data as Type // TODO: wait... what ?!
   return value
 }
@@ -62,7 +62,7 @@ export const storage = {
   get,
   has,
   /* c8 ignore next 2 */
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   media: typeof localStorage === 'undefined' ? ({} as Storage) : localStorage,
   prefix: '', // prefix all keys in the storage with a custom string
   set,

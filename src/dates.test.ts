@@ -71,7 +71,7 @@ const samples = [
 
 for (const [index, [input, expected]] of samples.entries())
   it(`should calculate time ago correctly (index ${index})`, () => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
     expect(readableTimeAgo(input as Date | number)).toBe(expected)
   })
 

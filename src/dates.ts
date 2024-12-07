@@ -64,7 +64,7 @@ export function formatDate(date: Readonly<Date>, format: string, locale = 'en-US
  * @example readableTime(3 * nbMsInDay) // "3 days"
  * @example readableTime(3 * nbMsInDay, false) // "3d"
  */
-export function readableTime(input: Readonly<Date> | number, isLong = true) {
+export function readableTime(input: number | Readonly<Date>, isLong = true) {
   const ms = typeof input === 'number' ? input : Date.now() - input.getTime()
   // eslint-disable-next-line jsdoc/require-jsdoc
   const format = (value: number, long: string, short: string) => `${Math.floor(value)}${isLong ? ` ${long + (Math.floor(value) > 1 ? 's' : '')}` : short}`

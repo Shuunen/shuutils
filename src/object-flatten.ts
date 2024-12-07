@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion */
 
 /**
  * Convert a multi-level deep object into a single-level, flatten, object

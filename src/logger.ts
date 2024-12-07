@@ -26,9 +26,9 @@ export class Logger {
 
   readonly #levels: LogLevel[] = ['1-debug', '2-test', '3-info', '4-fix', '5-warn', '6-good', '7-error']
 
-  readonly #padStart = 7
-
   readonly #padding: number
+
+  readonly #padStart = 7
 
   public inMemoryLogs: string[] = []
 
