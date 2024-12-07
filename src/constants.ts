@@ -57,3 +57,10 @@ export const nbSpacesIndent = 2
 // percentages
 export const nbPercentMin = 0
 export const nbPercentMax = 100
+// breakpoints
+export const nbPixelXs = 320
+export const nbPixelSm = 640
+export const nbPixelMd = 768
+export const nbPixelLg = 1024
+export const nbPixelXl = 1280
+export const nbPixel2Xl = 1536
