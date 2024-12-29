@@ -3,7 +3,8 @@
  * @returns true if the environment is a test environment
  */
 export function isTestEnvironment() {
-  return process.env.NODE_ENV === 'test'
+  const properties = ['jest', 'mocha', '__vitest_environment__', '__vitest_required__']
+  return properties.some(property => property in globalThis)
 }
 
 /**
