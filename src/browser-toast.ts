@@ -38,7 +38,7 @@ function toastAdd(type: 'error' | 'success', message = '', delay = 0, padding = 
   const last = document.querySelector('.shu-toast:nth-last-child(1 of .shu-toast)')?.getBoundingClientRect().top
   const bottom = last === undefined ? 0 : window.innerHeight - last
   const background = type === 'success' ? 'forestgreen' : 'firebrick'
-  const icon = type === 'success' ? '✔' : '✖' // @ts-expect-error it works (๑◕ܫ◕๑)
+  const icon = type === 'success' ? '&check;' : '&cross;' // @ts-expect-error it works (๑◕ܫ◕๑)
   element.style = `position: fixed; display: flex; align-items: center; gap: 8px; bottom: ${bottom + padding}px; right: 20px; z-index: 99999; padding: 5px 14px 6px 10px; background-color: ${background}; color: white; border-radius: 7px; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); font-size: 18px; transition: transform 0.2s ease-in-out; transform: translateX(300px);`
   element.innerHTML = `<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">${icon}</span><span style="margin-top: -1px;">${message}</span>`
   toastShow(element)
