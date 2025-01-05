@@ -1,6 +1,7 @@
 /* c8 ignore start */
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 
-type ListenerMedia = Element | HTMLElement | Window
+type ListenerMedia = Element | HTMLElement | typeof globalThis | Window
 
 export interface Listener {
   callback: (event: unknown) => unknown
@@ -14,8 +15,7 @@ export interface Listener {
  * @param data the data to emit
  * @param media the media to emit the event from, like window or a dom element
  */
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export function emit<Data>(name: string, data?: Readonly<Data>, media = globalThis) {
+export function emit<Data>(name: string, data?: Readonly<Data>, media: ListenerMedia = globalThis) {
   if (data === undefined) media.dispatchEvent(new CustomEvent(name))
   else media.dispatchEvent(new CustomEvent(name, { detail: data }))
 }
@@ -27,8 +27,8 @@ export function emit<Data>(name: string, data?: Readonly<Data>, media = globalTh
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
  */
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types, @typescript-eslint/no-unnecessary-type-parameters
-export function on<Data>(name: string, callback: (data: Data, event: Event) => unknown, media = globalThis) {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+export function on<Data>(name: string, callback: (data: Data, event: Event) => unknown, media: ListenerMedia = globalThis) {
   /**
    * The callback to call when the event is emitted
    * @param event the event
