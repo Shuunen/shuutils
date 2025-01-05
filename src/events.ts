@@ -38,7 +38,8 @@ export function on<Data>(name: string, callback: (data: Data, event: Event) => u
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
     return callback(event instanceof CustomEvent ? event.detail : event, event as Event)
   }
-  media.addEventListener(name, onCallback)
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  media.addEventListener(name, onCallback, { passive: true })
   return { callback: onCallback, media, name }
 }
 
