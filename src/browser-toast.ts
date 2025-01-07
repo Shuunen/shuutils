@@ -25,6 +25,17 @@ function toastShow(element: HTMLElement, delay = 100) {
 }
 
 /**
+ * Returns the style for the toast notification based on the type.
+ * @param type the type of the toast notification
+ * @returns the style for the toast notification
+ */
+function toastStyle(type: 'error' | 'info' | 'success') {
+  if (type === 'success') return { backgrounds: ['MediumSeaGreen', 'SeaGreen'], icon: '&check;', iconStyle: 'line-height: 21px; text-indent: 1px;' }
+  if (type === 'error') return { backgrounds: ['FireBrick', 'Brown'], icon: 'x', iconStyle: 'line-height: 21.5px;' }
+  return { backgrounds: ['DodgerBlue', 'RoyalBlue'], icon: 'i', iconStyle: 'line-height: 21px;' }
+}
+
+/**
  * Adds a toast notification to the document body.
  * @param type - The type of the toast notification.
  * @param message - The message to be displayed in the toast notification.
@@ -32,15 +43,14 @@ function toastShow(element: HTMLElement, delay = 100) {
  * @param padding - The padding in pixels for the toast notification.
  */
 // eslint-disable-next-line @typescript-eslint/max-params
-function toastAdd(type: 'error' | 'success', message = '', delay = 0, padding = 20) {
+function toastAdd(type: 'error' | 'info' | 'success', message = '', delay = 0, padding = 14) {
   const element = document.createElement('div')
   element.setAttribute('class', 'shu-toast')
   const last = document.querySelector('.shu-toast:nth-last-child(1 of .shu-toast)')?.getBoundingClientRect().top
-  const bottom = last === undefined ? 0 : window.innerHeight - last
-  const background = type === 'success' ? 'forestgreen' : 'firebrick'
-  const icon = type === 'success' ? '&check;' : '&cross;' // @ts-expect-error it works (๑◕ܫ◕๑)
-  element.style = `position: fixed; display: flex; align-items: center; gap: 8px; bottom: ${bottom + padding}px; right: 20px; z-index: 99999; padding: 5px 14px 6px 10px; background-color: ${background}; color: white; border-radius: 7px; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); font-size: 18px; transition: transform 0.2s ease-in-out; transform: translateX(300px);`
-  element.innerHTML = `<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">${icon}</span><span style="margin-top: -1px;">${message}</span>`
+  const bottom = last === undefined ? 0 : globalThis.innerHeight - last
+  const { backgrounds, icon, iconStyle } = toastStyle(type) // @ts-expect-error it works (๑◕ܫ◕๑)
+  element.style = `position: fixed; display: flex; align-items: center; gap: 9px; bottom: ${bottom + padding}px; right: ${padding}px; z-index: 99999; padding: 12px 20px 11px 14px; background: linear-gradient(45deg, ${backgrounds[0]}, 20%, ${backgrounds[1]}); color: white; border-radius: 5px; box-shadow: 0 3px 7px 0 rgba(0,0,0,.5); font-size: 18px; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; transform: translateX(300px);`
+  element.innerHTML = `<span style="${iconStyle}border-radius: 50%; color: ${backgrounds[1]}; background-color: #ffffff90; width: 20px; height: 20px; text-align: center; font-weight: bolder; font-size: 12px;">${icon}</span><span style="margin-top: -1px;">${message}</span>`
   toastShow(element)
   if (delay > 0)
     setTimeout(() => {
@@ -56,6 +66,16 @@ function toastAdd(type: 'error' | 'success', message = '', delay = 0, padding = 
  */
 export function toastError(message: string, delay = 4000) {
   toastAdd('error', message, delay)
+}
+
+/**
+ * Displays an info toast message.
+ * @param message - The info message to display.
+ * @param delay - The delay in milliseconds before the toast disappears. Default is 3000ms.
+ * @example utils.toastInfo('hello world')
+ */
+export function toastInfo(message: string, delay = 2000) {
+  toastAdd('info', message, delay)
 }
 
 /**

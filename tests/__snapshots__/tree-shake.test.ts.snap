@@ -141,15 +141,19 @@ function toastShow(element, delay = 100) {
     element.style.transform = "translateX(0)";
   }, delay);
 }
-function toastAdd(type, message = "", delay = 0, padding = 20) {
+function toastStyle(type) {
+  if (type === "success") return { backgrounds: ["MediumSeaGreen", "SeaGreen"], icon: "&check;", iconStyle: "line-height: 21px; text-indent: 1px;" };
+  if (type === "error") return { backgrounds: ["FireBrick", "Brown"], icon: "x", iconStyle: "line-height: 21.5px;" };
+  return { backgrounds: ["DodgerBlue", "RoyalBlue"], icon: "i", iconStyle: "line-height: 21px;" };
+}
+function toastAdd(type, message = "", delay = 0, padding = 14) {
   const element = document.createElement("div");
   element.setAttribute("class", "shu-toast");
   const last = document.querySelector(".shu-toast:nth-last-child(1 of .shu-toast)")?.getBoundingClientRect().top;
-  const bottom = last === void 0 ? 0 : window.innerHeight - last;
-  const background = type === "success" ? "forestgreen" : "firebrick";
-  const icon2 = type === "success" ? "&check;" : "&cross;";
-  element.style = \`position: fixed; display: flex; align-items: center; gap: 8px; bottom: \${bottom + padding}px; right: 20px; z-index: 99999; padding: 5px 14px 6px 10px; background-color: \${background}; color: white; border-radius: 7px; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5); font-size: 18px; transition: transform 0.2s ease-in-out; transform: translateX(300px);\`;
-  element.innerHTML = \`<span style="border-radius: 50%; border: 1px solid #ffffff90; width: 20px; height: 20px; text-align: center; font-size: 12px;">\${icon2}</span><span style="margin-top: -1px;">\${message}</span>\`;
+  const bottom = last === void 0 ? 0 : globalThis.innerHeight - last;
+  const { backgrounds, icon: icon2, iconStyle } = toastStyle(type);
+  element.style = \`position: fixed; display: flex; align-items: center; gap: 9px; bottom: \${bottom + padding}px; right: \${padding}px; z-index: 99999; padding: 12px 20px 11px 14px; background: linear-gradient(45deg, \${backgrounds[0]}, 20%, \${backgrounds[1]}); color: white; border-radius: 5px; box-shadow: 0 3px 7px 0 rgba(0,0,0,.5); font-size: 18px; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; transform: translateX(300px);\`;
+  element.innerHTML = \`<span style="\${iconStyle}border-radius: 50%; color: \${backgrounds[1]}; background-color: #ffffff90; width: 20px; height: 20px; text-align: center; font-weight: bolder; font-size: 12px;">\${icon2}</span><span style="margin-top: -1px;">\${message}</span>\`;
   toastShow(element);
   if (delay > 0)
     setTimeout(() => {
