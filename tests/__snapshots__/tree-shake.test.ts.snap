@@ -130,6 +130,7 @@ exports[`tree-shake test D 1`] = `
   ╚══════════════════════════╝
   // dist/shuutils.js
 function toastHide(element, delay = 200) {
+  element.style.opacity = "0";
   element.style.transform = "translateX(300px)";
   setTimeout(() => {
     element.remove();
@@ -138,6 +139,7 @@ function toastHide(element, delay = 200) {
 function toastShow(element, delay = 100) {
   document.body.append(element);
   setTimeout(() => {
+    element.style.opacity = "1";
     element.style.transform = "translateX(0)";
   }, delay);
 }

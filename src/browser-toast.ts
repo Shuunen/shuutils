@@ -6,6 +6,7 @@
  * @param delay - The delay in milliseconds before removing the element.
  */
 function toastHide(element: HTMLElement, delay = 200) {
+  element.style.opacity = '0'
   element.style.transform = 'translateX(300px)'
   setTimeout(() => {
     element.remove()
@@ -20,6 +21,7 @@ function toastHide(element: HTMLElement, delay = 200) {
 function toastShow(element: HTMLElement, delay = 100) {
   document.body.append(element)
   setTimeout(() => {
+    element.style.opacity = '1'
     element.style.transform = 'translateX(0)'
   }, delay)
 }
