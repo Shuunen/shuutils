@@ -16,8 +16,8 @@ importers:
         specifier: '1.9'
         version: 1.9.4
       '@happy-dom/global-registrator':
-        specifier: '16.6'
-        version: 16.6.0
+        specifier: '16.7'
+        version: 16.7.0
       '@rollup/plugin-typescript':
         specifier: '12.1'
         version: 12.1.2(rollup@4.29.1)(tslib@2.8.1)(typescript@5.7.2)
@@ -26,7 +26,7 @@ importers:
         version: 22.10.2
       '@vitest/coverage-v8':
         specifier: '3.0'
-        version: 3.0.0(vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.6.0))
+        version: 3.0.0(vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.7.0))
       dependency-cruiser:
         specifier: '16.9'
         version: 16.9.0
@@ -50,7 +50,7 @@ importers:
         version: 5.7.2
       vitest:
         specifier: '3.0'
-        version: 3.0.0(@types/node@22.10.2)(happy-dom@16.6.0)
+        version: 3.0.0(@types/node@22.10.2)(happy-dom@16.7.0)
       watchlist:
         specifier: '0.3'
         version: 0.3.1
@@ -469,8 +469,8 @@ packages:
     resolution: {integrity: sha512-zSkKow6H5Kdm0ZUQUB2kV5JIXqoG0+uH5YADhaEHswm664N9Db8dXSi0nMJpacpMf+MyyglF1vnZohpEg5yUtg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@happy-dom/global-registrator@16.6.0':
-    resolution: {integrity: sha512-AfiL61jiNas3GKn6kSYUvEAxE+ZQWQcgJjTq6Cku/gEfHm4GFJT/rbM+Vp8DiscO8VAlQkc3pTsluJkTOIe2fg==}
+  '@happy-dom/global-registrator@16.7.0':
+    resolution: {integrity: sha512-kuOB8eKorSIyppFjTL1I4H7dwRnfBfHoOq0ALkWfUjWi1kzwJktJ//zglPG4u4MB5GrzCmDpkGTfJcKB/kNm7A==}
     engines: {node: '>=18.0.0'}
 
   '@humanfs/core@0.19.1':
@@ -1250,8 +1250,8 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  happy-dom@16.6.0:
-    resolution: {integrity: sha512-Zz5S9sog8a3p8XYZbO+eI1QMOAvCNnIoyrH8A8MLX+X2mJrzADTy+kdETmc4q+uD9AGAvQYGn96qBAn2RAciKw==}
+  happy-dom@16.7.0:
+    resolution: {integrity: sha512-vxjSgX/beuuVfuhEfxFfnOyYg4mLQHHomzVNumYyVqI23IMyjYI7RtmIFr9xnWiWyR2m7TS2BXa5Vht+J76VHQ==}
     engines: {node: '>=18.0.0'}
 
   has-flag@4.0.0:
@@ -2406,9 +2406,9 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@happy-dom/global-registrator@16.6.0':
+  '@happy-dom/global-registrator@16.7.0':
     dependencies:
-      happy-dom: 16.6.0
+      happy-dom: 16.7.0
 
   '@humanfs/core@0.19.1': {}
 
@@ -2671,7 +2671,7 @@ snapshots:
       '@typescript-eslint/types': 8.18.2
       eslint-visitor-keys: 4.2.0
 
-  '@vitest/coverage-v8@3.0.0(vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.6.0))':
+  '@vitest/coverage-v8@3.0.0(vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.7.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -2685,7 +2685,7 @@ snapshots:
       std-env: 3.8.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.0.0(@types/node@22.10.2)(happy-dom@16.6.0)
+      vitest: 3.0.0(@types/node@22.10.2)(happy-dom@16.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3276,7 +3276,7 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  happy-dom@16.6.0:
+  happy-dom@16.7.0:
     dependencies:
       webidl-conversions: 7.0.0
       whatwg-mimetype: 3.0.0
@@ -4021,7 +4021,7 @@ snapshots:
       '@types/node': 22.10.2
       fsevents: 2.3.3
 
-  vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.6.0):
+  vitest@3.0.0(@types/node@22.10.2)(happy-dom@16.7.0):
     dependencies:
       '@vitest/expect': 3.0.0
       '@vitest/mocker': 3.0.0(vite@5.4.11(@types/node@22.10.2))
@@ -4045,7 +4045,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.10.2
-      happy-dom: 16.6.0
+      happy-dom: 16.7.0
     transitivePeerDependencies:
       - less
       - lightningcss
