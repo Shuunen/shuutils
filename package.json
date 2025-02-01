@@ -11,9 +11,9 @@
   "description": "utils collection",
   "devDependencies": {
     "@biomejs/biome": "1.9",
-    "@happy-dom/global-registrator": "16.7",
+    "@happy-dom/global-registrator": "16.8",
     "@rollup/plugin-typescript": "12.1",
-    "@types/node": "22.12",
+    "@types/node": "22.13",
     "@vitest/coverage-v8": "3.0",
     "dependency-cruiser": "16.9",
     "esbuild": "0.24",
