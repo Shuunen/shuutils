@@ -6,6 +6,7 @@
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
+    "resultx": "2.0",
     "tiny-glob": "0.2"
   },
   "description": "utils collection",
@@ -25,6 +26,12 @@
     "vitest": "3.0",
     "watchlist": "0.3"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/shuutils.js",
+      "require": "./dist/shuutils.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -39,12 +46,6 @@
   ],
   "license": "MIT",
   "main": "./dist/shuutils.js",
-  "exports": {
-    ".": {
-      "import": "./dist/shuutils.js",
-      "require": "./dist/shuutils.cjs"
-    }
-  },
   "name": "shuutils",
   "private": false,
   "repository": {
@@ -60,6 +61,7 @@
     "lint:biome": "biome check --error-on-warnings --write --unsafe && echo lint:biome success",
     "lint:dep": "depcruise src --config && echo lint:dep success",
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
+    "lint:eslint:inspect": "eslint --inspect-config",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",
     "lint:watch": "watchlist src tests -eager -- pnpm lint",
     "mark": "node dist/unique-mark.cjs dist/*.{js,cjs,mjs} && echo mark success",
