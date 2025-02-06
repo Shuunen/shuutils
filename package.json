@@ -12,7 +12,7 @@
   "description": "utils collection",
   "devDependencies": {
     "@biomejs/biome": "1.9",
-    "@happy-dom/global-registrator": "16.8",
+    "@happy-dom/global-registrator": "17.0",
     "@rollup/plugin-typescript": "12.1",
     "@types/node": "22.13",
     "@vitest/coverage-v8": "3.0",
