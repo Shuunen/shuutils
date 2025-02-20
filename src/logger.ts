@@ -127,6 +127,7 @@ export class Logger {
     /* eslint-disable no-control-regex */
     return (
       stuff
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         .map(thing => (typeof thing === 'object' ? JSON.stringify(thing) : String(thing)))
         .join(' ')
         // biome-ignore lint/suspicious/noControlCharactersInRegex: it's ok, daddy is here
