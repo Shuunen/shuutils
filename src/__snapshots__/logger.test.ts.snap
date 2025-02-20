@@ -20,3 +20,14 @@ exports[`logger D 1`] = `
   "error This error 5 should be logged null",
 ]
 `;
+
+exports[`logger F show 1`] = `
+[
+  " info This info 1 should be logged 12",
+  " info This info 2 should be logged too [1,2,3]",
+  " warn This warn 3 should be logged {'isKeyC':true,'keyA':1,'keyB':'John'}",
+  "error This error 4 should not be logged",
+  "error This error 5 should be logged null",
+  " good This success 6 should be logged 12",
+]
+`;

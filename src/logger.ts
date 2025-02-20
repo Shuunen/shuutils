@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/class-methods-use-this */
+import { toastError, toastInfo, toastSuccess } from './browser-toast'
 import { bgGreen, bgRed, blue, cyan, gray, green, red, yellow } from './colors'
 import { formatDate, readableTime } from './dates'
+import { isBrowserEnvironment } from './environment'
 import { isVerbose } from './flags'
 
 type LogLevel = '1-debug' | '2-test' | '3-info' | '4-fix' | '5-warn' | '6-good' | '7-error'
@@ -192,6 +194,36 @@ export class Logger {
    */
   public info(...stuff: Readonly<unknown[]>) {
     this.#logIf('info', '3-info', stuff, blue)
+  }
+
+  /**
+   * Log an error message and show a toast
+   * @param stuff the things to log (will be red, such original)
+   * @example logger.error('Something went wrong')
+   */
+  public showError(...stuff: Readonly<unknown[]>) {
+    this.error(...stuff)
+    if (/* c8 ignore next */ isBrowserEnvironment()) toastError(this.clean(...stuff))
+  }
+
+  /**
+   * Log an info message and show a toast
+   * @param stuff the things to log
+   * @example logger.info('Hello ¯\_(ツ)_/¯')
+   */
+  public showInfo(...stuff: Readonly<unknown[]>) {
+    this.info(...stuff)
+    if (/* c8 ignore next */ isBrowserEnvironment()) toastInfo(this.clean(...stuff))
+  }
+
+  /**
+   * Log a success message and show a toast
+   * @param stuff the things to log
+   * @example logger.success('Everything went well')
+   */
+  public showSuccess(...stuff: Readonly<unknown[]>) {
+    this.success(...stuff)
+    if (/* c8 ignore next */ isBrowserEnvironment()) toastSuccess(this.clean(...stuff))
   }
 
   /**

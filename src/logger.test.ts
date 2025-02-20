@@ -58,41 +58,57 @@ it('logger D', () => {
 })
 
 const loggerE = new Logger({ willOutputToConsole: false })
-it('loggerE clean A', () => {
+it('logger clean A', () => {
   expect(loggerE.clean()).toBe('')
 })
-it('loggerE clean B', () => {
+it('logger clean B', () => {
   expect(loggerE.clean(red("Oh I'm in red now ?!"))).toMatchInlineSnapshot('"Oh I\'m in red now ?!"')
 })
-it('loggerE clean C', () => {
+it('logger clean C', () => {
   expect(loggerE.clean('an array ?', [12, 42])).toMatchInlineSnapshot('"an array ? [12,42]"')
 })
-it('loggerE clean D', () => {
+it('logger clean D', () => {
   expect(loggerE.clean('a function ?', () => 'Hello world')).toMatchInlineSnapshot('"a function ? () => \'Hello world\'"')
 })
-it('loggerE clean E', () => {
+it('logger clean E', () => {
   expect(loggerE.clean('an object ?', { isFull: true, keyA: 1, keyB: 'John' })).toMatchInlineSnapshot("\"an object ? {'isFull':true,'keyA':1,'keyB':'John'}\"")
 })
-it('loggerE clean F', () => {
+it('logger clean F', () => {
   expect(loggerE.clean('a boolean ?', true)).toMatchInlineSnapshot('"a boolean ? true"')
 })
-it('loggerE clean G', () => {
+it('logger clean G', () => {
   expect(loggerE.clean('a number ?', 42)).toMatchInlineSnapshot('"a number ? 42"')
 })
-it('loggerE clean H', () => {
+it('logger clean H', () => {
   expect(loggerE.clean('a string ?', 'Hello world')).toMatchInlineSnapshot('"a string ? Hello world"')
 })
-it('loggerE clean I', () => {
+it('logger clean I', () => {
   // eslint-disable-next-line unicorn/no-null
   expect(loggerE.clean('a null ?', null)).toMatchInlineSnapshot('"a null ? null"')
 })
-it('loggerE clean J', () => {
+it('logger clean J', () => {
   // eslint-disable-next-line unicorn/no-useless-undefined
   expect(loggerE.clean('an undefined ?', undefined)).toMatchInlineSnapshot('"an undefined ? undefined"')
 })
-it('loggerE clean K', () => {
+it('logger clean K', () => {
   expect(loggerE.clean('a date ?', new Date('2020-01-01'))).toMatchInlineSnapshot('"a date ? \'2020-01-01T00:00:00.000Z\'"')
 })
-it('loggerE clean L', () => {
+it('logger clean L', () => {
   expect(loggerE.clean('a regexp ?', /Hello world{3,5}/u)).toMatchInlineSnapshot('"a regexp ? {}"')
 }) // not supported for now
+
+it('logger F show', () => {
+  const loggerF = new Logger({ willLogDelay: false, willOutputToConsole: false, willOutputToMemory: true })
+  loggerF.showInfo('This info 1 should be logged', 12)
+  loggerF.info('This info 2 should be logged too', [1, 2, 3])
+  loggerF.warn('This warn 3 should be logged', { isKeyC: true, keyA: 1, keyB: 'John' })
+  loggerF.showError('This error 4 should not be logged')
+  loggerF.error('This error 5 should be logged', null) // eslint-disable-line unicorn/no-null
+  loggerF.showSuccess('This success 6 should be logged', 12)
+  loggerF.test(true, 'This test 7 should be logged', undefined) // eslint-disable-line unicorn/no-useless-undefined
+  loggerF.test(false, 'This test 8 should be logged', () => 'Hello world')
+  loggerF.debug('This debug 9 should be logged', true, [], {})
+  loggerF.options.minimumLevel = '3-info'
+  loggerF.debug('This debug 10 should not be logged')
+  expect(loggerF.inMemoryLogs, 'loggerF inMemoryLogs').toMatchSnapshot()
+})
