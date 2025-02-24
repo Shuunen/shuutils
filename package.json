@@ -19,7 +19,7 @@
     "esbuild": "0.25",
     "eslint": "*",
     "eslint-plugin-shuunen": "1.0",
-    "repo-check": "1.40",
+    "repo-check": "1.42",
     "tsup": "8.3",
     "typescript": "5.7",
     "vitest": "3.0",
