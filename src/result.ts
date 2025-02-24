@@ -1,7 +1,7 @@
-import { err, ok, trySafe, unwrap } from 'resultx'
+import { err as error, ok, trySafe, unwrap } from './resultx'
 
 /**
- * A `Result` collection of functions to handle errors and successes.
+ * A `Result` collection of functions from Johann Schopplich to handle errors and successes.
  * @see https://github.com/johannschopplich/resultx
  * @see https://github.com/Shuunen/ts-result-comparison
  */
@@ -11,7 +11,7 @@ export const Result = {
    * Create a failing `Result` with an error message.
    * @example if (shitHappen) return Result.error('File not found')
    */
-  error: err,
+  error,
   /**
    * Create a successful `Result` with a value.
    * @example return Result.ok(42)

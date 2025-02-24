@@ -6,7 +6,6 @@
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
-    "resultx": "2.0",
     "tiny-glob": "0.2"
   },
   "description": "utils collection",

@@ -4,18 +4,19 @@
     "ignore": [
       "node_modules/**",
       "dist/**",
-      "coverage/**"
+      "coverage/**",
+      "src/resultx.ts"
     ]
   },
   "formatter": {
     "enabled": true,
+    "ignore": [
+      "src/shuutils.ts"
+    ],
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 180,
-    "ignore": [
-      "src/shuutils.ts"
-    ]
+    "lineWidth": 180
   },
   "javascript": {
     "formatter": {

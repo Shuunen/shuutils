@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      resultx:
-        specifier: '2.0'
-        version: 2.0.2
       tiny-glob:
         specifier: '0.2'
         version: 0.2.9
@@ -1750,9 +1747,6 @@ packages:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
     engines: {node: '>= 0.4'}
     hasBin: true
-
-  resultx@2.0.2:
-    resolution: {integrity: sha512-wWaAwKrlQlIa4IIGkQi7UE4tt3XwoDI+XRDTYY8hVVaqQSwnQR4tDkLweSSvjtKNsUC86MKfok65+hNNLbZW4Q==}
 
   reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
@@ -3716,8 +3710,6 @@ snapshots:
       is-core-module: 2.16.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
-
-  resultx@2.0.2: {}
 
   reusify@1.0.4: {}
 
