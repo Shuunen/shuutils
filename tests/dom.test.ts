@@ -1,29 +1,6 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 import { expect, it } from 'vitest'
-import {
-  backdrop,
-  css,
-  div,
-  dom,
-  em,
-  findAll,
-  findOne,
-  h1,
-  h2,
-  h3,
-  icon,
-  image,
-  img,
-  li,
-  link,
-  scrollToHeightSync,
-  small,
-  strong,
-  text,
-  tw,
-  ul,
-  waitToDetect,
-} from '../src/shuutils'
+import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src/shuutils'
 
 GlobalRegistrator.register()
 
@@ -58,13 +35,6 @@ it('custom type dom element with classes & dom element content', () => {
   expect(element.textContent).toBe('John Pepe')
   expect(element.tagName.toLowerCase()).toBe('i')
   expect(element.innerHTML).toBe('<p class="pizza">John Pepe</p>')
-})
-
-it('image', () => {
-  const element = image('profile', 'https://cdn.com/image.jpg', 'profile picture')
-  expect(element.alt).toBe('profile picture')
-  expect(element.tagName.toLowerCase()).toBe('img')
-  expect(element.src).toBe('https://cdn.com/image.jpg')
 })
 
 it('img', () => {

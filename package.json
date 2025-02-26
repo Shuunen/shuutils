@@ -12,13 +12,13 @@
   "devDependencies": {
     "@biomejs/biome": "1.9",
     "@happy-dom/global-registrator": "17.1",
-    "@rollup/plugin-typescript": "12.1",
     "@types/node": "22.13",
     "@vitest/coverage-v8": "3.0",
     "dependency-cruiser": "16.10",
     "esbuild": "0.25",
     "eslint": "*",
     "eslint-plugin-shuunen": "1.0",
+    "knip": "latest",
     "repo-check": "1.42",
     "tsup": "8.4",
     "typescript": "5.7",
@@ -46,6 +46,11 @@
   "license": "MIT",
   "main": "./dist/shuutils.js",
   "name": "shuutils",
+  "pnpm": {
+    "overrides": {
+      "tinypool": "0.8.0"
+    }
+  },
   "private": false,
   "repository": {
     "type": "git",
@@ -56,11 +61,12 @@
     "build:watch": "watchlist bin src -eager -- pnpm build",
     "check": "pnpm install && echo install success && pnpm build && pnpm lint && repo-check && echo repo-check success && pnpm test && echo check success",
     "dev": "pnpm test:watch",
-    "lint": "pnpm lint:tsc && pnpm lint:biome && pnpm lint:eslint && pnpm lint:dep && echo lint success",
+    "lint": "pnpm lint:tsc && pnpm lint:biome && pnpm lint:knip && pnpm lint:eslint && pnpm lint:dep && echo lint success",
     "lint:biome": "biome check --error-on-warnings --write --unsafe && echo lint:biome success",
     "lint:dep": "depcruise src --config && echo lint:dep success",
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
     "lint:eslint:inspect": "eslint --inspect-config",
+    "lint:knip": "knip",
     "lint:tsc": "tsc --noEmit && echo lint:tsc success",
     "lint:watch": "watchlist src tests -eager -- pnpm lint",
     "mark": "node dist/unique-mark.cjs dist/*.{js,cjs,mjs} && echo mark success",

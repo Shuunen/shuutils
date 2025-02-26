@@ -31,7 +31,6 @@ export function img(classes: string, source: string, alt: string) {
   element.src = source
   return element
 }
-export const image = img
 
 /**
  * Generate an icon element with a <i> tag
