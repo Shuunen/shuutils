@@ -15,6 +15,8 @@ export function isTestEnvironment() {
  * @returns true if the environment is a browser environment
  */
 export function isBrowserEnvironment() {
+  const isHappyDom = globalThis.navigator.userAgent.includes('HappyDOM')
+  if (isHappyDom) return false
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  return globalThis.matchMedia !== undefined
+  return typeof document !== 'undefined' && globalThis.matchMedia !== undefined
 }

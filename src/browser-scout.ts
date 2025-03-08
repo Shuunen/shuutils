@@ -103,7 +103,8 @@ export function getOperatingSystem(userAgent = getUserAgent()) {
  * @returns true if the browser is running on mobile
  */
 export function isMobile(userAgent = getUserAgent()) {
-  if ('ontouchstart' in (typeof document === 'undefined' ? {} : document.documentElement)) return true
+  // ontouchstart is now detected in HappyDom
+  // if ('ontouchstart' in (typeof document === 'undefined' ? {} : document.documentElement)) return true
   if (userAgent.includes('Mobile')) return true
   const browser = getBrowser(userAgent)
   return ['Android'].includes(browser)
