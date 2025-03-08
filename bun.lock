@@ -9,6 +9,7 @@
       "devDependencies": {
         "@biomejs/biome": "1.9",
         "@happy-dom/global-registrator": "17.4",
+        "@types/bun": "1.2",
         "@types/node": "22.13",
         "esbuild": "0.25",
         "eslint": "*",
@@ -188,6 +189,8 @@
 
     "@snyk/github-codeowners": ["@snyk/github-codeowners@1.1.0", "", { "dependencies": { "commander": "^4.1.1", "ignore": "^5.1.8", "p-map": "^4.0.0" }, "bin": { "github-codeowners": "dist/cli.js" } }, "sha512-lGFf08pbkEac0NYgVf4hdANpAgApRjNByLXB+WBip3qj1iendOIyAwP2GKkKbQMNVy2r1xxDf0ssfWscoiC+Vw=="],
 
+    "@types/bun": ["@types/bun@1.2.4", "", { "dependencies": { "bun-types": "1.2.4" } }, "sha512-QtuV5OMR8/rdKJs213iwXDpfVvnskPXY/S0ZiFbsTjQZycuqPbMW8Gf/XhLfwE5njW8sxI2WjISURXPlHypMFA=="],
+
     "@types/estree": ["@types/estree@1.0.6", "", {}, "sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw=="],
 
     "@types/json-schema": ["@types/json-schema@7.0.15", "", {}, "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="],
@@ -195,6 +198,8 @@
     "@types/node": ["@types/node@22.13.10", "", { "dependencies": { "undici-types": "~6.20.0" } }, "sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw=="],
 
     "@types/normalize-package-data": ["@types/normalize-package-data@2.4.4", "", {}, "sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA=="],
+
+    "@types/ws": ["@types/ws@8.5.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw=="],
 
     "@typescript-eslint/eslint-plugin": ["@typescript-eslint/eslint-plugin@8.23.0", "", { "dependencies": { "@eslint-community/regexpp": "^4.10.0", "@typescript-eslint/scope-manager": "8.23.0", "@typescript-eslint/type-utils": "8.23.0", "@typescript-eslint/utils": "8.23.0", "@typescript-eslint/visitor-keys": "8.23.0", "graphemer": "^1.4.0", "ignore": "^5.3.1", "natural-compare": "^1.4.0", "ts-api-utils": "^2.0.1" }, "peerDependencies": { "@typescript-eslint/parser": "^8.0.0 || ^8.0.0-alpha.0", "eslint": "^8.57.0 || ^9.0.0", "typescript": ">=4.8.4 <5.8.0" } }, "sha512-vBz65tJgRrA1Q5gWlRfvoH+w943dq9K1p1yDBY2pc+a1nbBLZp7fB9+Hk8DaALUbzjqlMfgaqlVPT1REJdkt/w=="],
 
@@ -247,6 +252,8 @@
     "browserslist": ["browserslist@4.24.4", "", { "dependencies": { "caniuse-lite": "^1.0.30001688", "electron-to-chromium": "^1.5.73", "node-releases": "^2.0.19", "update-browserslist-db": "^1.1.1" }, "bin": { "browserslist": "cli.js" } }, "sha512-KDi1Ny1gSePi1vm0q4oxSF8b4DR44GF4BbmS2YdhPLOEqd8pDviZOGH/GsmRwoWJ2+5Lr085X7naowMwKHDG1A=="],
 
     "builtin-modules": ["builtin-modules@3.3.0", "", {}, "sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw=="],
+
+    "bun-types": ["bun-types@1.2.4", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-nDPymR207ZZEoWD4AavvEaa/KZe/qlrbMSchqpQwovPZCKc7pwMoENjEtHgMKaAjJhy+x6vfqSBA1QU3bJgs0Q=="],
 
     "bundle-require": ["bundle-require@5.1.0", "", { "dependencies": { "load-tsconfig": "^0.2.3" }, "peerDependencies": { "esbuild": ">=0.18" } }, "sha512-3WrrOuZiyaaZPWiEt4G3+IffISVC9HYlWueJEBWED4ZH4aIAC2PnkdnuRrR94M+w6yGWn4AglWtJtBI8YqvgoA=="],
 

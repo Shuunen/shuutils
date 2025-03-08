@@ -1,6 +1,4 @@
-import { writeFileSync } from 'node:fs'
-import path from 'node:path'
-import { cwd } from 'node:process'
+import { write } from 'bun'
 import glob from 'tiny-glob'
 
 const { log } = console
@@ -11,12 +9,12 @@ const { log } = console
  */
 async function listEntries() {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const files = await glob('*.ts', { cwd: path.join(cwd(), 'src/'), filesOnly: true })
+  const files = await glob('*.ts', { cwd: 'src', filesOnly: true })
   const list = files
     .filter(file => !(file.includes('shuutils.ts') || file.includes('unique-mark.ts') || file.includes('.test.ts')))
     .map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${file.replace('.ts', '')}'`)
-  const content = `${list.join('\n')}\n`
-  writeFileSync(path.join(cwd(), 'src/shuutils.ts'), content)
+  const content = `${list.sort().join('\n')}\n`
+  await write('src/shuutils.ts', content)
   log('src/shuutils.ts updated !')
 }
 

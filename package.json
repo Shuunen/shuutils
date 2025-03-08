@@ -12,6 +12,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9",
     "@happy-dom/global-registrator": "17.4",
+    "@types/bun": "1.2",
     "@types/node": "22.13",
     "esbuild": "0.25",
     "eslint": "*",
