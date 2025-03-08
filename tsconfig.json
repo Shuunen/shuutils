@@ -29,9 +29,6 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ESNext",
-    "types": [
-      "node"
-    ],
     "verbatimModuleSyntax": true
   },
   "include": [

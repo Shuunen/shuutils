@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
-import { sleep, throttle } from '../src/shuutils'
+import { expect, it } from 'bun:test'
+import { sleep, throttle } from './shuutils'
 
 let times = 0
 

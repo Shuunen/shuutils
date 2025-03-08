@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import {
   dateIso10,
   dateToIsoString,
@@ -20,7 +20,7 @@ it('dateIso10 specific date', () => {
   expect(dateIso10(new Date('2018-11-30'))).toBe('2018-11-30')
 })
 it('dateIso10 today', () => {
-  expect(dateIso10(today)).toBe(today.toISOString().split('T')[0])
+  expect(dateIso10(today)).toBe(today.toISOString().split('T')[0] ?? '')
 })
 
 // use dateIso10 to remove milliseconds that would differ from two new Date() instances
@@ -67,12 +67,11 @@ const samples = [
   [daysAgo(61), '2 months ago'],
   [daysAgo(364), '12 months ago'],
   [daysAgo(365), 'last year'],
-]
+] as const
 
 for (const [index, [input, expected]] of samples.entries())
   it(`should calculate time ago correctly (index ${index})`, () => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
-    expect(readableTimeAgo(input as Date | number)).toBe(expected)
+    expect(readableTimeAgo(input)).toBe(expected)
   })
 
 const date = new Date('2021-09-02T07:08:28')

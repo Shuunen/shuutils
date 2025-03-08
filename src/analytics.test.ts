@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { Analytics } from './analytics'
 import { sleep } from './functions'
 
@@ -6,7 +6,7 @@ it('analytics A throw if track event without setup', () => {
   const analytics = new Analytics()
   expect(() => {
     analytics.track('test')
-  }).toThrowErrorMatchingInlineSnapshot(`[Error: analytics : track event failed, analytics not setup]`)
+  }).toThrowErrorMatchingInlineSnapshot(`"analytics : track event failed, analytics not setup"`)
 })
 
 it('analytics B setupInMemory', async () => {
@@ -31,12 +31,12 @@ it('analytics C throw if identify without setup', () => {
   const analytics = new Analytics()
   expect(() => {
     analytics.identify('test')
-  }).toThrowErrorMatchingInlineSnapshot(`[Error: analytics : identify failed, analytics not setup]`)
+  }).toThrowErrorMatchingInlineSnapshot(`"analytics : identify failed, analytics not setup"`)
 })
 
 it('analytics D throw if track page without setup', () => {
   const analytics = new Analytics()
   expect(() => {
     analytics.page()
-  }).toThrowErrorMatchingInlineSnapshot(`[Error: analytics : track page failed, analytics not setup]`)
+  }).toThrowErrorMatchingInlineSnapshot(`"analytics : track page failed, analytics not setup"`)
 })

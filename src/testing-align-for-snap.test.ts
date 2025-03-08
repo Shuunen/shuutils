@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { alignForSnap } from './testing-align-for-snap'
 
 it('cleanForSnap A - Windows filepath', () => {

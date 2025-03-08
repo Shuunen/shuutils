@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { functionReturningUndefined, functionReturningVoid, hasOwn, sleep } from './shuutils'
 
 it('hasOwn A', () => {

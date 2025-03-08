@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import {
   capitalize,
   crc32,
@@ -187,7 +187,7 @@ it('parse json valid object string', () => {
   expect(parseJson('{ "name": "John Cena", "age": 42 }')).toStrictEqual({ error: '', value: { age: 42, name: 'John Cena' } })
 })
 it('parse json invalid object string', () => {
-  expect(parseJson('{ xyz "name": "John Cena" }').error).toContain('Expected property')
+  expect(parseJson('{ xyz "name": "John Cena" }').error).toMatchInlineSnapshot(`"JSON invalide : JSON Parse error: Expected '}'"`)
 })
 it('parse json valid array string', () => {
   expect(parseJson('[ "John Cena", 42 ]')).toStrictEqual({ error: '', value: ['John Cena', 42] })

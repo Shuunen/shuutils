@@ -1,0 +1,55 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add color code 1`] = `"\x1B[22mtest\x1B[32m"`;
+
+exports[`color reset 1`] = `"\x1B[0mtest\x1B[0m"`;
+
+exports[`color bold 1`] = `"\x1B[1mtest\x1B[22m"`;
+
+exports[`color dim 1`] = `"\x1B[2mtest\x1B[22m"`;
+
+exports[`color italic 1`] = `"\x1B[3mtest\x1B[23m"`;
+
+exports[`color underline 1`] = `"\x1B[4mtest\x1B[24m"`;
+
+exports[`color overline 1`] = `"\x1B[53mtest\x1B[55m"`;
+
+exports[`color inverse 1`] = `"\x1B[7mtest\x1B[27m"`;
+
+exports[`color strikeThrough 1`] = `"\x1B[9mtest\x1B[29m"`;
+
+exports[`color black 1`] = `"\x1B[30mtest\x1B[39m"`;
+
+exports[`color red 1`] = `"\x1B[31mtest\x1B[39m"`;
+
+exports[`color green 1`] = `"\x1B[32mtest\x1B[39m"`;
+
+exports[`color yellow 1`] = `"\x1B[33mtest\x1B[39m"`;
+
+exports[`color blue 1`] = `"\x1B[34mtest\x1B[39m"`;
+
+exports[`color magenta 1`] = `"\x1B[35mtest\x1B[39m"`;
+
+exports[`color cyan 1`] = `"\x1B[36mtest\x1B[39m"`;
+
+exports[`color white 1`] = `"\x1B[37mtest\x1B[39m"`;
+
+exports[`color gray 1`] = `"\x1B[90mtest\x1B[39m"`;
+
+exports[`color bgBlack 1`] = `"\x1B[40mtest\x1B[49m"`;
+
+exports[`color bgRed 1`] = `"\x1B[41mtest\x1B[49m"`;
+
+exports[`color bgGreen 1`] = `"\x1B[42mtest\x1B[49m"`;
+
+exports[`color bgYellow 1`] = `"\x1B[43mtest\x1B[49m"`;
+
+exports[`color bgBlue 1`] = `"\x1B[44mtest\x1B[49m"`;
+
+exports[`color bgMagenta 1`] = `"\x1B[45mtest\x1B[49m"`;
+
+exports[`color bgCyan 1`] = `"\x1B[46mtest\x1B[49m"`;
+
+exports[`color bgWhite 1`] = `"\x1B[47mtest\x1B[49m"`;
+
+exports[`color bgGray 1`] = `"\x1B[100mtest\x1B[49m"`;

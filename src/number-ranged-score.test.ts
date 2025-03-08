@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { rangedScore } from './number-ranged-score'
 
 const priceRules = { isHigherBetter: false, scoreMax: 2, scoreMin: 0, valueMax: 10_000, valueMin: 5000 }

@@ -1,6 +1,6 @@
+import { expect, it } from 'bun:test'
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { expect, it } from 'vitest'
-import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from '../src/shuutils'
+import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from './shuutils'
 
 GlobalRegistrator.register()
 
@@ -129,7 +129,7 @@ it('wait to detect an existing element', async () => {
 })
 it('wait to detect a non-existing element', async () => {
   const element = await waitToDetect('.not-existing', 10, 2, 5, true)
-  expect(element).toBe(undefined)
+  expect(element).toMatchInlineSnapshot(`undefined`)
 })
 
 it('scroll to height', async () => {

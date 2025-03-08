@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { arrayUnique, insertValueAfterItem, removeValueFromArray, shuffleArray } from './shuutils'
 
 const elements = ['damn', 'this', 'test', 'is', 'crazy']

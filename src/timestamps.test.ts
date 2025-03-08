@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
-import { getTimestamp, getTimestampMs } from '../src/shuutils'
+import { expect, it } from 'bun:test'
+import { getTimestamp, getTimestampMs } from './shuutils'
 
 it('specific date', () => {
   expect(getTimestamp(new Date('1989-05-14'))).toBe(611_107_200)

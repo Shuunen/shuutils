@@ -1,8 +1,8 @@
+import { expect, it } from 'bun:test'
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build as esbuild } from 'esbuild'
-import { expect, it } from 'vitest'
 
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
 const resolveDir = path.join(currentDirectory, '../dist') // eslint-disable-line unicorn/prevent-abbreviations

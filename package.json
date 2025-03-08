@@ -13,8 +13,6 @@
     "@biomejs/biome": "1.9",
     "@happy-dom/global-registrator": "17.4",
     "@types/node": "22.13",
-    "@vitest/coverage-v8": "3.0",
-    "dependency-cruiser": "16.10",
     "esbuild": "0.25",
     "eslint": "*",
     "eslint-plugin-shuunen": "1.0",
@@ -22,7 +20,6 @@
     "repo-check": "1.42",
     "tsup": "8.4",
     "typescript": "5.8",
-    "vitest": "3.0",
     "watchlist": "0.3"
   },
   "exports": {
@@ -56,9 +53,8 @@
     "build:watch": "watchlist bin src -eager -- bun run build",
     "check": "bun install && echo install success && bun run build && bun lint && repo-check && echo repo-check success && bun test && echo check success",
     "dev": "bun test:watch",
-    "lint": "bun lint:tsc && bun lint:biome && bun lint:knip && bun lint:eslint && bun lint:dep && echo lint success",
+    "lint": "bun lint:tsc && bun lint:biome && bun lint:knip && bun lint:eslint && echo lint success",
     "lint:biome": "biome check --error-on-warnings --write --unsafe && echo lint:biome success",
-    "lint:dep": "depcruise src --config && echo lint:dep success",
     "lint:eslint": "eslint --cache --max-warnings 0 && echo lint:eslint success",
     "lint:eslint:inspect": "eslint --inspect-config",
     "lint:knip": "knip",
@@ -69,10 +65,9 @@
     "prepack": "bun run build",
     "preversion": "bun check",
     "start": "bun dev",
-    "test": "vitest --run --coverage && echo test success",
-    "test:bench": "vitest bench",
-    "test:update": "vitest --run --coverage --update && echo test update success",
-    "test:watch": "vitest --coverage"
+    "test": "bun test --coverage && echo test success",
+    "test:update": "bun test --coverage --update-snapshots && echo test update success",
+    "test:watch": "bun test --coverage --watch"
   },
   "type": "module",
   "types": "./dist/shuutils.d.ts",

@@ -4,7 +4,10 @@
  */
 export function isTestEnvironment() {
   const properties = ['jest', 'mocha', '__vitest_environment__', '__vitest_required__']
-  return properties.some(property => property in globalThis)
+  const hasTestBin = properties.some(property => property in globalThis)
+  if (hasTestBin) return true
+  const useBunTest = 'Bun' in globalThis && globalThis.Bun.argv.join(' ').includes('.test.')
+  return useBunTest
 }
 
 /**

@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
-import { hasOwn, storage } from '../src/shuutils'
+import { expect, it } from 'bun:test'
+import { hasOwn, storage } from './shuutils'
 
 interface User {
   age: number
@@ -24,7 +24,7 @@ it('storage returnTestB', () => {
 
 const returnTestC = storage.get<User>(key)
 it('storage returnTestC', () => {
-  expect(returnTestC).toBe(undefined)
+  expect(returnTestC).toMatchInlineSnapshot(`undefined`)
 })
 
 const returnTestD = storage.get<User>(key, { age: 0, name: 'default' })
@@ -39,10 +39,11 @@ it('storage returnTestE', () => {
 
 const returnTestF = storage.get<number>(key)
 it('storage returnTestF', () => {
-  expect(returnTestF).toBe(undefined)
+  expect(returnTestF).toMatchInlineSnapshot(`undefined`)
 })
 
 it('storage get without default value', () => {
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
   expect(storage.get(key)).toBe(undefined)
 })
 
@@ -90,7 +91,7 @@ it('storage clear value for key', () => {
 })
 
 it('storage get return undefined when key is not found', () => {
-  expect(storage.get<User>('John')).toBe(undefined)
+  expect(storage.get<User>('John')).toMatchInlineSnapshot(`undefined`)
 })
 
 it('storage get default value when key is not found', () => {

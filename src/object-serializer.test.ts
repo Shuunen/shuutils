@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable jsdoc/require-jsdoc */
-import { expect, it } from 'vitest'
-import { objectDeserialize, objectSerialize } from '../src/object-serializer'
+import { expect, it } from 'bun:test'
+import { objectDeserialize, objectSerialize } from './object-serializer'
 
 const person = {
   age: 21,
@@ -129,7 +129,7 @@ it('objectDeserialize C regex', () => {
   const object = objectDeserialize(String.raw`{"regex":{"__strRegexFlags__":"iu","__strRegexSource__":"^ho\\d+$"}}`)
   expect(object).toMatchInlineSnapshot(`
     {
-      "regex": /\\^ho\\\\d\\+\\$/iu,
+      "regex": /^ho\\d+$/iu,
     }
   `)
   // @ts-expect-error type is unknown
@@ -151,7 +151,7 @@ it('objectDeserialize E function', () => {
   const object = objectDeserialize(String.raw`{"func":{"__strFunction__":"function add(numberA, numberB) {\n  return numberA + numberB;\n}"}}`)
   expect(object).toMatchInlineSnapshot(`
     {
-      "func": [Function],
+      "func": [Function: add],
     }
   `)
   // @ts-expect-error type is unknown
@@ -207,7 +207,7 @@ it('objectDeserialize H person', () => {
       },
       "isNameValid": true,
       "name": "John",
-      "nameRegex": /\\^jo/iu,
+      "nameRegex": /^jo/iu,
       "nameValidator": [Function],
       "pets": [
         "Médoc",

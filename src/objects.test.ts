@@ -2,10 +2,10 @@
 /* eslint-disable max-lines */
 /* eslint-disable jsdoc/require-jsdoc */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { expect, it } from 'vitest'
-import { objectEqual } from '../src/object-equal'
-import { objectSort } from '../src/object-sort'
-import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from '../src/shuutils'
+import { expect, it } from 'bun:test'
+import { objectEqual } from './object-equal'
+import { objectSort } from './object-sort'
+import { access, byProperty, clone, flatten, genClass, isRecord, objectSum, safeAssign } from './shuutils'
 
 const person = {
   age: 21,
@@ -144,13 +144,30 @@ it('object assign A simple', () => {
   expect(Object.assign({ name: 'John' }, { name: 'Claire' })).toStrictEqual({ name: 'Claire' })
 })
 it('object assign B limitation, overwrite with undefined', () => {
-  expect(Object.assign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toStrictEqual({ age: undefined, name: 'Claire' })
+  expect(Object.assign({ age: 31, name: 'John' }, { age: undefined, name: 'Claire' })).toMatchInlineSnapshot(`
+    {
+      "age": undefined,
+      "name": "Claire",
+    }
+  `)
 })
 it('object assign C limitation, overwrite with null', () => {
-  expect(Object.assign({ age: 31, name: 'John' }, { age: null, name: 'Claire' })).toStrictEqual({ age: null, name: 'Claire' })
+  expect(Object.assign({ age: 31, name: 'John' }, { age: null, name: 'Claire' })).toMatchInlineSnapshot(`
+    {
+      "age": null,
+      "name": "Claire",
+    }
+  `)
 })
 it('object assign D limitation, loose side data', () => {
-  expect(Object.assign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: { age: 21 }, name: 'Claire' })).toStrictEqual({ details: { age: 21 }, name: 'Claire' })
+  expect(Object.assign({ details: { age: 42, type: 'years' }, name: 'John' }, { details: { age: 21 }, name: 'Claire' })).toMatchInlineSnapshot(`
+    {
+      "details": {
+        "age": 21,
+      },
+      "name": "Claire",
+    }
+  `)
 })
 /* eslint-enable prefer-object-spread */
 

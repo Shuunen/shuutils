@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { getLangFromPath, getTranslator, localePath } from './translate'
 
 const messages = {
@@ -40,7 +40,7 @@ it('localePath F', () => {
 })
 it('localePath G', () => {
   // @ts-expect-error testing invalid lang
-  expect(() => localePath('/contact', 'hz')).toThrowErrorMatchingInlineSnapshot(`[Error: unsupported lang "hz", cannot translate path "/contact"]`)
+  expect(() => localePath('/contact', 'hz')).toThrowErrorMatchingInlineSnapshot(`"unsupported lang "hz", cannot translate path "/contact""`)
 })
 
 const $t = getTranslator('en')

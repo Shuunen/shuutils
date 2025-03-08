@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { Result } from './result'
 
 it('Result.ok', () => {
@@ -37,7 +37,7 @@ it('Result.trySafe B error', () => {
   const result = Result.trySafe(() => JSON.parse('{"a": 42'))
   expect(result).toMatchInlineSnapshot(`
     Err {
-      "error": [SyntaxError: Expected ',' or '}' after property value in JSON at position 8 (line 1 column 9)],
+      "error": [SyntaxError: JSON Parse error: Expected '}'],
       "ok": false,
     }
   `)
@@ -66,5 +66,5 @@ it('Result.unwrap B error', () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { error, value } = Result.unwrap(result)
   expect(value).toMatchInlineSnapshot(`undefined`)
-  expect(error).toMatchInlineSnapshot(`[SyntaxError: Expected ',' or '}' after property value in JSON at position 8 (line 1 column 9)]`)
+  expect(error).toMatchInlineSnapshot(`[SyntaxError: JSON Parse error: Expected '}']`)
 })

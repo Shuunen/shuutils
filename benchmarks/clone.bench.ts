@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable jsdoc/require-jsdoc */
-import { bench, describe } from 'vitest'
+import { describe } from 'bun:test'
 import { Logger, browserContext, clone } from '../src/shuutils'
+
+// fake bench function, initially I was using Vitest bench but now i'm using Bun, there is no bench function in Bun for now
+function bench(name: string, functionA: () => void) {
+  describe(name, functionA)
+}
 
 const simple = {
   address: {

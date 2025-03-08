@@ -1,7 +1,18 @@
-import { bench, describe } from 'vitest'
+import { describe } from 'bun:test'
 import { memoize, objectSum } from '../src/shuutils'
 
 // Maybe try to bench other memoize functions from https://gist.github.com/thetallweeks/a55cc2fedfd65d16b9ea
+
+// fake bench function, initially I was using Vitest bench but now i'm using Bun, there is no bench function in Bun for now
+
+/**
+ * Fake bench function, initially I was using Vitest bench but now i'm using Bun, there is no bench function in Bun for now
+ * @param name the name of the bench
+ * @param functionA the function to bench
+ */
+function bench(name: string, functionA: () => void) {
+  describe(name, functionA)
+}
 
 /**
  * A simple sort function

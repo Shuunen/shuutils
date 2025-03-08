@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`clone I debug 1`] = `
 {
@@ -9,7 +9,7 @@ exports[`clone I debug 1`] = `
       "favoriteFood": "sushi",
     },
     "name": "John",
-    "nameRegex": /\\^jo/iu,
+    "nameRegex": /^jo/iu,
     "nameValid": true,
     "nameValidator": [Function],
   },
@@ -20,7 +20,7 @@ exports[`clone I debug 1`] = `
       "favoriteFood": "sushi",
     },
     "name": "John",
-    "nameRegex": /\\^jo/iu,
+    "nameRegex": /^jo/iu,
     "nameValid": true,
     "nameValidator": [Function],
   },
@@ -33,7 +33,7 @@ exports[`flatten A object 1`] = `
   "details.dateOfBirth": 2001-12-22T00:00:00.000Z,
   "details.favoriteFood": "sushi",
   "name": "John",
-  "nameRegex": /\\^jo/iu,
+  "nameRegex": /^jo/iu,
   "nameValid": true,
   "nameValidator": [Function],
 }
@@ -45,7 +45,7 @@ exports[`flatten B object with a custom root path 1`] = `
   "person.details.dateOfBirth": 2001-12-22T00:00:00.000Z,
   "person.details.favoriteFood": "sushi",
   "person.name": "John",
-  "person.nameRegex": /\\^jo/iu,
+  "person.nameRegex": /^jo/iu,
   "person.nameValid": true,
   "person.nameValidator": [Function],
 }

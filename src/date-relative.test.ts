@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { daysFromNow } from './date-relative'
 import { dateIso10 } from './dates'
 

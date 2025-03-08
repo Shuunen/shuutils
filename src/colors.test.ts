@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import {
   addColorCode,
   bgBlack,
@@ -30,7 +30,7 @@ import {
   underline,
   white,
   yellow,
-} from '../src/shuutils'
+} from './shuutils'
 
 it('is not Firefox', () => {
   expect(isFirefox()).toBe(false)

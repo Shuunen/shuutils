@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { toUnixPath } from './system'
 
 it('toUnixPath A empty', () => {

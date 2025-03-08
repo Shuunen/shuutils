@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
-import { expectEqualTypes, memoize } from '../src/shuutils'
+import { expect, it } from 'bun:test'
+import { expectEqualTypes, memoize } from './shuutils'
 
 let addCalls = 0
 
@@ -44,7 +44,7 @@ it('memoize B testing memoized function', () => {
 
 it('memoize C invalid callback given', () => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
-  expect(() => memoize(1 as unknown as () => void)).toThrowErrorMatchingInlineSnapshot('[Error: memoize callback parameter should be a function]')
+  expect(() => memoize(1 as unknown as () => void)).toThrowErrorMatchingInlineSnapshot(`"memoize callback parameter should be a function"`)
 })
 
 type Parent = { age?: number; firstName: string; lastName: string }

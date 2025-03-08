@@ -8,7 +8,7 @@ export type Lang = (typeof handledLangs)[number]
 // eslint-disable-next-line prefer-named-capture-group
 const langRegex = /^\/(en|fr)\//u
 
-const defaultLang: Lang = 'en' satisfies Lang
+const defaultLang = 'en'
 
 /**
  * Get the language from the path
@@ -56,7 +56,7 @@ export function translate(lang: Lang, message: Readonly<Record<string, string>> 
  * @param targetLang the target language to translate to, like "fr"
  * @returns the translated path, like "/fr/contact"
  */
-export function localePath(path: string, targetLang = defaultLang) {
+export function localePath(path: string, targetLang: Lang = defaultLang) {
   if (!handledLangs.includes(targetLang)) throw new Error(`unsupported lang "${targetLang}", cannot translate path "${path}"`)
   return getPath(path, targetLang === defaultLang ? '' : targetLang)
 }

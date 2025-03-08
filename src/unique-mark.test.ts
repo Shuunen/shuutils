@@ -1,22 +1,31 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { version } from '../package.json'
+import { Result } from './result'
 import { generateMark, getPackageJsonVersion, getTargetFiles, injectMarkInFiles } from './unique-mark'
 
 describe('unique-mark', () => {
   it('getPackageJsonVersion A', () => {
-    expect(getPackageJsonVersion()).toBe(version)
+    const result = Result.unwrap(getPackageJsonVersion())
+    expect(result.error).toMatchInlineSnapshot(`undefined`)
+    expect(result.value).toBe(version)
   })
 
   it('getPackageJsonVersion B pkg file not found', () => {
-    expect(() => getPackageJsonVersion('non-existent.json')).toThrowErrorMatchingInlineSnapshot(`[Error: package.json was not found in non-existent.json, aborting.]`)
+    const result = Result.unwrap(getPackageJsonVersion('non-existent.json'))
+    expect(result.error).toMatchInlineSnapshot(`"package.json was not found in non-existent.json, aborting."`)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 
   it('getPackageJsonVersion C pkg file found but invalid json', () => {
-    expect(() => getPackageJsonVersion('README.md')).toThrowErrorMatchingInlineSnapshot(`[Error: package.json in README.md is not a valid JSON, aborting.]`)
+    const result = Result.unwrap(getPackageJsonVersion('README.md'))
+    expect(result.error).toMatchInlineSnapshot(`"package.json in README.md is not a valid JSON, aborting."`)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 
   it('getTargetFiles A list markdown files at root dir', async () => {
-    expect(await getTargetFiles('*.{md}')).toMatchInlineSnapshot(`
+    const result = Result.unwrap(await getTargetFiles('*.{md}'))
+    expect(result.error).toMatchInlineSnapshot(`undefined`)
+    expect(result.value).toMatchInlineSnapshot(`
       [
         "README.md",
       ]
@@ -24,17 +33,21 @@ describe('unique-mark', () => {
   })
 
   it('getTargetFiles B list without target', async () => {
-    await expect(async () => getTargetFiles()).rejects.toThrowErrorMatchingInlineSnapshot(`[Error: no target specified, aborting.]`)
+    const result = Result.unwrap(await getTargetFiles())
+    expect(result.error).toMatchInlineSnapshot(`"no target specified, aborting."`)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 
   it('getTargetFiles C list with invalid extension', async () => {
-    await expect(async () => getTargetFiles('*.js')).rejects.toThrowErrorMatchingInlineSnapshot(
-      `[Error: provided : "*.js", you need to use *.{js} to capture all files with that extension (limitation of tiny-glob)]`,
-    )
+    const result = Result.unwrap(await getTargetFiles('*.js'))
+    expect(result.error).toMatchInlineSnapshot(`"provided : "*.js", you need to use *.{js} to capture all files with that extension (limitation of tiny-glob)"`)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 
   it('getTargetFiles D list with no files found', async () => {
-    await expect(async () => getTargetFiles('*.{nope}')).rejects.toThrowErrorMatchingInlineSnapshot(`[Error: no file found for target "*.{nope}", aborting.]`)
+    const result = Result.unwrap(await getTargetFiles('*.nope'))
+    expect(result.error).toMatchInlineSnapshot(`"provided : "*.nope", you need to use *.{nope} to capture all files with that extension (limitation of tiny-glob)"`)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 
   const fakeMark = '9.7.8 - xyz - 07/05/2023 17:26:35'
@@ -43,7 +56,9 @@ describe('unique-mark', () => {
   })
 
   it('injectMarkInFiles A successful', () => {
-    expect(injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'placeholder' })).toMatchInlineSnapshot(`
+    const result = Result.unwrap(injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'placeholder' }))
+    expect(result.error).toMatchInlineSnapshot(`undefined`)
+    expect(result.value).toMatchInlineSnapshot(`
       {
         "logs": [
           "injected in src/strings.ts : 7 times",
@@ -54,10 +69,12 @@ describe('unique-mark', () => {
   })
 
   it('injectMarkInFiles B fail to find placeholder', () => {
-    expect(() => injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'nope' })).toThrowErrorMatchingInlineSnapshot(`
-      [Error: could not find a place to inject in src/strings.ts, aborting.
+    const result = Result.unwrap(injectMarkInFiles({ files: ['src/strings.ts'], isReadOnly: true, mark: fakeMark, placeholder: 'nope' }))
+    expect(result.error).toMatchInlineSnapshot(`
+      "could not find a place to inject in src/strings.ts, aborting.
 
-      Please use one or more of these placeholders :  <span id="nope"></span>  <meta name="nope" content="">  __nope__]
+      Please use one or more of these placeholders :  <span id="nope"></span>  <meta name="nope" content="">  __nope__"
     `)
+    expect(result.value).toMatchInlineSnapshot(`undefined`)
   })
 })
