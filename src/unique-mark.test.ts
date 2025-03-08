@@ -29,7 +29,7 @@ describe('unique-mark', () => {
 
   it('getTargetFiles C list with invalid extension', async () => {
     await expect(async () => getTargetFiles('*.js')).rejects.toThrowErrorMatchingInlineSnapshot(
-      `[Error: you need to use *.{js} to capture all files with that extension, it's a limitation of tiny-glob, aborting.]`,
+      `[Error: provided : "*.js", you need to use *.{js} to capture all files with that extension (limitation of tiny-glob)]`,
     )
   })
 

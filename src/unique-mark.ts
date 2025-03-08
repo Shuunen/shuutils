@@ -31,7 +31,7 @@ export async function getTargetFiles(target = process.argv[2] ?? '') {
   if (target === '') throw new Error('no target specified, aborting.')
   // if ends with something like *.js
   const extension = /\.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
-  if (extension !== '') throw new Error(`you need to use *.{${extension}} to capture all files with that extension, it's a limitation of tiny-glob, aborting.`)
+  if (extension !== '') throw new Error(`provided : "${target}", you need to use *.{${extension}} to capture all files with that extension (limitation of tiny-glob)`)
   const files = await glob(target)
   if (files.length === 0) throw new Error(`no file found for target "${target}", aborting.`)
   return files
