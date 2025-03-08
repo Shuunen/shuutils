@@ -46,7 +46,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Shuutils](https://github.com/Shuunen/shuutils) : collection of pure JS utils
 - [Tsup](https://github.com/egoist/tsup) : super fast js/ts bundler with no config, powered by esbuild <3
-- [Vitest](https://github.com/vitest-dev/vitest) : super fast vite-native testing framework
 - [Watchlist](https://github.com/lukeed/watchlist) : recursively watch a list of directories & run a command on any file system
 - [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities
 
