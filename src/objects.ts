@@ -59,26 +59,21 @@ export function objectSum(object: Readonly<Record<string, unknown>>, willSortKey
   return stringSum(objectSerialize(object, willSortKeys))
 }
 
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types, complexity */
-
 /**
- * Like Object.assign but only non-null/undefined values can overwrite
- * @param target Destination object
- * @param sources Object(s) to sequentially merge
- * @returns The resulting object merged
+ * Generate a list of classes from an object
+ * @param object the object to generate classes from
+ * @param keys optional, filter the keys to use
+ * @param list optional, additional classes to add
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-export function safeAssign(target: Record<string, unknown>, ...sources: Readonly<Record<string, unknown>>[]) {
-  if (sources.length === 0) return target
-  const source = sources.shift()
-  if (isRecord(target) && isRecord(source))
-    for (const key in source)
-      if (isRecord(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} }) // eslint-disable-line @typescript-eslint/strict-boolean-expressions
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
-        safeAssign(target[key] as Record<string, unknown>, source[key] as Record<string, unknown>)
-      } else if (source[key] !== null && source[key] !== undefined) Object.assign(target, { [key]: source[key] })
-  return safeAssign(target, ...sources)
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+function genClassObjectKeys(object: Record<string, GenClassTypes>, keys: string[], list: GenClassTypes[]) {
+  const finalKeys = keys.length === 0 ? Object.keys(object) : clone(keys)
+  for (const key of finalKeys) {
+    const value = object[key]
+    if (typeof value === 'boolean' && value) list.push(key)
+    else if (typeof value === 'string' && value.length > 0) list.push(`${key}-${value}`)
+    else if (Array.isArray(value) && value.length > 0) list.push(`has-${key}`)
+  }
 }
 
 /**
@@ -88,20 +83,12 @@ export function safeAssign(target: Record<string, unknown>, ...sources: Readonly
  * @param cls optional, additional classes to add, ex: "add-me"
  * @returns ready to use string class list, ex: "enabled size-large add-me"
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export function genClass(object: GenClassTypes | GenClassTypes[] | Record<string, GenClassTypes>, keys: string[] = [], cls: GenClassTypes[] = []) {
   const list = clone(cls)
   if (object === null || object === undefined) list.unshift('')
   else if (typeof object !== 'object') list.unshift(...String(object).split(' '))
   else if (Array.isArray(object)) list.unshift(...object.filter(Boolean).join(' ').split(' '))
-  else {
-    const finalKeys = keys.length === 0 ? Object.keys(object) : clone(keys)
-    for (const key of finalKeys) {
-      const value = object[key]
-      if (typeof value === 'boolean' && value) list.push(key)
-      else if (typeof value === 'string' && value.length > 0) list.push(`${key}-${value}`)
-      else if (Array.isArray(value) && value.length > 0) list.push(`has-${key}`)
-    }
-  }
+  else genClassObjectKeys(object, keys, list)
   return arrayUnique(list.map(String)).join(' ').trim().replace(/\s+/gu, ' ')
 }
