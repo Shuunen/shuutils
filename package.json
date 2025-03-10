@@ -16,7 +16,7 @@
     "@types/node": "22.13",
     "esbuild": "0.25",
     "eslint": "*",
-    "eslint-plugin-shuunen": "1.0",
+    "eslint-plugin-shuunen": "1.1",
     "knip": "latest",
     "repo-check": "1.42",
     "tsup": "8.4",
