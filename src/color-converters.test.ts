@@ -1,24 +1,35 @@
 import { expect, it } from 'bun:test'
 import { hexToHsl, hexToRgb } from './color-converters'
+import { Result } from './result'
 
 it('color hexToRgb A', () => {
-  expect(hexToRgb('#f00')).toStrictEqual({ colorBlue: 0, colorGreen: 0, colorRed: 255 })
+  const result = Result.unwrap(hexToRgb('#f00'))
+  expect(result.value).toStrictEqual({ colorBlue: 0, colorGreen: 0, colorRed: 255 })
+  expect(result.error).toBeUndefined()
 })
 
 it('color hexToRgb B', () => {
-  expect(hexToRgb('#0f0')).toStrictEqual({ colorBlue: 0, colorGreen: 255, colorRed: 0 })
+  const result = Result.unwrap(hexToRgb('#0f0'))
+  expect(result.value).toStrictEqual({ colorBlue: 0, colorGreen: 255, colorRed: 0 })
+  expect(result.error).toBeUndefined()
 })
 
 it('color hexToRgb C', () => {
-  expect(hexToRgb('#00f')).toStrictEqual({ colorBlue: 255, colorGreen: 0, colorRed: 0 })
+  const result = Result.unwrap(hexToRgb('#00f'))
+  expect(result.value).toStrictEqual({ colorBlue: 255, colorGreen: 0, colorRed: 0 })
+  expect(result.error).toBeUndefined()
 })
 
 it('color hexToRgb D', () => {
-  expect(hexToRgb('#ff0000')).toStrictEqual({ colorBlue: 0, colorGreen: 0, colorRed: 255 })
+  const result = Result.unwrap(hexToRgb('#ff0000'))
+  expect(result.value).toStrictEqual({ colorBlue: 0, colorGreen: 0, colorRed: 255 })
+  expect(result.error).toBeUndefined()
 })
 
 it('color hexToRgb E', () => {
-  expect(() => hexToRgb('#00')).toThrowError(/invalid/iu)
+  const result = Result.unwrap(hexToRgb('#00'))
+  expect(result.value).toBeUndefined()
+  expect(result.error).toMatchInlineSnapshot(`"Invalid HEX color provided : #00, should have a length of 4 or 7 instead of : 3"`)
 })
 
 it('color hexToHsl A red short', () => {

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { sleep } from './functions'
 import { Logger } from './logger'
+import { Result } from './result'
 
 type AnalyticsInstance = {
   identify: (userId: string, additionalData?: Record<string, unknown>) => Promise<void>
@@ -26,20 +27,26 @@ export class Analytics {
    * Identify a user
    * @param userId - The user, like '123456', 'super-admin', etc.
    * @param additionalData - Additional data to identify the user, like `{ email: '...', age: 35, ... }`
+   * @returns a Result object
    */
   public identify(userId: string, additionalData?: Record<string, unknown>) {
-    if (this.$instance === undefined) throw new Error('analytics : identify failed, analytics not setup')
-    this.$logger.info(`analytics : identify user "${userId}" on app "${this.$app}"`)
+    if (this.$instance === undefined) return Result.error('analytics : identify failed, analytics not setup')
+    const message = `analytics : identify user "${userId}" on app "${this.$app}"`
+    this.$logger.info(message)
     void this.$instance.identify(userId, additionalData)
+    return Result.ok(message)
   }
 
   /**
    * Track a page view
+   * @returns a Result object
    */
   public page() {
-    if (this.$instance === undefined) throw new Error('analytics : track page failed, analytics not setup')
-    this.$logger.debug(`analytics : track page for app "${this.$app}"`)
+    if (this.$instance === undefined) return Result.error('analytics : track page failed, analytics not setup')
+    const message = `analytics : track page for app "${this.$app}"`
+    this.$logger.debug(message)
     void this.$instance.page()
+    return Result.ok(message)
   }
 
   /**
@@ -76,10 +83,13 @@ export class Analytics {
    * Track an event
    * @param event - The event name like 'click', 'download-invoice', etc.
    * @param additionalData - Additional data to track the event, like `{ category: '...', label: '...', ... }`
+   * @returns a Result object
    */
   public track(event: string, additionalData?: Record<string, unknown>) {
-    if (this.$instance === undefined) throw new Error('analytics : track event failed, analytics not setup')
-    this.$logger.debug(`analytics : track event "${event}" for app "${this.$app}"`)
+    if (this.$instance === undefined) return Result.error('analytics : track event failed, analytics not setup')
+    const message = `analytics : track event "${event}" for app "${this.$app}"`
+    this.$logger.debug(message)
     void this.$instance.track(event, additionalData)
+    return Result.ok(message)
   }
 }

@@ -5,6 +5,7 @@
  * @returns a memoized function
  */
 export function memoize<Callback extends (...arguments_: Parameters<Callback>) => unknown>(callback: Callback) {
+  // eslint-disable-next-line no-restricted-syntax
   if (typeof callback !== 'function') throw new Error('memoize callback parameter should be a function')
   const cache: Record<string, ReturnType<Callback>> = {}
   /**

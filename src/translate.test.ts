@@ -1,4 +1,5 @@
 import { expect, it } from 'bun:test'
+import { Result } from './result'
 import { getLangFromPath, getTranslator, localePath } from './translate'
 
 const messages = {
@@ -21,26 +22,40 @@ const messages = {
 }
 
 it('localePath A', () => {
-  expect(localePath('')).toMatchInlineSnapshot(`""`)
+  const result = Result.unwrap(localePath(''))
+  expect(result.value).toMatchInlineSnapshot(`""`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath B', () => {
-  expect(localePath('/')).toMatchInlineSnapshot('"/"')
+  const result = Result.unwrap(localePath('/'))
+  expect(result.value).toMatchInlineSnapshot(`"/"`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath C', () => {
-  expect(localePath('/contact', 'en')).toMatchInlineSnapshot(`"/contact"`)
+  const result = Result.unwrap(localePath('/contact', 'en'))
+  expect(result.value).toMatchInlineSnapshot(`"/contact"`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath D', () => {
-  expect(localePath('/en/contact', 'en')).toMatchInlineSnapshot(`"/contact"`)
+  const result = Result.unwrap(localePath('/en/contact', 'en'))
+  expect(result.value).toMatchInlineSnapshot(`"/contact"`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath E', () => {
-  expect(localePath('/fr/contact', 'en')).toMatchInlineSnapshot(`"/contact"`)
+  const result = Result.unwrap(localePath('/fr/contact', 'en'))
+  expect(result.value).toMatchInlineSnapshot(`"/contact"`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath F', () => {
-  expect(localePath('/contact', 'fr')).toMatchInlineSnapshot(`"/fr/contact"`)
+  const result = Result.unwrap(localePath('/contact', 'fr'))
+  expect(result.value).toMatchInlineSnapshot(`"/fr/contact"`)
+  expect(result.error).toBeUndefined()
 })
 it('localePath G', () => {
   // @ts-expect-error testing invalid lang
-  expect(() => localePath('/contact', 'hz')).toThrowErrorMatchingInlineSnapshot(`"unsupported lang "hz", cannot translate path "/contact""`)
+  const result = Result.unwrap(localePath('/contact', 'hz'))
+  expect(result.value).toBeUndefined()
+  expect(result.error).toMatchInlineSnapshot(`"unsupported lang "hz", cannot translate path "/contact""`)
 })
 
 const $t = getTranslator('en')

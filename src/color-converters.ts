@@ -14,6 +14,7 @@ import {
   nbSixth,
   nbThird,
 } from './constants'
+import { Result } from './result'
 
 /**
  * Convert a hex color to rgb
@@ -22,18 +23,18 @@ import {
  */
 export function hexToRgb(hex: string) {
   if (hex.length === nbShortHex)
-    return {
+    return Result.ok({
       colorBlue: Number(`0x${hex[nbFourth]}${hex[nbFourth]}`),
       colorGreen: Number(`0x${hex[nbThird]}${hex[nbThird]}`),
       colorRed: Number(`0x${hex[nbSecond]}${hex[nbSecond]}`),
-    }
+    })
   if (hex.length === nbLongHex)
-    return {
+    return Result.ok({
       colorBlue: Number(`0x${hex[nbSixth]}${hex[nbSeventh]}`),
       colorGreen: Number(`0x${hex[nbFourth]}${hex[nbFifth]}`),
       colorRed: Number(`0x${hex[nbSecond]}${hex[nbThird]}`),
-    }
-  throw new Error(`Invalid HEX color provided : ${hex}, should have a length of ${nbShortHex} or ${nbLongHex} instead of : ${hex.length}`)
+    })
+  return Result.error(`Invalid HEX color provided : ${hex}, should have a length of ${nbShortHex} or ${nbLongHex} instead of : ${hex.length}`)
 }
 
 // Credits to https://css-tricks.com/converting-color-spaces-in-javascript/
@@ -44,8 +45,9 @@ export function hexToRgb(hex: string) {
  */
 // eslint-disable-next-line max-statements
 export function hexToHsl(hex: string) {
-  let { colorBlue, colorGreen, colorRed } = hexToRgb(hex) // Convert hex to RGB first
-
+  const result = hexToRgb(hex) // Convert hex to RGB first
+  if (!result.ok) return result
+  let { colorBlue, colorGreen, colorRed } = result.value
   // Then to HSL
   colorRed /= nbRgbMax
   colorGreen /= nbRgbMax

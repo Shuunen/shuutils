@@ -97,14 +97,14 @@ async function init() {
   const logger = new Logger()
   logger.debug('starting...')
   const version = getPackageJsonVersion()
-  if (!version.ok) throw new Error(version.error)
+  if (!version.ok) throw new Error(version.error) // eslint-disable-line no-restricted-syntax
   const files = await getTargetFiles()
-  if (!files.ok) throw new Error(files.error)
+  if (!files.ok) throw new Error(files.error) // eslint-disable-line no-restricted-syntax
   logger.debug(`found ${files.value.length} file${files.value.length > 1 ? 's' : ''} to inject mark :`, files.value.join(', '))
   const mark = generateMark({ version: version.value })
   logger.debug('generated mark', mark)
   const result = injectMarkInFiles({ files: files.value, mark })
-  if (!result.ok) throw new Error(result.error)
+  if (!result.ok) throw new Error(result.error) // eslint-disable-line no-restricted-syntax
   const { logs, totalInjections } = result.value
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-type-assertion
   for (const line of logs) logger.info(...(line.split(':') as [string, string]))

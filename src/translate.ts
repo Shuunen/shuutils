@@ -1,4 +1,5 @@
 import { getPath } from './browser-routing'
+import { Result } from './result'
 import { fillTemplate } from './strings'
 
 const handledLangs = ['en', 'fr'] as const
@@ -57,8 +58,8 @@ export function translate(lang: Lang, message: Readonly<Record<string, string>> 
  * @returns the translated path, like "/fr/contact"
  */
 export function localePath(path: string, targetLang: Lang = defaultLang) {
-  if (!handledLangs.includes(targetLang)) throw new Error(`unsupported lang "${targetLang}", cannot translate path "${path}"`)
-  return getPath(path, targetLang === defaultLang ? '' : targetLang)
+  if (!handledLangs.includes(targetLang)) return Result.error(`unsupported lang "${targetLang}", cannot translate path "${path}"`)
+  return Result.ok(getPath(path, targetLang === defaultLang ? '' : targetLang))
 }
 
 /**
