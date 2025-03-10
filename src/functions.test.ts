@@ -15,10 +15,10 @@ it('hasOwn D', () => {
 })
 
 it('sleep A', async () => {
-  expect(await sleep(10)).toBe(10)
+  expect(await sleep(5)).toBe(5)
 })
 it('sleep B', async () => {
-  expect(await sleep(20)).toBe(20)
+  expect(await sleep(7)).toBe(7)
 })
 
 it('functionReturningVoid A', () => {

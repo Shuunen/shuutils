@@ -48,7 +48,6 @@ export async function getTargetFiles(target = process.argv[nbThird] ?? '') {
  */
 export function generateMark({ commit = '', date = formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss'), version = '' }: Readonly<{ commit?: string; date?: string; version?: string }>) {
   let finalCommit = commit
-  /* c8 ignore next */
   if (commit === '') finalCommit = execSync('git rev-parse --short HEAD', { cwd: process.cwd() }).toString().trim()
   return `${version} - ${finalCommit} - ${date}`
 }
@@ -79,8 +78,7 @@ export function injectMarkInFiles({
         `could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`,
       )
     const updatedContent = injectMark(content, placeholder, mark)
-    const times = updatedContent.match(markRegex)?.length /* c8 ignore next */ ?? 0
-    /* c8 ignore next 2 */
+    const times = updatedContent.match(markRegex)?.length ?? 0
     if (!isReadOnly) writeFileSync(file, updatedContent)
     logs.push(`injected in ${file} : ${times} time${times > 1 ? 's' : ''}`)
     totalInjections += times
@@ -88,17 +86,18 @@ export function injectMarkInFiles({
   return Result.ok({ logs, totalInjections })
 }
 
-/* c8 ignore start */
 /**
  * Main function
+ * @param target the glob to get the files from, like "public/index.html" or "public/*.js"
+ * @returns a Result object
  */
-// eslint-disable-next-line max-statements
-async function init() {
+// eslint-disable-next-line max-statements, complexity
+export async function init(target = process.argv[nbThird] ?? '') {
   const logger = new Logger()
   logger.debug('starting...')
   const version = getPackageJsonVersion()
   if (!version.ok) throw new Error(version.error) // eslint-disable-line no-restricted-syntax
-  const files = await getTargetFiles()
+  const files = await getTargetFiles(target)
   if (!files.ok) throw new Error(files.error) // eslint-disable-line no-restricted-syntax
   logger.debug(`found ${files.value.length} file${files.value.length > 1 ? 's' : ''} to inject mark :`, files.value.join(', '))
   const mark = generateMark({ version: version.value })
@@ -110,6 +109,7 @@ async function init() {
   for (const line of logs) logger.info(...(line.split(':') as [string, string]))
   if (totalInjections === 0) logger.info('files found but no mark found for injection')
   else logger.success('total injections :', String(totalInjections))
+  return Result.ok(`injected ${totalInjections} mark${totalInjections > 1 ? 's' : ''} in ${files.value.length} file${files.value.length > 1 ? 's' : ''}`)
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await

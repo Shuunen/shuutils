@@ -11,29 +11,29 @@ function myFunction() {
   return times
 }
 
-const myFunctionDebounced = debounce(myFunction, 100)
+const myFunctionDebounced = debounce(myFunction, 10)
 
 /**
  * @returns the number of times the function has been called after 50ms
  */
 async function myAsyncFunction() {
-  await sleep(50)
+  await sleep(5)
   times += 1
   return times
 }
 
-const myAsyncFunctionDebounced = debounce(myAsyncFunction, 100)
+const myAsyncFunctionDebounced = debounce(myAsyncFunction, 10)
 
 it('debounce A : sync function', async () => {
   times = 0
   expect(times).toBe(0)
   void myFunctionDebounced()
   expect(times).toBe(0)
-  await sleep(50)
+  await sleep(5)
   expect(times).toBe(0)
-  await sleep(60)
+  await sleep(6)
   expect(times).toBe(1)
-  await sleep(30)
+  await sleep(3)
   expect(times).toBe(1)
 })
 
@@ -42,13 +42,13 @@ it('debounce B : async function', async () => {
   expect(times).toBe(0)
   void myAsyncFunctionDebounced()
   expect(times).toBe(0)
-  await sleep(50)
+  await sleep(5)
   expect(times).toBe(0)
-  await sleep(50) // the delay inside the function is 50ms
+  await sleep(5) // the delay inside the function is 50ms
   expect(times).toBe(0)
-  await sleep(60)
+  await sleep(6)
   expect(times).toBe(1)
-  await sleep(30)
+  await sleep(3)
   expect(times).toBe(1)
 })
 

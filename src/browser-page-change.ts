@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import { sleep } from './functions'
 
-/* c8 ignore start */
-
 /**
  * Default callback for onPageChange
  * @param location the new location
@@ -25,5 +23,3 @@ export async function onPageChange(callback = onPageChangeDefaultCallback, wait 
   if (current !== last) callback(current)
   void onPageChange(callback, wait, current)
 }
-
-/* c8 ignore stop */

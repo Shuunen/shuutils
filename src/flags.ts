@@ -5,7 +5,6 @@
  */
 export function hasOption(name: string) {
   // could be nice to check for environment variables too
-  /* c8 ignore next */
   if (typeof process === 'undefined') return false
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   return (process.argv ?? []).includes(`--${name}`) || (process.env?.[name] ?? '').toString() === 'true'

@@ -30,7 +30,6 @@ export function randomBoolean() {
 export function randomEmail(first: string, last: string) {
   const providers = pickOne(['gmail.com', 'yahoo.de', 'hotmail.fr', 'outlook.com', 'protonmail.com'])
   const isShort = randomBoolean()
-  /* c8 ignore next */
   const email = `${isShort ? first[0]?.toLocaleLowerCase() : first.toLocaleLowerCase()}.${last.toLocaleLowerCase()}@${providers}`
   return email
 }

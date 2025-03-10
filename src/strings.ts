@@ -1,4 +1,3 @@
-/* c8 ignore next */
 import { nbSpacesIndent } from './constants'
 import { flatten } from './object-flatten'
 import { objectDeserialize } from './object-serializer'
@@ -129,7 +128,6 @@ export function crc32(text: string) {
   const crcTable = createCrc32Table()
   let crc = -1
   for (let index = 0; index < text.length; index += 1) {
-    /* c8 ignore next */
     const code = text.codePointAt(index) ?? 0
     const key: number = (code ^ crc) & 0xff // eslint-disable-line unicorn/number-literal-case, @typescript-eslint/no-magic-numbers, no-bitwise
     const value: number | undefined = crcTable[key]

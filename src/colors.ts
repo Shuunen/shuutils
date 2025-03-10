@@ -6,7 +6,6 @@
  * @returns boolean if the browser is Firefox
  */
 export function isFirefox() {
-  /* c8 ignore next 4 */
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (globalThis.navigator === undefined) return false
   return globalThis.navigator.userAgent.includes('Firefox')
@@ -20,7 +19,6 @@ export function isFirefox() {
  * @returns the string with the color code
  */
 export function addColorCode(from: number, to: number, string: string) {
-  /* c8 ignore next */
   return isFirefox() ? string : `\u001B[${from}m${string}\u001B[${to}m`
 }
 

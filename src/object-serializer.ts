@@ -43,7 +43,6 @@ function replacer(this: unknown, key: string, value?: Readonly<unknown>) {
  * @returns the value of the object
  */
 function reviver(_key: string, value?: unknown) {
-  /* c8 ignore next */
   if (value === undefined || value === null) return value
   if (typeof value !== 'object') return value // @ts-expect-error non-standard properties
   if ('__strRegexFlags__' in value && '__strRegexSource__' in value) return new RegExp(value.__strRegexSource__, value.__strRegexFlags__)

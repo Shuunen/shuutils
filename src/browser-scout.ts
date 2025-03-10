@@ -1,8 +1,6 @@
 import { isBrowserEnvironment } from './environment'
 import type { NavigatorUserAgent } from './types'
 
-/* c8 ignore start */
-
 /* eslint-disable @typescript-eslint/naming-convention, perfectionist/sort-objects */
 const browsers = {
   // biome-ignore lint/style/useNamingConvention: <explanation>

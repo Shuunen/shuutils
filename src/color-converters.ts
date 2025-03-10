@@ -63,7 +63,6 @@ export function hexToHsl(hex: string) {
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + nbThird
   else hue = (colorRed - colorGreen) / delta + nbFifth
   hue = Math.round(hue * nbHueStep)
-  /* c8 ignore next */
   if (hue < 0) hue += nbHueMax
   lightness = (max + min) / nbThird
   saturation = delta === 0 ? 0 : delta / (1 - Math.abs(nbThird * lightness - 1))

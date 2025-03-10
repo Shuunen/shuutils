@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
 import { version } from '../package.json'
 import { Result } from './result'
-import { generateMark, getPackageJsonVersion, getTargetFiles, injectMarkInFiles } from './unique-mark'
+import { generateMark, getPackageJsonVersion, getTargetFiles, init, injectMarkInFiles } from './unique-mark'
 
 describe('unique-mark', () => {
   it('getPackageJsonVersion A', () => {
@@ -76,5 +76,35 @@ describe('unique-mark', () => {
       Please use one or more of these placeholders :  <span id="nope"></span>  <meta name="nope" content="">  __nope__"
     `)
     expect(result.value).toMatchInlineSnapshot(`undefined`)
+  })
+
+  it('init A no targets', () => {
+    expect(init()).rejects.toThrowErrorMatchingInlineSnapshot(`"no target specified, aborting."`)
+  })
+
+  it('init B missing placeholder', async () => {
+    await Bun.write('test.log', 'console.log("hello shuutils !");')
+    expect(init('test.{log}')).rejects.toThrowErrorMatchingInlineSnapshot(`
+      "could not find a place to inject in test.log, aborting.
+
+      Please use one or more of these placeholders :  <span id="unique-mark"></span>  <meta name="unique-mark" content="">  __unique-mark__"
+    `)
+  })
+
+  it('init C with partial placeholder', async () => {
+    await Bun.write('test.log', 'console.log("hello shuutils !");\n// unique-mark')
+    const result = await init('test.{log}')
+    expect(result.value).toMatchInlineSnapshot(`"injected 0 mark in 1 file"`)
+  })
+
+  it('init D with full placeholder', async () => {
+    await Bun.write('test.log', 'console.log("hello shuutils __unique-mark__ !");')
+    const content = Bun.file('test.log')
+    const before = await content.text()
+    expect(before.includes('__unique-mark__')).toBe(true)
+    const result = await init('test.{log}')
+    expect(result.value).toMatchInlineSnapshot(`"injected 1 mark in 1 file"`)
+    const after = await content.text()
+    expect(after.includes('__unique-mark__')).toBe(false)
   })
 })

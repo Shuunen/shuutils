@@ -1,4 +1,3 @@
-/* c8 ignore start */
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 
 type ListenerMedia = Element | HTMLElement | typeof globalThis | Window
@@ -53,4 +52,3 @@ export function on<Data>(name: string, callback: (data: Data, event: Event) => u
 export function off({ callback, media, name }: Readonly<Listener>) {
   media.removeEventListener(name, callback)
 }
-/* c8 ignore stop */

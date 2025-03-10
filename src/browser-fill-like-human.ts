@@ -1,4 +1,3 @@
-/* c8 ignore start */
 import { sleep } from './functions'
 import { randomNumber } from './random'
 

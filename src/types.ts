@@ -1,4 +1,3 @@
-/* c8 ignore start */
 interface NavigatorUserAgentBrandVersion {
   readonly brand: string
   readonly version: string

@@ -35,7 +35,7 @@ async function anAsyncFunctionThatReturnAnObject() {
 
 it('throttle A', async () => {
   times = 0
-  const myFunctionThrottled = throttle(myFunction, 100)
+  const myFunctionThrottled = throttle(myFunction, 10)
   expect(times).toBe(0)
   myFunctionThrottled()
   expect(times).toBe(1)
@@ -43,7 +43,7 @@ it('throttle A', async () => {
   myFunctionThrottled()
   myFunctionThrottled()
   expect(times).toBe(1)
-  await sleep(100)
+  await sleep(10)
   myFunctionThrottled()
   myFunctionThrottled()
   expect(times).toBe(2)

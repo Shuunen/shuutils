@@ -30,7 +30,6 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [ ] use zod
 - [ ] add willOutputToFile option to the logger
 - [ ] re-enable useTopLevelRegex in biome
-- [ ] when available, add bun coverage line exclusions and enable thresholds to ensure coverage is not decreasing
 
 ## Thanks
 

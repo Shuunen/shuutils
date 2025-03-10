@@ -1,8 +1,8 @@
 import { expect, it } from 'bun:test'
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from './shuutils'
+import { Result, backdrop, css, div, dom, em, findAll, findOne, h1, h2, h3, icon, img, li, link, scrollToHeightSync, small, strong, text, tw, ul, waitToDetect } from './shuutils'
 
-GlobalRegistrator.register()
+if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
 it('custom type dom element with no classes', () => {
   const element = dom('article')
@@ -124,12 +124,12 @@ it('find all type', () => {
 })
 
 it('wait to detect an existing element', async () => {
-  const element = await waitToDetect('body', 10)
-  expect(element?.tagName).toBe('BODY')
+  const result = Result.unwrap(await waitToDetect('body', 10))
+  expect(result.value?.tagName).toBe('BODY')
 })
 it('wait to detect a non-existing element', async () => {
-  const element = await waitToDetect('.not-existing', 10, 2, 5, true)
-  expect(element).toMatchInlineSnapshot(`undefined`)
+  const result = Result.unwrap(await waitToDetect('.not-existing', 5, 2, 1))
+  expect(result.value).toMatchInlineSnapshot(`undefined`)
 })
 
 it('scroll to height', async () => {

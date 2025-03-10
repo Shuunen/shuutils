@@ -57,7 +57,7 @@ export class Logger {
 
   public options: LoggerOptions = {
     isActive: true,
-    minimumLevel: /* c8 ignore next */ isVerbose() ? '1-debug' : '3-info',
+    minimumLevel: isVerbose() ? '1-debug' : '3-info',
     willLogDate: false,
     willLogDelay: true,
     willLogTime: false,
@@ -208,7 +208,7 @@ export class Logger {
    */
   public showError(...stuff: Readonly<unknown[]>) {
     this.error(...stuff)
-    if (/* c8 ignore next */ isBrowserEnvironment()) toastError(clean(...stuff))
+    if (isBrowserEnvironment()) toastError(clean(...stuff))
   }
 
   /**
@@ -218,7 +218,7 @@ export class Logger {
    */
   public showInfo(...stuff: Readonly<unknown[]>) {
     this.info(...stuff)
-    if (/* c8 ignore next */ isBrowserEnvironment()) toastInfo(clean(...stuff))
+    if (isBrowserEnvironment()) toastInfo(clean(...stuff))
   }
 
   /**
@@ -228,7 +228,7 @@ export class Logger {
    */
   public showSuccess(...stuff: Readonly<unknown[]>) {
     this.success(...stuff)
-    if (/* c8 ignore next */ isBrowserEnvironment()) toastSuccess(clean(...stuff))
+    if (isBrowserEnvironment()) toastSuccess(clean(...stuff))
   }
 
   /**

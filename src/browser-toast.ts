@@ -1,5 +1,3 @@
-/* c8 ignore start */
-
 /**
  * Hides the toast element by applying a transform and removing it after a delay.
  * @param element - The toast element to hide.
