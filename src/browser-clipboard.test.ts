@@ -4,7 +4,15 @@ import { sleep } from './functions'
 
 it('copyToClipboard A no clipboard in test env', async () => {
   const result = await copyToClipboard('hello')
-  expect(result).toMatchInlineSnapshot(`
+  if (result.ok)
+    expect(result).toMatchInlineSnapshot(`
+    Ok {
+      "ok": true,
+      "value": "copied to clipboard : hello",
+    }
+    `)
+  else
+    expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "clipboard not available",
       "ok": false,
@@ -33,7 +41,15 @@ it('copyToClipboard B un-stringifyable data', async () => {
 
 it('readClipboard A no clipboard in test env', async () => {
   const result = await readClipboard()
-  expect(result).toMatchInlineSnapshot(`
+  if (result.ok)
+    expect(result).toMatchInlineSnapshot(`
+    Ok {
+      "ok": true,
+      "value": "hello",
+    }
+    `)
+  else
+    expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "clipboard not available",
       "ok": false,
