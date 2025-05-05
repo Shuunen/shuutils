@@ -3,8 +3,7 @@ import { copyToClipboard, readClipboard } from './browser-clipboard'
 import { sleep } from './functions'
 
 it('copyToClipboard A no clipboard in test env', async () => {
-  // eslint-disable-next-line unicorn/no-useless-undefined
-  const result = await copyToClipboard('hello', false, undefined)
+  const result = await copyToClipboard('hello')
   expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "clipboard not available",
@@ -13,20 +12,21 @@ it('copyToClipboard A no clipboard in test env', async () => {
   `)
 })
 
-it('copyToClipboard B mocked clipboard', async () => {
-  const clipboard = {
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    writeText: async (text: string) => {
-      await sleep(10)
-      expect(text).toBe('hello')
+it('copyToClipboard B un-stringifyable data', async () => {
+  /* eslint-disable jsdoc/require-jsdoc, @typescript-eslint/naming-convention */
+  const objectThatCannotBeStringified = {
+    // biome-ignore lint/style/useNamingConvention: <explanation>
+    toJSON: () => {
+      // eslint-disable-next-line no-restricted-syntax
+      throw new Error('cannot be stringified')
     },
   }
-  // @ts-expect-error for testing purposes
-  const result = await copyToClipboard('hello', false, clipboard)
+  /* eslint-enable jsdoc/require-jsdoc, @typescript-eslint/naming-convention */
+  const result = await copyToClipboard(objectThatCannotBeStringified)
   expect(result).toMatchInlineSnapshot(`
-    Ok {
-      "ok": true,
-      "value": "copied to clipboard : hello",
+    Err {
+      "error": "failed to stringify the data",
+      "ok": false,
     }
   `)
 })
