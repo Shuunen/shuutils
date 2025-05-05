@@ -18,7 +18,7 @@
     "eslint": "*",
     "eslint-plugin-shuunen": "1.1",
     "knip": "latest",
-    "repo-check": "1.42",
+    "repo-check": "1.43",
     "tsup": "8.4",
     "typescript": "5.8",
     "watchlist": "0.3"
