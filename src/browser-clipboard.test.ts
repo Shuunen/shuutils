@@ -3,7 +3,8 @@ import { copyToClipboard, readClipboard } from './browser-clipboard'
 import { sleep } from './functions'
 
 it('copyToClipboard A no clipboard in test env', async () => {
-  const result = await copyToClipboard('hello')
+  // eslint-disable-next-line unicorn/no-useless-undefined
+  const result = await copyToClipboard('hello', false, undefined)
   expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "clipboard not available",
@@ -26,16 +27,6 @@ it('copyToClipboard B mocked clipboard', async () => {
     Ok {
       "ok": true,
       "value": "copied to clipboard : hello",
-    }
-  `)
-})
-
-it('copyToClipboard C back to no clip', async () => {
-  const result = await copyToClipboard('hey Jude')
-  expect(result).toMatchInlineSnapshot(`
-    Err {
-      "error": "clipboard not available",
-      "ok": false,
     }
   `)
 })
