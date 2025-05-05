@@ -35,14 +35,18 @@ console.log('Hello world, current timestamp is', getTimestamp())
 
 - [Angus Croll](https://github.com/angus-c/just) : for the inspiration of some dependency free functions
 - [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) : nice icon
+- [Boxy Svg](https://boxy-svg.com) : simple & effective svg editor
+- [Bun](https://bun.sh) : super fast runtime for JavaScript and TypeScript
 - [Esbuild](https://github.com/evanw/esbuild) : an extremely fast JavaScript bundler and minifier
 - [Eslint](https://eslint.org) : super tool to find & fix problems
 - [Github](https://github.com) : for all their great work year after year, pushing OSS forward
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
+- [Knip](https://github.com/webpro/knip) : super tool to find & fix problems
 - [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Shuutils](https://github.com/Shuunen/shuutils) : collection of pure JS utils
+- [Svg Omg](https://jakearchibald.github.io/svgomg/) : the great king of svg file size reduction
 - [Tsup](https://github.com/egoist/tsup) : super fast js/ts bundler with no config, powered by esbuild <3
 - [Watchlist](https://github.com/lukeed/watchlist) : recursively watch a list of directories & run a command on any file system
 - [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities
