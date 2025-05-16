@@ -19,7 +19,7 @@
     "eslint-plugin-shuunen": "1.3",
     "knip": "5.56",
     "repo-check": "1.43",
-    "tsup": "8.4",
+    "tsup": "8.5",
     "typescript": "5.8",
     "watchlist": "0.3"
   },
