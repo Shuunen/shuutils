@@ -15,7 +15,7 @@
         "eslint": "9.28",
         "eslint-plugin-shuunen": "1.3",
         "knip": "5.60",
-        "repo-check": "1.44",
+        "repo-check": "1.45",
         "tsup": "8.5",
         "typescript": "5.8",
         "watchlist": "0.3",
@@ -593,7 +593,7 @@
 
     "regjsparser": ["regjsparser@0.12.0", "", { "dependencies": { "jsesc": "~3.0.2" }, "bin": { "regjsparser": "bin/parser" } }, "sha512-cnE+y8bz4NhMjISKbgeVJtqNbtf5QpjZP+Bslo+UqkIt9QPnX9q095eiRRASJG1/tz6dlNr6Z5NsBiWYokp6EQ=="],
 
-    "repo-check": ["repo-check@1.44.0", "", { "dependencies": { "arg": "5.0", "shuutils": "10.6", "sort-json": "2.0" }, "bin": { "repo-check": "dist/repo-check.cjs" } }, "sha512-b5SSQ05OQP8LymPiGcfMPe2gVhrto7l/V6hRlL6oWrlTej0fdfcSp6dDk0uYyVQsWkHRcNkCWyNzGO1A7BfJqg=="],
+    "repo-check": ["repo-check@1.45.0", "", { "dependencies": { "arg": "5.0", "shuutils": "10.6", "sort-json": "2.0" }, "bin": { "repo-check": "dist/repo-check.cjs" } }, "sha512-H1TjmpbOWImWMFsJKsWSzdhfDQWCPlmiIUKhybpFGen0WtlShB5QsnGKPBSVpCV95b7KfQFRt4x0w9/pnxtQKw=="],
 
     "resolve": ["resolve@1.22.10", "", { "dependencies": { "is-core-module": "^2.16.0", "path-parse": "^1.0.7", "supports-preserve-symlinks-flag": "^1.0.0" }, "bin": { "resolve": "bin/resolve" } }, "sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w=="],
 
