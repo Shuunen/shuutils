@@ -12,6 +12,10 @@
 
 > My collection of *mostly* pure JS utils functions :zap:
 
+## Archived
+
+This repo is archived since it migrated to [Shuunen/monorepo](https://github.com/Shuunen/monorepo/tree/master/libs/shuutils)
+
 ## Install
 
 `npm install shuutils`
