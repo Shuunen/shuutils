@@ -1,28 +1,8 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "cSpell.words": [
-    "bitness",
-    "bundlejs",
-    "caramail",
-    "Cena",
-    "Croll",
-    "Pepe",
-    "pikachu",
-    "plusplus",
-    "rebeccapurple",
-    "resultx",
-    "sonarjs",
-    "standardx"
-  ],
+  "cSpell.words": ["bitness", "bundlejs", "caramail", "Cena", "Croll", "Pepe", "pikachu", "plusplus", "rebeccapurple", "resultx", "sonarjs", "standardx"],
   "workbench.colorCustomizations": {
     "activityBar.background": "#410A76",
     "titleBar.activeBackground": "#5B0EA5",
     "titleBar.activeForeground": "#FDFBFF"
-  },
-  "typescript.format.insertSpaceBeforeFunctionParenthesis": false
+  }
 }
