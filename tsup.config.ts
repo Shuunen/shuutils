@@ -1,33 +1,28 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { defineConfig } from 'tsup'
 
-const banner = '// shuutils __unique-mark__\n'
+const banner = '// shuutils __unique-mark__\n',
+  shebang = '#!/usr/bin/env node\n'
 
-const shebang = '#!/usr/bin/env node\n'
-
+// oxlint-disable-next-line import/no-default-export
 export default defineConfig([
   {
     banner: { js: banner },
     clean: true,
-    dts: true,
-    entry: ['src/shuutils.ts'],
-    format: ['cjs', 'esm'],
+    dts: { compilerOptions: { ignoreDeprecations: '6.0', types: ['node', 'vite/client'] } },
+    entry: { shuutils: 'src/index.ts' },
+    format: ['esm', 'cjs'],
     minify: false,
-    outDir: 'dist',
-    platform: 'neutral',
-    replaceNodeEnv: true,
-    skipNodeModulesBundle: true,
     sourcemap: false,
-    splitting: true,
-    target: 'esnext',
     treeshake: true,
-    watch: false,
   },
   {
-    banner: { js: `${shebang}\n${banner}` },
-    entry: ['src/unique-mark.ts'],
+    banner: { js: shebang + banner },
+    clean: false,
+    dts: false,
+    entry: { 'unique-mark': 'src/bin/unique-mark.cli.ts' },
     format: ['cjs'],
     minify: false,
-    outDir: 'dist',
+    sourcemap: false,
+    treeshake: true,
   },
 ])
