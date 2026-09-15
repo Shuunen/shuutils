@@ -56,7 +56,7 @@ export async function make({ header, target, index = 'index.ts', ext }: MakeProp
   const out = path.join(process.cwd(), index)
   logger.info('Listing entries', target)
   const files = await glob(target, { filesOnly: true }),
-    list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from "./${ext === undefined ? file : removeExtension(file) + ext}";`.replace(path.sep, '/')),
+    list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${ext === undefined ? file : removeExtension(file) + ext}'`.replaceAll(path.sep, '/')),
     content = `${header ?? ''}${list.toSorted().join('\n')}\n`
   logger.info('Into barrel file', out)
   writeFileSync(out, content)
