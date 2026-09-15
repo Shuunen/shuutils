@@ -36,7 +36,7 @@ lib modules must not call `console` nor import from a parent directory.
 
 - **Globals**: `describe`, `it`, `expect` are global — do not import them
 - **File naming**: `.test.ts` only, never `.spec.ts`
-- **Spacing in tests**: inside `test`/`it` blocks, do not include empty lines for visual spacing
+- **Spacing in tests**: inside `test`/`it` blocks, do not include empty lines for visual spacing, but do leave one empty line between consecutive `test`/`it` blocks
 - **DOM tests**: register happy-dom per file with `GlobalRegistrator.register({ url: 'https://localhost/' })`
 - **Fail loudly**: pair `expect(x).toBeDefined()` with `invariant(x, "msg")` — never `if (!x) return`
 - **Type checks**: `toBeTypeOf("number")` over `expect(typeof x).toBe("number")`

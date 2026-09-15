@@ -2,7 +2,7 @@
 // I had to get sources from https://github.com/johannschopplich/resultx/blob/main/src/index.ts to be able to have a cjs working version of the library
 // oxlint-disable max-classes-per-file, consistent-type-definitions, id-length
 
-type Result<T, E> = Ok<T> | Err<E>
+export type ResultType<T, E> = Ok<T> | Err<E>
 
 interface UnwrappedOk<T> {
   value: T
@@ -41,9 +41,9 @@ function err<E = unknown>(error: E): Err<E> {
   return new Err(error)
 }
 
-function trySafe<T, E = unknown>(fn: () => T): Result<T, E>
-function trySafe<T, E = unknown>(promise: Promise<T>): Promise<Result<T, E>>
-function trySafe<T, E = unknown>(fnOrPromise: (() => T) | Promise<T>): Result<T, E> | Promise<Result<T, E>> {
+function trySafe<T, E = unknown>(fn: () => T): ResultType<T, E>
+function trySafe<T, E = unknown>(promise: Promise<T>): Promise<ResultType<T, E>>
+function trySafe<T, E = unknown>(fnOrPromise: (() => T) | Promise<T>): ResultType<T, E> | Promise<ResultType<T, E>> {
   if (fnOrPromise instanceof Promise)
     // oxlint-disable-next-line promise/prefer-await-to-then
     return fnOrPromise.then(ok).catch(err as (error: unknown) => Err<E>)
@@ -57,8 +57,8 @@ function trySafe<T, E = unknown>(fnOrPromise: (() => T) | Promise<T>): Result<T,
 
 function unwrap<T>(result: Ok<T>): UnwrappedOk<T>
 function unwrap<E>(result: Err<E>): UnwrappedErr<E>
-function unwrap<T, E>(result: Result<T, E>): UnwrappedResult<T, E>
-function unwrap<T, E>(result: Result<T, E>): UnwrappedResult<T, E> {
+function unwrap<T, E>(result: ResultType<T, E>): UnwrappedResult<T, E>
+function unwrap<T, E>(result: ResultType<T, E>): UnwrappedResult<T, E> {
   return result.ok ? { error: undefined, value: result.value } : { error: result.error, value: undefined }
 }
 
@@ -98,6 +98,3 @@ export const Result = {
    */
   unwrap,
 }
-
-// oxlint-disable-next-line id-length
-export type ResultType<T, E> = Result<T, E>

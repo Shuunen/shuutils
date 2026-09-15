@@ -5,6 +5,7 @@ describe('debounce', () => {
     const debounced = debounce((value: number) => value * 2, 5)
     await expect(debounced(21)).resolves.toBe(42)
   })
+
   it('debounce B only runs the callback once for a burst of calls', async () => {
     let calls = 0
     const debounced = debounce((value: number) => {
@@ -17,6 +18,7 @@ describe('debounce', () => {
     expect(calls).toBe(1)
     expect(result).toBe(3)
   })
+
   it('debounce C runs again after the wait has elapsed', async () => {
     let calls = 0
     const debounced = debounce(() => {
@@ -26,6 +28,7 @@ describe('debounce', () => {
     await debounced()
     expect(calls).toBe(2)
   })
+
   it('debounce D settles every superseded call with the last result', async () => {
     let calls = 0
     const debounced = debounce((value: number) => {

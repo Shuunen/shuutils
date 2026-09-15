@@ -25,7 +25,7 @@ test('state A name change', () => {
 test('state A watch callback', () => {
   let callbackCalls = 0
   /**
-   *
+   * counts each time the watcher fires on the name key
    */
   function callback() {
     callbackCalls += 1
@@ -66,7 +66,7 @@ test('state C with storage and all keys stored by default', () => {
 test('state D multiple watch', () => {
   let callbackCalls = 0
   /**
-   *
+   * counts each time the watcher fires on the name or age keys
    */
   function callbackA() {
     callbackCalls += 1
