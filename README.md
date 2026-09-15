@@ -15,10 +15,6 @@
 
 > My collection of _mostly_ pure JS utils functions :zap:
 
-## Archived
-
-This repo is archived since it migrated to [Shuunen/monorepo](https://github.com/Shuunen/monorepo/tree/master/libs/shuutils)
-
 ## Install
 
 `npm install shuutils`
@@ -32,11 +28,25 @@ import { getTimestamp } from 'shuutils'
 console.log('Hello world, current timestamp is', getTimestamp())
 ```
 
+## Migrating from v10
+
+`v11` removes a few top-level exports. The functionality is still there, just reached differently :
+
+| Removed in v11                   | Use instead                                                  |
+| -------------------------------- | ------------------------------------------------------------ |
+| `ok`, `err`, `unwrap`, `trySafe` | `Result.ok`, `Result.err`, `Result.unwrap`, `Result.trySafe` |
+| `expectType`, `expectEqualTypes` | dropped, use your test runner's own type assertions          |
+| `cn`, `genClass`                 | dropped                                                      |
+| `access`, `jsonStartRegex`       | dropped                                                      |
+
+Behavior changes :
+
+- `sanitize` and `slugify` now treat `.` as a separator, so `slugify('example.com')` returns `example-com` where `v10` returned `examplecom`
+
 ## TODO
 
 - [ ] use zod
 - [ ] add willOutputToFile option to the logger
-- [ ] re-enable useTopLevelRegex in biome
 
 ## Thanks
 
@@ -45,12 +55,10 @@ console.log('Hello world, current timestamp is', getTimestamp())
 - [Boxy Svg](https://boxy-svg.com) : simple & effective svg editor
 - [Bun](https://bun.sh) : super fast runtime for JavaScript and TypeScript
 - [Esbuild](https://github.com/evanw/esbuild) : an extremely fast JavaScript bundler and minifier
-- [Eslint](https://eslint.org) : super tool to find & fix problems
 - [Github](https://github.com) : for all their great work year after year, pushing OSS forward
+- [Oxlint](https://oxc.rs) : super fast linter and formatter
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
-- [Knip](https://github.com/webpro/knip) : super tool to find & fix problems
-- [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Shuutils](https://github.com/Shuunen/shuutils) : collection of pure JS utils
 - [Svg Omg](https://jakearchibald.github.io/svgomg/) : the great king of svg file size reduction
