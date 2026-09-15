@@ -4,7 +4,7 @@ import { coverageConfigDefaults, defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     coverage: {
-      exclude: [...coverageConfigDefaults.exclude, 'src/index.ts', 'dist/**', '**/*.config.ts', '**/*.d.ts', 'src/bin/lint.rules.ts'],
+      exclude: [...coverageConfigDefaults.exclude, 'src/index.ts', 'dist/**', '**/*.config.ts', '**/*.d.ts', 'src/bin/repo-lint.rules.ts'],
       include: ['src/**/*.ts'],
       provider: 'v8' as const,
       reporter: [['text', { maxCols: 120 }], 'lcov'],

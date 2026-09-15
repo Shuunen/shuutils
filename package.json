@@ -2,7 +2,11 @@
   "$schema": "https://json.schemastore.org/package",
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "bin": {
-    "unique-mark": "./dist/unique-mark.cjs"
+    "unique-mark": "dist/unique-mark.cjs",
+    "header-injector": "dist/header-injector.js",
+    "repo-lint": "dist/repo-lint.js",
+    "barrel-maker": "dist/barrel-maker.js",
+    "changelog-generator": "dist/changelog-generator.js"
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "dependencies": {
@@ -64,12 +68,12 @@
     "build": "turbo run build:tsc build:tsup && echo build completed successfully || (echo Please fix build errors and run pnpm run build to check for remaining build issues && exit 1)",
     "build:tsc": "tsc -b && echo build:tsc completed successfully || (echo Please fix type errors and run pnpm run build:tsc to check for remaining type issues && exit 1)",
     "build:tsup": "tsup-node && echo build:tsup completed successfully || (echo Please fix build errors and run pnpm run build:tsup to check for remaining build issues && exit 1)",
-    "check": "turbo run --output-logs=errors-only lint:types lint:format lint:issues lint:shuutils build:tsc build:tsup test:unit && echo check completed successfully",
+    "check": "turbo run --output-logs=errors-only lint:types lint:format lint:issues lint:repo build:tsc build:tsup test:unit && echo check completed successfully",
     "dev": "vitest",
     "lint:format": "oxfmt --check && echo lint:format completed successfully || (echo Please run pnpm run lint:format:fix to automatically fix formatting issues && exit 1)",
     "lint:format:fix": "oxfmt && echo lint:format:fix completed successfully",
     "lint:issues": "oxlint --type-aware && echo lint:issues completed successfully || (echo Please fix lint issues and run pnpm run lint:issues to check for remaining issues && exit 1)",
-    "lint:shuutils": "bun src/bin/lint.cli.ts --target=\"src/**/*.ts\" && echo lint:shuutils completed successfully",
+    "lint:repo": "bun src/bin/repo-lint.cli.ts --target=\"src/**/*.ts\" && echo lint:repo completed successfully",
     "lint:types": "tsgo -p tsconfig.app.json && tsgo -p tsconfig.node.json && echo lint:types completed successfully || (echo Please fix type errors and run pnpm run lint:types to check for remaining type issues && exit 1)",
     "list": "cd src && bun ./bin/barrel-maker.cli.ts --target=\"./lib/*.ts\" --ext=\"\" && echo list completed successfully",
     "prepack": "pnpm run build",

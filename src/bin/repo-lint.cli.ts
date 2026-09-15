@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import glob from 'tiny-glob'
 import { nbThird } from '../lib/constants'
-import { rules } from './lint.rules'
+import { rules } from './repo-lint.rules'
 
 /**
  * Run every rule on a single file, applying fixers when they provide one

@@ -16,7 +16,7 @@ Run `pnpm check` (types, formatting, lint, custom lint, builds, tests). Fix all 
 
 Never disable a lint rule without asking the user. Try to fix the code first then if too complex, ask the user if they want to disable the rule for that line/file.
 
-`pnpm run lint:shuutils` runs the repo's own rules (see `src/bin/lint.rules.ts`):
+`pnpm run lint:repo` runs the repo's own rules (see `src/bin/repo-lint.rules.ts`):
 lib modules need a sibling test, exports need JSDoc, the barrel must be up to date,
 lib modules must not call `console` nor import from a parent directory.
 
