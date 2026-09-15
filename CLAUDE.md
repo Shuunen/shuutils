@@ -20,6 +20,10 @@ Never disable a lint rule without asking the user. Try to fix the code first the
 lib modules need a sibling test, exports need JSDoc, the barrel must be up to date,
 lib modules must not call `console` nor import from a parent directory.
 
+## Versioning
+
+`VERSION` holds the version as MAJOR.MINOR.PATCH semver, and must stay in sync with `version` in `package.json`. Bump both in the same commit.
+
 ## Code practices
 
 - **Zero deps**: never add a runtime dependency, inline the few lines instead
