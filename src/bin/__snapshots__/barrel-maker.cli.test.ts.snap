@@ -2,10 +2,10 @@
 
 exports[`barrel-maker cli > main B with args > content 1`] = `
 "// ACME
-export * from "./atoms/Button.js";
-export * from "./icons/Icon.js";
-export * from "./molecules/Card.js";
-export type * from "./atoms/types.js";
+export * from './atoms/Button.js'
+export * from './icons/Icon.js'
+export * from './molecules/Card.js'
+export type * from './atoms/types.js'
 "
 `;
 
@@ -23,10 +23,10 @@ exports[`barrel-maker cli > main B with args > files 1`] = `
 `;
 
 exports[`barrel-maker cli > main C without header > content 1`] = `
-"export * from "./atoms/Button.js";
-export * from "./icons/Icon.js";
-export * from "./molecules/Card.js";
-export type * from "./atoms/types.js";
+"export * from './atoms/Button.js'
+export * from './icons/Icon.js'
+export * from './molecules/Card.js'
+export type * from './atoms/types.js'
 "
 `;
 
@@ -45,10 +45,10 @@ exports[`barrel-maker cli > main C without header > files 1`] = `
 
 exports[`barrel-maker cli > make A ext empty and default index.ts > content 1`] = `
 "// Copyright ACME
-export * from "./atoms/Button";
-export * from "./icons/Icon";
-export * from "./molecules/Card";
-export type * from "./atoms/types";
+export * from './atoms/Button'
+export * from './icons/Icon'
+export * from './molecules/Card'
+export type * from './atoms/types'
 "
 `;
 
@@ -67,10 +67,10 @@ exports[`barrel-maker cli > make A ext empty and default index.ts > files 1`] = 
 
 exports[`barrel-maker cli > make B index.js and ext .js > content 1`] = `
 "// Copyright ACME
-export * from "./atoms/Button.js";
-export * from "./icons/Icon.js";
-export * from "./molecules/Card.js";
-export type * from "./atoms/types.js";
+export * from './atoms/Button.js'
+export * from './icons/Icon.js'
+export * from './molecules/Card.js'
+export type * from './atoms/types.js'
 "
 `;
 
@@ -88,10 +88,10 @@ exports[`barrel-maker cli > make B index.js and ext .js > files 1`] = `
 `;
 
 exports[`barrel-maker cli > make C undefined ext > content 1`] = `
-"export * from "./atoms/Button.tsx";
-export * from "./icons/Icon.tsx";
-export * from "./molecules/Card.tsx";
-export type * from "./atoms/types.ts";
+"export * from './atoms/Button.tsx'
+export * from './icons/Icon.tsx'
+export * from './molecules/Card.tsx'
+export type * from './atoms/types.ts'
 "
 `;
 

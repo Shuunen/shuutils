@@ -6,8 +6,8 @@ import { Logger } from '../lib/logger'
 import { Result } from '../lib/result'
 
 // use me like :
-//  bun libs/utils/src/bin/header-injector.cli.ts --header="Copyright 2026 ACME"
-//  bun libs/utils/src/bin/header-injector.cli.ts --remove --header="Copyright 2026 ACME"
+//  bun src/bin/header-injector.cli.ts --header="Copyright 2026 ACME"
+//  bun src/bin/header-injector.cli.ts --target="src/**/*.ts" --remove --header="Copyright 2026 ACME"
 
 /* v8 ignore next */
 const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' }),
@@ -28,6 +28,20 @@ const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error
     writeError: 0,
   }
 type Metrics = typeof metrics
+
+const defaultTarget = 'src/**/*.ts',
+  ignoredFolders = ['node_modules/', 'dist/', 'coverage/']
+
+/**
+ * Tell if a file should get a header, skipping generated files and vendor folders
+ * @param file the file path to check
+ * @returns true when the file should be processed
+ */
+function isWantedFile(file: string) {
+  const unixPath = file.replaceAll('\\', '/')
+  if (file.endsWith('.d.ts') || file.endsWith('.gen.ts')) return false
+  return !ignoredFolders.some(folder => unixPath.startsWith(folder) || unixPath.includes(`/${folder}`))
+}
 
 /**
  * Parse command-line arguments into a key-value object
@@ -149,8 +163,9 @@ export async function main(argv: string[]) {
   const isRemoveMode = args.remove !== undefined
   if (!args.header) return Result.error('missing header argument')
 
-  const allFiles = await glob('**/*.ts', { filesOnly: true }),
-    files = allFiles.filter(file => !file.endsWith('.d.ts') && !file.endsWith('.gen.ts')),
+  const target = args.target || defaultTarget,
+    allFiles = await glob(target, { filesOnly: true }),
+    files = allFiles.filter(file => isWantedFile(file)),
     header = `// ${args.header}`
   logger.info(`${isRemoveMode ? 'Removing' : 'Scanning'} headers of ${files.length} files...`)
   for (const file of files) processFile({ file, header, isRemoveMode, stats })
