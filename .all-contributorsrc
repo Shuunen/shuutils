@@ -7,35 +7,25 @@
       "name": "Romain Racamier",
       "avatar_url": "https://avatars.githubusercontent.com/u/439158?v=4",
       "profile": "https://fr.linkedin.com/in/romain-racamier",
-      "contributions": [
-        "infra",
-        "test",
-        "code"
-      ]
+      "contributions": ["infra", "test", "code"]
     },
     {
       "login": "babforlife",
       "name": "babforlife",
       "avatar_url": "https://avatars.githubusercontent.com/u/55501953?v=4",
       "profile": "https://github.com/babforlife",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "jordan-boyer",
       "name": "jordan boyer",
       "avatar_url": "https://avatars.githubusercontent.com/u/6780830?v=4",
       "profile": "https://github.com/jordan-boyer",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     }
   ],
   "contributorsPerLine": 7,
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "imageSize": 100,
   "projectName": "shuutils",
   "projectOwner": "Shuunen",
