@@ -14,7 +14,7 @@ describe(objectSum, () => {
     object4ButDeepRegexDifferent = { fool: { bar: 'foo', regex: /^oh\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
 
   it('objectSum A on empty object', () => {
-    expect(objectSum({})).toMatchInlineSnapshot(`-1549353149`)
+    expect(objectSum({})).toMatchInlineSnapshot(`2745614147`)
   })
 
   it('objectSum B is the same on two equally empty objects', () => {
@@ -22,11 +22,11 @@ describe(objectSum, () => {
   })
 
   it('objectSum C on object with numbers', () => {
-    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toMatchInlineSnapshot(`-1472746119`)
+    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).toMatchInlineSnapshot(`2822221177`)
   })
 
   it('objectSum D on object with a slightly different number', () => {
-    expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toMatchInlineSnapshot(`-411681858`)
+    expect(objectSum({ keyA: 1, keyB: 2, keyC: 4 })).toMatchInlineSnapshot(`3883285438`)
   })
 
   it('objectSum E on object with a slightly different key', () => {
@@ -49,7 +49,7 @@ describe(objectSum, () => {
         propJ: 10,
         users,
       }),
-    ).toMatchInlineSnapshot(`-876202366`)
+    ).toMatchInlineSnapshot(`3418764930`)
   })
 
   it('objectSum G is the same on two equals objects', () => {

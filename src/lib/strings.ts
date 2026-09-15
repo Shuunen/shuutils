@@ -107,7 +107,7 @@ export function crc32(text: string) {
       /* v8 ignore stop */
       crc = value ^ (crc >>> 8)
   }
-  return Math.trunc(-1 ^ crc)
+  return (-1 ^ crc) >>> 0
   // oxlint-enable no-bitwise, no-magic-numbers
 }
 

@@ -91,7 +91,7 @@ test('ellipsis, giving a short string that should not be processed', () => {
 })
 
 test('string sum a simple word', () => {
-  expect(stringSum('plop')).toBe(-1_177_138_288)
+  expect(stringSum('plop')).toBe(3_117_829_008)
 })
 
 test('string sum a sentence', () => {
@@ -120,4 +120,9 @@ test('crc32 A', () => {
 
 test('crc32 B', () => {
   expect(crc32('12 is a great number LÔL !! :p')).toBe(1_336_548_843)
+})
+
+test('crc32 C never returns a negative number', () => {
+  const samples = Array.from({ length: 300 }, (_, index) => `sample ${index}`)
+  expect(samples.every(sample => crc32(sample) >= 0)).toBe(true)
 })
