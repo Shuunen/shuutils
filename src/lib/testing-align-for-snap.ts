@@ -33,7 +33,7 @@ export function alignForSnap(content: unknown): string {
 
   if (typeof content === 'object' && 'textContent' in content) return clean(String(content.textContent))
 
-  if (Array.isArray(content) || content instanceof NodeList || content instanceof HTMLCollection)
+  if (Array.isArray(content) || (typeof NodeList !== 'undefined' && content instanceof NodeList) || (typeof HTMLCollection !== 'undefined' && content instanceof HTMLCollection))
     return Array.from(content)
       .map(item => alignForSnap(item))
       .join(' | ')
