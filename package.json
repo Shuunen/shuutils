@@ -29,8 +29,14 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/shuutils.js",
-      "require": "./dist/shuutils.cjs"
+      "import": {
+        "types": "./dist/shuutils.d.ts",
+        "default": "./dist/shuutils.js"
+      },
+      "require": {
+        "types": "./dist/shuutils.d.cts",
+        "default": "./dist/shuutils.cjs"
+      }
     }
   },
   "files": [
@@ -66,6 +72,7 @@
     "lint:shuutils": "bun src/bin/lint.cli.ts --target=\"src/**/*.ts\" && echo lint:shuutils completed successfully",
     "lint:types": "tsgo -p tsconfig.app.json && tsgo -p tsconfig.node.json && echo lint:types completed successfully || (echo Please fix type errors and run pnpm run lint:types to check for remaining type issues && exit 1)",
     "list": "cd src && bun ./bin/barrel-maker.cli.ts --target=\"./lib/*.ts\" --ext=\"\" && echo list completed successfully",
+    "prepack": "pnpm run build",
     "test": "turbo run test:unit",
     "test:ui": "vitest --ui",
     "test:unit": "vitest run --coverage && echo test:unit completed successfully || (echo Please fix test errors and run pnpm run test:unit to check for remaining test issues && exit 1)",
@@ -73,5 +80,6 @@
     "up:deps": "pnpm update --latest && echo up:deps completed successfully"
   },
   "type": "module",
-  "version": "10.6.0"
+  "types": "./dist/shuutils.d.ts",
+  "version": "11.0.0"
 }
