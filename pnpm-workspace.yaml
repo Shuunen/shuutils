@@ -1,3 +1,5 @@
-onlyBuiltDependencies:
-  - bun
-  - esbuild
+allowBuilds:
+  bun: true
+  esbuild: true
+overrides:
+  esbuild: ^0.28.2
