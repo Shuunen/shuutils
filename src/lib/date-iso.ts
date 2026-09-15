@@ -1,0 +1,180 @@
+import { nbMsInMinute } from './constants'
+import { invariant } from './invariant'
+
+/**
+ * Convert a date into iso string
+ *
+ * Example with timezone
+ * in  : dateToIsoString(new Date())
+ * out : "2018-09-03T15:24:00.366Z"
+ *
+ * Example without timezone
+ * in  : dateToIsoString(new Date(), true)
+ * out : "2018-09-03T15:24:00.366"
+ * @param date input date
+ * @param shouldRemoveTimezone remove the last z ?
+ * @returns string like : "2018-09-03T15:24:00.366Z"
+ */
+export function dateToIsoString(date: Readonly<Date>, shouldRemoveTimezone = false) {
+  let dateString = new Date(date.getTime() - date.getTimezoneOffset() * nbMsInMinute).toISOString()
+  if (shouldRemoveTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
+
+  return dateString
+}
+
+/**
+ * Format a date to ISO without time
+ * @param date input date
+ * @returns string like : "2019-12-31"
+ */
+export function dateIso10(date: Readonly<Date> = new Date()): NonNullable<string> {
+  const [result] = date.toISOString().split('T')
+  invariant(result, 'Failed to convert date to ISO string')
+  return result
+}
+
+/**
+ * Strip the seconds, milliseconds and timezone from an ISO date string
+ *
+ * @param date  the ISO date string
+ * @returns ex: `2025-06-26T12:34`
+ */
+export function dateIsoStripSecondsZone(date: string) {
+  const dateObject = new Date(date)
+  if (Number.isNaN(dateObject.getTime())) return ''
+
+  // oxlint-disable-next-line no-magic-numbers
+  return new Date(date).toISOString().slice(0, 16)
+}
+
+const EMPTY_DATE = '-',
+  INVALID_DATE = 'N/A'
+
+/**
+ * Parse a date as UTC, a date-only string is parsed at midnight UTC instead of local time
+ * @param date the date to parse
+ * @returns the parsed date
+ */
+export function parseAsUTC(date: Date | string | number): Date {
+  if (date instanceof Date) return date
+
+  if (typeof date === 'string') {
+    /* v8 ignore start */
+    // oxlint-disable-next-line no-magic-numbers
+    const hasTimezone = date.includes('Z') || date.includes('+') || (date.match(/-/g) || []).length > 2,
+      /* v8 ignore end */
+      dateWithZ = hasTimezone ? date : `${date}Z`
+    return new Date(dateWithZ)
+  }
+
+  return new Date(date)
+}
+
+/**
+ * Strip the seconds, milliseconds and timezone from an ISO date string
+ * @param date  the ISO date as a string or a Date object
+ * @param options - {
+ *   withTime?: boolean; // Whether to include the time (hours:minutes) in the output. Defaults to `true`.
+ *   acceptPartialDate?: boolean; // Whether to accept partial dates like "2025" or "2025-12". Defaults to `false`. If true and the date is partial, the output is handled by `partialDateDisplay`.
+ * }
+ * @returns A formatted date string (example: "24/12/2025" or "24/12/2025 17:00") in the current timezone, or a special INVALID_DATE constant if the input is invalid and partials are not accepted. If partials are accepted, returns a formatted partial date string.
+ */
+export function dateIsoToReadableDatetime(
+  date: string | Date | null | undefined,
+  options: {
+    withTime?: boolean
+    acceptPartialDate?: boolean
+  } = {},
+): string {
+  const withTime = options.withTime ?? true,
+    acceptPartialDate = options.acceptPartialDate ?? false
+  if (!date) return EMPTY_DATE
+
+  const dateObject: Date = parseAsUTC(date),
+    padLength = 2,
+    invalidDate = Number.isNaN(dateObject.getTime())
+
+  if (invalidDate && !acceptPartialDate) return INVALID_DATE
+
+  if (invalidDate && acceptPartialDate) return partialDateDisplay(date as string)
+
+  const day = String(dateObject.getDate()).padStart(padLength, '0'),
+    month = String(dateObject.getMonth() + 1).padStart(padLength, '0'),
+    year = dateObject.getFullYear()
+
+  let result = `${day}/${month}/${year}`
+  if (withTime) {
+    const hours = String(dateObject.getHours()).padStart(padLength, '0'),
+      minutes = String(dateObject.getMinutes()).padStart(padLength, '0')
+    result += ` ${hours}:${minutes}`
+  }
+
+  return result
+}
+
+const DATE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/
+
+/**
+ * Converts a partial ISO date string to a human-readable format.
+ *
+ * Recognizes the following partial date formats:
+ * - "YYYY-00-00": returns "YYYY"
+ * - "YYYY-MM-00": returns "MM/YYYY"
+ * For any other format (including full dates or invalid formats), returns "N/A".
+ *
+ * @param dateString - The ISO date string in the format "YYYY-MM-DD".
+ * @returns A human-readable string for partial dates, or "N/A" if the format is not recognized.
+ */
+function partialDateDisplay(dateString: string): string {
+  const match = DATE_REGEX.exec(dateString)
+  if (!match) return INVALID_DATE
+
+  const [, year, month, day] = match
+
+  if (year === '0000') return INVALID_DATE
+
+  if (month === '00' && year) return year
+
+  if (month !== '00' && day === '00') return `${month}/${year}`
+
+  return INVALID_DATE
+}
+
+const millisecondsPattern = /\.\d{3}Z$/
+
+/**
+ * Builds an ISO 8601 string based on local date and time parts.
+ * This function takes date and time strings in local time,
+ * constructs a Date object, and returns the ISO string in UTC.
+ * @param datePart - The local date string in "YYYY-MM-DD" format (e.g., "2023-06-28")
+ * @param timePart - The local time string in "HH:mm" format (e.g., "15:45")
+ * @returns The corresponding ISO string (e.g., "2023-06-28T13:45:00Z"), or an empty string if date or time is missing
+ */
+export function buildIsoFromLocal(datePart: string, timePart: string): string {
+  if (!datePart || !timePart) return ''
+
+  const [yy, mm, dd] = datePart.split('-').map(Number),
+    [hh, min] = timePart.split(':').map(Number),
+    hasInvalidDatePart = yy === undefined || mm === undefined || dd === undefined,
+    hasInvalidTimePart = hh === undefined || min === undefined
+  if (hasInvalidDatePart || hasInvalidTimePart) return ''
+
+  const local = new Date(yy, mm - 1, dd, hh, min, 0, 0)
+  /* v8 ignore start */
+  if (Number.isNaN(local.getTime())) return ''
+
+  /* v8 ignore stop */
+  return new Date(local.getTime() - local.getTimezoneOffset() * nbMsInMinute).toISOString().replace(millisecondsPattern, 'Z')
+}
+
+/**
+ * Check if the date is valid
+ *
+ * @param date  the date
+ * @returns ex: `true`
+ */
+export function isValidDate(date: Date | undefined) {
+  if (!date) return false
+
+  return !Number.isNaN(date.getTime())
+}

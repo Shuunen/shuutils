@@ -1,0 +1,52 @@
+/**
+ * Check if the environment is a dev environment
+ * @param isEnvDev env var
+ * @returns true if the environment is a dev environment
+ */
+export function isDevEnvironment(isEnvDev = import.meta.env.DEV) {
+  return isEnvDev
+}
+
+/**
+ * check if app is deployed in dev namespace
+ * @param isEnvDev env var
+ * @param envSubDev env var for dev subdomain
+ * @returns true if App is deployed in Dev namespace
+ */
+export function isDeployedInDevNamespace(isEnvDev = import.meta.env.DEV, envSubDev = import.meta.env.VITE_DEV_SUBDOMAIN) {
+  const { host } = globalThis.window.location,
+    [subdomain] = host.split('.')
+  return isDevEnvironment(isEnvDev) || subdomain === envSubDev
+}
+
+/**
+ * Check if the environment is a test environment
+ * @param glob optional, the global object to check, default is globalThis
+ * @returns true if the environment is a test environment
+ */
+export function isTestEnvironment(glob: Record<string, unknown> = globalThis) {
+  const properties = ['jest', 'mocha', 'playwright', '__vitest_environment__', '__vitest_required__', '__vitest_browser_runner__', '__vitest_browser__', '__vitest_worker__', '__coverage__', 'STORYBOOK_ENV', '__STORYBOOK_ADDONS_CHANNEL__'],
+    hasTestProp = properties.some(property => property in glob)
+  if (hasTestProp) return true
+
+  // @ts-expect-error type issue
+  // oxlint-disable-next-line typescript/no-unsafe-call
+  const useBunTest = 'Bun' in glob && glob?.Bun?.argv.join(' ').includes('.test.')
+  // oxlint-disable-next-line typescript/no-unsafe-return
+  return useBunTest
+}
+
+/**
+ * Check if the environment is a browser environment
+ * @param userAgent optional, the user agent to check, default is navigator.userAgent
+ * @returns true if the environment is a browser environment
+ */
+export function isBrowserEnvironment(userAgent = globalThis.navigator?.userAgent) {
+  if (!userAgent) return false
+
+  if (userAgent.includes('HappyDOM')) return false
+
+  if (userAgent.includes('Headless')) return false
+
+  return typeof document !== 'undefined' && globalThis.matchMedia !== undefined
+}
