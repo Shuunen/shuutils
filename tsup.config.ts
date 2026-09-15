@@ -18,6 +18,8 @@ export default defineConfig([
   {
     banner: { js: shebang + banner },
     clean: false,
+    // esbuild rewrites import.meta to {} in cjs, so the bin entry would never self-start
+    define: { 'import.meta.main': 'true' },
     dts: false,
     entry: { 'unique-mark': 'src/bin/unique-mark.cli.ts' },
     format: ['cjs'],
