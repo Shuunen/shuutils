@@ -1,0 +1,174 @@
+import { nbSpacesIndent } from './constants'
+import { isRecord } from './object-is-record'
+import { objectSort } from './object-sort'
+
+// currently handled :
+// - array
+// - boolean
+// - circular references
+// - date
+// - file
+// - function
+// - null
+// - number
+// - object
+// - regexp
+// - string
+// not handled yet :
+// - infinity
+// - map
+// - nan
+// - set
+
+/**
+ * Replacer function for JSON.stringify
+ * @param this the context object
+ * @param key the key of the object
+ * @param value the value of the object
+ * @returns the value of the object
+ */
+function replacer(this: unknown, key: string, value?: Readonly<unknown>) {
+  if (value === undefined) return value
+
+  if (value instanceof RegExp) return { __regexFlags__: value.flags, __regexSource__: value.source }
+
+  if (typeof value === 'function') return { __function__: value.toString() }
+
+  // @ts-expect-error type issue
+  if (this[key] instanceof File)
+    // @ts-expect-error type issue
+    return { __fileName__: this[key].name, __fileSize__: this[key].size, __fileType__: this[key].type }
+
+  // cannot do this : if (value instanceof Date) { console.log('replacer return toISOString'); return { __strDate__: value.toISOString() } } // see note 1, instead we do this :
+  // @ts-expect-error type issue
+  if (this[key] instanceof Date)
+    // @ts-expect-error type issue
+    // oxlint-disable-next-line typescript/no-unsafe-call
+    return { __date__: this[key].toISOString() }
+
+  return value
+}
+
+const createCircularReplacer = () => {
+  const seen = new WeakSet<object>()
+  /**
+   * Replacer function for JSON.stringify with circular reference handling
+   * @param this the context object
+   * @param key the key being stringified
+   * @param value the value being stringified
+   * @returns the value to serialize
+   */
+  function circularReplacer(this: unknown, key: string, value?: Readonly<unknown>) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) return '__circular__'
+
+      seen.add(value)
+    }
+    return replacer.call(this, key, value)
+  }
+  return circularReplacer
+}
+
+/**
+ * Detect function for JSON.parse reviver
+ * @param value an unknown value
+ * @returns the type of this value like : "empty", "date"...
+ */
+function detect(value?: unknown) /* NOSONAR */ {
+  if (value === undefined || value === null || typeof value !== 'object') return 'not-object'
+
+  if ('__regexFlags__' in value && '__regexSource__' in value) return 'regex'
+
+  if ('__function__' in value) return 'function'
+
+  if ('__fileName__' in value && '__fileSize__' in value && '__fileType__' in value) return 'file'
+
+  if ('__date__' in value) return 'date'
+
+  return 'unknown'
+}
+
+type SerializedRegex = {
+  __regexFlags__: string
+  __regexSource__: string
+}
+
+type SerializedFunction = {
+  __function__: string
+}
+
+type SerializedFile = {
+  __fileName__: string
+  __fileSize__: number
+  __fileType__: string
+}
+
+type SerializedDate = {
+  __date__: string
+}
+
+function isSerializedRegex(value: unknown): value is SerializedRegex {
+  return isRecord(value) && typeof value.__regexSource__ === 'string' && typeof value.__regexFlags__ === 'string'
+}
+
+function isSerializedFunction(value: unknown): value is SerializedFunction {
+  return isRecord(value) && typeof value.__function__ === 'string'
+}
+
+function isSerializedFile(value: unknown): value is SerializedFile {
+  return isRecord(value) && typeof value.__fileName__ === 'string' && typeof value.__fileSize__ === 'number' && typeof value.__fileType__ === 'string'
+}
+
+function isSerializedDate(value: unknown): value is SerializedDate {
+  return isRecord(value) && typeof value.__date__ === 'string'
+}
+
+/**
+ * Reviver function for JSON.parse
+ * @param _key the key of the object
+ * @param value the value of the object
+ * @returns the value of the object
+ */
+function reviver(_key: string, value?: unknown) {
+  const type = detect(value)
+  if (type === 'regex' && isSerializedRegex(value)) return new RegExp(value.__regexSource__, value.__regexFlags__)
+
+  if (type === 'function' && isSerializedFunction(value))
+    // oxlint-disable-next-line no-new-func, no-unsafe-return, no-implied-eval, no-unsafe-call
+    return new Function(`return ${value.__function__}`)() // NOSONAR
+
+  if (type === 'file' && isSerializedFile(value)) return new File([], value.__fileName__, { type: value.__fileType__ })
+
+  if (type === 'date' && isSerializedDate(value)) return new Date(value.__date__)
+
+  return value
+}
+
+/**
+ * Serializes an object to a string, using JSON.stringify with enhanced support for functions & regex
+ * @param object the object to serialize to a string
+ * @param willSortKeys if true, the order of keys will be sorted alpha before serialization
+ * @param willIndent if true, the output string will be indented for better readability
+ * @returns the serialized object as a string
+ */
+export function objectSerialize(object: Readonly<Record<string, unknown>>, willSortKeys = false, willIndent = false) {
+  return JSON.stringify(willSortKeys ? objectSort(object) : object, createCircularReplacer(), willIndent ? nbSpacesIndent : undefined)
+}
+
+/**
+ * Deserializes a string to an object, using JSON.parse with enhanced support for functions & regex
+ * @param string the string to deserialize to an object
+ * @returns the deserialized object
+ */
+export function objectDeserialize(string: string) {
+  return JSON.parse(string, reviver) as Record<number | string, unknown>
+}
+
+// note 1 : detecting Date objects in replacer function
+// let's consider this object : { date: new Date() }, at first iteration _key is '', value is { date: 2021-01-01T00:00:00.000Z }
+// note here that at this point, value is not an instance of Date, it's an object, but value.date is an instance of Date
+// so because it's not a function, not a RegExp, we return value as is, so it's not serialized
+// at second iteration, _key is 'date', value is "2021-01-01T00:00:00.000Z" but... now value is a string, not an object, so we cannot detect it's an instance of Date
+// thank you JSON.stringify for this inconsistency -.-''
+// but do you like magic ? this[key] is still an instance of Date, so we can use it to detect it's a Date object
+// wow *mouth wide open*

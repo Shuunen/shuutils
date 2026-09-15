@@ -1,0 +1,18 @@
+/**
+ * Convert a multi-level deep object into a single-level, flatten, object
+ * @param object the object to flatten
+ * @param path optional, add a root path to all keys
+ * @param separator optional, the character to join keys
+ * @returns object like `{ 'person.name': 'John Doe', 'person.age': 32 }`
+ */
+export function flatten(object: Readonly<Record<string, unknown>>, path = '', separator = '.'): Record<string, unknown> {
+  const result: Record<string, unknown> = {}
+  for (const key of Object.keys(object)) {
+    const value = object[key],
+      updatedPath = Array.isArray(object) ? `${path}[${key}]` : [path, key].filter(Boolean).join(separator),
+      isObject = [typeof value === 'object', value !== null, !(value instanceof Date), !(value instanceof File), !(value instanceof RegExp), !(Array.isArray(value) && value.length === 0)].every(Boolean)
+    if (isObject) Object.assign(result, flatten(value as Record<string, unknown>, updatedPath, separator))
+    else result[updatedPath] = value
+  }
+  return result
+}

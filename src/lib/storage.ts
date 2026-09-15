@@ -1,0 +1,75 @@
+// oxlint-disable typescript/no-use-before-define
+import { parseJson } from './json'
+
+function get(key: string, defaultValue: string): string
+function get(key: string, defaultValue: boolean): boolean
+function get(key: string, defaultValue: number): number
+function get<Type = unknown>(_key: string, _defaultValue: Type): Type
+// oxlint-disable-next-line typescript/no-unnecessary-type-parameters
+function get<Type = unknown>(key: string): Type | undefined
+
+/**
+ * Get a value from the storage media
+ * @param key The key of the value to get
+ * @param defaultValue The default value to return if the key is not found
+ * @returns The value or defaultValue if not found
+ */
+function get<Type = unknown>(key: string, defaultValue?: Type) {
+  const path = storage.prefix + key,
+    data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
+  if (data === undefined || data === null || data === '') return defaultValue
+
+  /* v8 ignore next */
+  if (typeof data !== 'string') return data as Type
+
+  const result = parseJson<Type>(data)
+  if (!result.ok) return data as Type
+
+  // wait... what is this case ?!
+  return result.value
+}
+
+/**
+ * Set a value in the storage
+ * @param key The key of the value to set
+ * @param data The value to set
+ * @returns The given value
+ */
+function set<Type>(key: string, data: Type) {
+  const path = storage.prefix + key,
+    value = typeof data === 'string' ? data : JSON.stringify(data)
+  Reflect.set(storage.media, path, value)
+  return data
+}
+
+/**
+ * Check if storage has a value
+ * @param key The key of the value to check
+ * @returns true if storage has a value for the given key
+ */
+function has(key: string) {
+  return get(key) !== undefined
+}
+
+/**
+ * Remove a value from the storage
+ * @param key The key of the value to remove
+ */
+function clear(key: string) {
+  const path = storage.prefix + key
+  // oxlint-disable-next-line no-dynamic-delete
+  delete storage.media[path]
+}
+
+export const storage = {
+  clear,
+  get,
+  has,
+  /* v8 ignore start */
+  media: typeof localStorage === 'undefined' ? ({} as Storage) : localStorage,
+  /* v8 ignore stop */
+  prefix: '', // prefix all keys in the storage with a custom string
+  set,
+}
+
+export type ShuutilsStorage = typeof storage
