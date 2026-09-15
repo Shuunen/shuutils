@@ -1,11 +1,15 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import glob from 'tiny-glob'
+import { nbThird } from '../lib/constants'
 import { rules } from './lint.rules'
 
-const argvStart = 2 // skip node binary + script path
-
-function lintFile(filePath: string): string[] {
+/**
+ * Run every rule on a single file, applying fixers when they provide one
+ * @param filePath the file to lint
+ * @returns the list of issues found, empty when the file is clean
+ */
+export function lintFile(filePath: string): string[] {
   let content = fs.readFileSync(filePath, 'utf8'),
     changed = false
   const issues: string[] = []
@@ -23,9 +27,14 @@ function lintFile(filePath: string): string[] {
   return issues
 }
 
-async function getTargetFiles(argv: string[]): Promise<string[]> {
+/**
+ * Resolve the `--target` glob from the command line into absolute TypeScript file paths
+ * @param argv the command-line arguments
+ * @returns the absolute paths of the files to lint
+ */
+export async function getTargetFiles(argv: string[]): Promise<string[]> {
   const args: Record<string, string> = {}
-  for (const arg of argv.slice(argvStart)) {
+  for (const arg of argv.slice(nbThird)) {
     const [key = '', value = ''] = arg.replace('--', '').split('=')
     if (key.length > 0) args[key] = value
   }
@@ -35,18 +44,21 @@ async function getTargetFiles(argv: string[]): Promise<string[]> {
   return matches.map(match => path.resolve(process.cwd(), match)).filter(match => match.endsWith('.ts') && !match.endsWith('.d.ts'))
 }
 
-async function main(argv: string[]) {
+/**
+ * Entry point for the custom linter
+ * @param argv the command-line arguments
+ * @returns the report line when every file passes, throws otherwise
+ */
+export async function main(argv: string[]) {
   const files = await getTargetFiles(argv)
-  let foundIssues = false
-  for (const filePath of files) {
-    const issues = lintFile(filePath)
-    for (const issue of issues) {
-      console.error(`File: ${path.relative(process.cwd(), filePath)} - Issue: ${issue}`)
-      foundIssues = true
-    }
+  const problems: string[] = []
+  for (const filePath of files) for (const issue of lintFile(filePath)) problems.push(`File: ${path.relative(process.cwd(), filePath)} - Issue: ${issue}`)
+  if (problems.length > 0) {
+    for (const problem of problems) console.error(problem)
+    throw new Error('Lint issues found.')
   }
-  if (foundIssues) throw new Error('Lint issues found.')
-  console.log(`All custom rules passed successfully on ${files.length} files !`)
+  return `All custom rules passed successfully on ${files.length} files !`
 }
 
-await main(process.argv)
+/* v8 ignore start */
+if (import.meta.main) console.log(await main(process.argv))
