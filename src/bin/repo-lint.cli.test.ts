@@ -1,10 +1,10 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { getTargetFiles, lintFile, main } from './lint.cli'
+import { getTargetFiles, lintFile, main } from './repo-lint.cli'
 
 const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'shuutils-lint-')),
-  argv = (...args: string[]) => ['node', 'lint.cli.ts', ...args]
+  argv = (...args: string[]) => ['node', 'repo-lint.cli.ts', ...args]
 
 /**
  * Write a file in the temp folder
@@ -18,7 +18,7 @@ function write(name: string, content: string) {
   return filePath
 }
 
-describe('lint.cli', () => {
+describe('repo-lint.cli', () => {
   it('lintFile A reports an undocumented export', () => {
     const filePath = write('undocumented.ts', 'export function nope() {}\n')
     expect(lintFile(filePath).join(' ')).toContain('jsdoc')

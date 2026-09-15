@@ -1,9 +1,9 @@
-import { getExportsWithoutJsdoc, hasNoConsoleCall, hasNoRelativeParentImport, isLibFile, isTestFile, rules } from './lint.rules'
+import { getExportsWithoutJsdoc, hasNoConsoleCall, hasNoRelativeParentImport, isLibFile, isTestFile, rules } from './repo-lint.rules'
 
-const binFile = '/repo/src/bin/lint.cli.ts',
+const binFile = '/repo/src/bin/repo-lint.cli.ts',
   libFile = '/repo/src/lib/colors.ts'
 
-describe('lint.rules', () => {
+describe('repo-lint.rules', () => {
   it('isTestFile A detects a test file', () => {
     expect(isTestFile('/repo/src/lib/colors.test.ts')).toBe(true)
   })

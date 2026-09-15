@@ -24,4 +24,4 @@ Behaviors that changed during the split and still need a decision, reverting or 
 - [ ] `Logger` persistence rewrites the whole file on each line, fine for small logs only
 - [ ] Lost generics on `findOne`, `on` and `throttle`, callers get widened types
 - [ ] `readClipboard` parameter and `isBrowserEnvironment` headless detection differ from `v10`
-- [ ] `src/bin/lint.rules.ts` is excluded from coverage although `lint.rules.test.ts` exists
+- [ ] `src/bin/repo-lint.rules.ts` is excluded from coverage although `repo-lint.rules.test.ts` exists

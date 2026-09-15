@@ -16,7 +16,7 @@
     "lint:issues": {
       "inputs": ["src/**/*.ts", ".oxlintrc.json", "tsconfig*.json"]
     },
-    "lint:shuutils": {
+    "lint:repo": {
       "inputs": ["src/**/*.ts", "src/bin/lint.*.ts"]
     },
     "lint:types": {

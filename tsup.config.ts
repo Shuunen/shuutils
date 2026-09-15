@@ -27,4 +27,15 @@ export default defineConfig([
     sourcemap: false,
     treeshake: true,
   },
+  {
+    banner: { js: shebang + banner },
+    clean: false,
+    // esm only, these clis rely on import.meta.main and top level await, which cjs cannot express
+    dts: false,
+    entry: { 'barrel-maker': 'src/bin/barrel-maker.cli.ts', 'changelog-generator': 'src/bin/changelog-generator.cli.ts', 'header-injector': 'src/bin/header-injector.cli.ts', 'repo-lint': 'src/bin/repo-lint.cli.ts' },
+    format: ['esm'],
+    minify: false,
+    sourcemap: false,
+    treeshake: true,
+  },
 ])
