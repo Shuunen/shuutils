@@ -1,0 +1,88 @@
+import { writeFileSync } from 'node:fs'
+import path from 'node:path'
+import glob from 'tiny-glob'
+import { nbThird } from '../lib/constants'
+import { Logger } from '../lib/logger'
+import { Result } from '../lib/result'
+
+/* v8 ignore next */
+const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' }),
+  extensionRegex = /\.[^/.]+$/
+
+/**
+ * Filters out unwanted files based on naming conventions
+ * @param filename the name of the file to check
+ * @returns true if the file is wanted, false otherwise
+ */
+function filterFile(filename: string) {
+  if (filename.endsWith('.d.ts')) return false
+
+  if (filename.includes('.test.')) return false
+
+  if (filename.includes('.stories.')) return false
+
+  if (filename.includes('index.')) return false
+
+  return true
+}
+
+/**
+ * Removes the file extension from a filename
+ * @param filename the name of the file, like "foobar.utils.ts"
+ * @returns the filename without its extension, like "foobar.utils"
+ */
+function removeExtension(filename: string) {
+  return filename.replace(extensionRegex, '')
+}
+
+type MakeProps = {
+  header?: string
+  target: string
+  index?: string
+  ext?: string
+}
+
+/**
+ * Creates a barrel file (index.ts) exporting all modules matching the target glob
+ * @param options configuration options
+ * @param options.header header to inject at the top of the generated file
+ * @param options.target glob pattern for files to include
+ * @param options.index output index file name
+ * @param options.ext extension for output imports (optional)
+ * @returns result object with content and out on success, or error message on failure
+ * @example bun barrel-maker.cli.ts --target="./lib/*.ts" --header='Copyright 2025 ACME' --ext=".js"
+ */
+export async function make({ header, target, index = 'index.ts', ext }: MakeProps) {
+  const out = path.join(process.cwd(), index)
+  logger.info('Listing entries', target)
+  const files = await glob(target, { filesOnly: true }),
+    list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from "./${ext === undefined ? file : removeExtension(file) + ext}";`.replace(path.sep, '/')),
+    content = `${header ?? ''}${list.toSorted().join('\n')}\n`
+  logger.info('Into barrel file', out)
+  writeFileSync(out, content)
+  logger.success('Barrel file updated !')
+  return Result.ok({ content, files, out })
+}
+
+/**
+ * Main entry point for the barrel-maker CLI
+ * @param argv the command line arguments
+ * @returns result object with content, files, and out on success, or error message on failure
+ */
+export function main(argv: string[]) {
+  logger.debug('barrel-maker.cli.ts started')
+  const args = Object.fromEntries(argv.slice(nbThird).map(arg => arg.replace('--', '').split('=')))
+  if (!args.target) return Result.error('missing target argument')
+
+  const options = {
+    ext: args.ext,
+    header: args.header ? `// ${args.header}\n` : '',
+    index: args.index,
+    target: args.target,
+  } satisfies MakeProps
+  logger.debug('options', options)
+  return make(options)
+}
+
+/* v8 ignore start */
+if (import.meta.main) void main(process.argv)
