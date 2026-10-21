@@ -1,5 +1,9 @@
+import { existsSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import path from 'node:path'
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 import { isBrowserEnvironment, isDeployedInDevNamespace, isDevEnvironment, isTestEnvironment } from './environment'
+import { invariant } from './invariant'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
@@ -80,5 +84,23 @@ describe(isDeployedInDevNamespace, () => {
   it('returns false if neither isDevEnvironment is true nor subdomain matches DEV_SUBDOMAIN', () => {
     mockLocationHost('some-other-subdomain.example.com')
     expect(isDeployedInDevNamespace(false)).toBe(false)
+  })
+})
+
+describe('environment utils in the cjs bundle', () => {
+  // import.meta does not exist in cjs, so the defaults must not crash there
+  const distCjs = path.join(import.meta.dirname, '../../dist/shuutils.cjs')
+
+  it('isDevEnvironment should not throw without import.meta.env', () => {
+    invariant(existsSync(distCjs), 'dist/shuutils.cjs is missing, run pnpm run build first')
+    const bundle = createRequire(import.meta.url)(distCjs) as typeof import('./environment')
+    expect(bundle.isDevEnvironment()).toBeUndefined()
+  })
+
+  it('isDeployedInDevNamespace should not throw without import.meta.env', () => {
+    invariant(existsSync(distCjs), 'dist/shuutils.cjs is missing, run pnpm run build first')
+    const bundle = createRequire(import.meta.url)(distCjs) as typeof import('./environment')
+    mockLocationHost('my-app.example.com')
+    expect(bundle.isDeployedInDevNamespace()).toBe(false)
   })
 })

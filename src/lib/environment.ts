@@ -3,7 +3,7 @@
  * @param isEnvDev env var
  * @returns true if the environment is a dev environment
  */
-export function isDevEnvironment(isEnvDev = import.meta.env.DEV) {
+export function isDevEnvironment(isEnvDev = import.meta.env?.DEV) {
   return isEnvDev
 }
 
@@ -13,7 +13,7 @@ export function isDevEnvironment(isEnvDev = import.meta.env.DEV) {
  * @param envSubDev env var for dev subdomain
  * @returns true if App is deployed in Dev namespace
  */
-export function isDeployedInDevNamespace(isEnvDev = import.meta.env.DEV, envSubDev = import.meta.env.VITE_DEV_SUBDOMAIN) {
+export function isDeployedInDevNamespace(isEnvDev = import.meta.env?.DEV, envSubDev = import.meta.env?.VITE_DEV_SUBDOMAIN) {
   const { host } = globalThis.window.location
   const [subdomain] = host.split('.')
   return isDevEnvironment(isEnvDev) || subdomain === envSubDev
