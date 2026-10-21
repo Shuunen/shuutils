@@ -6,6 +6,7 @@
 [![Install size](https://badgen.net/packagephobia/install/shuutils)](https://packagephobia.com/result?p=shuutils)
 [![Publish size](https://img.shields.io/bundlephobia/min/shuutils?label=publish%20size)](https://bundlephobia.com/package/shuutils)
 [![Package Quality](https://npm.packagequality.com/shield/shuutils.svg)](https://packagequality.com/#?package=shuutils)
+[![Visitors](https://hits.sh/github.com/Shuunen/shuutils.svg?label=visitors&color=informational)](https://hits.sh/github.com/Shuunen/shuutils/)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
@@ -43,27 +44,24 @@ Behavior changes :
 
 - `sanitize` and `slugify` now treat `.` as a separator, so `slugify('example.com')` returns `example-com` where `v10` returned `examplecom`
 
-## TODO
-
-- [ ] use zod
-- [ ] add willOutputToFile option to the logger
-
 ## Thanks
 
 - [Angus Croll](https://github.com/angus-c/just) : for the inspiration of some dependency free functions
 - [Box icon](https://www.iconfinder.com/icons/2123914/app_box_essential_ui_icon) : nice icon
 - [Boxy Svg](https://boxy-svg.com) : simple & effective svg editor
 - [Bun](https://bun.sh) : super fast runtime for JavaScript and TypeScript
-- [Esbuild](https://github.com/evanw/esbuild) : an extremely fast JavaScript bundler and minifier
 - [Github](https://github.com) : for all their great work year after year, pushing OSS forward
+- [Knip](https://github.com/webpro/knip) : super tool to find & fix problems
+- [Oxc](https://oxc.rs) : a lovely super-fast collection of JavaScript tools written in Rust
 - [Oxlint](https://oxc.rs) : super fast linter and formatter
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
-- [Shuutils](https://github.com/Shuunen/shuutils) : collection of pure JS utils
 - [Svg Omg](https://jakearchibald.github.io/svgomg/) : the great king of svg file size reduction
 - [Tsdown](https://tsdown.dev) : elegant library bundler powered by rolldown <3
-- [Watchlist](https://github.com/lukeed/watchlist) : recursively watch a list of directories & run a command on any file system
+- [V8](https://github.com/demurgos/v8-coverage) : simple & effective cli for code coverage
+- [Vite](https://github.com/vitejs/vite) : super fast frontend tooling
+- [Vitest](https://github.com/vitest-dev/vitest) : super fast vite-native testing framework
 - [Yoctocolors](https://github.com/sindresorhus/yoctocolors) : for the extra-lightweight color utilities
 
 ## Contributors ✨
@@ -89,11 +87,3 @@ Thanks goes to these wonderful people :
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/Shuunen/shuutils.svg?variant=adaptive)](https://starchart.cc/Shuunen/shuutils)
-
-## Page views
-
-[![Free Website Counter](https://www.websitecounterfree.com/c.php?d=9&id=60672&s=12)](https://www.websitecounterfree.com)
