@@ -5,9 +5,9 @@
     "build:tsc": {
       "inputs": ["src/**", "tsconfig*.json"]
     },
-    "build:tsup": {
+    "build:tsdown": {
       "dependsOn": ["build:tsc"],
-      "inputs": ["src/**", "tsconfig*.json", "tsup.config.ts"],
+      "inputs": ["src/**", "tsconfig*.json", "tsdown.config.ts"],
       "outputs": ["dist/**"]
     },
     "lint:format": {
@@ -23,7 +23,8 @@
       "inputs": ["src/**/*.ts", "tsconfig*.json"]
     },
     "test:unit": {
-      "inputs": ["src/**/*.ts", "vite.config.ts"],
+      "dependsOn": ["build:tsdown"],
+      "inputs": ["src/**/*.ts", "vite.config.ts", "vitest.setup.ts"],
       "outputs": ["coverage/**"]
     }
   }
