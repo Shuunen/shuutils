@@ -1,7 +1,6 @@
 import { execSync } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import glob from 'tiny-glob'
 import { nbThird } from '../lib/constants'
 import { formatDate } from '../lib/date-format'
 import { parseJson } from '../lib/json'
@@ -9,6 +8,7 @@ import { Logger } from '../lib/logger'
 import { Result } from '../lib/result'
 import { injectMark } from '../lib/string-inject-mark'
 import type { PackageJson } from '../lib/types'
+import { globFiles } from './glob-files'
 
 // use me like :
 // npx unique-mark "public/*.{js}"
@@ -30,16 +30,13 @@ export function getPackageJsonVersion(location = path.join(process.cwd(), 'packa
 
 /**
  * Get the files to inject the mark in
- * @param target the glob to get files from, like "public/index.html" or "public/*.{js}"
+ * @param target the glob to get files from, like "public/index.html" or "public/*.js"
  * @returns the files to inject the mark in
  */
 export async function getTargetFiles(target = process.argv[nbThird] ?? '') {
   if (target === '') return Result.error('no target specified, aborting.')
 
-  const extension = /\.(?<ext>[a-z]+)$/u.exec(target)?.groups?.ext ?? ''
-  if (extension !== '') return Result.error(`provided : "${target}", you need to use *.{${extension}} to capture all files with that extension (limitation of tiny-glob)`)
-
-  const files = await glob(target)
+  const files = await globFiles(target)
   if (files.length === 0) return Result.error(`no file found with target "${target}", aborting.`)
 
   return Result.ok(files)
@@ -88,7 +85,7 @@ export function injectMarkInFiles({ files = [], isReadOnly = false, mark = 'no-m
 
 /**
  * Main function
- * @param target the glob to get files from, like "public/index.html" or "public/*.{js}"
+ * @param target the glob to get files from, like "public/index.html" or "public/*.js"
  * @returns a Result object
  */
 export async function init(target = process.argv[nbThird] ?? '') {

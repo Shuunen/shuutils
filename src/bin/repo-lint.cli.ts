@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import glob from 'tiny-glob'
 import { nbThird } from '../lib/constants'
+import { globFiles } from './glob-files'
 import { rules } from './repo-lint.rules'
 
 /**
@@ -40,7 +40,7 @@ export async function getTargetFiles(argv: string[]): Promise<string[]> {
   }
   const { target = '' } = args
   if (target.length === 0) throw new Error('missing target argument')
-  const matches = await glob(target, { filesOnly: true })
+  const matches = await globFiles(target, { filesOnly: true })
   return matches.map(match => path.resolve(process.cwd(), match)).filter(match => match.endsWith('.ts') && !match.endsWith('.d.ts'))
 }
 

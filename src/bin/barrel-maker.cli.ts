@@ -1,9 +1,9 @@
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
-import glob from 'tiny-glob'
 import { nbThird } from '../lib/constants'
 import { Logger } from '../lib/logger'
 import { Result } from '../lib/result'
+import { globFiles } from './glob-files'
 
 /* v8 ignore next */
 const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
@@ -55,7 +55,7 @@ type MakeProps = {
 export async function make({ header, target, index = 'index.ts', ext }: MakeProps) {
   const out = path.join(process.cwd(), index)
   logger.info('Listing entries', target)
-  const files = await glob(target, { filesOnly: true })
+  const files = await globFiles(target, { filesOnly: true })
   const list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${ext === undefined ? file : removeExtension(file) + ext}'`.replaceAll(path.sep, '/'))
   const content = `${header ?? ''}${list.toSorted().join('\n')}\n`
   logger.info('Into barrel file', out)

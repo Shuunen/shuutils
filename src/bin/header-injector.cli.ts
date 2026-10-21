@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs'
-import glob from 'tiny-glob'
 import { gray, green, red, yellow } from '../lib/colors'
 import { nbThird } from '../lib/constants'
 import { Logger } from '../lib/logger'
 import { Result } from '../lib/result'
+import { globFiles } from './glob-files'
 
 // use me like :
 //  bun src/bin/header-injector.cli.ts --header="Copyright 2026 ACME"
@@ -164,7 +164,7 @@ export async function main(argv: string[]) {
   if (!args.header) return Result.error('missing header argument')
 
   const target = args.target || defaultTarget
-  const allFiles = await glob(target, { filesOnly: true })
+  const allFiles = await globFiles(target, { filesOnly: true })
   const files = allFiles.filter(file => isWantedFile(file))
   const header = `// ${args.header}`
   logger.info(`${isRemoveMode ? 'Removing' : 'Scanning'} headers of ${files.length} files...`)

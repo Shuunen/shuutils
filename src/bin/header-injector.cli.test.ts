@@ -1,9 +1,9 @@
 import { invariant } from '../lib/invariant'
 
-vi.mock(import('tiny-glob'))
+vi.mock(import('./glob-files'))
 vi.mock(import('node:fs'))
 
-const glob = await import('tiny-glob')
+const { globFiles } = await import('./glob-files')
 const fs = await import('node:fs')
 const mod = await import('./header-injector.cli')
 
@@ -28,7 +28,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main B should inject header into files without header', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['a.ts', 'b.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['a.ts', 'b.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
     const writeSpy = vi.mocked(fs.writeFileSync)
     const result = await mod.main(['node', 'script', '--header=HEADER'])
@@ -43,7 +43,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main C should count skipped when write fails', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['c.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['c.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('console.log(3)')
     vi.mocked(fs.writeFileSync).mockImplementation(() => {
       throw new Error('disk full')
@@ -59,7 +59,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main D should count readError when read fails', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['d.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['d.ts'])
     vi.mocked(fs.readFileSync).mockImplementation(() => {
       throw new Error('permission denied')
     })
@@ -73,7 +73,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main E should move header into files with header not on the first line', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['a.ts', 'c.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['a.ts', 'c.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
     const writeSpy = vi.mocked(fs.writeFileSync)
     const result = await mod.main(['node', 'script', '--header=HEADER'])
@@ -88,7 +88,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main F should remove header from files when --remove flag is passed', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['a.ts', 'b.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['a.ts', 'b.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
     const writeSpy = vi.mocked(fs.writeFileSync).mockReturnValue(undefined)
     const result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
@@ -101,7 +101,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main G should handle files without header in remove mode', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['b.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['b.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('console.log(2)')
     const writeSpy = vi.mocked(fs.writeFileSync)
     const result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
@@ -114,7 +114,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main F should not remove header when it does not match --header', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['a.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['a.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('// HEADER\nconsole.log(1)')
     const writeSpy = vi.mocked(fs.writeFileSync)
     const result = await mod.main(['node', 'script', '--remove', '--header=OTHER'])
@@ -127,7 +127,7 @@ describe('header-injector.cli.ts', () => {
   })
 
   it('main H should handle write errors in remove mode', async () => {
-    vi.mocked(glob.default).mockResolvedValue(['a.ts'])
+    vi.mocked(globFiles).mockResolvedValue(['a.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('// HEADER\nconsole.log(1)')
     vi.mocked(fs.writeFileSync).mockImplementation(() => {
       throw new Error('disk full')

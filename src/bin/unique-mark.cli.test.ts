@@ -38,9 +38,10 @@ describe('unique-mark.cli', () => {
     expect(result.error).toMatchInlineSnapshot(`"no target specified, aborting."`)
   })
 
-  it('getTargetFiles C list with invalid extension', async () => {
-    const result = Result.unwrap(await getTargetFiles('*.js'))
-    expect(result.error).toMatchInlineSnapshot(`"provided : "*.js", you need to use *.{js} to capture all files with that extension (limitation of tiny-glob)"`)
+  it('getTargetFiles C list with a simple extension', async () => {
+    const result = Result.unwrap(await getTargetFiles('*.md'))
+    expect(result.error).toBeUndefined()
+    expect(result.value).toContain('README.md')
   })
 
   it('getTargetFiles D list with no files found', async () => {

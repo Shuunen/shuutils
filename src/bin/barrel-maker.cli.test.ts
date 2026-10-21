@@ -6,7 +6,7 @@ const mockFiles = ['atoms/Button.tsx', 'atoms/index.ts', 'atoms/types.ts', 'atom
 describe('barrel-maker cli', () => {
   beforeEach(() => {
     vi.resetModules()
-    vi.doMock(import('tiny-glob'), () => ({ default: vi.fn<() => Promise<string[]>>().mockResolvedValue(mockFiles) }))
+    vi.doMock(import('./glob-files'), () => ({ globFiles: vi.fn<() => Promise<string[]>>().mockResolvedValue(mockFiles) }))
     vi.doMock(import('node:fs'), () => ({ writeFileSync: vi.fn<() => void>() }))
   })
 
