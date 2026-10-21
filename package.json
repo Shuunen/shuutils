@@ -2,11 +2,11 @@
   "$schema": "https://json.schemastore.org/package",
   "author": "Romain Racamier-Lafon <romain.racamier@gmail.com>",
   "bin": {
-    "unique-mark": "dist/unique-mark.cjs",
+    "barrel-maker": "dist/barrel-maker.js",
+    "changelog-generator": "dist/changelog-generator.js",
     "header-injector": "dist/header-injector.js",
     "repo-lint": "dist/repo-lint.js",
-    "barrel-maker": "dist/barrel-maker.js",
-    "changelog-generator": "dist/changelog-generator.js"
+    "unique-mark": "dist/unique-mark.cjs"
   },
   "bugs": "https://github.com/Shuunen/shuutils/issues",
   "description": "utils collection",
