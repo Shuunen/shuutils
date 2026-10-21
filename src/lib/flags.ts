@@ -5,8 +5,8 @@
  * @returns true if the option is present, false otherwise
  */
 export function hasOption(name: string, process: NodeJS.Process | undefined = globalThis.process): boolean {
-  const argv = process?.argv ?? [],
-    env = process?.env?.[name] ?? ''
+  const argv = process?.argv ?? []
+  const env = process?.env?.[name] ?? ''
   return argv.includes(`--${name}`) || env === 'true'
 }
 

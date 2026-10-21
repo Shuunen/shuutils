@@ -3,9 +3,9 @@ import { invariant } from '../lib/invariant'
 vi.mock(import('tiny-glob'))
 vi.mock(import('node:fs'))
 
-const glob = await import('tiny-glob'),
-  fs = await import('node:fs'),
-  mod = await import('./header-injector.cli')
+const glob = await import('tiny-glob')
+const fs = await import('node:fs')
+const mod = await import('./header-injector.cli')
 
 function mockFileContent(path: string): string {
   if (path === 'a.ts') return '// HEADER\nconsole.log(1)'
@@ -30,8 +30,8 @@ describe('header-injector.cli.ts', () => {
   it('main B should inject header into files without header', async () => {
     vi.mocked(glob.default).mockResolvedValue(['a.ts', 'b.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
-    const writeSpy = vi.mocked(fs.writeFileSync),
-      result = await mod.main(['node', 'script', '--header=HEADER'])
+    const writeSpy = vi.mocked(fs.writeFileSync)
+    const result = await mod.main(['node', 'script', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
     const { hasHeader, noHeader, moveHeader, addedHeader: nbFixed } = result.value
@@ -75,8 +75,8 @@ describe('header-injector.cli.ts', () => {
   it('main E should move header into files with header not on the first line', async () => {
     vi.mocked(glob.default).mockResolvedValue(['a.ts', 'c.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
-    const writeSpy = vi.mocked(fs.writeFileSync),
-      result = await mod.main(['node', 'script', '--header=HEADER'])
+    const writeSpy = vi.mocked(fs.writeFileSync)
+    const result = await mod.main(['node', 'script', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
     const { hasHeader, noHeader, moveHeader, addedHeader: nbFixed } = result.value
@@ -90,8 +90,8 @@ describe('header-injector.cli.ts', () => {
   it('main F should remove header from files when --remove flag is passed', async () => {
     vi.mocked(glob.default).mockResolvedValue(['a.ts', 'b.ts'])
     vi.mocked(fs.readFileSync).mockImplementation((...args: unknown[]) => mockFileContent(args[0] as string))
-    const writeSpy = vi.mocked(fs.writeFileSync).mockReturnValue(undefined),
-      result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
+    const writeSpy = vi.mocked(fs.writeFileSync).mockReturnValue(undefined)
+    const result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
     const { removedHeader, noHeader } = result.value
@@ -103,8 +103,8 @@ describe('header-injector.cli.ts', () => {
   it('main G should handle files without header in remove mode', async () => {
     vi.mocked(glob.default).mockResolvedValue(['b.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('console.log(2)')
-    const writeSpy = vi.mocked(fs.writeFileSync),
-      result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
+    const writeSpy = vi.mocked(fs.writeFileSync)
+    const result = await mod.main(['node', 'script', '--remove', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
     const { removedHeader, noHeader } = result.value
@@ -116,8 +116,8 @@ describe('header-injector.cli.ts', () => {
   it('main F should not remove header when it does not match --header', async () => {
     vi.mocked(glob.default).mockResolvedValue(['a.ts'])
     vi.mocked(fs.readFileSync).mockReturnValue('// HEADER\nconsole.log(1)')
-    const writeSpy = vi.mocked(fs.writeFileSync),
-      result = await mod.main(['node', 'script', '--remove', '--header=OTHER'])
+    const writeSpy = vi.mocked(fs.writeFileSync)
+    const result = await mod.main(['node', 'script', '--remove', '--header=OTHER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
     const { removedHeader, noHeader } = result.value
@@ -142,15 +142,15 @@ describe('header-injector.cli.ts', () => {
 
   it('report A should generate correct report string', () => {
     const metrics = {
-        addedHeader: 2,
-        hasHeader: 1,
-        moveHeader: 6,
-        noHeader: 3,
-        readError: 4,
-        removedHeader: 7,
-        writeError: 5,
-      },
-      report = mod.report(metrics)
+      addedHeader: 2,
+      hasHeader: 1,
+      moveHeader: 6,
+      noHeader: 3,
+      readError: 4,
+      removedHeader: 7,
+      writeError: 5,
+    }
+    const report = mod.report(metrics)
     expect(report).toMatchInlineSnapshot(`
       "Header Injector report :
         - Files without header : [33m3[39m
@@ -165,15 +165,15 @@ describe('header-injector.cli.ts', () => {
 
   it('report B should handle zero metrics gracefully', () => {
     const metrics = {
-        addedHeader: 0,
-        hasHeader: 0,
-        moveHeader: 0,
-        noHeader: 0,
-        readError: 0,
-        removedHeader: 0,
-        writeError: 0,
-      },
-      report = mod.report(metrics)
+      addedHeader: 0,
+      hasHeader: 0,
+      moveHeader: 0,
+      noHeader: 0,
+      readError: 0,
+      removedHeader: 0,
+      writeError: 0,
+    }
+    const report = mod.report(metrics)
     expect(report).toMatchInlineSnapshot(`
       "Header Injector report :
         - Files without header : [90m0[39m

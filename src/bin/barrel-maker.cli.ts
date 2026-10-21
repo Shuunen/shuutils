@@ -6,8 +6,8 @@ import { Logger } from '../lib/logger'
 import { Result } from '../lib/result'
 
 /* v8 ignore next */
-const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' }),
-  extensionRegex = /\.[^/.]+$/
+const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
+const extensionRegex = /\.[^/.]+$/
 
 /**
  * Filters out unwanted files based on naming conventions
@@ -55,9 +55,9 @@ type MakeProps = {
 export async function make({ header, target, index = 'index.ts', ext }: MakeProps) {
   const out = path.join(process.cwd(), index)
   logger.info('Listing entries', target)
-  const files = await glob(target, { filesOnly: true }),
-    list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${ext === undefined ? file : removeExtension(file) + ext}'`.replaceAll(path.sep, '/')),
-    content = `${header ?? ''}${list.toSorted().join('\n')}\n`
+  const files = await glob(target, { filesOnly: true })
+  const list = files.filter(file => filterFile(file)).map(file => `export ${file.includes('types') ? 'type ' : ''}* from './${ext === undefined ? file : removeExtension(file) + ext}'`.replaceAll(path.sep, '/'))
+  const content = `${header ?? ''}${list.toSorted().join('\n')}\n`
   logger.info('Into barrel file', out)
   writeFileSync(out, content)
   logger.success('Barrel file updated !')

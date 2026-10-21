@@ -15,10 +15,10 @@ export function byProperty<Type extends Record<string, unknown>>(property: strin
 
   const sortOrder = order === 'asc' ? nbAscending : nbDescending
   return (recordA: Type, recordB: Type) => {
-    const valueA = recordA[property] as number,
-      valueB = recordB[property] as number,
-      isValueAMissing = isNil(valueA),
-      isValueBMissing = isNil(valueB)
+    const valueA = recordA[property] as number
+    const valueB = recordB[property] as number
+    const isValueAMissing = isNil(valueA)
+    const isValueBMissing = isNil(valueB)
     if (isValueAMissing && !isValueBMissing) return sortOrder
 
     if (!isValueAMissing && isValueBMissing) return -sortOrder

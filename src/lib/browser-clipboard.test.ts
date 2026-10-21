@@ -36,11 +36,11 @@ describe('browser-clipboard', () => {
 
   it('copyToClipboard B should return an error when data cannot be stringified', async () => {
     const objectThatCannotBeStringified = {
-        toJSON() {
-          throw new Error('cannot be stringified')
-        },
+      toJSON() {
+        throw new Error('cannot be stringified')
       },
-      result = await copyToClipboard(objectThatCannotBeStringified)
+    }
+    const result = await copyToClipboard(objectThatCannotBeStringified)
     expect(result).toMatchInlineSnapshot(`
       Err {
         "error": "failed to stringify the data",
@@ -54,8 +54,8 @@ describe('browser-clipboard', () => {
       writeText: vi.fn<(text: string) => void>(() => undefined),
     }
     setClipboard(mockClipboard)
-    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({})),
-      result = await copyToClipboard('log this', true)
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({}))
+    const result = await copyToClipboard('log this', true)
     expect(result).toMatchInlineSnapshot(`
       Ok {
         "ok": true,
@@ -95,8 +95,8 @@ describe('browser-clipboard', () => {
       readText: vi.fn<() => string>(() => 'logged text'),
     }
     setClipboard(mockClipboard)
-    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({})),
-      result = await readClipboard(true)
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({}))
+    const result = await readClipboard(true)
     invariant(result.ok, 'expected result to be ok')
     expect(result.value).toBe('logged text')
     expect(spy).toHaveBeenCalledWith('reading clipboard...')

@@ -10,8 +10,8 @@ import { rules } from './repo-lint.rules'
  * @returns the list of issues found, empty when the file is clean
  */
 export function lintFile(filePath: string): string[] {
-  let content = fs.readFileSync(filePath, 'utf8'),
-    changed = false
+  let content = fs.readFileSync(filePath, 'utf8')
+  let changed = false
   const issues: string[] = []
   for (const rule of rules) {
     if (rule.fixer !== undefined) {

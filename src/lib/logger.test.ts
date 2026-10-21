@@ -32,15 +32,15 @@ describe('logger', () => {
   })
 
   it('logger C', async () => {
-    const storage = createInMemoryDriver(),
-      loggerC = new Logger({
-        minimumLevel: '7-error',
-        storage,
-        willLogDate: true,
-        willLogDelay: false,
-        willLogTime: true,
-        willOutputToConsole: false,
-      })
+    const storage = createInMemoryDriver()
+    const loggerC = new Logger({
+      minimumLevel: '7-error',
+      storage,
+      willLogDate: true,
+      willLogDelay: false,
+      willLogTime: true,
+      willOutputToConsole: false,
+    })
     loggerC.warn('This warn 2 should not be logged')
     loggerC.success('This success 1 should not be logged')
     loggerC.error('This error 1 should be logged')
@@ -159,72 +159,72 @@ describe('logger', () => {
   })
 
   it('logger result A should log ok result with default levels', async () => {
-    const loggerG = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      okResult = Result.ok({ data: 'success' })
+    const loggerG = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const okResult = Result.ok({ data: 'success' })
     loggerG.result('test operation', okResult)
     const logs = await loggerG.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" info test operation result was ok and returned : {'data':'success'}"`)
   })
 
   it('logger result B should log error result with default levels', async () => {
-    const loggerH = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      errorResult = Result.error('something went wrong')
+    const loggerH = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const errorResult = Result.error('something went wrong')
     loggerH.result('test operation', errorResult)
     const logs = await loggerH.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`"error test operation result was error and returned : something went wrong"`)
   })
 
   it('logger result C should log ok result with custom levels', async () => {
-    const loggerI = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      okResult = Result.ok(42)
+    const loggerI = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const okResult = Result.ok(42)
     loggerI.result('test operation', okResult, 'success', 'warn')
     const logs = await loggerI.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" good test operation result was ok and returned : 42"`)
   })
 
   it('logger result D should log error result with custom levels', async () => {
-    const loggerJ = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      errorResult = Result.error('custom error')
+    const loggerJ = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const errorResult = Result.error('custom error')
     loggerJ.result('test operation', errorResult, 'success', 'warn')
     const logs = await loggerJ.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" warn test operation result was error and returned : custom error"`)
   })
 
   it('logger showResult A should log ok result with default levels', async () => {
-    const loggerK = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      okResult = Result.ok({ data: 'success' })
+    const loggerK = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const okResult = Result.ok({ data: 'success' })
     loggerK.showResult('test operation', okResult)
     const logs = await loggerK.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" info test operation result was ok and returned : {'data':'success'}"`)
   })
 
   it('logger showResult B should log error result with default levels', async () => {
-    const loggerL = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      errorResult = Result.error('something went wrong')
+    const loggerL = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const errorResult = Result.error('something went wrong')
     loggerL.showResult('test operation', errorResult)
     const logs = await loggerL.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`"error test operation result was error and returned : something went wrong"`)
   })
 
   it('logger showResult C should log ok result with custom levels', async () => {
-    const loggerM = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      okResult = Result.ok(42)
+    const loggerM = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const okResult = Result.ok(42)
     loggerM.showResult('test operation', okResult, 'success', 'warn')
     const logs = await loggerM.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" good test operation result was ok and returned : 42"`)
   })
 
   it('logger showResult D should log error result with custom levels', async () => {
-    const loggerN = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false }),
-      errorResult = Result.error('custom error')
+    const loggerN = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    const errorResult = Result.error('custom error')
     loggerN.showResult('test operation', errorResult, 'success', 'warn')
     const logs = await loggerN.getLogs()
     expect(alignForSnap(logs)).toMatchInlineSnapshot(`" warn test operation result was error and returned : custom error"`)
   })
 
   it('logger getLogs B should return empty array when no storage configured', async () => {
-    const loggerO = new Logger({ willLogDelay: false, willOutputToConsole: false }),
-      logs = await loggerO.getLogs()
+    const loggerO = new Logger({ willLogDelay: false, willOutputToConsole: false })
+    const logs = await loggerO.getLogs()
     expect(logs).toMatchInlineSnapshot(`[]`)
   })
 
@@ -236,8 +236,8 @@ describe('logger', () => {
   })
 
   it('logger clearLogs B should clear all logs from storage', async () => {
-    const storage = createInMemoryDriver(),
-      loggerQ = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    const storage = createInMemoryDriver()
+    const loggerQ = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
     loggerQ.info('log one')
     loggerQ.info('log two')
     const beforeClear = await loggerQ.getLogs()
@@ -249,22 +249,22 @@ describe('logger', () => {
 
   it('logger getLogs A should handle storage get failure gracefully', async () => {
     const badDriver = {
-        delete: () => Promise.resolve(),
-        get: () => Promise.reject(new Error('storage unavailable')),
-        set: <Type>(_key: string, value: Type) => Promise.resolve(value),
-      },
-      loggerR = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false }),
-      logs = await loggerR.getLogs()
+      delete: () => Promise.resolve(),
+      get: () => Promise.reject(new Error('storage unavailable')),
+      set: <Type>(_key: string, value: Type) => Promise.resolve(value),
+    }
+    const loggerR = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
+    const logs = await loggerR.getLogs()
     expect(logs).toMatchInlineSnapshot(`[]`)
   })
 
   it('logger saveLog A should handle storage set failure gracefully', async () => {
     const badDriver = {
-        delete: () => Promise.resolve(),
-        get: <Type>() => Promise.resolve([] as unknown as Type),
-        set: () => Promise.reject(new Error('write error')),
-      },
-      loggerS = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
+      delete: () => Promise.resolve(),
+      get: <Type>() => Promise.resolve([] as unknown as Type),
+      set: () => Promise.reject(new Error('write error')),
+    }
+    const loggerS = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
     loggerS.info('this will fail to save')
     const logs = await loggerS.getLogs()
     expect(logs).toMatchInlineSnapshot(`[]`)
@@ -281,11 +281,11 @@ describe('logger', () => {
 
   it('logger clearLogs C should handle storage delete failure gracefully', async () => {
     const badDriver = {
-        delete: () => Promise.reject(new Error('delete error')),
-        get: <Type>() => Promise.resolve([] as unknown as Type),
-        set: <Type>(_key: string, value: Type) => Promise.resolve(value),
-      },
-      loggerT = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
+      delete: () => Promise.reject(new Error('delete error')),
+      get: <Type>() => Promise.resolve([] as unknown as Type),
+      set: <Type>(_key: string, value: Type) => Promise.resolve(value),
+    }
+    const loggerT = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
     await expect(loggerT.clearLogs()).resolves.toBeUndefined()
   })
 })

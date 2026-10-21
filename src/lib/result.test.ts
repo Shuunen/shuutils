@@ -49,16 +49,16 @@ test('Result.trySafe C promise ok', async () => {
 })
 
 test('Result.unwrap A ok', () => {
-  const result = Result.trySafe(() => ({ ahh: 42 })),
-    { error, value } = Result.unwrap(result)
+  const result = Result.trySafe(() => ({ ahh: 42 }))
+  const { error, value } = Result.unwrap(result)
   expect(value?.ahh).toMatchInlineSnapshot(`42`)
   expect(error).toMatchInlineSnapshot(`undefined`)
 })
 
 test('Result.unwrap B error', () => {
   // oxlint-disable-next-line typescript/no-unsafe-return
-  const result = Result.trySafe(() => JSON.parse('{"a": 42')),
-    { error, value } = Result.unwrap(result)
+  const result = Result.trySafe(() => JSON.parse('{"a": 42'))
+  const { error, value } = Result.unwrap(result)
   expect(value).toMatchInlineSnapshot(`undefined`)
   expect(String(error)).toContain('SyntaxError')
 })

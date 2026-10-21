@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const regexExport = /^export (?:async )?(?:function|class) (?<name>[\w$]+)/gm,
-  regexJsdocEnd = /\*\/\s*$/
+const regexExport = /^export (?:async )?(?:function|class) (?<name>[\w$]+)/gm
+const regexJsdocEnd = /\*\/\s*$/
 
 export type Rule = {
   check: (content: string, filePath: string) => boolean
@@ -64,8 +64,8 @@ export function isSkippableLine(line: string): boolean {
  * @returns the names of the undocumented exports
  */
 export function getExportsWithoutJsdoc(content: string): string[] {
-  const lines = content.split('\n'),
-    missing: string[] = []
+  const lines = content.split('\n')
+  const missing: string[] = []
   for (const match of content.matchAll(regexExport)) {
     const name = match.groups?.name
     if (name === undefined) continue

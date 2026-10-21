@@ -66,8 +66,8 @@ const memoizedChildName = memoize(childName)
 test('memoize D testing memoized function with objects', () => {
   childNameCalls = 0
   expect(childNameCalls).toBe(0)
-  const parentA = { age: 33, firstName: 'John', lastName: 'Doe' },
-    parentB = { firstName: 'Jane', lastName: 'Mac' }
+  const parentA = { age: 33, firstName: 'John', lastName: 'Doe' }
+  const parentB = { firstName: 'Jane', lastName: 'Mac' }
   expect(memoizedChildName('Michael', parentA, parentB)).toBe('Michael Doe Mac')
   expect(childNameCalls).toBe(1)
   expect(memoizedChildName('Michael', parentA, parentB)).toBe('Michael Doe Mac')

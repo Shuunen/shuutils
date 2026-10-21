@@ -40,12 +40,12 @@ export function hexToHsl(hex: string) {
   colorRed /= nbRgbMax
   colorGreen /= nbRgbMax
   colorBlue /= nbRgbMax
-  const min = Math.min(colorRed, colorGreen, colorBlue),
-    max = Math.max(colorRed, colorGreen, colorBlue),
-    delta = max - min
-  let hue = nbHslMin,
-    saturation = nbHslMin,
-    lightness = nbHslMin
+  const min = Math.min(colorRed, colorGreen, colorBlue)
+  const max = Math.max(colorRed, colorGreen, colorBlue)
+  const delta = max - min
+  let hue = nbHslMin
+  let saturation = nbHslMin
+  let lightness = nbHslMin
   if (delta === 0) hue = nbHslMin
   else if (max === colorRed) hue = ((colorGreen - colorBlue) / delta) % nbSeventh
   else if (max === colorGreen) hue = (colorBlue - colorRed) / delta + nbThird

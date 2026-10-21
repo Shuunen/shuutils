@@ -1,8 +1,8 @@
 import { objectEqual } from './object-equal'
 
 describe(objectEqual, () => {
-  const object4 = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 },
-    object4ButAnotherReference = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+  const object4 = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+  const object4ButAnotherReference = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
 
   it('objectEqual A true for empty objects', () => {
     expect(objectEqual({}, {})).toBe(true)

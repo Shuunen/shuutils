@@ -2,14 +2,14 @@ import { fillTemplate } from './string-template'
 
 describe('string-template', () => {
   const data = {
-      details: {
-        pinCode: 3544,
-      },
-      key_ToHappiness: 'Roo-doo-doot-da-doo',
-      name: 'Wick',
-      quote: 'Bears. Beets. Battlestar Galactica.',
+    details: {
+      pinCode: 3544,
     },
-    objectIn = { Andy: '{{ key_ToHappiness }} !' }
+    key_ToHappiness: 'Roo-doo-doot-da-doo',
+    name: 'Wick',
+    quote: 'Bears. Beets. Battlestar Galactica.',
+  }
+  const objectIn = { Andy: '{{ key_ToHappiness }} !' }
 
   it('fillTemplate A template string without mustaches and data', () => {
     expect(fillTemplate(data.quote)).toBe(data.quote)

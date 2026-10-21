@@ -3,8 +3,8 @@ import packageJson from '../../package.json' with { type: 'json' }
 import { Result } from '../lib/result'
 import { generateMark, getPackageJsonVersion, getTargetFiles, init, injectMarkInFiles } from './unique-mark.cli'
 
-const fakeMark = '9.7.8 - xyz - 07/05/2023 17:26:35',
-  logFile = 'unique-mark-test.log'
+const fakeMark = '9.7.8 - xyz - 07/05/2023 17:26:35'
+const logFile = 'unique-mark-test.log'
 
 describe('unique-mark.cli', () => {
   afterAll(() => {

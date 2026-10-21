@@ -3,8 +3,8 @@ import os from 'node:os'
 import path from 'node:path'
 import { getTargetFiles, lintFile, main } from './repo-lint.cli'
 
-const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'shuutils-lint-')),
-  argv = (...args: string[]) => ['node', 'repo-lint.cli.ts', ...args]
+const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'shuutils-lint-'))
+const argv = (...args: string[]) => ['node', 'repo-lint.cli.ts', ...args]
 
 /**
  * Write a file in the temp folder

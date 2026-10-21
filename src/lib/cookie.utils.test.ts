@@ -37,12 +37,12 @@ function clearAllCookies() {
 }
 
 describe('cookie.utils.test getCookieValueByName', () => {
-  const cookiePath = 'path=/',
-    decodedMockCookieValue = 'foobar 2025',
-    encodedMockCookieValue = 'foobar%202025',
-    mockCookieName = 'test_cookie',
-    notMockCookieName = 'not_test_cookie',
-    stringMockCookieValue = 'foobar2025'
+  const cookiePath = 'path=/'
+  const decodedMockCookieValue = 'foobar 2025'
+  const encodedMockCookieValue = 'foobar%202025'
+  const mockCookieName = 'test_cookie'
+  const notMockCookieName = 'not_test_cookie'
+  const stringMockCookieValue = 'foobar2025'
 
   beforeEach(() => {
     Reflect.deleteProperty(globalThis, 'cookieStore')

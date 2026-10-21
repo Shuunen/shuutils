@@ -3,32 +3,32 @@ import type { NavigatorUserAgent } from './types'
 
 // oxlint-disable-next-line sort-keys
 const browsers = {
-    Edge: /edge/iu, // keep me first
-    Chrome: /chrome|chromium|crios/iu,
-    Firefox: /firefox|fxios/iu,
-    'Internet Explorer': /msie|trident/iu,
-    Safari: /safari/iu,
-    'Unknown browser': /./u, // keep me last
-  } as const,
-  // oxlint-disable-next-line sort-keys
-  operatingSystems = {
-    Android: /android/iu,
-    'Chrome OS': /CrOS/iu,
-    iOS: /iphone/iu,
-    Linux: /linux/iu,
-    'Mac OS': /MacIntel|Macintosh|MacPPC/iu,
-    Windows: /Win32|Win64|Windows/iu,
-    'Unknown OS': /./u, // keep me last
-  } as const,
-  // oxlint-disable-next-line sort-keys
-  versions = {
-    MSIE: /MSIE (?<version>[\d.]+)/iu,
-    Edge: /Edge\/(?<version>[\d.]+)/iu,
-    Chrome: /Chrome\/(?<version>[\d.]+)/iu,
-    Firefox: /Firefox\/(?<version>[\d.]+)/iu,
-    generic: /Version\/(?<version>[\d.]+)/iu,
-    rv: /rv:(?<version>[\d.]+)/iu,
-  }
+  Edge: /edge/iu, // keep me first
+  Chrome: /chrome|chromium|crios/iu,
+  Firefox: /firefox|fxios/iu,
+  'Internet Explorer': /msie|trident/iu,
+  Safari: /safari/iu,
+  'Unknown browser': /./u, // keep me last
+} as const
+// oxlint-disable-next-line sort-keys
+const operatingSystems = {
+  Android: /android/iu,
+  'Chrome OS': /CrOS/iu,
+  iOS: /iphone/iu,
+  Linux: /linux/iu,
+  'Mac OS': /MacIntel|Macintosh|MacPPC/iu,
+  Windows: /Win32|Win64|Windows/iu,
+  'Unknown OS': /./u, // keep me last
+} as const
+// oxlint-disable-next-line sort-keys
+const versions = {
+  MSIE: /MSIE (?<version>[\d.]+)/iu,
+  Edge: /Edge\/(?<version>[\d.]+)/iu,
+  Chrome: /Chrome\/(?<version>[\d.]+)/iu,
+  Firefox: /Firefox\/(?<version>[\d.]+)/iu,
+  generic: /Version\/(?<version>[\d.]+)/iu,
+  rv: /rv:(?<version>[\d.]+)/iu,
+}
 
 type BrowserContext = Readonly<{
   browser: keyof typeof browsers
@@ -128,9 +128,9 @@ export function browserReport(context: BrowserContext) {
  * @copyright inspired from Ben Brooks Scholz https://github.com/benbscholz/detect Copyright (C) 2011
 */
 export function browserContext() {
-  const isBrowser = isBrowserEnvironment(),
-    userAgent = getUserAgent(),
-    browser = getBrowser(userAgent)
+  const isBrowser = isBrowserEnvironment()
+  const userAgent = getUserAgent()
+  const browser = getBrowser(userAgent)
   /* v8 ignore next */
   return {
     browser,

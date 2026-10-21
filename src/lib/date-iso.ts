@@ -47,8 +47,8 @@ export function dateIsoStripSecondsZone(date: string) {
   return new Date(date).toISOString().slice(0, 16)
 }
 
-const EMPTY_DATE = '-',
-  INVALID_DATE = 'N/A'
+const EMPTY_DATE = '-'
+const INVALID_DATE = 'N/A'
 
 /**
  * Parse a date as UTC, a date-only string is parsed at midnight UTC instead of local time
@@ -61,9 +61,9 @@ export function parseAsUTC(date: Date | string | number): Date {
   if (typeof date === 'string') {
     /* v8 ignore start */
     // oxlint-disable-next-line no-magic-numbers
-    const hasTimezone = date.includes('Z') || date.includes('+') || (date.match(/-/g) || []).length > 2,
-      /* v8 ignore end */
-      dateWithZ = hasTimezone ? date : `${date}Z`
+    const hasTimezone = date.includes('Z') || date.includes('+') || (date.match(/-/g) || []).length > 2
+    /* v8 ignore end */
+    const dateWithZ = hasTimezone ? date : `${date}Z`
     return new Date(dateWithZ)
   }
 
@@ -86,26 +86,26 @@ export function dateIsoToReadableDatetime(
     acceptPartialDate?: boolean
   } = {},
 ): string {
-  const withTime = options.withTime ?? true,
-    acceptPartialDate = options.acceptPartialDate ?? false
+  const withTime = options.withTime ?? true
+  const acceptPartialDate = options.acceptPartialDate ?? false
   if (!date) return EMPTY_DATE
 
-  const dateObject: Date = parseAsUTC(date),
-    padLength = 2,
-    invalidDate = Number.isNaN(dateObject.getTime())
+  const dateObject: Date = parseAsUTC(date)
+  const padLength = 2
+  const invalidDate = Number.isNaN(dateObject.getTime())
 
   if (invalidDate && !acceptPartialDate) return INVALID_DATE
 
   if (invalidDate && acceptPartialDate) return partialDateDisplay(date as string)
 
-  const day = String(dateObject.getDate()).padStart(padLength, '0'),
-    month = String(dateObject.getMonth() + 1).padStart(padLength, '0'),
-    year = dateObject.getFullYear()
+  const day = String(dateObject.getDate()).padStart(padLength, '0')
+  const month = String(dateObject.getMonth() + 1).padStart(padLength, '0')
+  const year = dateObject.getFullYear()
 
   let result = `${day}/${month}/${year}`
   if (withTime) {
-    const hours = String(dateObject.getHours()).padStart(padLength, '0'),
-      minutes = String(dateObject.getMinutes()).padStart(padLength, '0')
+    const hours = String(dateObject.getHours()).padStart(padLength, '0')
+    const minutes = String(dateObject.getMinutes()).padStart(padLength, '0')
     result += ` ${hours}:${minutes}`
   }
 
@@ -153,10 +153,10 @@ const millisecondsPattern = /\.\d{3}Z$/
 export function buildIsoFromLocal(datePart: string, timePart: string): string {
   if (!datePart || !timePart) return ''
 
-  const [yy, mm, dd] = datePart.split('-').map(Number),
-    [hh, min] = timePart.split(':').map(Number),
-    hasInvalidDatePart = yy === undefined || mm === undefined || dd === undefined,
-    hasInvalidTimePart = hh === undefined || min === undefined
+  const [yy, mm, dd] = datePart.split('-').map(Number)
+  const [hh, min] = timePart.split(':').map(Number)
+  const hasInvalidDatePart = yy === undefined || mm === undefined || dd === undefined
+  const hasInvalidTimePart = hh === undefined || min === undefined
   if (hasInvalidDatePart || hasInvalidTimePart) return ''
 
   const local = new Date(yy, mm - 1, dd, hh, min, 0, 0)

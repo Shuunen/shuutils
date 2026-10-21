@@ -16,9 +16,9 @@ export function toBase64(str: string) {
  * @returns Percent-encoded string
  */
 export function base64CharToPercentEncoded(char: string) {
-  const hexRadix = 16,
-    padLength = 2,
-    code = char.codePointAt(0) ?? 0
+  const hexRadix = 16
+  const padLength = 2
+  const code = char.codePointAt(0) ?? 0
   return `%${code.toString(hexRadix).padStart(padLength, '0')}`
 }
 
@@ -54,8 +54,8 @@ export function encodeForUrl(data: unknown) {
  * @returns Decoded data or empty string if decoding or parsing failed
  */
 export function decodeFromUrl(str: string) {
-  const b64 = decodeURIComponent(str),
-    decoded = fromBase64(b64),
-    result = parseJson(decoded)
+  const b64 = decodeURIComponent(str)
+  const decoded = fromBase64(b64)
+  const result = parseJson(decoded)
   return result.ok ? result.value : ''
 }

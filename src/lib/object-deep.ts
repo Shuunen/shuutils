@@ -38,8 +38,8 @@ export function setNested(object: Record<string, unknown>, path: string | Array<
       current = next as Record<string, unknown>
       continue
     }
-    const nextKey = String(pathArray[index + 1]),
-      created: Record<string, unknown> = /^\d+$/u.test(nextKey) ? ([] as unknown as Record<string, unknown>) : {}
+    const nextKey = String(pathArray[index + 1])
+    const created: Record<string, unknown> = /^\d+$/u.test(nextKey) ? ([] as unknown as Record<string, unknown>) : {}
     current[key] = created
     current = created
   }

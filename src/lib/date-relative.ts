@@ -18,8 +18,8 @@ const timeAgoTuples = [
  * @returns "a minute ago", "4 days ago"
  */
 export function readableTimeAgo(input: number | Readonly<Date>, language = 'en') {
-  const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' }),
-    ms = typeof input === 'number' ? input : Date.now() - input.getTime()
+  const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' })
+  const ms = typeof input === 'number' ? input : Date.now() - input.getTime()
   for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit)
 
   return rtf.format(-Math.floor(ms / nbMsInYear), 'year')
