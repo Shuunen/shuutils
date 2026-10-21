@@ -82,7 +82,8 @@
     "test:watch": "vitest",
     "up:deps": "pnpm update --latest && echo up:deps completed successfully"
   },
+  "sideEffects": false,
   "type": "module",
   "types": "./dist/shuutils.d.ts",
-  "version": "11.0.0"
+  "version": "11.1.0"
 }

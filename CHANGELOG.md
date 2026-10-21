@@ -3,6 +3,20 @@
 All notable changes to this project are documented here.
 Versions before `11.0.0` are listed in the [git tags](https://github.com/Shuunen/shuutils/tags).
 
+## 11.1.0
+
+### Fixed in 11.1.0
+
+- `isDevEnvironment` and `isDeployedInDevNamespace` threw a `TypeError` when called without arguments from the cjs bundle, where `import.meta.env` does not exist
+
+### Changed in 11.1.0
+
+- Zero runtime dependencies, the clis use the native `fs.glob` instead of `tiny-glob`
+- `unique-mark` accepts plain globs like `*.js`, the `*.{js}` form still works
+- The package now requires Node `>=22.2.0` through `engines`, needed by the clis
+- The package declares `"sideEffects": false` so bundlers can drop unused modules
+- The build moved from tsup to tsdown and TypeScript 7, the bundles keep their JSDoc comments and the typings list the same exports
+
 ## 11.0.0
 
 ### Breaking in 11.0.0
