@@ -1,14 +1,16 @@
-import { readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import packageJson from '../../package.json' with { type: 'json' }
 import { Result } from '../lib/result'
 import { generateMark, getPackageJsonVersion, getTargetFiles, init, injectMarkInFiles } from './unique-mark.cli'
 
 const fakeMark = '9.7.8 - xyz - 07/05/2023 17:26:35'
 const logFile = 'unique-mark-test.log'
+const testFolder = 'unique-mark-test-folder'
 
 describe('unique-mark.cli', () => {
   afterAll(() => {
     rmSync(logFile, { force: true })
+    rmSync(testFolder, { force: true, recursive: true })
   })
 
   it('getPackageJsonVersion A reads the local package.json', () => {
@@ -47,6 +49,21 @@ describe('unique-mark.cli', () => {
   it('getTargetFiles D list with no files found', async () => {
     const result = Result.unwrap(await getTargetFiles('nope-*'))
     expect(result.error).toMatchInlineSnapshot(`"no file found with target "nope-*", aborting."`)
+  })
+
+  it('getTargetFiles E list every file inside a folder, recursively', async () => {
+    mkdirSync(`${testFolder}/nested`, { recursive: true })
+    writeFileSync(`${testFolder}/a.js`, '__unique-mark__')
+    writeFileSync(`${testFolder}/nested/b.css`, '__unique-mark__')
+    const result = Result.unwrap(await getTargetFiles(testFolder))
+    expect(result.error).toBeUndefined()
+    expect(result.value?.toSorted()).toStrictEqual([`${testFolder}/a.js`, `${testFolder}/nested/b.css`])
+  })
+
+  it('getTargetFiles F list an empty folder', async () => {
+    mkdirSync(`${testFolder}/empty`, { recursive: true })
+    const result = Result.unwrap(await getTargetFiles(`${testFolder}/empty`))
+    expect(result.error).toMatchInlineSnapshot(`"no file found with target "${testFolder}/empty", aborting."`)
   })
 
   it('generateMark A with every option given', () => {

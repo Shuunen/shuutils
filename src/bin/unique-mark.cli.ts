@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { nbThird } from '../lib/constants'
 import { formatDate } from '../lib/date-format'
@@ -12,6 +12,7 @@ import { globFiles } from './glob-files'
 
 // use me like :
 // npx unique-mark "public/*.{js}"
+// npx unique-mark public
 
 /**
  * Load package.json file data
@@ -30,13 +31,14 @@ export function getPackageJsonVersion(location = path.join(process.cwd(), 'packa
 
 /**
  * Get the files to inject the mark in
- * @param target the glob to get files from, like "public/index.html" or "public/*.js"
+ * @param target the glob to get files from, like "public/index.html" or "public/*.js", or a folder like "public" to target every file inside it
  * @returns the files to inject the mark in
  */
 export async function getTargetFiles(target = process.argv[nbThird] ?? '') {
   if (target === '') return Result.error('no target specified, aborting.')
 
-  const files = await globFiles(target)
+  const isFolder = existsSync(target) && statSync(target).isDirectory()
+  const files = isFolder ? await globFiles(path.posix.join(target, '**/*'), { filesOnly: true }) : await globFiles(target)
   if (files.length === 0) return Result.error(`no file found with target "${target}", aborting.`)
 
   return Result.ok(files)
