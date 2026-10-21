@@ -4,8 +4,8 @@ import { emit, off, on } from './events'
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
 test('on, emit & off', () => {
-  const callback = vi.fn<() => number>(() => 12),
-    listener = on('foo', callback)
+  const callback = vi.fn<() => number>(() => 12)
+  const listener = on('foo', callback)
   expect(callback).toHaveBeenCalledTimes(0)
   emit('foo', 42)
   emit('bar', 'wow')
@@ -16,17 +16,17 @@ test('on, emit & off', () => {
 })
 
 test('emit without data', () => {
-  const callback = vi.fn<() => void>(),
-    listener = on('test-event', callback)
+  const callback = vi.fn<() => void>()
+  const listener = on('test-event', callback)
   emit('test-event')
   expect(callback).toHaveBeenCalledOnce()
   off(listener)
 })
 
 test('on handles non-CustomEvent', () => {
-  const callback = vi.fn<() => void>(),
-    element = document.createElement('div'),
-    listener = on('click', callback, element)
+  const callback = vi.fn<() => void>()
+  const element = document.createElement('div')
+  const listener = on('click', callback, element)
   element.click()
   expect(callback).toHaveBeenCalledOnce()
   off(listener)

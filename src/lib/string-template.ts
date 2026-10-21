@@ -17,7 +17,7 @@ export function fillTemplate(template: Readonly<Record<string, unknown>> | strin
   const flatData = flatten(data)
   for (const [key, value] of Object.entries(flatData)) {
     const regex = new RegExp(`(/?\\*?{{?\\s*${key}\\s*}?}\\*?/?)`, 'g')
-    string = string.replace(regex, String(value))
+    string = string.replaceAll(regex, String(value))
   }
   return string
 }

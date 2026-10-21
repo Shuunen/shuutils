@@ -23,8 +23,8 @@ export type AnalyticsOptions = Readonly<{
  */
 // oxlint-disable-next-line max-lines-per-function
 export function createAnalytics({ app = 'app-default', onIdentify, onPage, onTrack, willLog = false, willPile = false }: AnalyticsOptions | undefined = {}) {
-  const pile: string[] = [],
-    logger = willLog ? new Logger() : undefined
+  const pile: string[] = []
+  const logger = willLog ? new Logger() : undefined
   /**
    * Add an item to the memory pile
    * @param item the item to add

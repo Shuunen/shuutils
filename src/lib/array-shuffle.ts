@@ -10,8 +10,8 @@ import { clone } from './object-clone'
 export function shuffleArray<Type>(input: readonly Type[]) {
   const array = clone(input)
   for (let indexA = array.length - 1; indexA > 0; indexA += nbPrevious) {
-    const indexB = Math.floor(Math.random() * (indexA + 1)),
-      temporary = array[indexA]
+    const indexB = Math.floor(Math.random() * (indexA + 1))
+    const temporary = array[indexA]
     array[indexA] = array[indexB]
     array[indexB] = temporary
   }

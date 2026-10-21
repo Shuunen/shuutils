@@ -53,8 +53,8 @@ describe('async-storage', () => {
   })
 
   it('createInMemoryDriver B should return undefined for missing key', async () => {
-    const driver = createInMemoryDriver(),
-      result = await driver.get<string>('missing')
+    const driver = createInMemoryDriver()
+    const result = await driver.get<string>('missing')
     expect(result).toMatchInlineSnapshot(`undefined`)
   })
 
@@ -67,16 +67,16 @@ describe('async-storage', () => {
   })
 
   it('createInMemoryDriver D should isolate state between instances', async () => {
-    const driverA = createInMemoryDriver(),
-      driverB = createInMemoryDriver()
+    const driverA = createInMemoryDriver()
+    const driverB = createInMemoryDriver()
     await driverA.set('key', 'from-a')
     const result = await driverB.get<string>('key')
     expect(result).toMatchInlineSnapshot(`undefined`)
   })
 
   it('createAsyncStorage A should prefix keys when setting and getting', async () => {
-    const driver = createInMemoryDriver(),
-      store = createAsyncStorage('myApp', driver)
+    const driver = createInMemoryDriver()
+    const store = createAsyncStorage('myApp', driver)
     await store.set('user', { name: 'Alice' })
     const result = await store.get<{ name: string }>('user')
     expect(result).toMatchInlineSnapshot(`
@@ -87,8 +87,8 @@ describe('async-storage', () => {
   })
 
   it('createAsyncStorage B should prefix keys on delete', async () => {
-    const driver = createInMemoryDriver(),
-      store = createAsyncStorage('myApp', driver)
+    const driver = createInMemoryDriver()
+    const store = createAsyncStorage('myApp', driver)
     await store.set('user', 'Alice')
     await store.delete('user')
     const result = await store.get<string>('user')
@@ -96,9 +96,9 @@ describe('async-storage', () => {
   })
 
   it('createAsyncStorage C should isolate namespaces', async () => {
-    const driver = createInMemoryDriver(),
-      storeA = createAsyncStorage('appA', driver),
-      storeB = createAsyncStorage('appB', driver)
+    const driver = createInMemoryDriver()
+    const storeA = createAsyncStorage('appA', driver)
+    const storeB = createAsyncStorage('appB', driver)
     await storeA.set('key', 'from-a')
     const result = await storeB.get<string>('key')
     expect(result).toMatchInlineSnapshot(`undefined`)

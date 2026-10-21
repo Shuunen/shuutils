@@ -2,8 +2,8 @@ import { createAnalytics } from './analytics'
 import { Result } from './result'
 
 test('analytics A defaults', () => {
-  const analytics = createAnalytics(),
-    track = Result.unwrap(analytics.track('event-test'))
+  const analytics = createAnalytics()
+  const track = Result.unwrap(analytics.track('event-test'))
   expect(track.value).toMatchInlineSnapshot(`"analytics : track event "event-test" for app "app-default""`)
   expect(track.error).toBeUndefined()
   const page = Result.unwrap(analytics.page())
@@ -23,10 +23,10 @@ test('analytics B with pile', () => {
 })
 
 test('analytics C with callbacks', () => {
-  const onIdentify = vi.fn<() => void>(),
-    onPage = vi.fn<() => void>(),
-    onTrack = vi.fn<() => void>(),
-    analytics = createAnalytics({ app: 'unit-callbacks', onIdentify, onPage, onTrack })
+  const onIdentify = vi.fn<() => void>()
+  const onPage = vi.fn<() => void>()
+  const onTrack = vi.fn<() => void>()
+  const analytics = createAnalytics({ app: 'unit-callbacks', onIdentify, onPage, onTrack })
   analytics.track('event-name')
   expect(onTrack).toHaveBeenNthCalledWith(1, 'event-name', undefined)
   analytics.track('event-alt', { year: 2025 })
@@ -40,8 +40,8 @@ test('analytics C with callbacks', () => {
 })
 
 test('analytics D with willLog', () => {
-  const analytics = createAnalytics({ willLog: true }),
-    result = Result.unwrap(analytics.track('log-event'))
+  const analytics = createAnalytics({ willLog: true })
+  const result = Result.unwrap(analytics.track('log-event'))
   expect(result.value).toContain('analytics : track event')
 })
 

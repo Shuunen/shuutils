@@ -30,8 +30,8 @@ test('toastError A', () => {
 
 test('toastSuccess B should trigger show animation', async () => {
   toastSuccess('Animation test', 0)
-  const toasts = document.querySelectorAll<HTMLElement>('.shu-toast'),
-    lastToast = Array.from(toasts).at(-1)
+  const toasts = document.querySelectorAll<HTMLElement>('.shu-toast')
+  const lastToast = Array.from(toasts).at(-1)
   expect(lastToast?.style.opacity).toBe('0')
   await sleep(150)
   expect(lastToast?.style.opacity).toBe('1')

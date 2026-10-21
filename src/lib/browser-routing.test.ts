@@ -65,9 +65,9 @@ test('getPath H should handle url === "" and isBrowserEnvironment() === false', 
 
 test('getPath I should handle path === "blank"', () => {
   // Simulate browser environment
-  const originalIsBrowserEnvironment = isBrowserEnvironment,
-    originalDocument = globalThis.document,
-    originalMatchMedia = globalThis.matchMedia
+  const originalIsBrowserEnvironment = isBrowserEnvironment
+  const originalDocument = globalThis.document
+  const originalMatchMedia = globalThis.matchMedia
   // @ts-expect-error override for test
   globalThis.matchMedia = () => true
   // @ts-expect-error override for test

@@ -5,10 +5,10 @@ const mockFetch = vi.fn<(...args: unknown[]) => Promise<unknown>>()
 vi.stubGlobal('fetch', mockFetch)
 
 test('fetchJson A should successfully fetch and parse JSON data', async () => {
-  const mockData = { id: 123, message: 'success' },
-    mockResponse = {
-      json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
-    }
+  const mockData = { id: 123, message: 'success' }
+  const mockResponse = {
+    json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
+  }
   mockFetch.mockResolvedValue(mockResponse)
 
   const result = await fetchJson('https://api.example.com/data', { method: 'GET' })
@@ -57,18 +57,18 @@ test('fetchJson C should handle JSON parsing errors', async () => {
 })
 
 test('fetchJson D should pass request options correctly', async () => {
-  const mockData = { status: 'ok' },
-    mockResponse = {
-      json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
-    }
+  const mockData = { status: 'ok' }
+  const mockResponse = {
+    json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
+  }
   mockFetch.mockResolvedValue(mockResponse)
 
   const options = {
-      body: JSON.stringify({ test: 'data' }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    },
-    result = await fetchJson('https://api.example.com/post', options)
+    body: JSON.stringify({ test: 'data' }),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  }
+  const result = await fetchJson('https://api.example.com/post', options)
 
   expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/post', options)
   expect(result.ok).toBe(true)

@@ -6,16 +6,16 @@ import { Result } from '../lib/result'
 import { stringify } from '../lib/string-stringify'
 
 /* v8 ignore next */
-const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' }),
-  commitRegex = /(?<ticket>\w+-\d+)[ :]+(?<type>\w+(?<scope>\([\w-]+\))?: ?)?(?<message>.+)/
+const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
+const commitRegex = /(?<ticket>\w+-\d+)[ :]+(?<type>\w+(?<scope>\([\w-]+\))?: ?)?(?<message>.+)/
 
 /**
  * @param {string} commitLine single commit line to be parsed
  * @returns an object with {date, hash, message, ticket} or undefined depending on the retrievable information from the commit itself
  */
 export function parseSingleCommit(commitLine: string) {
-  const [hash, date, subject = ''] = commitLine.trim().split('|'),
-    match = commitRegex.exec(subject)
+  const [hash, date, subject = ''] = commitLine.trim().split('|')
+  const match = commitRegex.exec(subject)
   if (match?.groups) {
     const { ticket, message } = match.groups
     return { date, hash, message, ticket }
@@ -29,9 +29,9 @@ export function parseSingleCommit(commitLine: string) {
  * @returns the matching history lines
  */
 export function getHistory(filters: string[] = []) {
-  const command = `git log --reverse --format="%h|%ad|%s" --date=short`,
-    result = Result.trySafe(() => execSync(command, { encoding: 'utf8' }).trim()),
-    { value: lines = '' } = Result.unwrap(result)
+  const command = `git log --reverse --format="%h|%ad|%s" --date=short`
+  const result = Result.trySafe(() => execSync(command, { encoding: 'utf8' }).trim())
+  const { value: lines = '' } = Result.unwrap(result)
   return lines
     .split('\n')
     .map(commit => parseSingleCommit(commit))
@@ -91,12 +91,12 @@ export function getFilters(args: string[] = process.argv) {
  */
 export function main() {
   logger.info('Generating changelog...')
-  const output = getOutput(),
-    filters = getFilters(),
-    history = getHistory(filters),
-    releaseVersion = getReleaseVersion(),
-    data = { history, releaseVersion },
-    fileContent = `export const generatedChangeLog = ${stringify(data, true)}`
+  const output = getOutput()
+  const filters = getFilters()
+  const history = getHistory(filters)
+  const releaseVersion = getReleaseVersion()
+  const data = { history, releaseVersion }
+  const fileContent = `export const generatedChangeLog = ${stringify(data, true)}`
   writeFileSync(output, fileContent)
   logger.info(`Changelog generated successfully at ${output}`)
 }

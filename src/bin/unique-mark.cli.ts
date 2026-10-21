@@ -21,8 +21,8 @@ import type { PackageJson } from '../lib/types'
 export function getPackageJsonVersion(location = path.join(process.cwd(), 'package.json')) {
   if (!existsSync(location)) return Result.error(`package.json was not found in ${location}, aborting.`)
 
-  const content = readFileSync(location, 'utf8'),
-    parsed = parseJson<PackageJson>(content)
+  const content = readFileSync(location, 'utf8')
+  const parsed = parseJson<PackageJson>(content)
   if (!parsed.ok) return Result.error(`package.json in ${location} is not a valid JSON, aborting.`)
 
   return Result.ok(parsed.value.version)
@@ -69,15 +69,15 @@ export function generateMark({ commit = '', date = formatDate(new Date(), 'dd/MM
  */
 export function injectMarkInFiles({ files = [], isReadOnly = false, mark = 'no-mark', placeholder = 'unique-mark' }: Readonly<{ files?: readonly string[]; isReadOnly?: boolean; mark?: string; placeholder?: string }>) {
   let totalInjections = 0
-  const logs: string[] = [],
-    markRegex = new RegExp(mark, 'gu')
+  const logs: string[] = []
+  const markRegex = new RegExp(mark, 'gu')
   for (const file of files) {
     const content = readFileSync(file, 'utf8')
     if (!content.includes(placeholder) && files.length === 1)
       return Result.error(`could not find a place to inject in ${file}, aborting.\n\nPlease use one or more of these placeholders :  <span id="${placeholder}"></span>  <meta name="${placeholder}" content="">  __${placeholder}__`)
 
-    const updatedContent = injectMark(content, placeholder, mark),
-      times = updatedContent.match(markRegex)?.length ?? 0
+    const updatedContent = injectMark(content, placeholder, mark)
+    const times = updatedContent.match(markRegex)?.length ?? 0
     if (!isReadOnly) writeFileSync(file, updatedContent)
 
     logs.push(`injected in ${file} : ${times} time${times > 1 ? 's' : ''}`)

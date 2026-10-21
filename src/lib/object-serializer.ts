@@ -27,7 +27,7 @@ import { objectSort } from './object-sort'
  * @param value the value of the object
  * @returns the value of the object
  */
-function replacer(this: unknown, key: string, value?: Readonly<unknown>) {
+function replacer(this: unknown, key: string, value?: unknown) {
   if (value === undefined) return value
 
   if (value instanceof RegExp) return { __regexFlags__: value.flags, __regexSource__: value.source }
@@ -58,7 +58,7 @@ const createCircularReplacer = () => {
    * @param value the value being stringified
    * @returns the value to serialize
    */
-  function circularReplacer(this: unknown, key: string, value?: Readonly<unknown>) {
+  function circularReplacer(this: unknown, key: string, value?: unknown) {
     if (typeof value === 'object' && value !== null) {
       if (seen.has(value)) return '__circular__'
 

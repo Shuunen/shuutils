@@ -98,10 +98,10 @@ export function crc32(text: string) {
   let crc = -1
   for (let index = 0; index < text.length; index += 1) {
     /* v8 ignore next */
-    const code = text.codePointAt(index) ?? 0,
-      // oxlint-disable no-bitwise, no-magic-numbers
-      key: number = (code ^ crc) & 0xff,
-      value: number | undefined = crcTable[key]
+    const code = text.codePointAt(index) ?? 0
+    // oxlint-disable no-bitwise, no-magic-numbers
+    const key: number = (code ^ crc) & 0xff
+    const value: number | undefined = crcTable[key]
     /* v8 ignore start */
     if (value !== undefined && value !== 0)
       /* v8 ignore stop */

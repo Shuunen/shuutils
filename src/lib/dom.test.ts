@@ -83,8 +83,8 @@ test('dom backdrop', () => {
 test('dom basics', () => {
   const funcs = [strong, em, small, h1, h2, h3, div]
   for (const testFunction of funcs) {
-    const { name } = testFunction,
-      element = testFunction(name)
+    const { name } = testFunction
+    const element = testFunction(name)
     expect(element.tagName.toLowerCase()).toBe(name)
     expect(element.textContent).toBe('')
     expect(element.classList.contains(name)).toBe(true)

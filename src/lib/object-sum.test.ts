@@ -2,16 +2,16 @@ import { clone } from './object-clone'
 import { objectSum } from './object-sum'
 
 describe(objectSum, () => {
-  const object3 = { notFun: false, 'pretty-good': true, size: 'large', superFun: true },
-    users = [
-      { age: 21, name: 'John', pic: 'wow.png' },
-      { age: 42, name: 'Albert' },
-      { age: 22, name: 'Sam' },
-      { age: 11, name: 'Birgit' },
-    ],
-    object4 = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 },
-    object4ButAnotherReference = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 },
-    object4ButDeepRegexDifferent = { fool: { bar: 'foo', regex: /^oh\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+  const object3 = { notFun: false, 'pretty-good': true, size: 'large', superFun: true }
+  const users = [
+    { age: 21, name: 'John', pic: 'wow.png' },
+    { age: 42, name: 'Albert' },
+    { age: 22, name: 'Sam' },
+    { age: 11, name: 'Birgit' },
+  ]
+  const object4 = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+  const object4ButAnotherReference = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
+  const object4ButDeepRegexDifferent = { fool: { bar: 'foo', regex: /^oh\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
 
   it('objectSum A on empty object', () => {
     expect(objectSum({})).toMatchInlineSnapshot(`2745614147`)

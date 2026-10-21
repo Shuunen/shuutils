@@ -10,27 +10,27 @@ import { Result } from '../lib/result'
 //  bun src/bin/header-injector.cli.ts --target="src/**/*.ts" --remove --header="Copyright 2026 ACME"
 
 /* v8 ignore next */
-const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' }),
-  metrics = {
-    /** Number of files where the header was added */
-    addedHeader: 0,
-    /** Number of files that already have the header */
-    hasHeader: 0,
-    /** Number of files that move the header */
-    moveHeader: 0,
-    /** Number of files that do not have the header */
-    noHeader: 0,
-    /** Number of files that could not be read */
-    readError: 0,
-    /** Number of files where the header was removed */
-    removedHeader: 0,
-    /** Number of files that could not be written */
-    writeError: 0,
-  }
+const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
+const metrics = {
+  /** Number of files where the header was added */
+  addedHeader: 0,
+  /** Number of files that already have the header */
+  hasHeader: 0,
+  /** Number of files that move the header */
+  moveHeader: 0,
+  /** Number of files that do not have the header */
+  noHeader: 0,
+  /** Number of files that could not be read */
+  readError: 0,
+  /** Number of files where the header was removed */
+  removedHeader: 0,
+  /** Number of files that could not be written */
+  writeError: 0,
+}
 type Metrics = typeof metrics
 
-const defaultTarget = 'src/**/*.ts',
-  ignoredFolders = ['node_modules/', 'dist/', 'coverage/']
+const defaultTarget = 'src/**/*.ts'
+const ignoredFolders = ['node_modules/', 'dist/', 'coverage/']
 
 /**
  * Tell if a file should get a header, skipping generated files and vendor folders
@@ -73,8 +73,8 @@ function removeHeader(file: string, header: string, content: string, stats: Metr
     stats.noHeader += 1
     return
   }
-  const newContent = lines.slice(1).join('\n'),
-    writeResult = Result.trySafe(() => writeFileSync(file, newContent))
+  const newContent = lines.slice(1).join('\n')
+  const writeResult = Result.trySafe(() => writeFileSync(file, newContent))
   if (!writeResult.ok) {
     stats.writeError += 1
     return
@@ -92,8 +92,8 @@ function removeHeader(file: string, header: string, content: string, stats: Metr
  */
 // oxlint-disable-next-line max-params
 function addOrMoveHeader(file: string, header: string, content: string, stats: Metrics) {
-  const lines = content.split('\n'),
-    headerLine = lines.indexOf(header)
+  const lines = content.split('\n')
+  const headerLine = lines.indexOf(header)
   if (headerLine === 0) {
     stats.hasHeader += 1
     return
@@ -123,8 +123,8 @@ type ProcessFileOptions = { file: string; header: string; isRemoveMode: boolean;
  * @returns void
  */
 function processFile(options: ProcessFileOptions) {
-  const { file, header, isRemoveMode, stats } = options,
-    readResult = Result.trySafe(() => readFileSync(file, 'utf8'))
+  const { file, header, isRemoveMode, stats } = options
+  const readResult = Result.trySafe(() => readFileSync(file, 'utf8'))
   if (!readResult.ok) {
     stats.readError += 1
     return
@@ -157,16 +157,16 @@ export function report(data: Metrics): string {
  * @returns metrics or error
  */
 export async function main(argv: string[]) {
-  const stats = structuredClone(metrics),
-    args = parseArgs(argv)
+  const stats = structuredClone(metrics)
+  const args = parseArgs(argv)
   logger.info('header-injector.cli.ts started with args', yellow(JSON.stringify(args)))
   const isRemoveMode = args.remove !== undefined
   if (!args.header) return Result.error('missing header argument')
 
-  const target = args.target || defaultTarget,
-    allFiles = await glob(target, { filesOnly: true }),
-    files = allFiles.filter(file => isWantedFile(file)),
-    header = `// ${args.header}`
+  const target = args.target || defaultTarget
+  const allFiles = await glob(target, { filesOnly: true })
+  const files = allFiles.filter(file => isWantedFile(file))
+  const header = `// ${args.header}`
   logger.info(`${isRemoveMode ? 'Removing' : 'Scanning'} headers of ${files.length} files...`)
   for (const file of files) processFile({ file, header, isRemoveMode, stats })
 

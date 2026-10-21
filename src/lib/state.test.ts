@@ -80,8 +80,8 @@ test('state D multiple watch', () => {
 })
 
 test('state E watch all', () => {
-  let callbackCalls = 0,
-    callbackKey = ''
+  let callbackCalls = 0
+  let callbackKey = ''
   /**
    * @param updatedKey the key that has been updated
    */

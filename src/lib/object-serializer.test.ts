@@ -102,8 +102,8 @@ test('objectSerialize J handle undefined', () => {
 })
 
 test('objectSerialize K with sorted keys', () => {
-  const object = { keyA: undefined, keyB: 2, keyC: 3 },
-    serialized = JSON.stringify(objectSerialize(object, true))
+  const object = { keyA: undefined, keyB: 2, keyC: 3 }
+  const serialized = JSON.stringify(objectSerialize(object, true))
   expect(serialized).toMatchInlineSnapshot(`""{\\"keyB\\":2,\\"keyC\\":3}""`)
 })
 
@@ -205,9 +205,9 @@ test('objectDeserialize F nested Date', () => {
 })
 
 test('objectDeserialize G does not affect original object', () => {
-  const originalObject = { dateOfBirth: new Date('2001-12-22T00:00:00.000Z'), name: 'John' },
-    string = objectSerialize(originalObject),
-    deserializedObject = objectDeserialize(string)
+  const originalObject = { dateOfBirth: new Date('2001-12-22T00:00:00.000Z'), name: 'John' }
+  const string = objectSerialize(originalObject)
+  const deserializedObject = objectDeserialize(string)
   expect(originalObject).toMatchInlineSnapshot(`
     {
       "dateOfBirth": 2001-12-22T00:00:00.000Z,
@@ -293,8 +293,8 @@ test('objectDeserialize H person', () => {
 })
 
 test('objectDeserialize I simple', () => {
-  const serialized = '{"keyA":{"__strUndefined__":true},"keyB":2,"keyC":3}',
-    object = objectDeserialize(serialized)
+  const serialized = '{"keyA":{"__strUndefined__":true},"keyB":2,"keyC":3}'
+  const object = objectDeserialize(serialized)
   expect(object).toMatchInlineSnapshot(`
     {
       "keyA": {

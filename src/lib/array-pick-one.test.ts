@@ -1,7 +1,7 @@
 import { pickOne } from './array-pick-one'
 
-const elements = ['damn', 'this', 'test', 'is', 'crazy'],
-  elementPicked = pickOne(elements)
+const elements = ['damn', 'this', 'test', 'is', 'crazy']
+const elementPicked = pickOne(elements)
 
 test('pick one returns an element from the array', () => {
   expect(elements).toContain(elementPicked)

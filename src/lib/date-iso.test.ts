@@ -132,38 +132,38 @@ describe('date-iso', () => {
 
 describe(parseAsUTC, () => {
   it('should return the same object if input is already a Date instance', () => {
-    const now = new Date(),
-      result = parseAsUTC(now)
+    const now = new Date()
+    const result = parseAsUTC(now)
     expect(result).toBe(now) // Reference equality
     expect(result.getTime()).toBe(now.getTime())
   })
 
   it('should append "Z" to an ISO string without timezone and parse it as UTC', () => {
-    const dateStr = '2026-03-24T10:00:00',
-      result = parseAsUTC(dateStr)
+    const dateStr = '2026-03-24T10:00:00'
+    const result = parseAsUTC(dateStr)
 
     // 10:00 AM UTC should be exactly 10:00.000Z
     expect(result.toISOString()).toBe('2026-03-24T10:00:00.000Z')
   })
 
   it('should not append "Z" if the string already contains one', () => {
-    const dateStr = '2026-03-24T10:00:00Z',
-      result = parseAsUTC(dateStr)
+    const dateStr = '2026-03-24T10:00:00Z'
+    const result = parseAsUTC(dateStr)
 
     expect(result.toISOString()).toBe('2026-03-24T10:00:00.000Z')
   })
 
   it('should respect existing offsets and not append "Z"', () => {
-    const dateWithOffset = '2026-03-24T10:00:00+02:00',
-      result = parseAsUTC(dateWithOffset)
+    const dateWithOffset = '2026-03-24T10:00:00+02:00'
+    const result = parseAsUTC(dateWithOffset)
 
     // 10:00 AM GMT+2 is equivalent to 08:00 AM UTC
     expect(result.toISOString()).toBe('2026-03-24T08:00:00.000Z')
   })
 
   it('should work correctly with a numeric timestamp', () => {
-    const timestamp = 1_711_274_400_000,
-      result = parseAsUTC(timestamp)
+    const timestamp = 1_711_274_400_000
+    const result = parseAsUTC(timestamp)
 
     expect(result.getTime()).toBe(timestamp)
     expect(result).toBeInstanceOf(Date)
@@ -175,8 +175,8 @@ describe(parseAsUTC, () => {
   })
 
   it('should handle date-only strings by treating them as UTC midnight', () => {
-    const dateOnly = '2026-03-24',
-      result = parseAsUTC(dateOnly)
+    const dateOnly = '2026-03-24'
+    const result = parseAsUTC(dateOnly)
 
     // "2026-03-24Z" parses to midnight UTC
     expect(result.toISOString()).toBe('2026-03-24T00:00:00.000Z')

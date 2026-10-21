@@ -16,8 +16,8 @@ test('ms of a specific date', () => {
   expect(getTimestampMs(new Date('1989-05-14'))).toBe(611_107_200_000)
 })
 
-const sizeMs = getTimestampMs().toString().length,
-  sizeS = getTimestamp().toString().length
+const sizeMs = getTimestampMs().toString().length
+const sizeS = getTimestamp().toString().length
 
 test('ms is a 1000 times bigger', () => {
   expect(sizeMs - sizeS === 3).toBe(true)

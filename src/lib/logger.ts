@@ -194,8 +194,8 @@ export class Logger {
 
     if (this.options.willLogDelay) prefixes.unshift(this.__getDelay())
 
-    const context = isObjectEmpty(this.#context) ? '' : { context: this.#context },
-      line = `${prefixes.join(' ')} ${clean(...stuff, context)}`
+    const context = isObjectEmpty(this.#context) ? '' : { context: this.#context }
+    const line = `${prefixes.join(' ')} ${clean(...stuff, context)}`
     this.saveLog(line)
     if (!this.__shouldLog(level)) return
 
@@ -351,10 +351,10 @@ export class Logger {
     this.result(message, result, okLevel, errorLevel)
     /* v8 ignore start */
     if (isBrowserEnvironment()) {
-      const isOk = result.ok,
-        level = isOk ? okLevel : errorLevel,
-        toastMethods = { error: toastError, info: toastInfo, success: toastSuccess, warn: toastInfo },
-        showMethod = toastMethods[level]
+      const isOk = result.ok
+      const level = isOk ? okLevel : errorLevel
+      const toastMethods = { error: toastError, info: toastInfo, success: toastSuccess, warn: toastInfo }
+      const showMethod = toastMethods[level]
       showMethod(`${message}: ${clean(isOk ? result.value : result.error)}`)
     }
     /* v8 ignore stop */
@@ -367,9 +367,9 @@ export class Logger {
    * @example logger.test(1 === 1, '1 is equal to 1') // will log : ✔️ 1 is equal to 1
    */
   public test(thing: unknown, ...stuff: Readonly<unknown[]>) {
-    const isTruthy = Boolean(thing),
-      box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ '),
-      prefix = ' '.repeat(this.#padding - nbFourth)
+    const isTruthy = Boolean(thing)
+    const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
+    const prefix = ' '.repeat(this.#padding - nbFourth)
     this.__logIf(prefix + box, '2-test', stuff, isTruthy ? green : red)
   }
 

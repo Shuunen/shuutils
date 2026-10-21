@@ -28,6 +28,7 @@ lib modules must not call `console` nor import from a parent directory.
 
 - **Zero deps**: never add a runtime dependency, inline the few lines instead
 - **Constants**: camelCase only, never UPPER_SNAKE_CASE
+- **Declarations**: one variable per `const` / `let` statement, never `const a = 1, b = 2` (enforced by `one-var: never`)
 - **Absent values**: `undefined`, never `null`; use `isNil` from `./is-nil` to check
 - **Narrowing**: use `invariant(x, "msg")` from `./invariant` — never `x!` or silent `if (!x) return`
 - **Imports**: extensionless relative imports (`moduleResolution: bundler`)

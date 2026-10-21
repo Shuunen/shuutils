@@ -12,8 +12,8 @@ export function insertValueAfterItem<Type>(array: readonly Type[], item: Type, v
   const index = array.indexOf(item)
   if (index === nbNoIndex) return array
 
-  const arrayCopy = clone(array),
-    start = Math.min(index + nbAfter, arrayCopy.length)
+  const arrayCopy = clone(array)
+  const start = Math.min(index + nbAfter, arrayCopy.length)
   arrayCopy.splice(start, 0, value)
   return arrayCopy
 }

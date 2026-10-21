@@ -6,8 +6,8 @@ const handledLangs = ['en', 'fr'] as const
 
 export type Lang = (typeof handledLangs)[number]
 
-const defaultLang = 'en',
-  langRegex = /^\/(en|fr)\//u
+const defaultLang = 'en'
+const langRegex = /^\/(en|fr)\//u
 
 /**
  * Get the language from the path
@@ -29,8 +29,8 @@ export function handlePlural(translated: string, data?: Readonly<Record<string, 
   if (!translated.includes('|')) return fillTemplate(translated, data)
 
   // oxlint-disable-next-line typescript/no-base-to-string
-  const count = Number.parseInt(String(data?.count ?? '1'), 10),
-    [partA = '', partB = '', partC = ''] = translated.split(' | ')
+  const count = Number.parseInt(String(data?.count ?? '1'), 10)
+  const [partA = '', partB = '', partC = ''] = translated.split(' | ')
   if (partC.length > 0 && count > 1) return fillTemplate(partC, data)
 
   if ((partC.length > 0 && count === 1) || (partB.length > 0 && count > 1)) return fillTemplate(partB, data)

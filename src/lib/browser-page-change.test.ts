@@ -8,8 +8,8 @@ test('onPageChange A default callback', async () => {
 })
 
 test('onPageChange B callback', async () => {
-  let calls = 0,
-    location = ''
+  let calls = 0
+  let location = ''
   function callback(href: string) {
     calls += 1
     location = href

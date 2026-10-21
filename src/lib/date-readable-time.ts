@@ -10,13 +10,13 @@ import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInY
  */
 export function readableTime(input: number | Readonly<Date>, isLong = true) {
   /* v8 ignore next */
-  const ms = typeof input === 'number' ? input : Date.now() - input.getTime(),
-    format = (value: number, long: string, short: string) => {
-      const floor = Math.floor(value),
-        plural = floor > 1 ? 's' : '',
-        longPlural = ` ${long + plural}`
-      return `${floor}${isLong ? longPlural : short}`
-    }
+  const ms = typeof input === 'number' ? input : Date.now() - input.getTime()
+  const format = (value: number, long: string, short: string) => {
+    const floor = Math.floor(value)
+    const plural = floor > 1 ? 's' : ''
+    const longPlural = ` ${long + plural}`
+    return `${floor}${isLong ? longPlural : short}`
+  }
   if (ms < nbMsInSecond) return format(ms, 'millisecond', 'ms')
 
   if (ms < nbMsInMinute) return format(ms / nbMsInSecond, 'second', 's')

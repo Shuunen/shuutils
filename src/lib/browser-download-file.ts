@@ -5,9 +5,9 @@
  * @param fileName optional custom file name for the download.
  */
 export function downloadFile(file: Blob | MediaSource, fileName?: string) {
-  const url = URL.createObjectURL(file),
-    link = document.createElement('a'),
-    resolvedFileName = fileName ?? (file instanceof File ? file.name : 'download')
+  const url = URL.createObjectURL(file)
+  const link = document.createElement('a')
+  const resolvedFileName = fileName ?? (file instanceof File ? file.name : 'download')
   link.href = url
   link.download = resolvedFileName
   document.body.append(link)

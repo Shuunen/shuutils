@@ -15,8 +15,8 @@ function get<Type = unknown>(key: string): Type | undefined
  * @returns The value or defaultValue if not found
  */
 function get<Type = unknown>(key: string, defaultValue?: Type) {
-  const path = storage.prefix + key,
-    data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
+  const path = storage.prefix + key
+  const data = storage.media[path] // don't use getItem because it's not supported by all browsers or in memory object storage
   if (data === undefined || data === null || data === '') return defaultValue
 
   /* v8 ignore next */
@@ -36,8 +36,8 @@ function get<Type = unknown>(key: string, defaultValue?: Type) {
  * @returns The given value
  */
 function set<Type>(key: string, data: Type) {
-  const path = storage.prefix + key,
-    value = typeof data === 'string' ? data : JSON.stringify(data)
+  const path = storage.prefix + key
+  const value = typeof data === 'string' ? data : JSON.stringify(data)
   Reflect.set(storage.media, path, value)
   return data
 }

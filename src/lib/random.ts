@@ -29,9 +29,9 @@ export function randomBoolean() {
  * @returns email like `mickael.scott@gmail.com`
  */
 export function randomEmail(first: string, last: string, isShort = randomBoolean()) {
-  const provider = pickOne(['gmail.com', 'yahoo.de', 'hotmail.fr', 'outlook.com', 'proton.com']),
-    start = isShort && first[0] ? first[0].toLocaleLowerCase() : first.toLocaleLowerCase(),
-    email = `${[start, last.toLocaleLowerCase()].filter(Boolean).join('.')}@${provider}`
+  const provider = pickOne(['gmail.com', 'yahoo.de', 'hotmail.fr', 'outlook.com', 'proton.com'])
+  const start = isShort && first[0] ? first[0].toLocaleLowerCase() : first.toLocaleLowerCase()
+  const email = `${[start, last.toLocaleLowerCase()].filter(Boolean).join('.')}@${provider}`
   return email
 }
 
@@ -51,8 +51,8 @@ export function randomNumber(min = 0, max = 100) {
  * @returns object like `{ email: "mickael.scott@gmail.com", firstName: "Michael", lastName: "Scott" }`
  */
 export function randomPerson() {
-  const first = pickOne(['Michael', 'Dwight', 'Jim', 'Pam', 'Ryan', 'Andy', 'Kevin', 'Angela', 'Oscar', 'Toby']),
-    last = pickOne(['Scott', 'Schrute', 'Halpert', 'Beesly', 'Howard', 'Bernard', 'Malone', 'Martin', 'Martinez', 'Flenderson'])
+  const first = pickOne(['Michael', 'Dwight', 'Jim', 'Pam', 'Ryan', 'Andy', 'Kevin', 'Angela', 'Oscar', 'Toby'])
+  const last = pickOne(['Scott', 'Schrute', 'Halpert', 'Beesly', 'Howard', 'Bernard', 'Malone', 'Martin', 'Martinez', 'Flenderson'])
   return {
     // oxlint-disable-next-line no-magic-numbers
     age: randomNumber(18, 65),

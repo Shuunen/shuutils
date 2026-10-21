@@ -1,19 +1,19 @@
-const formatRegex = /y{4}|yy|M{4}|MM|dd|d|e{4}|e{3}|HH|mm|ss|\s/gu,
-  formatTokens: Record<string, Intl.DateTimeFormatOptions> = {
-    MM: { month: '2-digit' },
-    MMMM: { month: 'long' },
-    d: { day: 'numeric' }, // oxlint-disable-line id-length
-    dd: { day: '2-digit' },
-    eee: { weekday: 'short' },
-    eeee: { weekday: 'long' },
-    yy: { year: '2-digit' },
-    yyyy: { year: 'numeric' },
-  },
-  timeTokens: Record<string, (date: Date) => number> = {
-    HH: date => date.getHours(),
-    mm: date => date.getMinutes(),
-    ss: date => date.getSeconds(),
-  }
+const formatRegex = /y{4}|yy|M{4}|MM|dd|d|e{4}|e{3}|HH|mm|ss|\s/gu
+const formatTokens: Record<string, Intl.DateTimeFormatOptions> = {
+  MM: { month: '2-digit' },
+  MMMM: { month: 'long' },
+  d: { day: 'numeric' }, // oxlint-disable-line id-length
+  dd: { day: '2-digit' },
+  eee: { weekday: 'short' },
+  eeee: { weekday: 'long' },
+  yy: { year: '2-digit' },
+  yyyy: { year: 'numeric' },
+}
+const timeTokens: Record<string, (date: Date) => number> = {
+  HH: date => date.getHours(),
+  mm: date => date.getMinutes(),
+  ss: date => date.getSeconds(),
+}
 
 /**
  * Format a date to a specific format

@@ -4,15 +4,15 @@ import { objectSum } from './object-sum'
 
 describe(clone, () => {
   const person = {
-      age: 21,
-      details: { dateOfBirth: new Date('2001-12-22'), favouriteFood: 'sushi' },
-      name: 'John',
-      nameRegex: /^jo/iu,
-      nameValid: true,
-      nameValidator: (input: string) => input.length > 3,
-    },
-    personClone = clone(person),
-    personCloneModified = clone(person)
+    age: 21,
+    details: { dateOfBirth: new Date('2001-12-22'), favouriteFood: 'sushi' },
+    name: 'John',
+    nameRegex: /^jo/iu,
+    nameValid: true,
+    nameValidator: (input: string) => input.length > 3,
+  }
+  const personClone = clone(person)
+  const personCloneModified = clone(person)
   personCloneModified.age = 42
 
   it('clone A record', () => {
@@ -23,8 +23,8 @@ describe(clone, () => {
     expect(person.age).toBe(21)
   })
 
-  const persons = ['John', 'Fanny'],
-    personsCopy = clone(persons)
+  const persons = ['John', 'Fanny']
+  const personsCopy = clone(persons)
   personsCopy[1] = 'Bob'
 
   it('clone C array', () => {
