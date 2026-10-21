@@ -1,43 +1,44 @@
-import { build as esbuild } from 'esbuild'
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+import { build as rolldown } from 'rolldown'
+import { invariant } from './invariant'
 
-const currentDirectory = import.meta.dirname
-
-/**
- * Align the content of a file for snapshot testing
- * @param content the content of the file
- * @returns {string} the content of the file cleaned up for snapshot testing
- */
-function alignForSnap(content: string) {
-  return (
-    content
-      // clear the hash from the file name
-      .replaceAll(/(?<name>[a-z]{3,30})-[a-z\d]+(?<ext>\.js)/giu, '$<name>$<ext>')
-      // align the location of the imports
-      .replaceAll('libs/utils/', '')
-  )
-}
+// test the published bundle, not the sources, so a build step that leaks code is caught too
+const distEntry = path.join(import.meta.dirname, '../../dist/shuutils.js')
+const entryId = '\0tree-shake-entry'
 
 /**
- * Build a file using esbuild
- * @param contents the contents of the file
- * @returns {Promise<{ errors: import('esbuild').Message[], nbOutputFiles: number, output: string, warnings: import('esbuild').Message[] }>} the result of the build
+ * Build a file using rolldown, the bundler behind tsdown
+ * @param contents the contents of the file, importing from "shuutils"
+ * @returns {Promise<string>} the result of the build, ready for snapshot testing
  */
 async function build(contents: string) {
-  const result = await esbuild({
-    bundle: true,
-    format: 'esm',
-    minify: false,
+  invariant(existsSync(distEntry), 'dist/shuutils.js is missing, run pnpm run build first')
+  const warnings: string[] = []
+  const result = await rolldown({
+    input: entryId,
+    onLog: (level, log) => {
+      if (level === 'warn') warnings.push(log.message)
+    },
     platform: 'node',
-    stdin: { contents, resolveDir: currentDirectory },
+    plugins: [
+      {
+        load: id => (id === entryId ? contents : undefined),
+        name: 'tree-shake-entry',
+        resolveId: id => {
+          if (id === entryId) return id
+          if (id === 'shuutils') return distEntry
+          return undefined
+        },
+      },
+    ],
     write: false,
   })
   return `
-  ${result.outputFiles.length} files built
+  ${result.output.length} files built
 
-  ${result.warnings.length} warnings
-  ${result.warnings.map(warning => warning.text).join('\n')}
-  ${result.errors.length} errors
-  ${result.errors.map(error => error.text).join('\n')}
+  ${warnings.length} warnings
+  ${warnings.join('\n')}
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
@@ -45,32 +46,32 @@ async function build(contents: string) {
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  ${alignForSnap(result.outputFiles[0]?.text ?? '').trim()}
+  ${result.output[0].code.trim()}
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝`
 }
 
 test('tree-shake test A', async () => {
-  const result = await build(`import { randomNumber } from '../index.ts'
+  const result = await build(`import { randomNumber } from 'shuutils'
   console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))`)
   expect(result).toMatchSnapshot()
 })
 
 test('tree-shake test B', async () => {
-  const result = await build(`import { randomNumber, randomString } from '../index.ts'
+  const result = await build(`import { randomNumber, randomString } from 'shuutils'
   console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))`)
   expect(result).toMatchSnapshot()
 })
 
 test('tree-shake test C', async () => {
-  const result = await build(`import { readableTimeAgo } from '../index.ts'
+  const result = await build(`import { readableTimeAgo } from 'shuutils'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)
   expect(result).toMatchSnapshot()
 })
 
 test('tree-shake test D', async () => {
-  const result = await build(`import { toastSuccess } from '../index.ts'
+  const result = await build(`import { toastSuccess } from 'shuutils'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))`)
   expect(result).toMatchSnapshot()
 })

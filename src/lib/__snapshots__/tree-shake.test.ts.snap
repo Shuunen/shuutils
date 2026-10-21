@@ -6,23 +6,29 @@ exports[`tree-shake test A 1`] = `
 
   0 warnings
   
-  0 errors
-  
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { randomNumber } from '../index.ts'
+  import { randomNumber } from 'shuutils'
   console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // src/lib/random.ts
+  //#region dist/shuutils.js
+/**
+* Return a random number between min & max (0 & 100 if no args)
+* @param min (optional) the return number minimum included value
+* @param max (optional) the return number maximum included value
+* @returns number like : 12
+*/
 function randomNumber(min = 0, max = 100) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-// <stdin>
+//#endregion
+//#region \\0tree-shake-entry
 console.log("tree-shaking test A, only using randomNumber", randomNumber(1, 10));
+//#endregion
+export {};
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"
@@ -34,35 +40,45 @@ exports[`tree-shake test B 1`] = `
 
   0 warnings
   
-  0 errors
-  
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { randomNumber, randomString } from '../index.ts'
+  import { randomNumber, randomString } from 'shuutils'
   console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // src/lib/array-pick-one.ts
+  //#region dist/shuutils.js
+/**
+* Return an item from an array
+* @param items like : ["great", "place", "pine"]
+* @returns item like : "pine"
+*/
 function pickOne(items) {
-  if (items.length === 0) throw new Error("Array is empty");
-  return items[Math.floor(Math.random() * items.length)];
+	if (items.length === 0) throw new Error("Array is empty");
+	return items[Math.floor(Math.random() * items.length)];
 }
-
-// src/lib/random.ts
+/**
+* Give a random word or sentence without signification
+* @returns string like \`"Bolowey Opnet"\`
+*/
 function randomString() {
-  const strings = "Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(
-    ","
-  );
-  return pickOne(strings);
+	return pickOne("Bar Alto,Sin Seguritat,Lorem Ipsum,Ciao,Sit dolor,Por erestet,Tchu la Comida,Amet Inn,Aqualeris baked,Bouquet,Zu Amarillo,Ploject,Ruhe animals,Mah Plizure,Baacon pasty,Vinci mador,Alan Awake,Malohe Sutur,A priore sur,Quel memento,Kalitat arae".split(","));
 }
+/**
+* Return a random number between min & max (0 & 100 if no args)
+* @param min (optional) the return number minimum included value
+* @param max (optional) the return number maximum included value
+* @returns number like : 12
+*/
 function randomNumber(min = 0, max = 100) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-// <stdin>
+//#endregion
+//#region \\0tree-shake-entry
 console.log("tree-shaking test B, using randomNumber and randomString", randomNumber(1, 10), randomString(10));
+//#endregion
+export {};
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"
@@ -74,42 +90,71 @@ exports[`tree-shake test C 1`] = `
 
   0 warnings
   
-  0 errors
-  
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { readableTimeAgo } from '../index.ts'
+  import { readableTimeAgo } from 'shuutils'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // src/lib/constants.ts
-var nbMsInSecond = 1e3;
-var nbMsInMinute = 6e4;
-var nbMsInHour = 36e5;
-var nbMsInDay = 864e5;
-var nbMsInWeek = 6048e5;
-var nbMsInMonth = 2592e6;
-var nbMsInYear = 31536e6;
-
-// src/lib/date-relative.ts
-var timeAgoTuples = [
-  [nbMsInMinute, nbMsInSecond, "second"],
-  [nbMsInHour, nbMsInMinute, "minute"],
-  [nbMsInDay, nbMsInHour, "hour"],
-  [nbMsInWeek, nbMsInDay, "day"],
-  [nbMsInMonth, nbMsInWeek, "week"],
-  [nbMsInYear, nbMsInMonth, "month"]
+  //#region dist/shuutils.js
+const nbMsInSecond = 1e3;
+const nbMsInMinute = 6e4;
+const nbMsInHour = 36e5;
+const nbMsInDay = 864e5;
+const nbMsInWeek = 6048e5;
+const nbMsInMonth = 2592e6;
+const nbMsInYear = 31536e6;
+const timeAgoTuples = [
+	[
+		nbMsInMinute,
+		nbMsInSecond,
+		"second"
+	],
+	[
+		nbMsInHour,
+		nbMsInMinute,
+		"minute"
+	],
+	[
+		nbMsInDay,
+		nbMsInHour,
+		"hour"
+	],
+	[
+		nbMsInWeek,
+		nbMsInDay,
+		"day"
+	],
+	[
+		nbMsInMonth,
+		nbMsInWeek,
+		"week"
+	],
+	[
+		nbMsInYear,
+		nbMsInMonth,
+		"month"
+	]
 ];
+/**
+* Make a date readable for us, poor humans
+* Kudos to https://coolaj86.com/articles/time-ago-in-under-50-lines-of-javascript/
+* @param input a date or a number of milliseconds
+* @param language the language to use, default is "en"
+* @returns "a minute ago", "4 days ago"
+*/
 function readableTimeAgo(input, language = "en") {
-  const rtf = new Intl.RelativeTimeFormat(language, { numeric: "auto" }), ms = typeof input === "number" ? input : Date.now() - input.getTime();
-  for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
-  return rtf.format(-Math.floor(ms / nbMsInYear), "year");
+	const rtf = new Intl.RelativeTimeFormat(language, { numeric: "auto" }), ms = typeof input === "number" ? input : Date.now() - input.getTime();
+	for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
+	return rtf.format(-Math.floor(ms / nbMsInYear), "year");
 }
-
-// <stdin>
+//#endregion
+//#region \\0tree-shake-entry
 console.log("tree-shaking test C, only using readableTimeAgo", readableTimeAgo());
+//#endregion
+export {};
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"
@@ -121,60 +166,98 @@ exports[`tree-shake test D 1`] = `
 
   0 warnings
   
-  0 errors
-  
   ╔══════════════════════════╗
   ║  Input start             ║
   ╚══════════════════════════╝
-  import { toastSuccess } from '../index.ts'
+  import { toastSuccess } from 'shuutils'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  // src/lib/browser-toast.ts
+  //#region dist/shuutils.js
+/**
+* Hides the toast element by applying a transform and removing it after a delay.
+* @param element - The toast element to hide.
+* @param delay - The delay in milliseconds before removing the element.
+*/
 function toastHide(element, delay = 200) {
-  element.style.opacity = "0";
-  element.style.transform = "translateX(300px)";
-  setTimeout(() => {
-    element.remove();
-  }, delay);
+	element.style.opacity = "0";
+	element.style.transform = "translateX(300px)";
+	/* v8 ignore start */
+	setTimeout(() => {
+		element.remove();
+	}, delay);
+	/* v8 ignore stop */
 }
+/**
+* Shows a toast element with a specified delay.
+* @param element - The toast element to be shown.
+* @param delay - The delay in milliseconds before showing the toast.
+*/
 function toastShow(element, delay = 100) {
-  document.body.append(element);
-  setTimeout(() => {
-    element.style.opacity = "1";
-    element.style.transform = "translateX(0)";
-  }, delay);
+	document.body.append(element);
+	/* v8 ignore start */
+	setTimeout(() => {
+		element.style.opacity = "1";
+		element.style.transform = "translateX(0)";
+	}, delay);
+	/* v8 ignore stop */
 }
+/**
+* Returns the style for the toast notification based on the type.
+* @param type the type of the toast notification
+* @returns the style for the toast notification
+*/
 function toastStyle(type) {
-  if (type === "success")
-    return {
-      backgrounds: ["MediumSeaGreen", "SeaGreen"],
-      icon: "&check;",
-      iconStyle: "line-height: 21px; text-indent: 1px;"
-    };
-  if (type === "error") return { backgrounds: ["FireBrick", "Brown"], icon: "x", iconStyle: "line-height: 21.5px;" };
-  return { backgrounds: ["DodgerBlue", "RoyalBlue"], icon: "i", iconStyle: "line-height: 21px;" };
+	if (type === "success") return {
+		backgrounds: ["MediumSeaGreen", "SeaGreen"],
+		icon: "&check;",
+		iconStyle: "line-height: 21px; text-indent: 1px;"
+	};
+	if (type === "error") return {
+		backgrounds: ["FireBrick", "Brown"],
+		icon: "x",
+		iconStyle: "line-height: 21.5px;"
+	};
+	return {
+		backgrounds: ["DodgerBlue", "RoyalBlue"],
+		icon: "i",
+		iconStyle: "line-height: 21px;"
+	};
 }
+/**
+* Adds a toast notification to the document body.
+* @param type - The type of the toast notification.
+* @param message - The message to be displayed in the toast notification.
+* @param delay - The delay in milliseconds before the toast notification is removed.
+* @param padding - The padding in pixels for the toast notification.
+*/
 function toastAdd(type, message = "", delay = 0, padding = 14) {
-  const element = document.createElement("div");
-  element.setAttribute("class", "shu-toast");
-  const last = document.querySelector(".shu-toast:nth-last-child(1 of .shu-toast)")?.getBoundingClientRect().top, bottom = last === void 0 ? 0 : globalThis.innerHeight - last, { backgrounds, icon, iconStyle } = toastStyle(type);
-  element.style = \`position: fixed; display: flex; align-items: center; gap: 9px; bottom: \${bottom + padding}px; right: \${padding}px; z-index: 99999; padding: 12px 20px 11px 14px; background: linear-gradient(45deg, \${backgrounds[0]}, 20%, \${backgrounds[1]}); color: white; border-radius: 5px; box-shadow: 0 3px 7px 0 rgba(0,0,0,.5); font-size: 18px; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; transform: translateX(300px);\`;
-  element.innerHTML = \`<span style="\${iconStyle}border-radius: 50%; color: \${backgrounds[1]}; background-color: #ffffff90; width: 20px; height: 20px; text-align: center; font-weight: bolder; font-size: 12px;">\${icon}</span><span style="margin-top: -1px;">\${message}</span>\`;
-  console[type === "error" ? "error" : "log"](\`toast \${type} : \${message}\`);
-  toastShow(element);
-  if (delay > 0)
-    setTimeout(() => {
-      toastHide(element);
-    }, delay);
+	const element = document.createElement("div");
+	element.setAttribute("class", "shu-toast");
+	const last = document.querySelector(".shu-toast:nth-last-child(1 of .shu-toast)")?.getBoundingClientRect().top, bottom = last === void 0 ? 0 : globalThis.innerHeight - last, { backgrounds, icon, iconStyle } = toastStyle(type);
+	element.style = \`position: fixed; display: flex; align-items: center; gap: 9px; bottom: \${bottom + padding}px; right: \${padding}px; z-index: 99999; padding: 12px 20px 11px 14px; background: linear-gradient(45deg, \${backgrounds[0]}, 20%, \${backgrounds[1]}); color: white; border-radius: 5px; box-shadow: 0 3px 7px 0 rgba(0,0,0,.5); font-size: 18px; opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; transform: translateX(300px);\`;
+	element.innerHTML = \`<span style="\${iconStyle}border-radius: 50%; color: \${backgrounds[1]}; background-color: #ffffff90; width: 20px; height: 20px; text-align: center; font-weight: bolder; font-size: 12px;">\${icon}</span><span style="margin-top: -1px;">\${message}</span>\`;
+	console[type === "error" ? "error" : "log"](\`toast \${type} : \${message}\`);
+	toastShow(element);
+	if (delay > 0) setTimeout(() => {
+		toastHide(element);
+	}, delay);
 }
+/**
+* Displays a success toast message.
+* @param message - The success message to display.
+* @param delay - The delay in milliseconds before the toast disappears. Default is 2000ms.
+* @example utils.toastSuccess('hello world')
+*/
 function toastSuccess(message, delay = 2e3) {
-  toastAdd("success", message, delay);
+	toastAdd("success", message, delay);
 }
-
-// <stdin>
+//#endregion
+//#region \\0tree-shake-entry
 console.log("tree-shaking test D, using toastSuccess", toastSuccess("my message"));
+//#endregion
+export {};
   ╔══════════════════════════╗
   ║  Output end              ║
   ╚══════════════════════════╝"

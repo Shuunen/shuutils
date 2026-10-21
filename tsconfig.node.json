@@ -18,5 +18,5 @@
     "types": ["node", "vite/client", "vitest/globals", "vitest/importMeta", "vitest"],
     "verbatimModuleSyntax": true
   },
-  "include": ["vite.config.ts", "tsup.config.ts", "vitest.setup.ts", "src/bin", "src/vite-env.d.ts"]
+  "include": ["vite.config.ts", "tsdown.config.ts", "vitest.setup.ts", "src/bin", "src/vite-env.d.ts"]
 }
