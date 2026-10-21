@@ -34,7 +34,7 @@ export function isLibFile(filePath: string): boolean {
  * @param filePath the path of the module
  * @returns true if a sibling .test.ts file exists
  */
-export function hasSiblingTest(filePath: string): boolean {
+function hasSiblingTest(filePath: string): boolean {
   return fs.existsSync(filePath.replace(/\.ts$/, '.test.ts'))
 }
 
@@ -43,7 +43,7 @@ export function hasSiblingTest(filePath: string): boolean {
  * @param content the content of the file
  * @returns true if the content exports a function or a class
  */
-export function exportsBehaviour(content: string): boolean {
+function exportsBehaviour(content: string): boolean {
   if (content.trimStart().startsWith('/* v8 ignore start */')) return false
   return /^export (?:async )?(?:function|class) /m.test(content)
 }
@@ -53,7 +53,7 @@ export function exportsBehaviour(content: string): boolean {
  * @param line the line to check
  * @returns true if the line is blank or a line comment
  */
-export function isSkippableLine(line: string): boolean {
+function isSkippableLine(line: string): boolean {
   const trimmed = line.trim()
   return trimmed.length === 0 || trimmed.startsWith('//')
 }
@@ -82,7 +82,7 @@ export function getExportsWithoutJsdoc(content: string): string[] {
  * @param filePath the path of the file, ignored unless it is an index.ts
  * @returns true if the barrel is up to date
  */
-export function isBarrelUpToDate(filePath: string): boolean {
+function isBarrelUpToDate(filePath: string): boolean {
   if (path.basename(filePath) !== 'index.ts') return true
   const libDirectory = path.join(path.dirname(filePath), 'lib')
   if (!fs.existsSync(libDirectory)) return true
@@ -98,7 +98,7 @@ export function isBarrelUpToDate(filePath: string): boolean {
  * @param content the content of the file
  * @returns the content without comments
  */
-export function stripComments(content: string): string {
+function stripComments(content: string): string {
   return content.replaceAll(/\/\*[\s\S]*?\*\//gu, '').replaceAll(/\/\/.*$/gmu, '')
 }
 
