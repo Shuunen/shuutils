@@ -65,7 +65,7 @@
     "url": "git+https://github.com/Shuunen/shuutils.git"
   },
   "scripts": {
-    "build": "turbo run build:tsc build:tsdown && echo build completed successfully || (echo Please fix build errors and run pnpm run build to check for remaining build issues && exit 1)",
+    "build": "turbo run build:tsc build:tsdown && pnpm mark && echo build completed successfully || (echo Please fix build errors and run pnpm run build to check for remaining build issues && exit 1)",
     "build:tsc": "tsc -b && echo build:tsc completed successfully || (echo Please fix type errors and run pnpm run build:tsc to check for remaining type issues && exit 1)",
     "build:tsdown": "tsdown && echo build:tsdown completed successfully || (echo Please fix build errors and run pnpm run build:tsdown to check for remaining build issues && exit 1)",
     "check": "turbo run --output-logs=errors-only lint:types lint:knip lint:format lint:issues lint:repo build:tsc build:tsdown test:unit && echo check completed successfully",
@@ -77,6 +77,7 @@
     "lint:repo": "bun src/bin/repo-lint.cli.ts --target=\"src/**/*.ts\" && echo lint:repo completed successfully",
     "lint:types": "tsc -p tsconfig.app.json && tsc -p tsconfig.node.json && echo lint:types completed successfully || (echo Please fix type errors and run pnpm run lint:types to check for remaining type issues && exit 1)",
     "list": "cd src && bun ./bin/barrel-maker.cli.ts --target=\"./lib/*.ts\" --ext=\"\" && echo list completed successfully",
+    "mark": "bun src/bin/unique-mark.cli.ts dist && echo mark success",
     "prepack": "pnpm run build",
     "test": "turbo run test:unit",
     "test:ui": "vitest --ui",
