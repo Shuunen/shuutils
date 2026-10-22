@@ -1,47 +1,51 @@
-import { defineConfig } from 'tsdown'
+import { defineConfig, type UserConfig } from 'tsdown'
+import { uniqueMark } from './src/plugins/unique-mark.ts'
 
-const banner = '// shuutils __unique-mark__\n'
 const shebang = '#!/usr/bin/env node\n'
 
+const base = {
+  // keep the .js / .d.ts names that package.json exports point to
+  fixedExtension: false,
+  format: ['esm'],
+  minify: false,
+  sourcemap: false,
+  treeshake: true,
+} satisfies UserConfig
+
+// each config gets its own uniqueMark instance, the plugin keeps the resolved root per instance
 // oxlint-disable-next-line import/no-default-export
 export default defineConfig([
   {
-    banner: { js: banner },
+    ...base,
     clean: true,
     dts: { compilerOptions: { types: ['node', 'vite/client'] } },
+    entry: { shuutils: 'src/index.ts' },
+    plugins: [uniqueMark()],
     // the root tsconfig.json is a solution file with no files, the dts generator needs the real project
     tsconfig: 'tsconfig.app.json',
-    entry: { shuutils: 'src/index.ts' },
-    // keep the .js / .cjs / .d.ts / .d.cts names that package.json exports point to
-    fixedExtension: false,
-    format: ['esm', 'cjs'],
-    minify: false,
-    sourcemap: false,
-    treeshake: true,
   },
   {
-    banner: { js: shebang + banner },
+    ...base,
     clean: false,
-    // the cjs output rewrites import.meta to {}, so the bin entry would never self-start
+    dts: { compilerOptions: { types: ['node'] } },
+    entry: { plugins: 'src/plugins/index.ts' },
+    plugins: [uniqueMark()],
+    tsconfig: 'tsconfig.app.json',
+  },
+  {
+    ...base,
+    banner: { js: shebang },
+    clean: false,
+    // these files only run as bins, and import.meta.main is missing on older node 22 releases
     define: { 'import.meta.main': 'true' },
     dts: false,
-    entry: { 'unique-mark': 'src/bin/unique-mark.cli.ts' },
-    fixedExtension: false,
-    format: ['cjs'],
-    minify: false,
-    sourcemap: false,
-    treeshake: true,
-  },
-  {
-    banner: { js: shebang + banner },
-    clean: false,
-    // esm only, these clis rely on import.meta.main and top level await, which cjs cannot express
-    dts: false,
-    entry: { 'barrel-maker': 'src/bin/barrel-maker.cli.ts', 'changelog-generator': 'src/bin/changelog-generator.cli.ts', 'header-injector': 'src/bin/header-injector.cli.ts', 'repo-lint': 'src/bin/repo-lint.cli.ts' },
-    fixedExtension: false,
-    format: ['esm'],
-    minify: false,
-    sourcemap: false,
-    treeshake: true,
+    entry: {
+      'barrel-maker': 'src/bin/barrel-maker.cli.ts',
+      'changelog-generator': 'src/bin/changelog-generator.cli.ts',
+      'header-injector': 'src/bin/header-injector.cli.ts',
+      'repo-lint': 'src/bin/repo-lint.cli.ts',
+      'unique-mark': 'src/bin/unique-mark.cli.ts',
+    },
+    plugins: [uniqueMark()],
   },
 ])
