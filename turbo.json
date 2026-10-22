@@ -16,6 +16,13 @@
     "lint:issues": {
       "inputs": ["src/**/*.ts", ".oxlintrc.json", "tsconfig*.json"]
     },
+    "lint:knip": {
+      "inputs": ["src/**", "*.{ts,json}"]
+    },
+    "lint:package": {
+      "dependsOn": ["build:tsdown"],
+      "inputs": ["dist/**", "package.json", "README.md", "LICENSE"]
+    },
     "lint:repo": {
       "inputs": ["src/**/*.ts", "src/bin/lint.*.ts"]
     },
