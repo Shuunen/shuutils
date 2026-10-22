@@ -1,7 +1,7 @@
-import { objectDeserialize } from './object-serializer'
-import { Result } from './result'
+import { objectDeserialize } from './object-serializer.ts'
+import { Result } from './result.ts'
 
-const JSON_START_REGEX = /^(?:\[\s*)?\{\s*"/u
+const jsonStartRegex = /^(?:\[\s*)?\{\s*"/u
 
 /**
  * Check if the given string is a JSON object
@@ -9,7 +9,7 @@ const JSON_START_REGEX = /^(?:\[\s*)?\{\s*"/u
  * @returns The parsed object or false if parsing failed
  */
 export function isJson(jsonString: string) {
-  const hasValidStart = JSON_START_REGEX.test(jsonString)
+  const hasValidStart = jsonStartRegex.test(jsonString)
   if (!hasValidStart) return false
 
   try {
@@ -23,11 +23,15 @@ export function isJson(jsonString: string) {
 /**
  * Parse a supposed JSON string into an object
  * @param json The JSON string to parse
- * @returns An object with shape { error: string | undefined, value: Type | Record<string, unknown> } where error is a message if parsing fails, otherwise undefined.
+ * @param options the options
+ * @param options.functions if true, functions serialized by objectSerialize are revived by running their source code, only use it on a trusted string, default false
+ * @returns a Result, ok with the parsed value, or an error message like "Invalid JSON string: ..."
+ * @example const result = parseJson<{ age: number }>('{ "age": 32 }')
+ * if (result.ok) console.log(result.value.age)
  */
-export function parseJson<Type>(json: string) {
+export function parseJson<Type>(json: string, { functions = false }: Readonly<{ functions?: boolean }> = {}) {
   try {
-    return Result.ok(objectDeserialize(json) as Type)
+    return Result.ok(objectDeserialize(json, { functions }) as Type)
   } catch (error) {
     /* v8 ignore next */
     const message = error instanceof Error ? error.message : String(error)

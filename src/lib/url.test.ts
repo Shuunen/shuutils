@@ -1,4 +1,4 @@
-import { base64CharToPercentEncoded, decodeFromUrl, encodeForUrl, fromBase64, toBase64 } from './url'
+import { base64CharToPercentEncoded, decodeFromUrl, encodeForUrl, fromBase64, toBase64 } from './url.ts'
 
 describe('url', () => {
   it('toBase64 A should encode a string to base64', () => {
@@ -29,6 +29,11 @@ describe('url', () => {
   it('fromBase64 D should handle base64 with special characters', () => {
     const encoded = toBase64('Test\u0000\u0001\u0002')
     expect(fromBase64(encoded)).toMatchInlineSnapshot(`"Test\u0000\u0001\u0002"`)
+  })
+
+  it('decodeFromUrl keeps a serialized function as data', () => {
+    const encoded = encodeForUrl({ run: { __function__: '() => 42' } })
+    expect(decodeFromUrl(encoded)).toStrictEqual({ run: { __function__: '() => 42' } })
   })
 
   it('encodeForUrl A should encode object data for URL', () => {

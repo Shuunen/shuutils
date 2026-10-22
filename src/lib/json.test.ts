@@ -1,5 +1,5 @@
-import { isJson, parseJson } from './json'
-import { Result } from './result'
+import { isJson, parseJson } from './json.ts'
+import { Result } from './result.ts'
 
 describe('json utils', () => {
   it('isJson A valid JSON', () => {
@@ -24,6 +24,14 @@ describe('json utils', () => {
       },
     }
   `)
+  })
+
+  it('parseJson E keeps a serialized function as data unless asked to revive it', () => {
+    const json = '{"run":{"__function__":"() => 42"}}'
+    const safe = Result.unwrap(parseJson<{ run: unknown }>(json))
+    const revived = Result.unwrap(parseJson<{ run: () => number }>(json, { functions: true }))
+    expect(safe.value?.run).toStrictEqual({ __function__: '() => 42' })
+    expect(revived.value?.run()).toBe(42)
   })
 
   it('parseJson B invalid object string', () => {
