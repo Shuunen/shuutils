@@ -1,5 +1,5 @@
-import { parseJson } from './json'
-import { Result } from './result'
+import { parseJson } from './json.ts'
+import { Result } from './result.ts'
 
 /**
  * Encode a string to base64
@@ -7,7 +7,7 @@ import { Result } from './result'
  * @returns Base64 encoded string
  */
 export function toBase64(str: string) {
-  return globalThis.btoa(encodeURIComponent(str).replaceAll(/%([0-9A-F]{2})/g, (_value: string, hex: string) => String.fromCodePoint(Number.parseInt(hex, 16))))
+  return globalThis.btoa(encodeURIComponent(str).replaceAll(/%(?<hex>[0-9A-F]{2})/g, (_value: string, hex: string) => String.fromCodePoint(Number.parseInt(hex, 16))))
 }
 
 /**
@@ -31,7 +31,6 @@ export function fromBase64(b64: string) {
   const result = Result.trySafe(() =>
     decodeURIComponent(
       Array.from(globalThis.atob(b64))
-        // oxlint-disable-next-line max-nested-callbacks
         .map(char => base64CharToPercentEncoded(char))
         .join(''),
     ),
