@@ -26,15 +26,17 @@ export function emit<Data>(name: string, data?: Readonly<Data>, media: ListenerM
  * @param callback the callback to call when the event is emitted
  * @param media the media to listen to the event, like window or a dom element
  * @returns false if the event cannot be not listened to or a listener object if it can
+ * @example on<{ id: number }>('user-selected', user => console.log(user.id))
  */
-export function on(name: string, callback: (data: unknown, event: Event) => unknown, media: ListenerMedia = globalThis) {
+// oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- an event name cannot carry its data type, this lets callers name it like emit does
+export function on<Data = unknown>(name: string, callback: (data: Data, event: Event) => unknown, media: ListenerMedia = globalThis) {
   /**
    * The callback to call when the event is emitted
    * @param event the event
    * @returns the result of the callback
    */
   function onCallback(event: Event) {
-    const eventData = event instanceof CustomEvent ? (event.detail as unknown) : (event as unknown)
+    const eventData = (event instanceof CustomEvent ? event.detail : event) as Data
     // oxlint-disable-next-line prefer-await-to-callbacks
     return callback(eventData, event)
   }
