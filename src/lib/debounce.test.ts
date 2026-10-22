@@ -1,4 +1,4 @@
-import { debounce } from './debounce'
+import { debounce } from './debounce.ts'
 
 describe('debounce', () => {
   it('debounce A resolves with the callback result', async () => {
@@ -38,5 +38,15 @@ describe('debounce', () => {
     const results = await Promise.all([debounced(1), debounced(2), debounced(3)])
     expect(calls).toBe(1)
     expect(results).toStrictEqual([3, 3, 3])
+  })
+
+  it('debounce E rejects every pending call when the callback throws', async () => {
+    const debounced = debounce((value: number) => {
+      if (value > 0) throw new Error(`no ${value}`)
+      return value
+    }, 5)
+    const results = await Promise.allSettled([debounced(1), debounced(2)])
+    expect(results.map(result => result.status)).toStrictEqual(['rejected', 'rejected'])
+    await expect(debounced(0)).resolves.toBe(0)
   })
 })

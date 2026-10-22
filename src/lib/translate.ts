@@ -1,13 +1,13 @@
-import { getPath } from './browser-routing'
-import { Result } from './result'
-import { fillTemplate } from './string-template'
+import { getPath } from './browser-routing.ts'
+import { Result } from './result.ts'
+import { fillTemplate } from './string-template.ts'
 
 const handledLangs = ['en', 'fr'] as const
 
 export type Lang = (typeof handledLangs)[number]
 
 const defaultLang = 'en'
-const langRegex = /^\/(en|fr)\//u
+const langRegex = /^\/(?<lang>en|fr)\//u
 
 /**
  * Get the language from the path
@@ -15,7 +15,7 @@ const langRegex = /^\/(en|fr)\//u
  * @returns the language, like "en"
  */
 export function getLangFromPath(path: string) {
-  const detected = langRegex.exec(path)?.[1] ?? defaultLang
+  const detected = langRegex.exec(path)?.groups?.lang ?? defaultLang
   return detected === 'fr' ? 'fr' : defaultLang
 }
 
@@ -28,8 +28,8 @@ export function getLangFromPath(path: string) {
 export function handlePlural(translated: string, data?: Readonly<Record<string, unknown>>) {
   if (!translated.includes('|')) return fillTemplate(translated, data)
 
-  // oxlint-disable-next-line typescript/no-base-to-string
-  const count = Number.parseInt(String(data?.count ?? '1'), 10)
+  const rawCount = data?.count ?? 1
+  const count = typeof rawCount === 'number' ? rawCount : Number(rawCount)
   const [partA = '', partB = '', partC = ''] = translated.split(' | ')
   if (partC.length > 0 && count > 1) return fillTemplate(partC, data)
 
