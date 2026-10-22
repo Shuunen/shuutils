@@ -1,4 +1,4 @@
-import { byProperty } from './object-sort-by-property'
+import { byProperty } from './object-sort-by-property.ts'
 
 describe(byProperty, () => {
   const users = [

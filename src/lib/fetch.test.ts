@@ -1,21 +1,22 @@
-import { fetchJson } from './fetch'
+import { fetchJson } from './fetch.ts'
 
 // Mock fetch globally
 const mockFetch = vi.fn<(...args: unknown[]) => Promise<unknown>>()
 vi.stubGlobal('fetch', mockFetch)
 
-test('fetchJson A should successfully fetch and parse JSON data', async () => {
-  const mockData = { id: 123, message: 'success' }
-  const mockResponse = {
-    json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
-  }
-  mockFetch.mockResolvedValue(mockResponse)
+describe('fetch', () => {
+  it('fetchJson A should successfully fetch and parse JSON data', async () => {
+    const mockData = { id: 123, message: 'success' }
+    const mockResponse = {
+      json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
+    }
+    mockFetch.mockResolvedValue(mockResponse)
 
-  const result = await fetchJson('https://api.example.com/data', { method: 'GET' })
+    const result = await fetchJson('https://api.example.com/data', { method: 'GET' })
 
-  expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', { method: 'GET' })
-  expect(mockResponse.json).toHaveBeenCalledWith()
-  expect(result).toMatchInlineSnapshot(`
+    expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', { method: 'GET' })
+    expect(mockResponse.json).toHaveBeenCalledWith()
+    expect(result).toMatchInlineSnapshot(`
     Ok {
       "ok": true,
       "value": {
@@ -24,69 +25,70 @@ test('fetchJson A should successfully fetch and parse JSON data', async () => {
       },
     }
   `)
-})
+  })
 
-test('fetchJson B should handle fetch network errors', async () => {
-  const networkError = new Error('Network error')
-  mockFetch.mockRejectedValue(networkError)
+  it('fetchJson B should handle fetch network errors', async () => {
+    const networkError = new Error('Network error')
+    mockFetch.mockRejectedValue(networkError)
 
-  const result = await fetchJson('https://api.example.com/error', { method: 'GET' })
+    const result = await fetchJson('https://api.example.com/error', { method: 'GET' })
 
-  expect(result).toMatchInlineSnapshot(`
+    expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "fetch failed : Error: Network error",
       "ok": false,
     }
   `)
-})
+  })
 
-test('fetchJson C should handle JSON parsing errors', async () => {
-  const mockResponse = {
-    json: vi.fn<() => Promise<unknown>>().mockRejectedValue(new Error('Invalid JSON')),
-  }
-  mockFetch.mockResolvedValue(mockResponse)
+  it('fetchJson C should handle JSON parsing errors', async () => {
+    const mockResponse = {
+      json: vi.fn<() => Promise<unknown>>().mockRejectedValue(new Error('Invalid JSON')),
+    }
+    mockFetch.mockResolvedValue(mockResponse)
 
-  const result = await fetchJson('https://api.example.com/invalid', { method: 'POST' })
+    const result = await fetchJson('https://api.example.com/invalid', { method: 'POST' })
 
-  expect(result).toMatchInlineSnapshot(`
+    expect(result).toMatchInlineSnapshot(`
     Err {
       "error": "Error: Invalid JSON",
       "ok": false,
     }
   `)
-})
+  })
 
-test('fetchJson D should pass request options correctly', async () => {
-  const mockData = { status: 'ok' }
-  const mockResponse = {
-    json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
-  }
-  mockFetch.mockResolvedValue(mockResponse)
+  it('fetchJson D should pass request options correctly', async () => {
+    const mockData = { status: 'ok' }
+    const mockResponse = {
+      json: vi.fn<() => Promise<unknown>>().mockResolvedValue(mockData),
+    }
+    mockFetch.mockResolvedValue(mockResponse)
 
-  const options = {
-    body: JSON.stringify({ test: 'data' }),
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-  }
-  const result = await fetchJson('https://api.example.com/post', options)
+    const options = {
+      body: JSON.stringify({ test: 'data' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    }
+    const result = await fetchJson('https://api.example.com/post', options)
 
-  expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/post', options)
-  expect(result.ok).toBe(true)
-  if (result.ok) expect(result.value).toStrictEqual(mockData)
-})
+    expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/post', options)
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.value).toStrictEqual(mockData)
+  })
 
-test('fetchJson E should handle empty response body', async () => {
-  const mockResponse = {
-    json: vi.fn<() => Promise<unknown>>().mockResolvedValue(null),
-  }
-  mockFetch.mockResolvedValue(mockResponse)
+  it('fetchJson E should handle empty response body', async () => {
+    const mockResponse = {
+      json: vi.fn<() => Promise<unknown>>().mockResolvedValue(null),
+    }
+    mockFetch.mockResolvedValue(mockResponse)
 
-  const result = await fetchJson('https://api.example.com/empty', { method: 'GET' })
+    const result = await fetchJson('https://api.example.com/empty', { method: 'GET' })
 
-  expect(result).toMatchInlineSnapshot(`
+    expect(result).toMatchInlineSnapshot(`
     Ok {
       "ok": true,
       "value": null,
     }
   `)
+  })
 })

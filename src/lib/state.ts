@@ -1,5 +1,5 @@
 // oxlint-disable promise/prefer-await-to-callbacks
-import type { ShuutilsStorage } from './storage'
+import type { ShuutilsStorage } from './storage.ts'
 
 type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown) => void)
 
@@ -10,7 +10,6 @@ type StateCallback = (() => void) | ((updatedKey: string, updatedValue?: unknown
  * @param onlyStoreKeys The keys to sync with the storage object, if empty all keys will be synced
  * @returns The state object and a watch function
  */
-// oxlint-disable-next-line max-lines-per-function
 export function createState<State extends object>(data: State, stateStorage?: ShuutilsStorage, onlyStoreKeys: Array<keyof State> = []) {
   type StateKey = keyof State
   const store = (key: string | symbol) => stateStorage !== undefined && (onlyStoreKeys.length === 0 || onlyStoreKeys.includes(key as StateKey))

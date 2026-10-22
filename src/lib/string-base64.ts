@@ -1,4 +1,4 @@
-import { base64Regex, base64TypeRegex } from './string-regex'
+import { base64Regex, base64TypeRegex } from './string-regex.ts'
 
 /**
  * Check if the string is a base64 string

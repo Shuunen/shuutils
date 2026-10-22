@@ -1,4 +1,4 @@
-import { insertValueAfterItem } from './array-insert-after'
+import { insertValueAfterItem } from './array-insert-after.ts'
 
 describe(insertValueAfterItem, () => {
   it('insertValueAfterItem A insert value after existing item', () => {

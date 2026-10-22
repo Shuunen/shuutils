@@ -1,9 +1,11 @@
-import { isObjectEmpty } from './object-is-empty'
+import { isObjectEmpty } from './object-is-empty.ts'
 
-test('isObjectEmpty A on empty object', () => {
-  expect(isObjectEmpty({})).toBe(true)
-})
+describe('object-is-empty', () => {
+  it('isObjectEmpty A on empty object', () => {
+    expect(isObjectEmpty({})).toBe(true)
+  })
 
-test('isObjectEmpty B on non-empty object', () => {
-  expect(isObjectEmpty({ name: 'John' })).toBe(false)
+  it('isObjectEmpty B on non-empty object', () => {
+    expect(isObjectEmpty({ name: 'John' })).toBe(false)
+  })
 })

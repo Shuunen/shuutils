@@ -1,5 +1,5 @@
-import { consoleLog } from './browser-console'
-import { sleep } from './sleep'
+import { consoleLog } from './browser-console.ts'
+import { sleep } from './sleep.ts'
 
 /**
  * Default callback for onPageChange

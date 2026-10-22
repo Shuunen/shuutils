@@ -1,5 +1,4 @@
 /* v8 ignore start */
-// oxlint-disable no-console
 
 /**
  * Log a message to the native console when it's needed to use the native (boring) console

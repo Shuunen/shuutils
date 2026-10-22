@@ -2,8 +2,8 @@ import { existsSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { isBrowserEnvironment, isDeployedInDevNamespace, isDevEnvironment, isTestEnvironment } from './environment'
-import { invariant } from './invariant'
+import { isBrowserEnvironment, isDeployedInDevNamespace, isDevEnvironment, isTestEnvironment } from './environment.ts'
+import { invariant } from './invariant.ts'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
@@ -18,10 +18,9 @@ describe('environment utils', () => {
     ['G should not detect any test environment', {}, false],
   ] as const
 
-  for (const [letter, sample, expected] of testSamples)
-    it(`isTestEnvironment ${letter}`, () => {
-      expect(isTestEnvironment(sample)).toBe(expected)
-    })
+  it.each(testSamples)('isTestEnvironment %s', (_title, sample, expected) => {
+    expect(isTestEnvironment(sample)).toBe(expected)
+  })
 
   const browserSamples = [
     ['A we want dev env by default to not be detected as browser', undefined, false],
@@ -30,10 +29,9 @@ describe('environment utils', () => {
     ['D empty userAgent should not be detected as browser', '', false],
   ] as const
 
-  for (const [letter, sample, expected] of browserSamples)
-    it(`isBrowserEnvironment ${letter}`, () => {
-      expect(isBrowserEnvironment(sample)).toBe(expected)
-    })
+  it.each(browserSamples)('isBrowserEnvironment %s', (_title, sample, expected) => {
+    expect(isBrowserEnvironment(sample)).toBe(expected)
+  })
 
   describe(isDevEnvironment, () => {
     beforeEach(() => {
@@ -87,19 +85,19 @@ describe(isDeployedInDevNamespace, () => {
   })
 })
 
-describe('environment utils in the cjs bundle', () => {
-  // import.meta does not exist in cjs, so the defaults must not crash there
-  const distCjs = path.join(import.meta.dirname, '../../dist/shuutils.cjs')
+describe('environment utils in the bundle loaded through require', () => {
+  // cjs consumers load the esm bundle with require(esm), where import.meta.env does not exist, so the defaults must not crash there
+  const distEsm = path.join(import.meta.dirname, '../../dist/shuutils.js')
 
   it('isDevEnvironment should not throw without import.meta.env', () => {
-    invariant(existsSync(distCjs), 'dist/shuutils.cjs is missing, run pnpm run build first')
-    const bundle = createRequire(import.meta.url)(distCjs) as typeof import('./environment')
+    invariant(existsSync(distEsm), 'dist/shuutils.js is missing, run pnpm run build first')
+    const bundle = createRequire(import.meta.url)(distEsm) as { isDeployedInDevNamespace: typeof isDeployedInDevNamespace; isDevEnvironment: typeof isDevEnvironment }
     expect(bundle.isDevEnvironment()).toBeUndefined()
   })
 
   it('isDeployedInDevNamespace should not throw without import.meta.env', () => {
-    invariant(existsSync(distCjs), 'dist/shuutils.cjs is missing, run pnpm run build first')
-    const bundle = createRequire(import.meta.url)(distCjs) as typeof import('./environment')
+    invariant(existsSync(distEsm), 'dist/shuutils.js is missing, run pnpm run build first')
+    const bundle = createRequire(import.meta.url)(distEsm) as { isDeployedInDevNamespace: typeof isDeployedInDevNamespace; isDevEnvironment: typeof isDevEnvironment }
     mockLocationHost('my-app.example.com')
     expect(bundle.isDeployedInDevNamespace()).toBe(false)
   })

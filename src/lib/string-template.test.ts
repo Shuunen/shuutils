@@ -1,4 +1,4 @@
-import { fillTemplate } from './string-template'
+import { fillTemplate } from './string-template.ts'
 
 describe('string-template', () => {
   const data = {

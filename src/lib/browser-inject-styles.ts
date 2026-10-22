@@ -1,4 +1,4 @@
-import { Result } from './result'
+import { Result } from './result.ts'
 
 /**
  * Inject styles in the DOM

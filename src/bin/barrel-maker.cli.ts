@@ -1,9 +1,9 @@
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { nbThird } from '../lib/constants'
-import { Logger } from '../lib/logger'
-import { Result } from '../lib/result'
-import { globFiles } from './glob-files'
+import { nbThird } from '../lib/constants.ts'
+import { Logger } from '../lib/logger.ts'
+import { Result } from '../lib/result.ts'
+import { globFiles } from './glob-files.ts'
 
 /* v8 ignore next */
 const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })

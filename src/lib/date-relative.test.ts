@@ -1,6 +1,6 @@
-import { nbMsInDay, nbMsInMonth, nbMsInWeek, nbMsInYear } from './constants'
-import { dateIso10 } from './date-iso'
-import { daysAgo, daysAgoIso10, daysFromNow, readableTimeAgo } from './date-relative'
+import { nbMsInDay, nbMsInMonth, nbMsInWeek, nbMsInYear } from './constants.ts'
+import { dateIso10 } from './date-iso.ts'
+import { daysAgo, daysAgoIso10, daysFromNow, readableTimeAgo } from './date-relative.ts'
 
 describe('date-relative', () => {
   it('daysFromNow A without param', () => {
@@ -38,8 +38,7 @@ describe('date-relative', () => {
     [nbMsInYear, 'last year'],
   ] as const
 
-  for (const [index, [input, expected]] of samples.entries())
-    it(`readableTimeAgo should calculate time ago correctly (index ${index})`, () => {
-      expect(readableTimeAgo(input)).toBe(expected)
-    })
+  it.each(samples)('readableTimeAgo should turn %s ms into "%s"', (input, expected) => {
+    expect(readableTimeAgo(input)).toBe(expected)
+  })
 })

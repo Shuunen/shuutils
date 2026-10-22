@@ -1,4 +1,4 @@
-import { alignForSnap } from './testing-align-for-snap'
+import { alignForSnap } from './testing-align-for-snap.ts'
 
 // no happy-dom registration here on purpose : alignForSnap must not touch DOM globals that do not exist
 

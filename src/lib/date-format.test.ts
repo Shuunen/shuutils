@@ -1,4 +1,4 @@
-import { formatDate } from './date-format'
+import { formatDate } from './date-format.ts'
 
 describe('date-format', () => {
   const date = new Date('2021-09-02T07:08:28')

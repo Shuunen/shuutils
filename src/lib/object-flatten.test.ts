@@ -1,4 +1,4 @@
-import { flatten } from './object-flatten'
+import { flatten } from './object-flatten.ts'
 
 describe('object-flatten', () => {
   const person = {

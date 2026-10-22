@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs'
-import { gray, green, red, yellow } from '../lib/colors'
-import { nbThird } from '../lib/constants'
-import { Logger } from '../lib/logger'
-import { Result } from '../lib/result'
-import { globFiles } from './glob-files'
+import { gray, green, red, yellow } from '../lib/colors.ts'
+import { nbThird } from '../lib/constants.ts'
+import { Logger } from '../lib/logger.ts'
+import { Result } from '../lib/result.ts'
+import { globFiles } from './glob-files.ts'
 
 // use me like :
 //  bun src/bin/header-injector.cli.ts --header="Copyright 2026 ACME"

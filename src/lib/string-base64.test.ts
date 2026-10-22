@@ -1,4 +1,4 @@
-import { isBase64, parseBase64 } from './string-base64'
+import { isBase64, parseBase64 } from './string-base64.ts'
 
 describe('string-base64', () => {
   it('isBase64 valid with data', () => {

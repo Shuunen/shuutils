@@ -1,4 +1,4 @@
-import { isBrowserEnvironment } from './environment'
+import { isBrowserEnvironment } from './environment.ts'
 
 /**
  * Remove extra slashes from URL

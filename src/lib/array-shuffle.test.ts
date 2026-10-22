@@ -1,4 +1,4 @@
-import { shuffleArray } from './array-shuffle'
+import { shuffleArray } from './array-shuffle.ts'
 
 describe('array-shuffle', () => {
   it('shuffleArray A does not mutate the original array', () => {
@@ -12,7 +12,7 @@ describe('array-shuffle', () => {
   })
 
   it('shuffleArray C keeps the same members', () => {
-    expect(shuffleArray([1, 2, 3, 4, 5]).sort((a, b) => a - b)).toStrictEqual([1, 2, 3, 4, 5])
+    expect(shuffleArray([1, 2, 3, 4, 5]).toSorted((first, second) => first - second)).toStrictEqual([1, 2, 3, 4, 5])
   })
 
   it('shuffleArray D on an empty array', () => {

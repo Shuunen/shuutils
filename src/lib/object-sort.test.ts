@@ -1,5 +1,5 @@
-import { objectEqual } from './object-equal'
-import { objectSort } from './object-sort'
+import { objectEqual } from './object-equal.ts'
+import { objectSort } from './object-sort.ts'
 
 describe(objectSort, () => {
   it('objectSort A sort a simple object', () => {

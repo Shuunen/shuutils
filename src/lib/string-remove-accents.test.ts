@@ -1,4 +1,4 @@
-import { removeAccents } from './string-remove-accents'
+import { removeAccents } from './string-remove-accents.ts'
 
 describe('string-remove-accents', () => {
   it('removeAccents A basic accents', () => {

@@ -1,4 +1,4 @@
-import { removeValueFromArray } from './array-remove-value'
+import { removeValueFromArray } from './array-remove-value.ts'
 
 describe(removeValueFromArray, () => {
   it('removeValueFromArray A remove existing value', () => {

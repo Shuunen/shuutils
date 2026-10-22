@@ -1,4 +1,4 @@
-import { isHtml } from './string-regex'
+import { isHtml } from './string-regex.ts'
 
 describe('string-regex', () => {
   it('isHtml on html', () => {

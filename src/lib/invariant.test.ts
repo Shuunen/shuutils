@@ -1,4 +1,4 @@
-import { invariant } from './invariant'
+import { invariant } from './invariant.ts'
 
 describe('invariant', () => {
   it('invariant A does not throw on a truthy condition', () => {
@@ -22,6 +22,6 @@ describe('invariant', () => {
   it('invariant D narrows the type', () => {
     const value: string | undefined = 'hello'
     invariant(value, 'value is missing')
-    expect(value.length).toBe(5)
+    expect(value).toHaveLength(5)
   })
 })

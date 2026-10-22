@@ -1,5 +1,5 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { alignForSnap } from './testing-align-for-snap'
+import { alignForSnap } from './testing-align-for-snap.ts'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 

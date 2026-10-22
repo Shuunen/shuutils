@@ -1,6 +1,6 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { fileToBase64 } from './browser-file-to-base64'
-import { Result } from './result'
+import { fileToBase64 } from './browser-file-to-base64.ts'
+import { Result } from './result.ts'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
