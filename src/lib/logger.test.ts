@@ -1,8 +1,8 @@
-import { createInMemoryDriver } from './async-storage'
-import { red } from './colors'
-import { Logger } from './logger'
-import { Result } from './result'
-import { alignForSnap } from './testing-align-for-snap'
+import { createInMemoryDriver } from './async-storage.ts'
+import { red } from './colors.ts'
+import { Logger } from './logger.ts'
+import { Result } from './result.ts'
+import { alignForSnap } from './testing-align-for-snap.ts'
 
 describe('logger', () => {
   it('logger A', () => {
@@ -247,6 +247,28 @@ describe('logger', () => {
     expect(afterClear).toMatchInlineSnapshot(`[]`)
   })
 
+  it('logger saveLogs A keeps a storage key holding something else than logs untouched', async () => {
+    const storage = createInMemoryDriver()
+    await storage.set('logs', { otherApp: true })
+    const loggerX = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerX.info('first line')
+    loggerX.info('second line')
+    await expect(loggerX.getLogs()).resolves.toStrictEqual([])
+    await expect(storage.get('logs')).resolves.toStrictEqual({ otherApp: true })
+  })
+
+  it('logger saveLogs B keeps saving after a failed save', async () => {
+    const storage = createInMemoryDriver()
+    const set = vi.spyOn(storage, 'set').mockRejectedValueOnce(new Error('disk full'))
+    const loggerY = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerY.info('lost line')
+    await loggerY.getLogs()
+    loggerY.info('kept line')
+    const logs = await loggerY.getLogs()
+    set.mockRestore()
+    expect(logs).toHaveLength(1)
+  })
+
   it('logger getLogs A should handle storage get failure gracefully', async () => {
     const badDriver = {
       delete: () => Promise.resolve(),
@@ -279,6 +301,27 @@ describe('logger', () => {
     expect(logs).toHaveLength(10)
   })
 
+  it('logger saveLog B should batch a burst of logs into a single read and write', async () => {
+    const driver = createInMemoryDriver()
+    const getSpy = vi.spyOn(driver, 'get')
+    const setSpy = vi.spyOn(driver, 'set')
+    const loggerV = new Logger({ storage: driver, willLogDelay: false, willOutputToConsole: false })
+    for (let index = 0; index < 50; index += 1) loggerV.info(`log ${index}`)
+    await loggerV.getLogs()
+    expect(setSpy).toHaveBeenCalledOnce()
+    expect(getSpy).toHaveBeenCalledTimes(2)
+  })
+
+  it('logger saveLog C should keep the order of logs written while a save is running', async () => {
+    const loggerW = new Logger({ storage: createInMemoryDriver(), willLogDelay: false, willOutputToConsole: false })
+    loggerW.info('first')
+    await Promise.resolve()
+    loggerW.info('second')
+    loggerW.info('third')
+    const logs = await loggerW.getLogs()
+    expect(logs.map(line => line.trim())).toStrictEqual(['info first', 'info second', 'info third'])
+  })
+
   it('logger clearLogs C should handle storage delete failure gracefully', async () => {
     const badDriver = {
       delete: () => Promise.reject(new Error('delete error')),
@@ -287,5 +330,57 @@ describe('logger', () => {
     }
     const loggerT = new Logger({ storage: badDriver, willLogDelay: false, willOutputToConsole: false })
     await expect(loggerT.clearLogs()).resolves.toBeUndefined()
+  })
+
+  // Value: protects=a storage read that throws synchronously, like a blocked localStorage, does not stop later logs from being saved; fails_when=the trySafe guard in the save queue is removed;
+  // why_new=saveLogs B fails the set, which has its own guard, so the queue guard never runs; seam=none; no_claim=a real browser storage (in memory driver with a spy)
+  it('logger saveLogs C keeps saving after the storage read throws synchronously', async () => {
+    const storage = createInMemoryDriver()
+    const get = vi.spyOn(storage, 'get').mockImplementationOnce(() => {
+      throw new Error('access denied')
+    })
+    const loggerZ = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerZ.info('lost line')
+    await expect(loggerZ.getLogs()).resolves.toStrictEqual([])
+    loggerZ.info('kept line')
+    const logs = await loggerZ.getLogs()
+    get.mockRestore()
+    expect(logs.map(line => line.trim())).toStrictEqual(['info kept line'])
+  })
+
+  // Value: protects=an array holding anything else than strings is another app data and is left untouched; fails_when=the stored array is filtered to its string lines and written back;
+  // why_new=the key holding an object was covered but not an array with foreign entries; seam=none; no_claim=other storage drivers (in memory driver)
+  it('logger saveLogs D keeps an array holding non string entries untouched', async () => {
+    const storage = createInMemoryDriver()
+    const foreign = ['old line', 42, { otherApp: true }]
+    await storage.set('logs', foreign)
+    const loggerAa = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerAa.info('new line')
+    await expect(loggerAa.getLogs()).resolves.toStrictEqual([])
+    await expect(storage.get('logs')).resolves.toStrictEqual(foreign)
+  })
+
+  // Value: protects=a failed storage read never replaces the stored history with the new lines only; fails_when=the read failure returns an empty list again; why_new=getLogs A only checks the read result; seam=none; no_claim=a real browser storage (in memory driver with a spy)
+  it('logger saveLogs F keeps the stored history after a failed read', async () => {
+    const storage = createInMemoryDriver()
+    await storage.set('logs', ['old line'])
+    const get = vi.spyOn(storage, 'get').mockRejectedValueOnce(new Error('storage busy'))
+    const loggerAc = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerAc.info('unsaved line')
+    const logs = await loggerAc.getLogs()
+    get.mockRestore()
+    expect(logs).toStrictEqual(['old line'])
+  })
+
+  it('logger saveLogs E keeps only the last 1000 lines', async () => {
+    const storage = createInMemoryDriver()
+    await storage.set(
+      'logs',
+      Array.from({ length: 1000 }, (_item, index) => `line ${index}`),
+    )
+    const loggerAb = new Logger({ storage, willLogDelay: false, willOutputToConsole: false })
+    loggerAb.info('newest line')
+    const logs = await loggerAb.getLogs()
+    expect([logs.length, logs[0], logs.at(-1)?.trim()]).toStrictEqual([1000, 'line 1', 'info newest line'])
   })
 })
