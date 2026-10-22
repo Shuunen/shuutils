@@ -1,4 +1,4 @@
-import { capNesting } from './object-cap-nesting'
+import { capNesting } from './object-cap-nesting.ts'
 
 describe('object-cap-nesting utils', () => {
   const myObject = {
@@ -53,6 +53,10 @@ describe('object-cap-nesting utils', () => {
   `)
   })
 
+  it('capNesting B2 keeps the top level object below level 1', () => {
+    expect(capNesting(myObject, 0)).toStrictEqual(capNesting(myObject, 1))
+  })
+
   it('capNesting C cap more than available', () => {
     expect(capNesting(myObject, 10)).toStrictEqual(myObject)
   })
@@ -80,10 +84,18 @@ describe('object-cap-nesting utils', () => {
     const obj: Record<string, unknown> = Object.create(proto)
     obj.own = 'ownValue'
     obj.nested = { deep: 'deepValue' }
-    const result = capNesting(obj, 2) as Record<string, unknown>
+    const result = capNesting(obj, 2)
     expect(result).toHaveProperty('own')
     expect(result).toHaveProperty('nested')
     // Should not have inherited property
     expect(Object.hasOwn(result, 'inherited')).toBe(false)
+  })
+
+  // Value: protects=an own "__proto__" key from JSON.parse stays a plain key of the result; fails_when=the result is built with an assignment again, which swaps its prototype; why_new=no test had a __proto__ key; seam=none; no_claim=the global Object prototype, which an assignment never changes
+  it('capNesting keeps an own __proto__ key as a key', () => {
+    const result = capNesting(JSON.parse('{"a":1,"__proto__":{"isAdmin":true}}') as Record<string, unknown>)
+    expect(Object.keys(result)).toStrictEqual(['a', '__proto__'])
+    expect(Object.getPrototypeOf(result)).toBe(Object.prototype)
+    expect('isAdmin' in result).toBe(false)
   })
 })
