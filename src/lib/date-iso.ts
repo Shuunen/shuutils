@@ -1,5 +1,5 @@
-import { nbMsInMinute } from './constants'
-import { invariant } from './invariant'
+import { nbMsInMinute } from './constants.ts'
+import { invariant } from './invariant.ts'
 
 /**
  * Convert a date into iso string
@@ -9,15 +9,16 @@ import { invariant } from './invariant'
  * out : "2018-09-03T15:24:00.366Z"
  *
  * Example without timezone
- * in  : dateToIsoString(new Date(), true)
+ * in  : dateToIsoString(new Date(), { removeTimezone: true })
  * out : "2018-09-03T15:24:00.366"
  * @param date input date
- * @param shouldRemoveTimezone remove the last z ?
+ * @param options the options
+ * @param options.removeTimezone remove the last z ?
  * @returns string like : "2018-09-03T15:24:00.366Z"
  */
-export function dateToIsoString(date: Readonly<Date>, shouldRemoveTimezone = false) {
+export function dateToIsoString(date: Readonly<Date>, { removeTimezone = false }: Readonly<{ removeTimezone?: boolean }> = {}) {
   let dateString = new Date(date.getTime() - date.getTimezoneOffset() * nbMsInMinute).toISOString()
-  if (shouldRemoveTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
+  if (removeTimezone && dateString.toLowerCase().endsWith('z')) dateString = dateString.slice(0, Math.max(0, dateString.length - 1))
 
   return dateString
 }
@@ -47,8 +48,8 @@ export function dateIsoStripSecondsZone(date: string) {
   return new Date(date).toISOString().slice(0, 16)
 }
 
-const EMPTY_DATE = '-'
-const INVALID_DATE = 'N/A'
+const emptyDateLabel = '-'
+const invalidDateLabel = 'N/A'
 
 /**
  * Parse a date as UTC, a date-only string is parsed at midnight UTC instead of local time
@@ -77,7 +78,7 @@ export function parseAsUTC(date: Date | string | number): Date {
  *   withTime?: boolean; // Whether to include the time (hours:minutes) in the output. Defaults to `true`.
  *   acceptPartialDate?: boolean; // Whether to accept partial dates like "2025" or "2025-12". Defaults to `false`. If true and the date is partial, the output is handled by `partialDateDisplay`.
  * }
- * @returns A formatted date string (example: "24/12/2025" or "24/12/2025 17:00") in the current timezone, or a special INVALID_DATE constant if the input is invalid and partials are not accepted. If partials are accepted, returns a formatted partial date string.
+ * @returns A formatted date string (example: "24/12/2025" or "24/12/2025 17:00") in the current timezone, or a special invalidDateLabel constant if the input is invalid and partials are not accepted. If partials are accepted, returns a formatted partial date string.
  */
 export function dateIsoToReadableDatetime(
   date: string | Date | null | undefined,
@@ -88,13 +89,13 @@ export function dateIsoToReadableDatetime(
 ): string {
   const withTime = options.withTime ?? true
   const acceptPartialDate = options.acceptPartialDate ?? false
-  if (!date) return EMPTY_DATE
+  if (!date) return emptyDateLabel
 
   const dateObject: Date = parseAsUTC(date)
   const padLength = 2
   const invalidDate = Number.isNaN(dateObject.getTime())
 
-  if (invalidDate && !acceptPartialDate) return INVALID_DATE
+  if (invalidDate && !acceptPartialDate) return invalidDateLabel
 
   if (invalidDate && acceptPartialDate) return partialDateDisplay(date as string)
 
@@ -112,7 +113,7 @@ export function dateIsoToReadableDatetime(
   return result
 }
 
-const DATE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/
+const dateRegex = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})$/u
 
 /**
  * Converts a partial ISO date string to a human-readable format.
@@ -126,18 +127,18 @@ const DATE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/
  * @returns A human-readable string for partial dates, or "N/A" if the format is not recognized.
  */
 function partialDateDisplay(dateString: string): string {
-  const match = DATE_REGEX.exec(dateString)
-  if (!match) return INVALID_DATE
+  const parts = dateRegex.exec(dateString)?.groups
+  if (!parts) return invalidDateLabel
 
-  const [, year, month, day] = match
+  const { year, month, day } = parts
 
-  if (year === '0000') return INVALID_DATE
+  if (year === '0000') return invalidDateLabel
 
   if (month === '00' && year) return year
 
   if (month !== '00' && day === '00') return `${month}/${year}`
 
-  return INVALID_DATE
+  return invalidDateLabel
 }
 
 const millisecondsPattern = /\.\d{3}Z$/

@@ -1,27 +1,27 @@
-import { stringify } from './string-stringify'
+import { stringify } from './string-stringify.ts'
 
 describe('string-stringify', () => {
   const samples = [
-    { _: 'A', in: null, out: 'null' },
-    { _: 'B', in: 'hello', out: 'hello' },
-    { _: 'C', in: 42, out: '42' },
-    { _: 'D', in: { a: 1, b: 'text' }, out: '{"a":1,"b":"text"}' },
-    { _: 'E', in: undefined, out: 'undefined' },
-    { _: 'F', in: true, out: 'true' },
+    { in: null, out: 'null', title: 'null' },
+    { in: 'hello', out: 'hello', title: 'a string' },
+    { in: 42, out: '42', title: 'a number' },
+    { in: { count: 1, label: 'text' }, out: '{"count":1,"label":"text"}', title: 'an object' },
+    { in: undefined, out: 'undefined', title: 'undefined' },
+    { in: true, out: 'true', title: 'a boolean' },
   ]
-  for (const sample of samples)
-    it(`stringify ${sample._}`, () => {
-      expect(stringify(sample.in)).toBe(sample.out)
-    })
+
+  it.each(samples)('stringify $title', sample => {
+    expect(stringify(sample.in)).toBe(sample.out)
+  })
 
   it('stringify with indentation', () => {
-    const obj = { a: 1, b: { c: 'text', d: [1, 2, 3] } }
-    expect(stringify(obj, true)).toMatchInlineSnapshot(`
+    const sample = { count: 1, nested: { label: 'text', values: [1, 2, 3] } }
+    expect(stringify(sample, { indent: true })).toMatchInlineSnapshot(`
       "{
-        "a": 1,
-        "b": {
-          "c": "text",
-          "d": [
+        "count": 1,
+        "nested": {
+          "label": "text",
+          "values": [
             1,
             2,
             3

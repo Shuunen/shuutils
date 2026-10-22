@@ -1,4 +1,4 @@
-import { objectEqual } from './object-equal'
+import { objectEqual } from './object-equal.ts'
 
 describe(objectEqual, () => {
   const object4 = { fool: { bar: 'foo', regex: /^ho\d+$/iu }, keyA: 1, keyB: 2, keyC: 3 }
@@ -43,6 +43,6 @@ describe(objectEqual, () => {
 
   it('objectEqual K true with same objects, different key order but key sort is active', () => {
     // oxlint-disable-next-line sort-keys -- the differing key order is the point of this test
-    expect(objectEqual({ keyA: 1, keyB: 2, keyC: 3 }, { keyC: 3, keyA: 1, keyB: 2 }, true)).toBe(true)
+    expect(objectEqual({ keyA: 1, keyB: 2, keyC: 3 }, { keyC: 3, keyA: 1, keyB: 2 }, { sortKeys: true })).toBe(true)
   })
 })

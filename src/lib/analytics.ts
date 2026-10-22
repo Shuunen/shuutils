@@ -1,30 +1,30 @@
-import { Logger } from './logger'
-import { Result } from './result'
+import { Logger } from './logger.ts'
+import { Result } from './result.ts'
 
 export type AnalyticsOptions = Readonly<{
   app?: string
+  log?: boolean
   onIdentify?: (userId: string, additionalData?: Record<string, unknown>) => unknown
   onPage?: () => unknown
   onTrack?: (event: string, additionalData?: Record<string, unknown>) => unknown
-  willLog?: boolean
-  willPile?: boolean
+  pile?: boolean
 }>
 
 /**
  * Generic analytics wrapper, can be used with any analytics third party library
  * @param options the options for the analytics
  * @param options.app the app name, like 'my-project', 'super-app', etc.
+ * @param options.log if the analytics will log
  * @param options.onIdentify the callback to identify a user
  * @param options.onPage the callback to track a page
  * @param options.onTrack the callback to track an event
- * @param options.willLog if the analytics will log
- * @param options.willPile if the analytics will pile the events in memory
+ * @param options.pile if the analytics will pile the events in memory
  * @returns the analytics object
  */
 // oxlint-disable-next-line max-lines-per-function
-export function createAnalytics({ app = 'app-default', onIdentify, onPage, onTrack, willLog = false, willPile = false }: AnalyticsOptions | undefined = {}) {
+export function createAnalytics({ app = 'app-default', log = false, onIdentify, onPage, onTrack, pile: isPiling = false }: AnalyticsOptions | undefined = {}) {
   const pile: string[] = []
-  const logger = willLog ? new Logger() : undefined
+  const logger = log ? new Logger() : undefined
   /**
    * Add an item to the memory pile
    * @param item the item to add
@@ -47,7 +47,7 @@ export function createAnalytics({ app = 'app-default', onIdentify, onPage, onTra
     const message = `analytics : identify user "${userId}" on app "${app}"`
     onIdentify?.(userId, additionalData)
     logger?.debug(message)
-    if (willPile) addToPile(`identify:${userId}`)
+    if (isPiling) addToPile(`identify:${userId}`)
 
     return Result.ok(message)
   }
@@ -59,7 +59,7 @@ export function createAnalytics({ app = 'app-default', onIdentify, onPage, onTra
     const message = `analytics : track page for app "${app}"`
     onPage?.()
     logger?.debug(message)
-    if (willPile) addToPile('page')
+    if (isPiling) addToPile('page')
 
     return Result.ok(message)
   }
@@ -73,7 +73,7 @@ export function createAnalytics({ app = 'app-default', onIdentify, onPage, onTra
     const message = `analytics : track event "${event}" for app "${app}"`
     onTrack?.(event, additionalData)
     logger?.debug(message)
-    if (willPile) addToPile(`track:${event}`)
+    if (isPiling) addToPile(`track:${event}`)
 
     return Result.ok(message)
   }

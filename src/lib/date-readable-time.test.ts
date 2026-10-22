@@ -1,5 +1,5 @@
-import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInSecond, nbMsInYear } from './constants'
-import { readableTime } from './date-readable-time'
+import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInSecond, nbMsInYear } from './constants.ts'
+import { readableTime } from './date-readable-time.ts'
 
 describe('date-readable-time', () => {
   it('readableTime A', () => {
@@ -27,7 +27,7 @@ describe('date-readable-time', () => {
   })
 
   it('readableTime G', () => {
-    expect(readableTime(3 * nbMsInDay, false)).toBe('3d')
+    expect(readableTime(3 * nbMsInDay, { short: true })).toBe('3d')
   })
 
   it('readableTime H', () => {
@@ -35,7 +35,7 @@ describe('date-readable-time', () => {
   })
 
   it('readableTime I', () => {
-    expect(readableTime(42, false)).toBe('42ms')
+    expect(readableTime(42, { short: true })).toBe('42ms')
   })
 
   it('readableTime J', () => {
@@ -63,6 +63,6 @@ describe('date-readable-time', () => {
   })
 
   it('readableTime P should handle exactly 1 year short', () => {
-    expect(readableTime(nbMsInYear, false)).toBe('1y')
+    expect(readableTime(nbMsInYear, { short: true })).toBe('1y')
   })
 })
