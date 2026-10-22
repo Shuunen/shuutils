@@ -1,18 +1,21 @@
-import type { AsyncStorage } from './async-storage'
-import { consoleLog } from './browser-console'
-import { toastError, toastInfo, toastSuccess } from './browser-toast'
-import { bgGreen, bgRed, blue, cyan, gray, green, red, yellow } from './colors'
-import { nbFourth, nbSpacesIndent } from './constants'
-import { formatDate } from './date-format'
-import { readableTime } from './date-readable-time'
-import { isBrowserEnvironment } from './environment'
-import { isVerbose } from './flags'
+import type { AsyncStorage } from './async-storage.ts'
+import { consoleLog } from './browser-console.ts'
+import { toastError, toastInfo, toastSuccess } from './browser-toast.ts'
+import { bgGreen, bgRed, blue, cyan, gray, green, red, yellow } from './colors.ts'
+import { nbFourth, nbSpacesIndent } from './constants.ts'
+import { formatDate } from './date-format.ts'
+import { readableTime } from './date-readable-time.ts'
+import { isBrowserEnvironment } from './environment.ts'
+import { isVerbose } from './flags.ts'
 // oxlint-disable max-lines
-import { isObjectEmpty } from './object-is-empty'
-import { type ResultType, Result } from './result'
-import { stringify } from './string-stringify'
+import { isObjectEmpty } from './object-is-empty.ts'
+import { type ResultType, Result } from './result.ts'
+import { stringify } from './string-stringify.ts'
 
 const logsStorageKey = 'logs'
+
+// older lines are dropped, so a long lived app neither fills its storage nor slows down on each save
+const maxStoredLogs = 1000
 
 /**
  * Clean stuff to log
@@ -69,7 +72,7 @@ export type LoggerOptions = {
    */
   willOutputToConsole: boolean
   /**
-   * The AsyncStorage instance to use to store the logs, example localStorageDriver, etc.
+   * The AsyncStorage instance to use to store the logs, example localStorageDriver, etc. Only the last 1000 lines are kept
    */
   storage?: AsyncStorage
 }
@@ -83,6 +86,8 @@ export class Logger {
   #lastLogTimestamp = 0
 
   #saveQueue: Promise<void> = Promise.resolve()
+
+  #pendingLines: string[] = []
 
   readonly #levels: LogLevel[] = ['1-debug', '2-test', '3-info', '4-fix', '5-warn', '6-good', '7-error']
 
@@ -119,7 +124,7 @@ export class Logger {
    * Calculate the delay since the last log
    * @returns the delay like "+12ms"
    */
-  private __getDelay() {
+  #getDelay() {
     const now = Date.now()
     if (this.#lastLogTimestamp === 0) {
       this.#lastLogTimestamp = now
@@ -127,37 +132,63 @@ export class Logger {
     }
     const delay = now - this.#lastLogTimestamp
     this.#lastLogTimestamp = now
-    return `+${readableTime(delay, false)}`.padStart(this.#padStart)
+    return `+${readableTime(delay, { short: true })}`.padStart(this.#padStart)
   }
 
-  private saveLog(line: string) {
+  #saveLog(line: string) {
+    this.#pendingLines.push(line)
+    // a save is already queued and will take this line too, so a burst of logs costs a single read and write
+    if (this.#pendingLines.length > 1) return
     // oxlint-disable-next-line promise/prefer-await-to-then -- serial queue requires .then() chaining
-    this.#saveQueue = this.#saveQueue.then(() => this.__doSaveLog(line))
+    this.#saveQueue = this.#saveQueue.then(() => this.#savePendingLines())
   }
 
-  private async __doSaveLog(line: string) {
+  async #savePendingLines() {
+    const lines = this.#pendingLines
+    this.#pendingLines = []
+    const saveResult = await Result.trySafe(this.#doSaveLogs(lines))
+    // a failed save must not reject the queue, or no later line would ever be saved
+    if (!saveResult.ok) this.#log(['error'], ['Failed to save logs', saveResult.error])
+  }
+
+  async #doSaveLogs(lines: readonly string[]) {
     if (!this.options.storage) return
 
-    const logs = await this.__getLogsFromStorage()
-    logs.push(line)
-    const setResult = await Result.trySafe(this.options.storage.set(logsStorageKey, logs))
-    if (!setResult.ok) this.__log(['error'], ['Failed to set logs to storage', setResult.error])
+    const logs = await this.#readStoredLogs()
+    // the stored logs could not be read, or the key holds another app data, overwriting would lose that data
+    if (logs === undefined) return
+    const setResult = await Result.trySafe(this.options.storage.set(logsStorageKey, [...logs, ...lines].slice(-maxStoredLogs)))
+    if (!setResult.ok) this.#log(['error'], ['Failed to set logs to storage', setResult.error])
   }
 
-  private async __getLogsFromStorage() {
+  /**
+   * Read the stored logs
+   * @returns the stored logs, or undefined when they could not be read or the storage key holds something else than logs
+   */
+  async #readStoredLogs() {
     if (!this.options.storage) return []
 
-    const getResult = await Result.trySafe(this.options.storage.get<string[]>(logsStorageKey))
+    const getResult = await Result.trySafe(this.options.storage.get<unknown>(logsStorageKey))
     if (!getResult.ok) {
-      this.__log(['error'], ['Failed to get logs from storage', getResult.error])
-      return []
+      // saving now would replace the whole stored history with the new lines only
+      this.#log(['error'], ['Failed to get logs from storage', getResult.error])
+      return undefined
     }
-    return getResult.value ?? []
+    const stored = getResult.value
+    if (stored === undefined) return []
+    // an array holding anything else than strings is another app data, keeping only its strings would overwrite the rest
+    if (Array.isArray(stored) && stored.every((line): line is string => typeof line === 'string')) return stored
+    this.#log(['error'], [`The "${logsStorageKey}" storage key holds something else than logs, they are not saved`])
+    return undefined
   }
 
+  /**
+   * Get the stored logs, only the last 1000 lines are kept
+   * @returns the stored log lines
+   */
   public async getLogs() {
     await this.#saveQueue
-    return this.__getLogsFromStorage()
+    return (await this.#readStoredLogs()) ?? []
   }
 
   public async clearLogs() {
@@ -165,7 +196,7 @@ export class Logger {
 
     await this.#saveQueue
     const deleteResult = await Result.trySafe(this.options.storage.delete(logsStorageKey))
-    if (!deleteResult.ok) this.__log(['error'], ['Failed to clear logs from storage', deleteResult.error])
+    if (!deleteResult.ok) this.#log(['error'], ['Failed to clear logs from storage', deleteResult.error])
   }
 
   /**
@@ -173,7 +204,7 @@ export class Logger {
    * @param prefixes the prefixes to add before the message
    * @param stuff the things to log
    */
-  private __log(prefixes: string[], stuff: Readonly<unknown[]>) {
+  #log(prefixes: string[], stuff: Readonly<unknown[]>) {
     if (this.options.willOutputToConsole) consoleLog(prefixes.join(' '), ...stuff)
   }
 
@@ -186,22 +217,22 @@ export class Logger {
    * @example logger.logIf('debug', '1-debug', ['Hello', 'world', 42])
    */
   // oxlint-disable-next-line max-params
-  private __logIf(prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
+  #logIf(prefix: string, level: LogLevel, stuff: Readonly<unknown[]>, color: (string_: string) => string) {
     const prefixes = [prefix.padStart(this.#padding)]
     if (this.options.willLogTime) prefixes.unshift(formatDate(new Date(), 'HH:mm:ss'))
 
     if (this.options.willLogDate) prefixes.unshift(formatDate(new Date(), 'yyyy-MM-dd'))
 
-    if (this.options.willLogDelay) prefixes.unshift(this.__getDelay())
+    if (this.options.willLogDelay) prefixes.unshift(this.#getDelay())
 
     const context = isObjectEmpty(this.#context) ? '' : { context: this.#context }
     const line = `${prefixes.join(' ')} ${clean(...stuff, context)}`
-    this.saveLog(line)
-    if (!this.__shouldLog(level)) return
+    this.#saveLog(line)
+    if (!this.#shouldLog(level)) return
 
     /* v8 ignore next */
     prefixes[prefixes.length - 1] = color(prefixes.at(-1) ?? '')
-    this.__log(prefixes, stuff)
+    this.#log(prefixes, stuff)
   }
 
   /**
@@ -209,7 +240,7 @@ export class Logger {
    * @param level the log level to check
    * @returns true if the log should be output
    */
-  private __shouldLog(level: LogLevel) {
+  #shouldLog(level: LogLevel) {
     return this.options.isActive && this.#levels.indexOf(level) >= this.#levels.indexOf(this.options.minimumLevel)
   }
 
@@ -219,7 +250,7 @@ export class Logger {
    * @example logger.debug('Hello world')
    */
   public debug(...stuff: Readonly<unknown[]>) {
-    this.__logIf('debug', '1-debug', stuff, gray)
+    this.#logIf('debug', '1-debug', stuff, gray)
   }
 
   /**
@@ -243,7 +274,7 @@ export class Logger {
    */
   public error(...stuff: Readonly<unknown[]>) {
     const errors = stuff.map(thing => (thing instanceof Error ? thing.message : thing))
-    this.__logIf('error', '7-error', errors, red)
+    this.#logIf('error', '7-error', errors, red)
   }
 
   /**
@@ -252,7 +283,7 @@ export class Logger {
    * @example logger.fix('This is a fix')
    */
   public fix(...stuff: Readonly<unknown[]>) {
-    this.__logIf('fix', '4-fix', stuff, cyan)
+    this.#logIf('fix', '4-fix', stuff, cyan)
   }
 
   /**
@@ -261,7 +292,7 @@ export class Logger {
    * @example logger.good('Everything went well')
    */
   public good(...stuff: Readonly<unknown[]>) {
-    this.__logIf('good', '6-good', stuff, green)
+    this.#logIf('good', '6-good', stuff, green)
   }
 
   /**
@@ -270,7 +301,7 @@ export class Logger {
    * @example logger.info('Hello ¯\_(ツ)_/¯')
    */
   public info(...stuff: Readonly<unknown[]>) {
-    this.__logIf('info', '3-info', stuff, blue)
+    this.#logIf('info', '3-info', stuff, blue)
   }
 
   /**
@@ -370,7 +401,7 @@ export class Logger {
     const isTruthy = Boolean(thing)
     const box = isTruthy ? bgGreen(' ✓ ') : bgRed(' ✗ ')
     const prefix = ' '.repeat(this.#padding - nbFourth)
-    this.__logIf(prefix + box, '2-test', stuff, isTruthy ? green : red)
+    this.#logIf(prefix + box, '2-test', stuff, isTruthy ? green : red)
   }
 
   /**
@@ -379,7 +410,7 @@ export class Logger {
    * @example logger.warn('Something went wrong')
    */
   public warn(...stuff: Readonly<unknown[]>) {
-    this.__logIf('warn', '5-warn', stuff, yellow)
+    this.#logIf('warn', '5-warn', stuff, yellow)
   }
 
   /**
