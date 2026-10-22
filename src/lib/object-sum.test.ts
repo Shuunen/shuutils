@@ -1,5 +1,5 @@
-import { clone } from './object-clone'
-import { objectSum } from './object-sum'
+import { clone } from './object-clone.ts'
+import { objectSum } from './object-sum.ts'
 
 describe(objectSum, () => {
   const object3 = { notFun: false, 'pretty-good': true, size: 'large', superFun: true }
@@ -18,7 +18,7 @@ describe(objectSum, () => {
   })
 
   it('objectSum B is the same on two equally empty objects', () => {
-    expect(objectSum({ name: 'john' }) === objectSum(clone({ name: 'john' }))).toBe(true)
+    expect(objectSum({ name: 'john' })).toBe(objectSum(clone({ name: 'john' })))
   })
 
   it('objectSum C on object with numbers', () => {
@@ -53,24 +53,24 @@ describe(objectSum, () => {
   })
 
   it('objectSum G is the same on two equals objects', () => {
-    expect(objectSum(object3) === objectSum(clone(object3))).toBe(true)
+    expect(objectSum(object3)).toBe(objectSum(clone(object3)))
   })
 
   it('objectSum H is the same on two equals objects with nested objects', () => {
-    expect(objectSum(object4) === objectSum(object4ButAnotherReference)).toBe(true)
+    expect(objectSum(object4)).toBe(objectSum(object4ButAnotherReference))
   })
 
   it('objectSum I is different with a deep slight modification', () => {
-    expect(objectSum(object4) !== objectSum(object4ButDeepRegexDifferent)).toBe(true)
+    expect(objectSum(object4)).not.toBe(objectSum(object4ButDeepRegexDifferent))
   })
 
   it('objectSum J changes depending on key order', () => {
     // oxlint-disable-next-line sort-keys -- the differing key order is the point of this test
-    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 }) !== objectSum({ keyC: 3, keyA: 1, keyB: 2 })).toBe(true)
+    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 })).not.toBe(objectSum({ keyC: 3, keyA: 1, keyB: 2 }))
   })
 
   it('objectSum K same when key sorted', () => {
     // oxlint-disable-next-line sort-keys -- the differing key order is the point of this test
-    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 }, true) === objectSum({ keyC: 3, keyA: 1, keyB: 2 }, true)).toBe(true)
+    expect(objectSum({ keyA: 1, keyB: 2, keyC: 3 }, { sortKeys: true })).toBe(objectSum({ keyC: 3, keyA: 1, keyB: 2 }, { sortKeys: true }))
   })
 })

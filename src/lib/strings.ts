@@ -1,13 +1,14 @@
-import { nbNinth } from './constants'
-import { removeAccents } from './string-remove-accents'
+import { nbNinth } from './constants.ts'
+import { removeAccents } from './string-remove-accents.ts'
 
 /**
  * Clean a string from special characters
  * @param sentence like "Hello, my name is John Doe !"
- * @param willLower lowercase the output
+ * @param options the options
+ * @param options.lowercase lowercase the output, default true
  * @returns cleaned string like "Hello my name is John Doe"
  */
-export function sanitize(sentence: string, willLower = true) {
+export function sanitize(sentence: string, { lowercase = true }: Readonly<{ lowercase?: boolean }> = {}) {
   const text = removeAccents(sentence)
     .trim() // remove leading and trailing spaces
     .replaceAll(/<[^<>]*>/gu, ' ') // remove any tags
@@ -15,7 +16,7 @@ export function sanitize(sentence: string, willLower = true) {
     .replaceAll(/[^\d\sa-z]/giu, '') // remove remaining non-alphanumeric characters
     .replaceAll(/\s+/gu, ' ') // replace multiple spaces with one
     .trim() // final trim
-  return willLower ? text.toLowerCase() : text
+  return lowercase ? text.toLowerCase() : text
 }
 
 /**
@@ -33,11 +34,12 @@ export function slugify(string: string) {
 /**
  * Transform the first letter of a string into capital
  * @param string `"hello John"`
- * @param shouldLower boolean, try to lower the rest of the string when applicable
+ * @param options the options
+ * @param options.lowercaseRest lowercase the rest of the string
  * @returns `"Hello John"`
  */
-export function capitalize(string: string, shouldLower = false) {
-  if (!shouldLower) return string.charAt(0).toUpperCase() + string.slice(1)
+export function capitalize(string: string, { lowercaseRest = false }: Readonly<{ lowercaseRest?: boolean }> = {}) {
+  if (!lowercaseRest) return string.charAt(0).toUpperCase() + string.slice(1)
 
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 }

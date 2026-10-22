@@ -1,4 +1,4 @@
-import { buildIsoFromLocal, dateIso10, dateIsoStripSecondsZone, dateIsoToReadableDatetime, dateToIsoString, isValidDate, parseAsUTC } from './date-iso'
+import { buildIsoFromLocal, dateIso10, dateIsoStripSecondsZone, dateIsoToReadableDatetime, dateToIsoString, isValidDate, parseAsUTC } from './date-iso.ts'
 
 describe('date-iso', () => {
   // dateIso10
@@ -20,7 +20,7 @@ describe('date-iso', () => {
   })
 
   it('dateToIsoString C does not contains timezone if needed', () => {
-    expect(dateToIsoString(new Date(), true).toLowerCase()).not.toContain('z')
+    expect(dateToIsoString(new Date(), { removeTimezone: true }).toLowerCase()).not.toContain('z')
   })
 
   // dateIsoStripSecondsZone
@@ -121,12 +121,8 @@ describe('date-iso', () => {
   })
 
   it('partial date should be shown correctly', () => {
-    expect(dateIsoToReadableDatetime('1985-00-00', { acceptPartialDate: true })).toBe('1985')
-    expect(dateIsoToReadableDatetime('0000-00-00', { acceptPartialDate: true })).toBe('N/A')
-    expect(dateIsoToReadableDatetime('1985-00-05', { acceptPartialDate: true })).toBe('1985')
-    expect(dateIsoToReadableDatetime('1985-06-00', { acceptPartialDate: true })).toBe('06/1985')
-    expect(dateIsoToReadableDatetime('1985-06-50', { acceptPartialDate: true })).toBe('N/A')
-    expect(dateIsoToReadableDatetime('19856-06-50', { acceptPartialDate: true })).toBe('N/A')
+    const dates = ['1985-00-00', '0000-00-00', '1985-00-05', '1985-06-00', '1985-06-50', '19856-06-50']
+    expect(dates.map(date => dateIsoToReadableDatetime(date, { acceptPartialDate: true }))).toStrictEqual(['1985', 'N/A', '1985', '06/1985', 'N/A', 'N/A'])
   })
 })
 

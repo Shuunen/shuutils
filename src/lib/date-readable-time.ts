@@ -1,21 +1,22 @@
-import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInYear } from './constants'
+import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInYear } from './constants.ts'
 
 /**
  * Make a date readable for us, poor humans
  * @param input a date or a number of milliseconds
- * @param isLong true to return a short version like "3d" instead of "3 days"
+ * @param options the options
+ * @param options.short true to return a short version like "3d" instead of "3 days"
  * @returns "1 minute", "4 months" or "1min", "4mon"
  * @example readableTime(3 * nbMsInDay) // "3 days"
- * @example readableTime(3 * nbMsInDay, false) // "3d"
+ * @example readableTime(3 * nbMsInDay, { short: true }) // "3d"
  */
-export function readableTime(input: number | Readonly<Date>, isLong = true) {
+export function readableTime(input: number | Readonly<Date>, { short = false }: Readonly<{ short?: boolean }> = {}) {
   /* v8 ignore next */
   const ms = typeof input === 'number' ? input : Date.now() - input.getTime()
-  const format = (value: number, long: string, short: string) => {
+  const format = (value: number, longUnit: string, shortUnit: string) => {
     const floor = Math.floor(value)
     const plural = floor > 1 ? 's' : ''
-    const longPlural = ` ${long + plural}`
-    return `${floor}${isLong ? longPlural : short}`
+    const longPlural = ` ${longUnit + plural}`
+    return `${floor}${short ? shortUnit : longPlural}`
   }
   if (ms < nbMsInSecond) return format(ms, 'millisecond', 'ms')
 

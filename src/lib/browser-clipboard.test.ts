@@ -1,6 +1,6 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import { copyToClipboard, readClipboard } from './browser-clipboard'
-import { invariant } from './invariant'
+import { copyToClipboard, readClipboard } from './browser-clipboard.ts'
+import { invariant } from './invariant.ts'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register()
 
@@ -54,8 +54,8 @@ describe('browser-clipboard', () => {
       writeText: vi.fn<(text: string) => void>(() => undefined),
     }
     setClipboard(mockClipboard)
-    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({}))
-    const result = await copyToClipboard('log this', true)
+    const spy = vi.spyOn(console, 'log').mockReturnValue()
+    const result = await copyToClipboard('log this', { log: true })
     expect(result).toMatchInlineSnapshot(`
       Ok {
         "ok": true,
@@ -95,22 +95,32 @@ describe('browser-clipboard', () => {
       readText: vi.fn<() => string>(() => 'logged text'),
     }
     setClipboard(mockClipboard)
-    const spy = vi.spyOn(console, 'log').mockImplementation(() => ({}))
-    const result = await readClipboard(true)
+    const spy = vi.spyOn(console, 'log').mockReturnValue()
+    const result = await readClipboard({ log: true })
     invariant(result.ok, 'expected result to be ok')
     expect(result.value).toBe('logged text')
     expect(spy).toHaveBeenCalledWith('reading clipboard...')
     expect(spy).toHaveBeenCalledWith(expect.stringContaining('got this text from clipboard'))
   })
 
-  it('readClipboard D should return an error when readText fails', async () => {
+  it('readClipboard D should read from the given clipboard instead of navigator.clipboard', async () => {
+    const result = await readClipboard({ clipboard: { readText: () => Promise.resolve('from a custom clipboard') } })
+    expect(result).toMatchInlineSnapshot(`
+      Ok {
+        "ok": true,
+        "value": "from a custom clipboard",
+      }
+    `)
+  })
+
+  it('readClipboard E should return an error when readText fails', async () => {
     const mockClipboard = {
       readText: vi.fn<() => string>(() => {
         throw new Error('read failed')
       }),
     }
     setClipboard(mockClipboard)
-    const result = await readClipboard(false)
+    const result = await readClipboard()
     expect(result).toMatchInlineSnapshot(`
       Err {
         "error": "clipboard not available",
