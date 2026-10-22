@@ -1,20 +1,20 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 // oxlint-disable typescript/unbound-method
 // oxlint-disable unicorn/no-document-cookie - we want to create the cookies manually
-import { getCookieValueByName } from './cookie.utils'
+import { getCookieValueByName } from './cookie.utils.ts'
 
 if (!GlobalRegistrator.isRegistered) GlobalRegistrator.register({ url: 'https://localhost/' })
 
 // Mock unused CookieStore common methods to comply with typing
 const cookieStoreCommonMock = {
-  onchange: vi.fn<(...args: unknown[]) => void>(),
+  addEventListener: vi.fn<(...args: unknown[]) => void>(),
   delete: vi.fn<(...args: unknown[]) => Promise<void>>(),
+  dispatchEvent: vi.fn<(...args: unknown[]) => boolean>(),
   // oxlint-disable-next-line typescript/no-explicit-any
   getAll: vi.fn<(...args: unknown[]) => Promise<any>>(),
-  set: vi.fn<(...args: unknown[]) => Promise<void>>(),
-  addEventListener: vi.fn<(...args: unknown[]) => void>(),
+  onchange: vi.fn<(...args: unknown[]) => void>(),
   removeEventListener: vi.fn<(...args: unknown[]) => void>(),
-  dispatchEvent: vi.fn<(...args: unknown[]) => boolean>(),
+  set: vi.fn<(...args: unknown[]) => Promise<void>>(),
 }
 
 // We need this helper function to clear all cookies before each test and ensure isolation

@@ -3,6 +3,8 @@ import path from 'node:path'
 
 const regexExport = /^export (?:async )?(?:function|class) (?<name>[\w$]+)/gm
 const regexJsdocEnd = /\*\/\s*$/
+// the [ ] keeps v8 coverage from reading this regex as a real ignore hint, which would hide the rest of the file
+const regexCoverageIgnoreStart = /^\s*\/\* v8[ ]ignore start \*\//u
 
 export type Rule = {
   check: (content: string, filePath: string) => boolean
@@ -44,7 +46,7 @@ function hasSiblingTest(filePath: string): boolean {
  * @returns true if the content exports a function or a class
  */
 function exportsBehaviour(content: string): boolean {
-  if (content.trimStart().startsWith('/* v8 ignore start */')) return false
+  if (regexCoverageIgnoreStart.test(content)) return false
   return /^export (?:async )?(?:function|class) /m.test(content)
 }
 
@@ -67,11 +69,11 @@ export function getExportsWithoutJsdoc(content: string): string[] {
   const lines = content.split('\n')
   const missing: string[] = []
   for (const match of content.matchAll(regexExport)) {
-    const name = match.groups?.name
-    if (name === undefined) continue
+    // the regex always captures the name group
+    const [, name] = match
     let previousIndex = content.slice(0, match.index).split('\n').length - 2
     // skip blank lines and line comments such as oxlint-disable-next-line
-    while (previousIndex >= 0 && isSkippableLine(lines[previousIndex] ?? '')) previousIndex -= 1
+    while (previousIndex >= 0 && isSkippableLine(lines[previousIndex])) previousIndex -= 1
     if (!regexJsdocEnd.test(lines[previousIndex]?.trim() ?? '')) missing.push(name)
   }
   return missing
@@ -90,7 +92,7 @@ function isBarrelUpToDate(filePath: string): boolean {
   return fs
     .readdirSync(libDirectory)
     .filter(file => file.endsWith('.ts') && !file.endsWith('.test.ts') && !file.endsWith('.d.ts'))
-    .every(file => content.includes(`./lib/${file.replace(/\.ts$/, '')}'`) || content.includes(`./lib/${file.replace(/\.ts$/, '')}"`))
+    .every(file => content.includes(`./lib/${file}'`) || content.includes(`./lib/${file}"`))
 }
 
 /**

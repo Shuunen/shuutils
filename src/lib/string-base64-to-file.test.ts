@@ -1,5 +1,5 @@
-import { Result } from './result'
-import { base64ToFile } from './string-base64-to-file'
+import { Result } from './result.ts'
+import { base64ToFile } from './string-base64-to-file.ts'
 
 describe(base64ToFile, () => {
   it('A should convert successfully', () => {

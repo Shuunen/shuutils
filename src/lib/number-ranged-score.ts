@@ -1,4 +1,4 @@
-import { round } from './number-round'
+import { round } from './number-round.ts'
 
 /**
  * Get a ranged score

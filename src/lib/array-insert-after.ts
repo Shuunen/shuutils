@@ -1,5 +1,5 @@
-import { nbAfter, nbNoIndex } from './constants'
-import { clone } from './object-clone'
+import { nbAfter, nbNoIndex } from './constants.ts'
+import { clone } from './object-clone.ts'
 
 /**
  * Add a value to an array if it does not already exist

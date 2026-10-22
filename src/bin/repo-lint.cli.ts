@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { nbThird } from '../lib/constants'
-import { globFiles } from './glob-files'
-import { rules } from './repo-lint.rules'
+import { nbThird } from '../lib/constants.ts'
+import { globFiles } from './glob-files.ts'
+import { rules } from './repo-lint.rules.ts'
 
 /**
  * Run every rule on a single file, applying fixers when they provide one

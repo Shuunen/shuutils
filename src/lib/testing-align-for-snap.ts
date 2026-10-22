@@ -1,4 +1,4 @@
-import { nbSpacesIndent } from './constants'
+import { nbSpacesIndent } from './constants.ts'
 
 /**
  * Clean dynamic data from a string
@@ -13,7 +13,7 @@ function clean(text: string) {
       // 6/25/2024, 11:21:23 AM => xx/xx/xxxx xx:xx:xx
       .replaceAll(/\d{1,2}\/\d{1,2}\/\d{4}, \d{1,2}:\d{2}:\d{2} [ap]m/giu, 'xx/xx/xxxx xx:xx:xx')
       // 2024-05-16T15:36:32.000Z => xxxx-xx-xxTxx:xx:xx.xxxZ
-      .replaceAll(/\d{4}-\d{2}-\d{2}([T ])\d{2}:\d{2}:\d{2}(\.\d{3}Z)?/gu, (_match, p1, p2) => `xxxx-xx-xx${p1}xx:xx:xx${p2 ? '.xxxZ' : ''}`)
+      .replaceAll(/\d{4}-\d{2}-\d{2}(?<separator>[T ])\d{2}:\d{2}:\d{2}(?<milliseconds>\.\d{3}Z)?/gu, (_match, separator: string, milliseconds?: string) => `xxxx-xx-xx${separator}xx:xx:xx${milliseconds === undefined ? '' : '.xxxZ'}`)
       // \\documents\\file.pdf => /documents/file.pdf
       .replaceAll(/\\+(?<letter>[^"])/gu, '/$<letter>')
   )

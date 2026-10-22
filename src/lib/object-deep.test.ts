@@ -1,4 +1,4 @@
-import { getNested, setNested } from './object-deep'
+import { getNested, setNested } from './object-deep.ts'
 
 const person = {
   details: {

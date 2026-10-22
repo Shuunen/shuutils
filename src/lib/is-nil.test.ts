@@ -1,4 +1,4 @@
-import { isNil } from './is-nil'
+import { isNil } from './is-nil.ts'
 
 describe('is-nil', () => {
   it('isNil A null is nil', () => {

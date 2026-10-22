@@ -1,5 +1,5 @@
-import { nbAscending, nbDescending } from './constants'
-import { isNil } from './is-nil'
+import { nbAscending, nbDescending } from './constants.ts'
+import { isNil } from './is-nil.ts'
 
 /**
  * Sort an array of objects by a specific property of theses objects, example :

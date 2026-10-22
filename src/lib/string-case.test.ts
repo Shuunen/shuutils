@@ -1,4 +1,4 @@
-import { camelToKebabCase, kebabToPascalCase } from './string-case'
+import { camelToKebabCase, kebabToPascalCase } from './string-case.ts'
 
 describe('string-case', () => {
   it('kebabToPascalCase A basic', () => {

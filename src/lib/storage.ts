@@ -1,5 +1,5 @@
 // oxlint-disable typescript/no-use-before-define
-import { parseJson } from './json'
+import { parseJson } from './json.ts'
 
 function get(key: string, defaultValue: string): string
 function get(key: string, defaultValue: boolean): boolean

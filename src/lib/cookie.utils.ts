@@ -1,4 +1,4 @@
-import { Logger } from './logger'
+import { Logger } from './logger.ts'
 
 /**
  * Get a cookie value by name, using the CookieStore API when available and falling back to document.cookie

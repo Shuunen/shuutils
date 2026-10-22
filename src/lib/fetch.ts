@@ -1,4 +1,4 @@
-import { Result } from './result'
+import { Result } from './result.ts'
 
 /**
  * Fetches raw data from the specified URL using the provided request options.

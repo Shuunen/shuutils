@@ -1,4 +1,4 @@
-import { pickOne } from './array-pick-one'
+import { pickOne } from './array-pick-one.ts'
 
 /**
  * Give a random word or sentence without signification

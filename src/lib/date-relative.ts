@@ -1,5 +1,5 @@
-import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInWeek, nbMsInYear } from './constants'
-import { dateIso10 } from './date-iso'
+import { nbMsInDay, nbMsInHour, nbMsInMinute, nbMsInMonth, nbMsInSecond, nbMsInWeek, nbMsInYear } from './constants.ts'
+import { dateIso10 } from './date-iso.ts'
 
 const timeAgoTuples = [
   [nbMsInMinute, nbMsInSecond, 'second'],

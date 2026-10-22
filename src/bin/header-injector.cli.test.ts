@@ -1,11 +1,11 @@
-import { invariant } from '../lib/invariant'
+import { invariant } from '../lib/invariant.ts'
 
-vi.mock(import('./glob-files'))
+vi.mock(import('./glob-files.ts'))
 vi.mock(import('node:fs'))
 
-const { globFiles } = await import('./glob-files')
+const { globFiles } = await import('./glob-files.ts')
 const fs = await import('node:fs')
-const mod = await import('./header-injector.cli')
+const mod = await import('./header-injector.cli.ts')
 
 function mockFileContent(path: string): string {
   if (path === 'a.ts') return '// HEADER\nconsole.log(1)'
@@ -34,11 +34,7 @@ describe('header-injector.cli.ts', () => {
     const result = await mod.main(['node', 'script', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
-    const { hasHeader, noHeader, moveHeader, addedHeader: nbFixed } = result.value
-    expect(hasHeader, 'B hasHeader').toBe(1)
-    expect(noHeader, 'B noHeader').toBe(1)
-    expect(moveHeader, 'B moveHeader').toBe(0)
-    expect(nbFixed, 'B nbFixed').toBe(1)
+    expect(result.value).toMatchObject({ addedHeader: 1, hasHeader: 1, moveHeader: 0, noHeader: 1 })
     expect(writeSpy).toHaveBeenCalledWith('b.ts', '// HEADER\nconsole.log(2)')
   })
 
@@ -51,11 +47,7 @@ describe('header-injector.cli.ts', () => {
     const result = await mod.main(['node', 'script', '--header=// NEW'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
-    const { readError, noHeader, writeError, addedHeader: nbFixed } = result.value
-    expect(noHeader, 'C noHeader').toBe(1)
-    expect(nbFixed, 'C nbFixed').toBe(0)
-    expect(readError, 'C readError').toBe(0)
-    expect(writeError, 'C writeError').toBe(1)
+    expect(result.value).toMatchObject({ addedHeader: 0, noHeader: 1, readError: 0, writeError: 1 })
   })
 
   it('main D should count readError when read fails', async () => {
@@ -66,10 +58,7 @@ describe('header-injector.cli.ts', () => {
     const result = await mod.main(['node', 'script', '--header=// NEW'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
-    const { readError, noHeader, addedHeader: nbFixed } = result.value
-    expect(readError, 'D readError').toBe(1)
-    expect(noHeader, 'D noHeader').toBe(0)
-    expect(nbFixed, 'D nbFixed').toBe(0)
+    expect(result.value).toMatchObject({ addedHeader: 0, noHeader: 0, readError: 1 })
   })
 
   it('main E should move header into files with header not on the first line', async () => {
@@ -79,11 +68,7 @@ describe('header-injector.cli.ts', () => {
     const result = await mod.main(['node', 'script', '--header=HEADER'])
     expect(result.ok).toBe(true)
     invariant(result.ok, 'expected result to be ok')
-    const { hasHeader, noHeader, moveHeader, addedHeader: nbFixed } = result.value
-    expect(hasHeader, 'B hasHeader').toBe(1)
-    expect(noHeader, 'B noHeader').toBe(0)
-    expect(moveHeader, 'B moveHeader').toBe(1)
-    expect(nbFixed, 'B nbFixed').toBe(0)
+    expect(result.value).toMatchObject({ addedHeader: 0, hasHeader: 1, moveHeader: 1, noHeader: 0 })
     expect(writeSpy).toHaveBeenCalledWith('c.ts', '// HEADER\nconsole.log(3);')
   })
 

@@ -1,5 +1,5 @@
-import { nbSpacesIndent } from './constants'
-import { flatten } from './object-flatten'
+import { nbSpacesIndent } from './constants.ts'
+import { flatten } from './object-flatten.ts'
 
 /**
  * Fill mustaches in a given string

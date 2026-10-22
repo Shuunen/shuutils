@@ -1,4 +1,4 @@
-import { globFiles } from './glob-files'
+import { globFiles } from './glob-files.ts'
 
 describe('glob-files', () => {
   it('globFiles A list files with a simple extension', async () => {

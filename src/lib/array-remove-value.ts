@@ -1,4 +1,4 @@
-import { clone } from './object-clone'
+import { clone } from './object-clone.ts'
 
 /**
  * Remove a value from an array

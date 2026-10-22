@@ -1,27 +1,28 @@
-import { Result } from './result'
+import { Result } from './result.ts'
 
-test('Result.ok', () => {
-  expect(Result.ok(42)).toMatchInlineSnapshot(`
+describe('result', () => {
+  it('Result.ok', () => {
+    expect(Result.ok(42)).toMatchInlineSnapshot(`
     Ok {
       "ok": true,
       "value": 42,
     }
   `)
-})
+  })
 
-test('Result.error', () => {
-  expect(Result.error('ay ay ay caramba !')).toMatchInlineSnapshot(`
+  it('Result.error', () => {
+    expect(Result.error('ay ay ay caramba !')).toMatchInlineSnapshot(`
     Err {
       "error": "ay ay ay caramba !",
       "ok": false,
     }
   `)
-})
+  })
 
-test('Result.trySafe A ok', () => {
-  // oxlint-disable-next-line typescript/no-unsafe-return
-  const result = Result.trySafe(() => JSON.parse('{"a": 42}'))
-  expect(result).toMatchInlineSnapshot(`
+  it('Result.trySafe A ok', () => {
+    // oxlint-disable-next-line typescript/no-unsafe-return
+    const result = Result.trySafe(() => JSON.parse('{"a": 42}'))
+    expect(result).toMatchInlineSnapshot(`
     Ok {
       "ok": true,
       "value": {
@@ -29,36 +30,37 @@ test('Result.trySafe A ok', () => {
       },
     }
   `)
-})
+  })
 
-test('Result.trySafe B error', () => {
-  // oxlint-disable-next-line typescript/no-unsafe-return
-  const result = Result.trySafe(() => JSON.parse('{"a": 42'))
-  expect(result.ok).toBe(false)
-  if (!result.ok) expect(String(result.error)).toContain('SyntaxError')
-})
+  it('Result.trySafe B error', () => {
+    // oxlint-disable-next-line typescript/no-unsafe-return
+    const result = Result.trySafe(() => JSON.parse('{"a": 42'))
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(String(result.error)).toContain('SyntaxError')
+  })
 
-test('Result.trySafe C promise ok', async () => {
-  const result = await Result.trySafe(Promise.resolve(42))
-  expect(result).toMatchInlineSnapshot(`
+  it('Result.trySafe C promise ok', async () => {
+    const result = await Result.trySafe(Promise.resolve(42))
+    expect(result).toMatchInlineSnapshot(`
     Ok {
       "ok": true,
       "value": 42,
     }
   `)
-})
+  })
 
-test('Result.unwrap A ok', () => {
-  const result = Result.trySafe(() => ({ ahh: 42 }))
-  const { error, value } = Result.unwrap(result)
-  expect(value?.ahh).toMatchInlineSnapshot(`42`)
-  expect(error).toMatchInlineSnapshot(`undefined`)
-})
+  it('Result.unwrap A ok', () => {
+    const result = Result.trySafe(() => ({ ahh: 42 }))
+    const { error, value } = Result.unwrap(result)
+    expect(value?.ahh).toMatchInlineSnapshot(`42`)
+    expect(error).toMatchInlineSnapshot(`undefined`)
+  })
 
-test('Result.unwrap B error', () => {
-  // oxlint-disable-next-line typescript/no-unsafe-return
-  const result = Result.trySafe(() => JSON.parse('{"a": 42'))
-  const { error, value } = Result.unwrap(result)
-  expect(value).toMatchInlineSnapshot(`undefined`)
-  expect(String(error)).toContain('SyntaxError')
+  it('Result.unwrap B error', () => {
+    // oxlint-disable-next-line typescript/no-unsafe-return
+    const result = Result.trySafe(() => JSON.parse('{"a": 42'))
+    const { error, value } = Result.unwrap(result)
+    expect(value).toMatchInlineSnapshot(`undefined`)
+    expect(String(error)).toContain('SyntaxError')
+  })
 })

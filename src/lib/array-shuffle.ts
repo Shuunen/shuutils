@@ -1,5 +1,5 @@
-import { nbPrevious } from './constants'
-import { clone } from './object-clone'
+import { nbPrevious } from './constants.ts'
+import { clone } from './object-clone.ts'
 
 /**
  * Randomize an array using the Fisher-Yates algorithm

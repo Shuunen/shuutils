@@ -1,4 +1,4 @@
-import { nbMsInSecond } from './constants'
+import { nbMsInSecond } from './constants.ts'
 
 /**
  * Give timestamp of a date or now in seconds

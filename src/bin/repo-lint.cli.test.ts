@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { getTargetFiles, lintFile, main } from './repo-lint.cli'
+import { getTargetFiles, lintFile, main } from './repo-lint.cli.ts'
 
 const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'shuutils-lint-'))
 const argv = (...args: string[]) => ['node', 'repo-lint.cli.ts', ...args]

@@ -1,4 +1,4 @@
-import { storage } from './storage'
+import { storage } from './storage.ts'
 
 export type AsyncStorage = {
   get: <Type>(key: string) => Promise<Type | undefined>

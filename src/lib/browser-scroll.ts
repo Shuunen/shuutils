@@ -1,10 +1,10 @@
 /* v8 ignore start */
-import { invariant } from './invariant'
+import { invariant } from './invariant.ts'
 
 /**
  * Smoothly scroll the page to the first element matching the given selector
  * @param querySelector the selector of the element to scroll to
- * @throws an Error if no element matches the selector
+ * @throws {Error} if no element matches the selector
  */
 export function scrollToElement(querySelector: string) {
   const element = globalThis.document.querySelector(querySelector)

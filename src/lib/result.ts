@@ -16,17 +16,17 @@ interface UnwrappedErr<E> {
 export type UnwrappedResult<T, E> = UnwrappedOk<T> | UnwrappedErr<E>
 
 class Ok<T> {
-  readonly value: T
-  readonly ok = true
-  constructor(value: T) {
+  public readonly value: T
+  public readonly ok = true
+  public constructor(value: T) {
     this.value = value
   }
 }
 
 class Err<E> {
-  readonly error: E
-  readonly ok = false
-  constructor(error: E) {
+  public readonly error: E
+  public readonly ok = false
+  public constructor(error: E) {
     this.error = error
   }
 }
@@ -45,7 +45,7 @@ function trySafe<T, E = unknown>(fn: () => T): ResultType<T, E>
 function trySafe<T, E = unknown>(promise: Promise<T>): Promise<ResultType<T, E>>
 function trySafe<T, E = unknown>(fnOrPromise: (() => T) | Promise<T>): ResultType<T, E> | Promise<ResultType<T, E>> {
   if (fnOrPromise instanceof Promise)
-    // oxlint-disable-next-line promise/prefer-await-to-then
+    // oxlint-disable-next-line promise/prefer-await-to-then, typescript/no-unnecessary-type-assertion -- the assertion pins the caught error to E
     return fnOrPromise.then(ok).catch(err as (error: unknown) => Err<E>)
 
   try {

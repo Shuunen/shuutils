@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { stringify } from '../lib/string-stringify'
-import { main, getHistory, getOutput, getFilters, parseSingleCommit, getReleaseVersion } from './changelog-generator.cli'
+import { stringify } from '../lib/string-stringify.ts'
+import { main, getHistory, getOutput, getFilters, parseSingleCommit, getReleaseVersion } from './changelog-generator.cli.ts'
 
 // oxlint-disable-next-line arrow-body-style
 const { mockFileSync, mockExecSync } = vi.hoisted(() => {
@@ -116,11 +116,11 @@ describe('changelog-generator.cli.ts', () => {
       output: '{"date":"2025-11-11","hash":"0980312c","message":"Add feature Foobar/Baz (#21)","ticket":"FU-11"}',
     },
   ]
-  for (const { id, input, output } of commits)
-    it(`parseSingleCommit ${id} should return expected`, () => {
-      const result = parseSingleCommit(input)
-      expect(stringify(result)).toBe(output)
-    })
+
+  it.each(commits)('parseSingleCommit $id should return expected', ({ input, output }) => {
+    const result = parseSingleCommit(input)
+    expect(stringify(result)).toBe(output)
+  })
 
   // getHistory
   it('getHistory A should fetch git history and parse it', () => {

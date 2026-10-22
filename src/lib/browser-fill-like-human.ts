@@ -1,5 +1,5 @@
-import { randomNumber } from './random'
-import { sleep } from './sleep'
+import { randomNumber } from './random.ts'
+import { sleep } from './sleep.ts'
 
 /**
  * Fill an input like a human would do

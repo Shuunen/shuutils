@@ -1,4 +1,4 @@
-import { arrayAlign } from './array-align'
+import { arrayAlign } from './array-align.ts'
 
 describe('array-align', () => {
   it('arrayAlign A common use case : values shorter than targetLength', () => {

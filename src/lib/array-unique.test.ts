@@ -1,4 +1,4 @@
-import { arrayUnique } from './array-unique'
+import { arrayUnique } from './array-unique.ts'
 
 describe(arrayUnique, () => {
   it('arrayUnique A clean number array', () => {

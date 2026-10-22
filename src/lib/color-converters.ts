@@ -1,5 +1,5 @@
-import { nbFifth, nbFourth, nbHslMin, nbHueMax, nbHueStep, nbLightnessMax, nbLongHex, nbRgbMax, nbSaturationMax, nbSecond, nbSeventh, nbShortHex, nbSixth, nbThird } from './constants'
-import { Result } from './result'
+import { nbFifth, nbFourth, nbHslMin, nbHueMax, nbHueStep, nbLightnessMax, nbLongHex, nbRgbMax, nbSaturationMax, nbSecond, nbSeventh, nbShortHex, nbSixth, nbThird } from './constants.ts'
+import { Result } from './result.ts'
 
 /**
  * Convert a hex color to rgb
@@ -30,7 +30,6 @@ export function hexToRgb(hex: string) {
  * @param hex "#000000"
  * @returns hsl object
  */
-// oxlint-disable-next-line max-statements
 export function hexToHsl(hex: string) {
   const result = hexToRgb(hex) // Convert hex to RGB first
   if (!result.ok) return result

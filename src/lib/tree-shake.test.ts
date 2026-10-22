@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { build as rolldown } from 'rolldown'
-import { invariant } from './invariant'
+import { invariant } from './invariant.ts'
 
 // test the published bundle, not the sources, so a build step that leaks code is caught too
 const distEntry = path.join(import.meta.dirname, '../../dist/shuutils.js')
@@ -52,26 +52,28 @@ async function build(contents: string) {
   ╚══════════════════════════╝`
 }
 
-test('tree-shake test A', async () => {
-  const result = await build(`import { randomNumber } from 'shuutils'
+describe('tree-shake', () => {
+  it('tree-shake test A', async () => {
+    const result = await build(`import { randomNumber } from 'shuutils'
   console.log('tree-shaking test A, only using randomNumber', randomNumber(1, 10))`)
-  expect(result).toMatchSnapshot()
-})
+    expect(result).toMatchSnapshot()
+  })
 
-test('tree-shake test B', async () => {
-  const result = await build(`import { randomNumber, randomString } from 'shuutils'
+  it('tree-shake test B', async () => {
+    const result = await build(`import { randomNumber, randomString } from 'shuutils'
   console.log('tree-shaking test B, using randomNumber and randomString', randomNumber(1, 10), randomString(10))`)
-  expect(result).toMatchSnapshot()
-})
+    expect(result).toMatchSnapshot()
+  })
 
-test('tree-shake test C', async () => {
-  const result = await build(`import { readableTimeAgo } from 'shuutils'
+  it('tree-shake test C', async () => {
+    const result = await build(`import { readableTimeAgo } from 'shuutils'
   console.log('tree-shaking test C, only using readableTimeAgo', readableTimeAgo())`)
-  expect(result).toMatchSnapshot()
-})
+    expect(result).toMatchSnapshot()
+  })
 
-test('tree-shake test D', async () => {
-  const result = await build(`import { toastSuccess } from 'shuutils'
+  it('tree-shake test D', async () => {
+    const result = await build(`import { toastSuccess } from 'shuutils'
   console.log('tree-shaking test D, using toastSuccess', toastSuccess('my message'))`)
-  expect(result).toMatchSnapshot()
+    expect(result).toMatchSnapshot()
+  })
 })

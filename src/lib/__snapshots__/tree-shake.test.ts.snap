@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tree-shake test A 1`] = `
+exports[`tree-shake > tree-shake test A 1`] = `
 "
   1 files built
 
@@ -34,7 +34,7 @@ export {};
   ╚══════════════════════════╝"
 `;
 
-exports[`tree-shake test B 1`] = `
+exports[`tree-shake > tree-shake test B 1`] = `
 "
   1 files built
 
@@ -84,7 +84,7 @@ export {};
   ╚══════════════════════════╝"
 `;
 
-exports[`tree-shake test C 1`] = `
+exports[`tree-shake > tree-shake test C 1`] = `
 "
   1 files built
 
@@ -161,7 +161,7 @@ export {};
   ╚══════════════════════════╝"
 `;
 
-exports[`tree-shake test D 1`] = `
+exports[`tree-shake > tree-shake test D 1`] = `
 "
   1 files built
 

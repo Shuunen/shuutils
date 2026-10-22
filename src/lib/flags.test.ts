@@ -1,4 +1,4 @@
-import { hasOption, isVerbose } from './flags'
+import { hasOption, isVerbose } from './flags.ts'
 
 // oxlint-disable-next-line prefer-structured-clone
 const initialProcess = JSON.parse(JSON.stringify(process))

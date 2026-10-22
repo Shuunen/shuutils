@@ -1,5 +1,5 @@
-import { invariant } from './invariant'
-import { Result, type ResultType } from './result'
+import { invariant } from './invariant.ts'
+import { Result, type ResultType } from './result.ts'
 
 /**
  * Convert a `File` instance to base64.

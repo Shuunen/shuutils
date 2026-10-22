@@ -1,9 +1,9 @@
 import { execSync } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { parseJson } from '../lib/json'
-import { Logger } from '../lib/logger'
-import { Result } from '../lib/result'
-import { stringify } from '../lib/string-stringify'
+import { parseJson } from '../lib/json.ts'
+import { Logger } from '../lib/logger.ts'
+import { Result } from '../lib/result.ts'
+import { stringify } from '../lib/string-stringify.ts'
 
 /* v8 ignore next */
 const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
@@ -35,10 +35,7 @@ export function getHistory(filters: string[] = []) {
   return lines
     .split('\n')
     .map(commit => parseSingleCommit(commit))
-    .filter(commit =>
-      // oxlint-disable-next-line max-nested-callbacks
-      filters.length > 0 ? filters.some(prefix => commit?.ticket?.startsWith(prefix)) : Boolean(commit),
-    )
+    .filter(commit => (filters.length > 0 ? filters.some(prefix => commit?.ticket?.startsWith(prefix)) : Boolean(commit)))
     .toReversed()
 }
 
@@ -64,7 +61,7 @@ export function getReleaseVersion() {
  * Extract the output path from the command line arguments
  * @param args the command line arguments
  * @returns the output path
- * @throws an Error if the --output argument is missing
+ * @throws {Error} if the --output argument is missing
  */
 export function getOutput(args: string[] = process.argv) {
   const outputArg = args.find(arg => arg.startsWith('--output='))
@@ -96,7 +93,7 @@ export function main() {
   const history = getHistory(filters)
   const releaseVersion = getReleaseVersion()
   const data = { history, releaseVersion }
-  const fileContent = `export const generatedChangeLog = ${stringify(data, true)}`
+  const fileContent = `export const generatedChangeLog = ${stringify(data, { indent: true })}`
   writeFileSync(output, fileContent)
   logger.info(`Changelog generated successfully at ${output}`)
 }

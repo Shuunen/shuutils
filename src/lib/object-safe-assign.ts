@@ -1,4 +1,4 @@
-import { isRecord } from './object-is-record'
+import { isRecord } from './object-is-record.ts'
 
 /**
  * Like Object.assign but only non-null/undefined values can overwrite

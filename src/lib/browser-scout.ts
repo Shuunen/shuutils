@@ -1,5 +1,5 @@
-import { isBrowserEnvironment } from './environment'
-import type { NavigatorUserAgent } from './types'
+import { isBrowserEnvironment } from './environment.ts'
+import type { NavigatorUserAgent } from './types.ts'
 
 // oxlint-disable-next-line sort-keys
 const browsers = {

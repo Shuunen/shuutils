@@ -1,8 +1,9 @@
 // oxlint-disable typescript/no-dynamic-delete
-import { createAsyncStorage, createInMemoryDriver, localStorageDriver } from './async-storage'
-import { storage } from './storage'
+import { createAsyncStorage, createInMemoryDriver, localStorageDriver } from './async-storage.ts'
+import { storage } from './storage.ts'
 
 // Mimics real localStorage where bracket access and getItem/removeItem share the same data
+// oxlint-disable-next-line typescript/no-unnecessary-type-assertion -- types the proxy target as a string store
 const localStorageStub = new Proxy({} as Record<string, string>, {
   deleteProperty(target, prop: string) {
     delete target[prop]

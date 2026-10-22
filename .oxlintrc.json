@@ -27,6 +27,7 @@
     "FormData": "readonly",
     "Headers": "readonly",
     "HTMLButtonElement": "readonly",
+    "HTMLCollection": "readonly",
     "HTMLElement": "readonly",
     "HTMLInputElement": "readonly",
     "KeyboardEvent": "readonly",
@@ -56,7 +57,13 @@
   "ignorePatterns": [".git", ".old", "*.d.ts", "coverage", "dist", "node_modules"],
   "overrides": [
     {
-      "files": ["src/bin/**/*.ts"],
+      "files": ["src/index.ts"],
+      "rules": {
+        "oxc/no-barrel-file": "off"
+      }
+    },
+    {
+      "files": ["src/bin/**/*.ts", "*.config.ts", "vitest.setup.ts"],
       "rules": {
         "no-nodejs-modules": "off",
         "require-hook": "off",
@@ -76,6 +83,7 @@
         "expectTypeOf": "readonly",
         "it": "readonly",
         "mock": "readonly",
+        "test": "readonly",
         "vi": "readonly"
       },
       "rules": {
@@ -88,8 +96,10 @@
         "prefer-describe-function-title": "off",
         "prefer-ending-with-an-expect": "off",
         "prefer-importing-jest-globals": "off",
+        "unicorn/no-null": "off",
         "vitest/no-conditional-expect": "off",
         "vitest/no-conditional-in-test": "off",
+        "vitest/no-hooks": "off",
         "vitest/prefer-expect-assertions": "off",
         "vitest/prefer-lowercase-title": "off",
         "vitest/valid-title": "off"
@@ -107,13 +117,14 @@
     "explicit-function-return-type": "off",
     "explicit-module-boundary-types": "off",
     "exports-last": "off",
-    "extensions": "off",
+    "extensions": ["error", "always", { "ignorePackages": true }],
     "filename-case": [
       "error",
       {
         "case": "kebabCase"
       }
     ],
+    "id-length": ["warn", { "exceptions": ["_"] }],
     "func-style": [
       "error",
       "declaration",
