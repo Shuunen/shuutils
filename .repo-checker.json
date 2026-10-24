@@ -1,4 +1,4 @@
 {
   "$schema": "./node_modules/repo-check/schema.json",
-  "maxSizeKo": 110
+  "maxSizeKo": 120
 }

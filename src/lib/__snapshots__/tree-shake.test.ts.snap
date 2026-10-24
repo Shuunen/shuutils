@@ -14,7 +14,7 @@ exports[`tree-shake > tree-shake test A 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  //#region dist/shuutils.js
+  // dist/shuutils.js
 /**
 * Return a random number between min & max (0 & 100 if no args)
 * @param min (optional) the return number minimum included value
@@ -24,10 +24,8 @@ exports[`tree-shake > tree-shake test A 1`] = `
 function randomNumber(min = 0, max = 100) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
-//#endregion
-//#region \\0tree-shake-entry
+// \\0tree-shake-entry
 console.log("tree-shaking test A, only using randomNumber", randomNumber(1, 10));
-//#endregion
 export {};
   ╔══════════════════════════╗
   ║  Output end              ║
@@ -48,7 +46,7 @@ exports[`tree-shake > tree-shake test B 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  //#region dist/shuutils.js
+  // dist/shuutils.js
 /**
 * Return an item from an array
 * @param items like : ["great", "place", "pine"]
@@ -74,10 +72,8 @@ function randomString() {
 function randomNumber(min = 0, max = 100) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
-//#endregion
-//#region \\0tree-shake-entry
+// \\0tree-shake-entry
 console.log("tree-shaking test B, using randomNumber and randomString", randomNumber(1, 10), randomString(10));
-//#endregion
 export {};
   ╔══════════════════════════╗
   ║  Output end              ║
@@ -98,7 +94,7 @@ exports[`tree-shake > tree-shake test C 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  //#region dist/shuutils.js
+  // dist/shuutils.js
 const nbMsInSecond = 1e3;
 const nbMsInMinute = 6e4;
 const nbMsInHour = 36e5;
@@ -151,10 +147,8 @@ function readableTimeAgo(input, language = "en") {
 	for (const [threshold, divisor, unit] of timeAgoTuples) if (ms < threshold) return rtf.format(-Math.floor(ms / divisor), unit);
 	return rtf.format(-Math.floor(ms / nbMsInYear), "year");
 }
-//#endregion
-//#region \\0tree-shake-entry
+// \\0tree-shake-entry
 console.log("tree-shaking test C, only using readableTimeAgo", readableTimeAgo());
-//#endregion
 export {};
   ╔══════════════════════════╗
   ║  Output end              ║
@@ -175,7 +169,7 @@ exports[`tree-shake > tree-shake test D 1`] = `
   ╔══════════════════════════╗
   ║  Input end, output start ║
   ╚══════════════════════════╝
-  //#region dist/shuutils.js
+  // dist/shuutils.js
 /**
 * Hides the toast element by applying a transform and removing it after a delay.
 * @param element - The toast element to hide.
@@ -256,10 +250,8 @@ function toastAdd(type, message = "", delay = 0, padding = 14) {
 function toastSuccess(message, delay = 2e3) {
 	toastAdd("success", message, delay);
 }
-//#endregion
-//#region \\0tree-shake-entry
+// \\0tree-shake-entry
 console.log("tree-shaking test D, using toastSuccess", toastSuccess("my message"));
-//#endregion
 export {};
   ╔══════════════════════════╗
   ║  Output end              ║
