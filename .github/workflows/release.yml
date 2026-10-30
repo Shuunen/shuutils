@@ -51,11 +51,11 @@ jobs:
           run_install: false
 
       # no pnpm cache here, ci runs on every branch and could write a cache this publishing job would restore
-      - name: Setup Node 24
+      - name: Setup Node 26
         if: steps.version.outputs.release == 'true'
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
