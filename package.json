@@ -71,7 +71,7 @@
     "build": "turbo run build:tsc build:tsdown && echo build completed successfully || (echo Please fix build errors and run pnpm run build to check for remaining build issues && exit 1)",
     "build:tsc": "tsc -b && echo build:tsc completed successfully || (echo Please fix type errors and run pnpm run build:tsc to check for remaining type issues && exit 1)",
     "build:tsdown": "tsdown && echo build:tsdown completed successfully || (echo Please fix build errors and run pnpm run build:tsdown to check for remaining build issues && exit 1)",
-    "check": "repo-check && turbo run --output-logs=errors-only lint:types lint:knip lint:format lint:issues lint:package lint:repo build:tsc build:tsdown test:unit && echo check completed successfully",
+    "check": "turbo run --output-logs=errors-only lint:types lint:knip lint:format lint:issues lint:package lint:repo build:tsc build:tsdown test:unit && repo-check && echo check completed successfully",
     "dev": "vitest",
     "lint:format": "oxfmt --check && echo lint:format completed successfully || (echo Please run pnpm run lint:format:fix to automatically fix formatting issues && exit 1)",
     "lint:format:fix": "oxfmt && echo lint:format:fix completed successfully",
