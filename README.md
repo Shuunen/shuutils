@@ -106,6 +106,7 @@ Behavior changes :
 - [Oxlint](https://oxc.rs) : super fast linter and formatter
 - [Jakub Juszczak's article](https://hackernoon.com/how-to-publish-your-package-on-npm-7fc1f5aae600): nice article about publishing on npm
 - [Josh Crowther's repo](https://github.com/jshcrowthe/howto-browser-modules): great ressource about modules
+- [Repo-checker](https://github.com/Shuunen/repo-checker) : eslint cover /src code and this tool the rest ^^
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Svg Omg](https://jakearchibald.github.io/svgomg/) : the great king of svg file size reduction
 - [Tsdown](https://tsdown.dev) : elegant library bundler powered by rolldown <3
