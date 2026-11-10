@@ -14,6 +14,6 @@ const singleBraceRegex = /\{(?<item>[^{},]*)\}/gu
 export async function globFiles(pattern: string, { filesOnly = false } = {}) {
   const files: string[] = []
   const normalized = pattern.replaceAll(singleBraceRegex, '$<item>')
-  for await (const entry of glob(normalized, { withFileTypes: true })) if (!filesOnly || entry.isFile()) files.push(path.relative(process.cwd(), path.join(entry.parentPath, entry.name)))
+  for await (const entry of glob(normalized, { withFileTypes: true })) if (!filesOnly || entry.isFile()) files.push(path.relative(process.cwd(), path.join(entry.parentPath, entry.name)).replaceAll('\\', '/'))
   return files
 }

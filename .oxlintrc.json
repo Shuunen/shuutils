@@ -197,6 +197,16 @@
     "vitest/prefer-called-times": "off",
     "vitest/prefer-to-be-falsy": "off",
     "vitest/prefer-to-be-truthy": "off",
-    "vitest/require-hook": "off"
+    "vitest/require-hook": "off",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ]
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
   }
 }
