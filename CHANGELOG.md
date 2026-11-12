@@ -8,6 +8,7 @@ Versions before `11.0.0` are listed in the [git tags](https://github.com/Shuunen
 ### Changed
 
 - Drop the redundant `#readme` from the package homepage
+- Remove the `version` script that wrote the `VERSION` file with `node`
 
 ## 12.0.0
 

@@ -93,8 +93,7 @@
     "test:unit": "vitest run --coverage && echo test:unit completed successfully || (echo Please fix test errors and run pnpm run test:unit to check for remaining test issues && exit 1)",
     "test:update": "vitest run --update && echo test:update completed successfully",
     "test:watch": "vitest",
-    "up:deps": "pnpm update --recursive --latest && echo up:deps completed successfully",
-    "version": "node -p \"require('./package.json').version\" > VERSION && git add VERSION"
+    "up:deps": "pnpm update --recursive --latest && echo up:deps completed successfully"
   },
   "sideEffects": false,
   "type": "module",
