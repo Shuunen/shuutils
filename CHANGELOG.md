@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 Versions before `11.0.0` are listed in the [git tags](https://github.com/Shuunen/shuutils/tags).
 
+## Unreleased
+
+### Changed
+
+- Drop the redundant `#readme` from the package homepage
+
 ## 12.0.0
 
 `11.1.0` was tagged but never published to npm, upgrading from `11.0.0` to `12.0.0` also brings the [11.1.0 changes](#1110).
