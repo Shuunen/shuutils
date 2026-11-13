@@ -9,6 +9,9 @@ export default defineConfig({
       provider: 'v8' as const,
       reporter: [['text', { maxCols: 120 }], 'lcov'],
       reportsDirectory: './coverage',
+      thresholds: {
+        100: true,
+      },
     },
     environment: 'node',
     globalSetup: './vitest.setup.ts',

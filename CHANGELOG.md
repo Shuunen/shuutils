@@ -11,6 +11,7 @@ Versions before `11.0.0` are listed in the [git tags](https://github.com/Shuunen
 - Remove the `version` script that wrote the `VERSION` file with `node`
 - Drop the redundant `run_install` option from the CI
 - Remove the unreachable fallbacks in the unique mark plugin and the mark injection, and let the unique mark CLI take its logger as a parameter
+- Require 100% test coverage
 
 ## 12.0.0
 
