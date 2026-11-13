@@ -68,6 +68,15 @@ describe('object-deep', () => {
     `)
   })
 
+  it('setNested should ignore prototype pollution keys', () => {
+    const obj = {}
+    setNested(obj, '__proto__.polluted', 'yes')
+    setNested(obj, 'constructor.prototype.polluted', 'yes')
+    setNested(obj, ['prototype'], 'yes')
+    expect(obj).toStrictEqual({})
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined()
+  })
+
   it('setNested B should set a nested property with string path', () => {
     const obj = {}
     setNested(obj, 'user.name', 'Bob')

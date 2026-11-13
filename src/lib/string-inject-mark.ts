@@ -141,7 +141,8 @@ function injectInJsx(content: string, attribute: string, mark: string) {
     const props = content.slice(at, close)
     const children = childrenRegex.exec(props)
     // a nested object or a template literal before it means the first "}" does not close the props, so their children are out of reach
-    if (children && !/[{`]/u.test(props.slice(attribute.length, children.index))) return replaceValue(content, at, { indices: children.indices, mark }) ?? content
+    const value = children?.indices?.groups?.value
+    if (children && value && !/[{`]/u.test(props.slice(attribute.length, children.index))) return `${content.slice(0, at + value[0])}${mark}${content.slice(at + value[1])}`
     // right after the attribute, a nested object or a template literal later in the props stays intact
     const end = at + attribute.length
     return `${content.slice(0, end)},children:"${mark}"${content.slice(end)}`

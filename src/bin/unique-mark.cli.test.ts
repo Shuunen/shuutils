@@ -51,6 +51,28 @@ describe('unique-mark.cli', () => {
     expect(result.error).toBe(`no file found with target "${testFolder}/empty", aborting.`)
   })
 
+  it('getTargetFiles H reads the target from the command line by default', async () => {
+    const originalArgv = process.argv
+    process.argv = ['node', 'unique-mark.cli.ts', 'README.md']
+    const result = Result.unwrap(
+      await getTargetFiles().finally(() => {
+        process.argv = originalArgv
+      }),
+    )
+    expect(result.value).toContain('README.md')
+  })
+
+  it('getTargetFiles I refuses to run without a command line target', async () => {
+    const originalArgv = process.argv
+    process.argv = ['node', 'unique-mark.cli.ts']
+    const result = Result.unwrap(
+      await getTargetFiles().finally(() => {
+        process.argv = originalArgv
+      }),
+    )
+    expect(result.error).toBe('no target specified, aborting.')
+  })
+
   it('getTargetFiles G list only the js, css and html files of a folder', async () => {
     mkdirSync(`${testFolder}/assets`, { recursive: true })
     writeFileSync(`${testFolder}/assets/logo.png`, new Uint8Array([0x89, 0x50, 0x4e, 0x47]))
@@ -193,5 +215,25 @@ describe('unique-mark.cli', () => {
     })
     expect(result.value).toBe('injected 1 mark in 1 file')
     expect(readFileSync(logFile, 'utf8')).toMatch(/^ - [\da-z-]+ - \d{2}\/\d{2}\/\d{4} /u)
+  })
+
+  it('init I throws without a command line target', async () => {
+    const originalArgv = process.argv
+    process.argv = ['node', 'unique-mark.cli.ts']
+    await expect(
+      init().finally(() => {
+        process.argv = originalArgv
+      }),
+    ).rejects.toThrow('no target specified, aborting.')
+  })
+
+  it('init H reads the target from the command line by default', async () => {
+    const originalArgv = process.argv
+    writeFileSync(logFile, '__unique-mark__')
+    process.argv = ['node', 'unique-mark.cli.ts', logFile]
+    const result = await init().finally(() => {
+      process.argv = originalArgv
+    })
+    expect(result.value).toBe('injected 1 mark in 1 file')
   })
 })

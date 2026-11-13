@@ -34,7 +34,7 @@ const leadingRegex = /^﻿?(?:#!.*\r?\n|@charset "[^"]*";\n?)?/u
  * @returns the content with the banner
  */
 export function addBanner(content: string, banner: string) {
-  const leading = leadingRegex.exec(content)?.[0] ?? ''
+  const leading = content.slice(0, content.length - content.replace(leadingRegex, '').length)
   return `${leading}${banner}${content.slice(leading.length)}`
 }
 
@@ -76,12 +76,11 @@ function shiftInlineSourceMap(content: string) {
  * Shift the source maps of a bundle file by the first line the banner adds, an empty mappings line keeps the rest aligned
  * @param options the options
  * @param options.bundle the whole bundle, holding the .map assets
+ * @param options.content the text content of the bundle file that got a banner
  * @param options.file the bundle file that got a banner
  * @param options.warn the bundler warn function, for a source map that cannot be shifted
  */
-function shiftMapsBelowBanner({ bundle, file, warn }: Readonly<{ bundle: Record<string, OutputFile>; file: OutputFile; warn: (message: string) => void }>) {
-  const content = file.type === 'chunk' ? file.code : file.source
-  if (typeof content !== 'string') return
+function shiftMapsBelowBanner({ bundle, content, file, warn }: Readonly<{ bundle: Record<string, OutputFile>; content: string; file: OutputFile; warn: (message: string) => void }>) {
   const shifted = shiftInlineSourceMap(content)
   // an index map with sections, or a broken one, keeps its mappings one line off the banner
   if (shifted === content && inlineMapRegex.test(content)) warn(`the inline source map of ${file.fileName} could not be shifted below the banner`)
@@ -152,7 +151,7 @@ export function uniqueMark({ banner = true, placeholder = 'unique-mark' }: Reado
         if (isMissed) this.warn(`some "${placeholder}" placeholders have not been replaced in ${file.fileName}`)
         if (file.type === 'chunk') file.code = updated
         else file.source = updated
-        if (hasAddedBanner) shiftMapsBelowBanner({ bundle, file, warn: message => this.warn(message) })
+        if (hasAddedBanner) shiftMapsBelowBanner({ bundle, content: updated, file, warn: message => this.warn(message) })
       }
     },
     name: 'shuutils:unique-mark',

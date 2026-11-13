@@ -74,10 +74,10 @@ export function injectMarkInFiles({ files = [], isReadOnly = false, mark = 'no-m
 /**
  * Main function
  * @param target the glob to get files from, like "public/index.html" or "public/*.js", or a folder like "public" to target every js, css and html file inside it
+ * @param logger the logger to report with, quiet by default so the unit tests stay silent
  * @returns a Result object
  */
-export async function init(target = process.argv[nbThird] ?? '') {
-  const logger = new Logger({ minimumLevel: import.meta.main ? '3-info' : '7-error' })
+export async function init(target = process.argv[nbThird] ?? '', logger = new Logger({ minimumLevel: '7-error' })) {
   logger.debug('starting...')
   const version = getPackageJsonVersion()
   // like the uniqueMark plugin, a private app package.json without version still gets a mark
@@ -103,4 +103,4 @@ export async function init(target = process.argv[nbThird] ?? '') {
 }
 
 /* v8 ignore start */
-if (import.meta.main) await init()
+if (import.meta.main) await init(undefined, new Logger({ minimumLevel: '3-info' }))

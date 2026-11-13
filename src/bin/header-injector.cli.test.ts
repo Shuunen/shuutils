@@ -50,6 +50,15 @@ describe('header-injector.cli.ts', () => {
     expect(result.value).toMatchObject({ addedHeader: 0, noHeader: 1, readError: 0, writeError: 1 })
   })
 
+  it('main R should skip generated and declaration files', async () => {
+    vi.mocked(globFiles).mockResolvedValue(['a.d.ts', 'b.gen.ts'])
+    const result = await mod.main(['node', 'script', '--header=// NEW'])
+    expect(result.ok).toBe(true)
+    invariant(result.ok, 'expected result to be ok')
+    expect(result.value).toMatchObject({ addedHeader: 0, noHeader: 0, readError: 0 })
+    expect(fs.readFileSync).not.toHaveBeenCalled()
+  })
+
   it('main D should count readError when read fails', async () => {
     vi.mocked(globFiles).mockResolvedValue(['d.ts'])
     vi.mocked(fs.readFileSync).mockImplementation(() => {
