@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
     "michelemelluso.gitignore",
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
