@@ -1,8 +1,17 @@
 {
   "cSpell.words": ["bitness", "bundlejs", "caramail", "Cena", "Croll", "Pepe", "pikachu", "plusplus", "rebeccapurple", "resultx", "sonarjs", "standardx"],
   "workbench.colorCustomizations": {
-    "activityBar.background": "#410A76",
-    "titleBar.activeBackground": "#5B0EA5",
-    "titleBar.activeForeground": "#FDFBFF"
+    "activityBar.background": "#32085a",
+    "activityBar.foreground": "#f9fafb",
+    "activityBarBadge.background": "#5b0ea5",
+    "activityBarBadge.foreground": "#f9fafb",
+    "statusBar.background": "#32085a",
+    "statusBar.foreground": "#f9fafbcc",
+    "statusBar.inactiveBackground": "#21053b",
+    "tab.activeBorderTop": "#5b0ea5",
+    "titleBar.activeBackground": "#5b0ea5",
+    "titleBar.activeForeground": "#f9fafb",
+    "titleBar.inactiveBackground": "#32085a",
+    "titleBar.inactiveForeground": "#f9fafbaa"
   }
 }

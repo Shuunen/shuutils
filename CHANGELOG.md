@@ -15,6 +15,7 @@ Versions before `11.0.0` are listed in the [git tags](https://github.com/Shuunen
 - Require 100% test coverage
 - Stop recommending the eslint extension
 - Stop reporting the compressed size of the files at build time
+- Color the VS Code window from the theme color: title bar, activity bar, status bar, badges and active tab
 
 ## 12.0.0
 
